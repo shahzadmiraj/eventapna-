@@ -1,0 +1,46 @@
+
+html,body{
+    height: 100vh;
+    width: 100%;
+    background: #FC5C7D;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6A82FB, #FC5C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+    font-weight: bold;
+    color: #000000;
+
+
+}
+.card-body
+{
+
+    background: #FC5C7D;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6A82FB, #FC5C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.input-group
+{
+    box-shadow: 14px 5px 20px 0px rgba(0, 0, 0, 0.6);
+
+}
+
+.newcolor
+{
+    background: #77A1D3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E684AE, #79CBCA, #77A1D3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E684AE, #79CBCA, #77A1D3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.transparencyjumbo
+{
+    background-color: rgba(253, 253, 255, 0.4) !important;
+    color: #000000;
+
+}
+.transparencyinputs
+{
+    background-color: rgba(0,0,0,0.3) !important;
+    color: #fdfdff;
+}
