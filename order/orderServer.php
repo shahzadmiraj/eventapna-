@@ -19,7 +19,8 @@ function orderChange($_POST,$PreviousAddressId)
     $destination_date=$_POST['destination_date'];
     $describe=$_POST['describe'];
     $status_catering=$_POST['status_catering'];
-
+    $branchOrder=$_POST['branchOrder'];
+    $orderid=$_POST['orderid'];
 
 
     $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `address_id`, `person_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe` FROM `orderDetail` WHERE id='.$orderid.'';
@@ -36,12 +37,14 @@ function CheckOrder($_POST)
     $destination_date=$_POST['destination_date'];
     $describe=$_POST['describe'];
     $status_catering=$_POST['status_catering'];
+    $branchOrder=$_POST['branchOrder'];
     //
     $PreviousTotal_person=$_POST['PreviousTotal_person'];
     $PreviousDestination_time=$_POST['PreviousDestination_time'];
     $PreviousDestination_date=$_POST['PreviousDestination_date'];
     $PreviousDescribe=$_POST['PreviousDescribe'];
     $PreviousStatus_catering=$_POST['PreviousStatus_catering'];
+    $PreviousBranchOrder=$_POST['PreviousBranchOrder'];
 
 
     if($total_person==$PreviousTotal_person)
@@ -61,6 +64,10 @@ function CheckOrder($_POST)
         return 1;
     }
     else if($status_catering==$PreviousStatus_catering)
+    {
+        return 1;
+    }
+    else if($branchOrder==$PreviousBranchOrder)
     {
         return 1;
     }
@@ -180,5 +187,6 @@ else if($_POST['function']=="orderSaveAfterChange")
 
 
 }
+
 
 ?>

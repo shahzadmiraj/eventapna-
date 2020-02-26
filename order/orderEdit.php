@@ -15,8 +15,9 @@ if(!isset($_SESSION['customer']))
 {
     header("location:../customer/CustomerCreate.php");
 }
+$companyid=$_COOKIE['companyid'];
 $orderId=$_SESSION['order'];
-$sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id` FROM `orderDetail` WHERE id='.$orderId.'';
+$sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id`,`catering_id` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
 $addressId=$orderDetail[0][8];
 $sql='SELECT `id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id` FROM `address` WHERE id='.$addressId.'';
@@ -66,6 +67,7 @@ include_once ("../webdesign/header/header.php");
             <input name="PreviousStreet_no" type="number" hidden value="'.$addresDetail[0][3].'">
             <input name="PreviousHouse_no" type="number" hidden value="'.$addresDetail[0][4].'">
             <input name="PreviousAddressId" type="number" hidden value="'.$addresDetail[0][0].'">
+            <input name="PreviousBranchOrder" type="number" hidden value="'.$addresDetail[0][10].'">
             ';
         ?>
 
@@ -126,11 +128,48 @@ include_once ("../webdesign/header/header.php");
                 </div>
                 <textarea name="describe"  class="form-control"  id="describe"><?php echo $orderDetail[0][2];?></textarea>
             </div>
+        </div>
 
 
+
+        <div class="form-group row">
+            <label for="branchOrder" class="col-form-label">Order in branch :</label>
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-eye"></i></span>
+                </div>
+
+                <select  name="branchOrder"   class="form-control">
+                    <?php
+
+                    $sql='SELECT od.catering_id,(SELECT c.name FROM catering as c WHERE c.id=od.catering_id) FROM orderDetail as od WHERE od.id='.$orderId.'';
+                    $caterinBranch=queryReceive($sql);
+                    echo '<option value='.$caterinBranch[0][0].'>'.$caterinBranch[0][1].'</option>';
+
+                    $sql='SELECT `id`, `name` FROM `catering` WHERE ISNULL(expire) && (id!='.$caterinBranch[0][0].' )&& (company_id='.$companyid.')';
+                    $AllBranches=queryReceive($sql);
+
+                    for($i=0;$i<count($AllBranches);$i++)
+                    {
+                            echo '<option value='.$AllBranches[$i][0].'>'.$AllBranches[$i][1].'</option>';
+                    }
+
+                    ?>
+                </select>
+            </div>
 
 
         </div>
+
+
+
+
+
+
+
+
         <div class="form-group row">
             <label for="orderStatus" class="col-form-label">Order Status </label>
 
