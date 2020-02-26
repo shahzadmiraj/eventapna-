@@ -56,10 +56,10 @@ include_once ("connection/indexEdit.php");
             color: white;
         }
         .top-right {
-             position: absolute;
-             top: 8px;
-             right: 16px;
-         }
+            position: absolute;
+            top: 8px;
+            right: 16px;
+        }
 
 
     </style>
@@ -68,8 +68,8 @@ include_once ("connection/indexEdit.php");
 <?php
 include_once ("webdesign/header/header.php");
 
-?>
 
+?>
 
 
 
@@ -140,99 +140,100 @@ include_once ("webdesign/header/header.php");
 
 
 
-<div class="jumbotron card card-image mr-5 ml-5 transparencyjumbo " style="margin-top: -15px;background-repeat: no-repeat; background-size: cover;">
-<form method="get" action="">
+    <div class="jumbotron card card-image mr-5 ml-5 transparencyjumbo " style="margin-top: -15px;background-repeat: no-repeat; background-size: cover;">
+        <form method="get" action="">
 
 
-    <div class="text-white  text-center  row" >
-        <div class="input-group mb-2 mr-sm-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-clock"></i></div>
+            <div class="text-white  text-center  row" >
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-clock"></i></div>
+                    </div>
+                    <select name="daytime" class="custom-select "  size="1">
+                        <option value="09:00:00">Morning Time </option>
+                        <option value="12:00:00">Afternoon Time</option>
+                        <option value="18:00:00">Evening Time</option>
+                    </select>
+                </div>
             </div>
-            <select name="daytime" class="custom-select "  size="1">
-                <option value="09:00:00">Morning Time </option>
-                <option value="12:00:00">Afternoon Time</option>
-                <option value="18:00:00">Evening Time</option>
-            </select>
-        </div>
+
+
+
+
+            <div class="text-white  text-center  row" >
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                    </div>
+                    <input required name="Date" type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
+                </div>
+            </div>
+
+
+            <div class="text-white  text-center  row" >
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-utensils"></i></div>
+                    </div>
+                    <select name="perhead" class="custom-select "  size="1">
+                        <option value="0">Per head Only Seating</option>
+                        <option value="1">Per head Seating + Food</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="m-auto">
+                <button value="submit" type="submit" class="btn btn-danger"><i class="fas fa-check"></i>
+                    Submit</button>
+            </div>
+        </form>
+
+
+
     </div>
 
 
 
 
-    <div class="text-white  text-center  row" >
-        <div class="input-group mb-2 mr-sm-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-            </div>
-            <input required name="Date" type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row" >
+
+
+        <?php
+
+        //echo hallAll();
+
+        //echo HallUserDesire("2013-03-15",0,"09:00:00");
+
+        if(isset($_GET["Date"]))
+        {
+            echo HallUserDesire($_GET["Date"],$_GET["perhead"],$_GET["daytime"]);
+        }
+        else
+        {
+            echo hallAll();
+
+        }
+
+        ?>
+
+
+
     </div>
-
-
-    <div class="text-white  text-center  row" >
-        <div class="input-group mb-2 mr-sm-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-utensils"></i></div>
-            </div>
-            <select name="perhead" class="custom-select "  size="1">
-                <option value="0">Per head Only Seating</option>
-                <option value="1">Per head Seating + Food</option>
-            </select>
-        </div>
-    </div>
-
-
-<div class="m-auto">
-<button value="submit" type="submit" class="btn btn-danger"><i class="fas fa-check"></i>
-    Submit</button>
-</div>
-</form>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="row" >
-
-
-    <?php
-    //echo hallAll();
-
-    //echo HallUserDesire("2013-03-15",0,"09:00:00");
-
-    if(isset($_GET["Date"]))
-    {
-        echo HallUserDesire($_GET["Date"],$_GET["perhead"],$_GET["daytime"]);
-    }
-    else
-    {
-        echo hallAll();
-
-    }
-
-    ?>
-
-
-
-</div>
 
 
 

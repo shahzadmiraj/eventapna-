@@ -1,6 +1,6 @@
 <?php
 include_once ('connect.php');
-require('../fpdf181/fpdf.php');
+require('../fpdf182/fpdf.php');
 
 class PDF extends FPDF
 {

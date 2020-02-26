@@ -54,9 +54,19 @@ include_once ("../webdesign/header/header.php");
 </div>
 
 <div class="container">
-    <form class="card-body">
+    <form class="card-body" id="editorder">
         <?php
-            echo '<input id="orderid" type="number" hidden value="'.$orderId.'">';
+            echo '<input name="orderid" type="number" hidden value="'.$orderDetail[0][0].'">
+            <input name="PreviousTotal_person" type="number" hidden value="'.$orderDetail[0][3].'">
+            <input name="PreviousDestination_time" type="number" hidden value="'.$orderDetail[0][7].'">
+            <input name="PreviousDestination_date" type="number" hidden value="'.$orderDetail[0][5].'">
+            <input name="PreviousDescribe" type="number" hidden value="'.$orderDetail[0][2].'">
+            <input name="PreviousStatus_catering" type="number" hidden value="'.$orderDetail[0][4].'">
+            <input name="PreviousTown" type="number" hidden value="'.$addresDetail[0][2].'">
+            <input name="PreviousStreet_no" type="number" hidden value="'.$addresDetail[0][3].'">
+            <input name="PreviousHouse_no" type="number" hidden value="'.$addresDetail[0][4].'">
+            <input name="PreviousAddressId" type="number" hidden value="'.$addresDetail[0][0].'">
+            ';
         ?>
 
         <div class="form-group row">
@@ -67,7 +77,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-users"></i></span>
                 </div>
-                <input  data-column="total_person" type="number" name="persons" id="persons" class="order form-control" value="<?php echo $orderDetail[0][3];?>">
+                <input  name="total_person" type="number"  id="persons" class="form-control" value="<?php echo $orderDetail[0][3];?>">
             </div>
 
         </div>
@@ -80,7 +90,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
                 </div>
-                <input  data-column="destination_time"  type="time" name="time" id="time"  class="order form-control" value="<?php echo $orderDetail[0][7];?>">
+                <input  name="destination_time"  type="time"  id="time"  class="form-control" value="<?php echo $orderDetail[0][7];?>">
 
             </div>
 
@@ -98,7 +108,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                <input  data-column="destination_date"  type="date" name="date" id="date" class="order change form-control" value="<?php echo $orderDetail[0][5];?>">
+                <input  name="destination_date"  type="date" class="form-control" value="<?php echo $orderDetail[0][5];?>">
             </div>
 
 
@@ -114,7 +124,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-comments"></i></span>
                 </div>
-                <textarea data-column="describe"  class="order change form-control form-control" ><?php echo $orderDetail[0][2];?></textarea>
+                <textarea name="describe"  class="form-control"  id="describe"><?php echo $orderDetail[0][2];?></textarea>
             </div>
 
 
@@ -130,7 +140,7 @@ include_once ("../webdesign/header/header.php");
                     <span class="input-group-text"><i class="far fa-eye"></i></span>
                 </div>
 
-                <select  data-column="status_catering"   class="order form-control form-control">
+                <select  name="status_catering"   class="form-control">
                     <?php
                     $OrderStatus=array("Running","Cancel","Delieved","Clear");
                     echo '<option value='.$orderDetail[0][4].'>'.$orderDetail[0][4].'</option>';
@@ -163,7 +173,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-city"></i></span>
                 </div>
-                <input  data-column="address_town" type="text" data-addressid=<?php echo $addressId;?> name="area" id="area" class=" address form-control" value="<?php echo $addresDetail[0][2];?>">
+                <input  name="town" type="text"  id="area" class="form-control" value="<?php echo $addresDetail[0][2];?>">
 
             </div>
 
@@ -180,7 +190,7 @@ include_once ("../webdesign/header/header.php");
                     <span class="input-group-text"><i class="fas fa-road"></i></span>
                 </div>
 
-                <input data-column="address_street_no"  type="number" data-addressid=<?php echo $addressId;?> name="streetno" id="streetNO" class=" address form-control" value=<?php echo $addresDetail[0][3];?>>
+                <input name="street_no"  type="number"  id="streetNO" class="form-control" value=<?php echo $addresDetail[0][3];?>>
             </div>
 
         </div>
@@ -192,29 +202,13 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-street-view"></i></span>
                 </div>
-                <input  data-column="address_house_no"  type="number" data-addressid=<?php echo $addressId;?>  name="houseno" id="houseno" class=" address form-control" value=<?php echo $addresDetail[0][4];?>>
+                <input  name="house_no"  type="number"  id="houseno" class="form-control" value=<?php echo $addresDetail[0][4];?>>
             </div>
 
 
 
         </div>
 
-
-        <div class="form-group row">
-            <label class="form-check-label" for="total_amount">total amount</label>
-
-
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
-                </div>
-                <input  data-column="total_amount" type="number" class="order form-control" id="total_amount"  value=<?php echo $orderDetail[0][1];?>>
-            </div>
-
-
-
-        </div>
 
         <div class="form-group row">
             <label class="form-check-label" for="booking_date">order booking date</label>
@@ -261,14 +255,17 @@ include_once ("../webdesign/header/header.php");
             if(isset($_GET['action']))
             {
                 echo '
-            <a href="../order/PreviewOrder.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Done</a>';
+            <button id="btnbackhistory" class="form-control col-6 btn btn-danger">Cancel</button>
+            <button id="submit" class="form-control col-6 btn btn-primary" data-href="../order/PreviewOrder.php"><i class="fas fa-check "></i>  Save</button>';
+
 
             }
             else
             {
                 echo '
             <a href="../customer/customerEdit.php"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
-            <a href="../dish/dishDisplay.php"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
+             <button id="submit" class="form-control col-6 btn btn-primary" data-href="../dish/dishDisplay.php"><i class="fas fa-check "></i>  Save</button>';
+
             }
             ?>
 
@@ -290,18 +287,18 @@ include_once ("../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
-      var orderid=  $("#orderid").val();
-
-
-
-        $(document).on("change",'.order',function () {
-            var columnName=$(this).data("column");
-            var text=$(this).val();
+        $("#submit").click(function (e)
+        {
+            e.preventDefault();
+            var href="'"+$(this).data("href")+"'";
+            var formdata=new FormData($('#editorder')[0]);
+            formdata.append("function","orderSaveAfterChange");
             $.ajax({
-                url: "orderEditServer.php",
-                data:{column_name:columnName,value:text,option:'orderChange',orderid:orderid},
-                dataType:"text",
+                url:"orderServer.php",
                 method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
 
                 beforeSend: function() {
                     $("#preloader").show();
@@ -309,40 +306,17 @@ include_once ("../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $("#preloader").hide();
+
                     if(data!='')
                     {
                         alert(data);
                     }
-                }
-            });
-
-        });
-
-        $(document).on("change",'.address',function () {
-            var columnName=$(this).data("column");
-            var addressId=$(this).data("addressid");
-            var text=$(this).val();
-            $.ajax({
-                url: "orderEditServer.php",
-                data:{column_name:columnName,value:text,option:'addressChange',addressId:addressId},
-                dataType:"text",
-                method:"POST",
-
-                beforeSend: function() {
-                    $("#preloader").show();
-                },
-                success:function (data)
-                {
-                    $("#preloader").hide();
-                    if(data!='')
+                    else
                     {
-                        alert(data);
+                        window.location.href=href;
                     }
                 }
             });
-
-        });
-
 
         $("#btnbackhistory").click(function () {
             window.history.back();

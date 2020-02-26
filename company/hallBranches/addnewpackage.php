@@ -1,9 +1,5 @@
 <?php
 include_once ("../../connection/connect.php");
-
-
-
-
 if(!isset($_GET['hall']))
 {
 

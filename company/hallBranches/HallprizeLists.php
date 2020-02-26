@@ -1,9 +1,6 @@
 <?php
 include_once ('../../connection/connect.php');
 
-
-
-
 if(!isset($_GET['hall']))
 {
 
@@ -20,7 +17,7 @@ if((!is_numeric($id))||$id=="")
 if(isset($_GET['editpackage']))
 {
 
-    $packageEncoded=base64url_decode($_GET['packageid']);
+    $packageEncoded=base64url_encode($_GET['packageid']);
     header("location:Editpackage.php?hallname=".$_GET['hallname']."&month=".$_GET['month']."&daytime=".$_GET['daytime']."&hall=".$encoded."&pack=".$packageEncoded."");
 
 }

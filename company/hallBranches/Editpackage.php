@@ -1,7 +1,7 @@
 <?php
 include_once ("../../connection/connect.php");
 
-if((!isset($_GET['hall']))||(!isset($_GET['pack'])))
+if(!((isset($_GET['hall']))&&(isset($_GET['pack']))))
 {
     header("location:../companyRegister/companyEdit.php");
 }
@@ -9,10 +9,10 @@ $encoded=$_GET['hall'];
 $id=base64url_decode($encoded);
 $encodedPack=$_GET['pack'];
 $packageid=base64url_decode($encodedPack);
-if(((!is_numeric($id))||$id=="")||((!is_numeric($packageid))||$packageid==""))
-{
-    header("location:../companyRegister/companyEdit.php");
-}
+//if(((!is_numeric($id))||$id=="")||((!is_numeric($packageid))||$packageid==""))
+//{
+//    header("location:../companyRegister/companyEdit.php");
+//}
 if(isset($_GET['action']))
 {
 
@@ -27,7 +27,7 @@ if(isset($_GET['action']))
 
     }
     querySend($sql);
-    header("location:HallprizeLists.php?hall=".$id."");
+    header("location:HallprizeLists.php?hall=".$_GET['hall']."");
 }
 
 $hallname=$_GET['hallname'];
@@ -105,7 +105,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
             </div>
-            <input readonly data-columnname="package_name"     class="packagechange form-control" type="text" value="<?php echo $packageDetail[0][8];?>">
+            <input  data-columnname="package_name"     class="packagechange form-control" type="text" value="<?php echo $packageDetail[0][8];?>">
         </div>
 
 
@@ -121,7 +121,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
             </div>
-            <input readonly data-columnname="price" class="packagechange form-control" type="number" value="<?php echo $packageDetail[0][3];?>">
+            <input  data-columnname="price" class="packagechange form-control" type="number" value="<?php echo $packageDetail[0][3];?>">
         </div>
 
     </div>
@@ -129,14 +129,11 @@ include_once ("../../webdesign/header/header.php");
     <div class="form-group row">
         <lable class="col-form-label">Packages Description</lable>
 
-
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-comments"></i></span>
             </div>
-            <textarea readonly data-columnname="describe" type="text"  class="packagechange  form-control" value="<?php echo $packageDetail[0][4];?>" > <?php echo $packageDetail[0][4];?></textarea>
+            <textarea  data-columnname="describe" type="text"  class="packagechange  form-control" value="<?php echo $packageDetail[0][4];?>" > <?php echo $packageDetail[0][4];?></textarea>
         </div>
 
 
@@ -156,7 +153,7 @@ include_once ("../../webdesign/header/header.php");
         <div id="alreadydishid'.$menuDetail[$i][0].'" class="col-4 border m-2 form-group p-0 card-body shadow " style="height: 30vh;" >
             <img src="'.$menuDetail[$i][2].'" class="col-12" style="height: 15vh">
             <p class="col-form-label" class="form-control col-12">'.$menuDetail[$i][1].'</p>
-            <input  hidden data-dishid="'.$menuDetail[$i][0].'" type="button" value="Remove" class="form-control alreadydishid col-12  btn btn-success">
+            <input  data-dishid="'.$menuDetail[$i][0].'" type="button" value="Remove" class="form-control alreadydishid col-12  btn btn-success">
         </div>';
 
 
@@ -175,12 +172,12 @@ include_once ("../../webdesign/header/header.php");
         <?php
         if($packageDetail[0][6]=="")
         {
-            echo '<a href="?action=expire" class="btn btn-danger col-6">Expire</a>';
+            echo '<a href="?action=expire&hall='.$_GET['hall'].'&pack='.$_GET['pack'].'" class="btn btn-danger col-6">Expire</a>';
 
         }
         else
         {
-            echo '<a href="?action=active" class="btn btn-warning col-6">Active</a>';
+            echo '<a href="?action=active&hall='.$_GET['hall'].'&pack='.$_GET['pack'].'" class="btn btn-warning col-6">Active</a>';
         }
 
         ?>
@@ -190,6 +187,79 @@ include_once ("../../webdesign/header/header.php");
 
 </form>
 
+
+
+
+
+
+    <hr class="border">
+    <h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>Select Dishes</h3>
+
+
+
+    <!-- Button trigger modal -->
+
+    <div class="form-group row">
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+            <input id="searchdish" class="form-control" type="text" placeholder="Search dish">
+            <button type="button" class="btn btn-primary float-right col-4" data-toggle="modal" data-target="#exampleModal">
+                ADD dish
+            </button>
+        </div>
+    </div>
+
+
+    <div id="selectmenu" class="border m-2 p-0  row"  style="overflow:auto;width: 100% ;height: 50vh" >
+
+        <?php
+
+        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
+        echo dishesOfPakage($sql);
+
+        ?>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formDishaddss">
+                        <div class="form-group row">
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
+                                </div>
+                                <input id="dishnameadd" name="dishname" class="form-control" type="text" placeholder="Dish Name Enter">
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                                </div>
+                                <input  name="image" class="form-control" type="file">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="submitformDishadd" class="btn btn-primary float-right">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -227,10 +297,6 @@ include_once ("../../webdesign/footer/footer.php");
                     if(data!='')
                     {
                         alert(data);
-                    }
-                    else
-                    {
-                        window.history.back();
                     }
                 }
             });

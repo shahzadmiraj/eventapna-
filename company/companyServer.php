@@ -302,14 +302,15 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)AN
             for ($j=0;$j<count($ALLpackages);$j++)
             {
 
+                //only difference of colors
                 if($ALLpackages[$j][1]!="")
                 {
-                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hall='.$hallid.'" class="btn btn-danger col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
+                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hall='.$encodehallid.'" class="btn btn-danger col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
 
                 }
                 else
                 {
-                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hall='.$hallid.'" class="btn btn-warning col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
+                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hall='.$encodehallid.'" class="btn btn-warning col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
                 }
 
 
@@ -331,10 +332,17 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)AN
     }
     else if($_POST['option']=="changeSeating")
     {
+
+        $timestamp = date('Y-m-d H:i:s');
         $packageid=$_POST['packageid'];
         $value=chechIsEmpty($_POST['value']);
-        $sql='UPDATE `hallprice` SET price='.$value.' WHERE id='.$packageid.'';
+        $sql='UPDATE `hallprice` SET expire="'.$timestamp.'" WHERE id='.$packageid.'';
         querySend($sql);
+        $sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
+        $detailPack=queryReceive($sql);
+        $sql='INSERT INTO `hallprice`(`id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`) VALUES (NULL,"'.$detailPack[0][1].'",0,'.$value.',"'.$detailPack[0][4].'","'.$detailPack[0][5].'",NULL,'.$detailPack[0][7].',"'.$detailPack[0][8].'")';
+        querySend($sql);
+       
     }
     else if($_POST['option']=="ExpireBtn")
     {
