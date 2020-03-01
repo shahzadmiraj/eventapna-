@@ -72,7 +72,17 @@ function querySend($sql)
     }
 }
 
+function checknumberOtherNull($value)
+{
 
+
+    if($value=="")
+    {
+        $value='NULL';
+    }
+
+    return $value;
+}
 
 function chechIsEmpty($value)
 {

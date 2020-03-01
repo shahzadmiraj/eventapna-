@@ -16,6 +16,7 @@ if(!isset($_SESSION['customer']))
     header("location:../customer/CustomerCreate.php");
 }
 $companyid=$_COOKIE['companyid'];
+$userid=$_COOKIE['userid'];
 $orderId=$_SESSION['order'];
 $sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id`,`catering_id` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
@@ -59,15 +60,17 @@ include_once ("../webdesign/header/header.php");
         <?php
             echo '<input name="orderid" type="number" hidden value="'.$orderDetail[0][0].'">
             <input name="PreviousTotal_person" type="number" hidden value="'.$orderDetail[0][3].'">
-            <input name="PreviousDestination_time" type="number" hidden value="'.$orderDetail[0][7].'">
-            <input name="PreviousDestination_date" type="number" hidden value="'.$orderDetail[0][5].'">
-            <input name="PreviousDescribe" type="number" hidden value="'.$orderDetail[0][2].'">
-            <input name="PreviousStatus_catering" type="number" hidden value="'.$orderDetail[0][4].'">
-            <input name="PreviousTown" type="number" hidden value="'.$addresDetail[0][2].'">
+            <input name="PreviousDestination_time" type="time" hidden value="'.$orderDetail[0][7].'">
+            <input name="PreviousDestination_date" type="date" hidden value="'.$orderDetail[0][5].'">
+            <input name="PreviousDescribe" type="text" hidden value="'.$orderDetail[0][2].'">
+            <input name="PreviousStatus_catering" type="text" hidden value="'.$orderDetail[0][4].'">
+            <input name="PreviousTown" type="text" hidden value="'.$addresDetail[0][2].'">
             <input name="PreviousStreet_no" type="number" hidden value="'.$addresDetail[0][3].'">
             <input name="PreviousHouse_no" type="number" hidden value="'.$addresDetail[0][4].'">
             <input name="PreviousAddressId" type="number" hidden value="'.$addresDetail[0][0].'">
-            <input name="PreviousBranchOrder" type="number" hidden value="'.$addresDetail[0][10].'">
+            <input name="PreviousBranchOrder" type="number" hidden value="'.$orderDetail[0][10].'">
+            <input name="CurrentUserid" type="number" hidden value="'.$userid.'">
+            
             ';
         ?>
 
@@ -323,45 +326,40 @@ include_once ("../webdesign/header/header.php");
 include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
-    $(document).ready(function ()
-    {
+    $(document).ready(function () {
 
-        $("#submit").click(function (e)
-        {
+        $(document).on('click', '#submit', function (e) {
             e.preventDefault();
-            var href="'"+$(this).data("href")+"'";
-            var formdata=new FormData($('#editorder')[0]);
-            formdata.append("function","orderSaveAfterChange");
+            var href = "'" + $(this).data("href") + "'";
+            var formdata = new FormData($('#editorder')[0]);
+            formdata.append("function", "orderSaveAfterChange");
             $.ajax({
-                url:"orderServer.php",
-                method:"POST",
-                data:formdata,
+                url: "orderServer.php",
+                method: "POST",
+                data: formdata,
                 contentType: false,
                 processData: false,
 
-                beforeSend: function() {
+                beforeSend: function () {
                     $("#preloader").show();
                 },
-                success:function (data)
-                {
+                success: function (data) {
                     $("#preloader").hide();
 
-                    if(data!='')
-                    {
+                    if (data != '') {
                         alert(data);
-                    }
-                    else
-                    {
-                        window.location.href=href;
+                    } else {
+                        window.location.href = href;
                     }
                 }
             });
 
-        $("#btnbackhistory").click(function () {
-            window.history.back();
+            $("#btnbackhistory").click(function () {
+                window.history.back();
+            });
+
+
         });
-
-
     });
 
 </script>

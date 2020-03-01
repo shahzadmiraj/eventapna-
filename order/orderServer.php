@@ -10,100 +10,110 @@
 include_once ("../connection/connect.php");
 
 $userid=$_COOKIE['userid'];
-function orderChange($_POST,$PreviousAddressId)
+function orderChange($post,$AddressId)
 {
+//chechIsEmpty
+    //checknumberOtherNull
 
+    $total_person=chechIsEmpty($post['total_person']);
+    $destination_time=$post['destination_time'];
+    $destination_date=$post['destination_date'];
+    $describe=$post['describe'];
+    $status_catering=$post['status_catering'];
+    $branchOrder=$post['branchOrder'];
+    $orderid=$post['orderid'];
+    $userid=$post['CurrentUserid'];
 
-    $total_person=$_POST['total_person'];
-    $destination_time=$_POST['destination_time'];
-    $destination_date=$_POST['destination_date'];
-    $describe=$_POST['describe'];
-    $status_catering=$_POST['status_catering'];
-    $branchOrder=$_POST['branchOrder'];
-    $orderid=$_POST['orderid'];
-
-
+    //get all information of order
     $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `address_id`, `person_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe` FROM `orderDetail` WHERE id='.$orderid.'';
     $previousDetail=queryReceive($sql);
 
-    $sql='INSERT INTO `history_order`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `address_id`, `total_person`, `status_hall`, `destination_date`, `destination_time`, `status_catering`, `comments`, `orderDetail_id`) VALUES (NULL,'.$previousDetail[0][1].','.$previousDetail[0][2].','.$previousDetail[0][3].','.$previousDetail[0][4].','.$previousDetail[0][5].','.$previousDetail[0][8].',"'.$previousDetail[0][9].'","'.$previousDetail[0][10].'","'.$previousDetail[0][12].'","'.$previousDetail[0][13].'","'.$previousDetail[0][14].'",'.$previousDetail[0][0].')';
+    //make history of order
+    $sql='INSERT INTO `history_order`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `address_id`, `total_person`, `status_hall`, `destination_date`, `destination_time`, `status_catering`, `comments`, `orderDetail_id`) VALUES (NULL,'.checknumberOtherNull($previousDetail[0][1]).','.$previousDetail[0][2].','.checknumberOtherNull($previousDetail[0][3]).','.$previousDetail[0][4].','.$previousDetail[0][5].','.$previousDetail[0][8].',"'.$previousDetail[0][9].'","'.$previousDetail[0][10].'","'.$previousDetail[0][12].'","'.$previousDetail[0][13].'","'.$previousDetail[0][14].'",'.$previousDetail[0][0].')';
+    querySend($sql);
+
+    //update order
+    $sql='UPDATE `orderDetail` SET `catering_id`='.$branchOrder.',`user_id`='.$userid.',`address_id`='.$AddressId.',`total_person`='.$total_person.',`destination_date`="'.$destination_date.'",`destination_time`="'.$destination_time.'",`status_catering`="'.$status_catering.'",`describe`="'.$describe.'" WHERE id='.$orderid.'';
+    querySend($sql);
+
+
 }
-function CheckOrder($_POST)
+function CheckOrder($post)
 {
 
 
-    $total_person=$_POST['total_person'];
-    $destination_time=$_POST['destination_time'];
-    $destination_date=$_POST['destination_date'];
-    $describe=$_POST['describe'];
-    $status_catering=$_POST['status_catering'];
-    $branchOrder=$_POST['branchOrder'];
+    $total_person=$post['total_person'];
+    $destination_time=$post['destination_time'];
+    $destination_date=$post['destination_date'];
+    $describe=$post['describe'];
+    $status_catering=$post['status_catering'];
+    $branchOrder=$post['branchOrder'];
     //
-    $PreviousTotal_person=$_POST['PreviousTotal_person'];
-    $PreviousDestination_time=$_POST['PreviousDestination_time'];
-    $PreviousDestination_date=$_POST['PreviousDestination_date'];
-    $PreviousDescribe=$_POST['PreviousDescribe'];
-    $PreviousStatus_catering=$_POST['PreviousStatus_catering'];
-    $PreviousBranchOrder=$_POST['PreviousBranchOrder'];
+    $PreviousTotal_person=$post['PreviousTotal_person'];
+    $PreviousDestination_time=$post['PreviousDestination_time'];
+    $PreviousDestination_date=$post['PreviousDestination_date'];
+    $PreviousDescribe=$post['PreviousDescribe'];
+    $PreviousStatus_catering=$post['PreviousStatus_catering'];
+    $PreviousBranchOrder=$post['PreviousBranchOrder'];
 
 
-    if($total_person==$PreviousTotal_person)
+    if($total_person!=$PreviousTotal_person)
     {
         return 1;
     }
-    else if($destination_time==$PreviousDestination_time)
+    else if($destination_time!=$PreviousDestination_time)
     {
         return 1;
     }
-    else if($destination_date==$PreviousDestination_date)
+    else if($destination_date!=$PreviousDestination_date)
     {
         return 1;
     }
-    else if($describe==$PreviousDescribe)
+    else if($describe!=$PreviousDescribe)
     {
         return 1;
     }
-    else if($status_catering==$PreviousStatus_catering)
+    else if($status_catering!=$PreviousStatus_catering)
     {
         return 1;
     }
-    else if($branchOrder==$PreviousBranchOrder)
+    else if($branchOrder!=$PreviousBranchOrder)
     {
         return 1;
     }
     return 0;
 }
 
-function checkAddress($_POST)
+function checkAddress($post)
 {
 
-    $town=$_POST['town'];
-    $street_no=$_POST['street_no'];
-    $houseno=$_POST['houseno'];
+    $town=$post['town'];
+    $street_no=$post['street_no'];
+    $houseno=$post['house_no'];
 
-    $PreviousTown=$_POST['PreviousTown'];
-    $PreviousStreet_no=$_POST['PreviousStreet_no'];
-    $PreviousHouse_no=$_POST['PreviousHouse_no'];
+    $PreviousTown=$post['PreviousTown'];
+    $PreviousStreet_no=$post['PreviousStreet_no'];
+    $PreviousHouse_no=$post['PreviousHouse_no'];
 
-    if($town==$PreviousTown)
+    if($town!=$PreviousTown)
     {
         return 1;
     }
-    else if($street_no==$PreviousStreet_no)
+    else if($street_no!=$PreviousStreet_no)
     {
         return 1;
     }
-    else if($houseno==$PreviousHouse_no)
+    else if($houseno!=$PreviousHouse_no)
     {
         return 1;
     }
     return 0;
 }
-function CreateNewAddress($_POST)
+function CreateNewAddress($post)
 {
-    $town=$_POST['town'];
-    $street_no=$_POST['street_no'];
-    $houseno=$_POST['houseno'];
+    $town=$post['town'];
+    $street_no=$post['street_no'];
+    $houseno=$post['house_no'];
     $sql='INSERT INTO `address`(`id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id`) VALUES (NULL,NULL,"'.$town.'",'.$street_no.','.$houseno.',NULL)';
     querySend($sql);
 }
@@ -162,17 +172,22 @@ else if($_POST['function']=="orderSaveAfterChange")
 {
 
     $PreviousAddressId=$_POST['PreviousAddressId'];
-    if(checkAddress($_POST))
+
+    $post=array();
+    $post=$_POST;
+    if(checkAddress($post))
     {
-        CreateNewAddress($_POST);
+        CreateNewAddress($post);
         $PreviousAddressId=mysqli_insert_id($connect);
-        orderChange($_POST,$PreviousAddressId);
+        orderChange($post,$PreviousAddressId);
+        echo 'address';
     }
     else
     {
-        if(CheckOrder($_POST))
+        if(CheckOrder($post))
         {
-            orderChange($_POST,$PreviousAddressId);
+            orderChange($post,$PreviousAddressId);
+            echo 'orderchange';
         }
 
     }
