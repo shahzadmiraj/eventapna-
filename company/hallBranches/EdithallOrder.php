@@ -14,17 +14,19 @@ if(!isset($_SESSION['customer']))
 {
     header("location:../../customer/CustomerCreate.php");
 }
-$hallid=$_SESSION['branchtypeid'];
+$companyid=$_COOKIE['companyid'];
+$userid=$_COOKIE['userid'];
+//$hallid=$_SESSION['branchtypeid'];
 $orderid=$_SESSION['order'];
 $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
- `user_id`, `sheftCatering`, `sheftHall`, `sheftCateringUser`, 
- `sheftHallUser`, `address_id`, `person_id`, `total_amount`, 
+ `user_id`, 1, 1, 1, 
+ 1, `address_id`, `person_id`, `total_amount`, 
  `total_person`, `status_hall`, `destination_date`, 
  `booking_date`, `destination_time`, `status_catering`, 
- `notice`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderid.'';
+ 1,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderid.'';
 $detailorder=queryReceive($sql);
 
-$sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$hallid.') AND (ISNULL(c.expire))';
+$sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$detailorder[0][1].') AND (ISNULL(c.expire))';
 
 $cateringids=queryReceive($sql);
 
@@ -63,6 +65,8 @@ include_once ("../../webdesign/header/header.php");
 
 <div class="container card-header shadow">
 <form class="form">
+    <input type="hidden" name="userid" value="<?php echo $userid;?>">
+
     <div class="form-group row">
         <label class="col-form-label">No of Guests</label>
 
@@ -329,6 +333,40 @@ include_once ("../../webdesign/header/header.php");
     ?>
 
 
+
+    <div class="form-group row">
+        <label for="branchOrder" class="col-form-label">Hall Order in branch :</label>
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-eye"></i></span>
+            </div>
+
+            <select  name="branchOrder"   class="form-control">
+                <?php
+
+                $sql='SELECT od.hall_id,(SELECT h.name FROM hall as h WHERE h.id=od.hall_id) FROM orderDetail as od WHERE od.id='.$orderid.'';
+                $Branch=queryReceive($sql);
+                echo '<option value='.$Branch[0][0].'>'.$Branch[0][1].'</option>';
+
+                $sql='SELECT `id`, `name` FROM `hall` WHERE ISNULL(expire) && (id!='.$Branch[0][0].' )&& (company_id='.$companyid.')';
+                $AllBranches=queryReceive($sql);
+
+                for($i=0;$i<count($AllBranches);$i++)
+                {
+                    echo '<option value='.$AllBranches[$i][0].'>'.$AllBranches[$i][1].'</option>';
+                }
+
+                ?>
+            </select>
+        </div>
+
+
+    </div>
+
+
+
     <div class="form-group row">
         <label class="col-form-label">Booked date</label>
 
@@ -345,9 +383,6 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="form-group row justify-content-center">
-
-
-
         <button id="cancel" type="button" class=" col-4 btn btn-danger" value="Cancel"><i class="fas fa-arrow-circle-left"></i>back</button>
         <button id="submitform" type="button" class=" col-4 btn btn-success" value="Save"><i class="fas fa-check "></i>Save</button>
     </div>
@@ -409,7 +444,7 @@ include_once ("../../webdesign/footer/footer.php");
             formdata.append("time", time);
             formdata.append("perheadwith", perheadwith);
             formdata.append("option", "checkpackages1");
-            formdata.append("hallid",<?php echo $hallid;?>);
+            formdata.append("hallid",<?php echo $detailorder[0][1];?>);
             $.ajax({
                 url: "../companyServer.php",
                 method: "POST",
@@ -524,7 +559,8 @@ include_once ("../../webdesign/footer/footer.php");
                 contentType: false,
                 processData: false,
 
-                beforeSend: function() {
+                beforeSend: function()
+                {
                     $("#preloader").show();
                 },
                 success:function (data)

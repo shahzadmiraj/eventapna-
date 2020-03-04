@@ -283,11 +283,11 @@ $attributeDetail=queryReceive($sql);
         //order 9 catering hall 1
        // $orderId=9;
         $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
- `user_id`, `sheftCatering`, `sheftHall`, `sheftCateringUser`, 
- `sheftHallUser`, `address_id`, `person_id`, `total_amount`, 
+ `user_id`, `booking_date`, `booking_date`, `booking_date`, 
+ `booking_date`, `address_id`, `person_id`, `total_amount`, 
  `total_person`, `status_hall`, `destination_date`, 
  `booking_date`, `destination_time`, `status_catering`, 
- `notice`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderId.'';
+ `booking_date`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderId.'';
         $detailorder = queryReceive($sql);
 
 

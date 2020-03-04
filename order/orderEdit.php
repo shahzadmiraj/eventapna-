@@ -28,9 +28,9 @@ $addresDetail=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+
     <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
+
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -59,6 +59,8 @@ include_once ("../webdesign/header/header.php");
     <form class="card-body" id="editorder">
         <?php
             echo '<input name="orderid" type="number" hidden value="'.$orderDetail[0][0].'">
+            
+            <input name="Previoustotal_amount" type="number" hidden value="'.$orderDetail[0][1].'">
             <input name="PreviousTotal_person" type="number" hidden value="'.$orderDetail[0][3].'">
             <input name="PreviousDestination_time" type="time" hidden value="'.$orderDetail[0][7].'">
             <input name="PreviousDestination_date" type="date" hidden value="'.$orderDetail[0][5].'">
@@ -205,6 +207,25 @@ include_once ("../webdesign/header/header.php");
 
 
 
+
+        <div class="form-group row">
+            <label class="form-check-label" for="total_amount">total amount</label>
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                </div>
+                <input  name="total_amount" type="number" class="form-control"  value=<?php echo $orderDetail[0][1];?>>
+            </div>
+
+
+
+        </div>
+
+
+
         <h3 align="center">  <i class="fas fa-map-marker-alt mr-2"></i>Delivery Address(optional)</h3>
         <div class="form-group row">
             <label for="area" class="col-form-label">area / block </label>
@@ -297,8 +318,8 @@ include_once ("../webdesign/header/header.php");
             if(isset($_GET['action']))
             {
                 echo '
-            <button id="btnbackhistory" class="form-control col-6 btn btn-danger">Cancel</button>
-            <button id="submit" class="form-control col-6 btn btn-primary" data-href="../order/PreviewOrder.php"><i class="fas fa-check "></i>  Save</button>';
+                 <button id="backBtn" class="form-control col-6 btn btn-danger">Cancel</button>
+            <button id="submit" class="form-control col-6 btn btn-primary" data-href="back"><i class="fas fa-check "></i>  Save</button>';
 
 
             }
@@ -348,17 +369,26 @@ include_once ("../webdesign/footer/footer.php");
 
                     if (data != '') {
                         alert(data);
-                    } else {
-                        window.location.href = href;
+                    } else
+                    {
+                        if(href.localeCompare("back")!=1)
+                        {
+                            window.history.back();
+                        }
+                        else
+                        {
+
+                           window.location.href = href;
+                        }
                     }
                 }
             });
+        });
 
-            $("#btnbackhistory").click(function () {
-                window.history.back();
-            });
-
-
+        $('#backBtn').click(function (e)
+        {
+            e.preventDefault();
+            window.history.back();
         });
     });
 
