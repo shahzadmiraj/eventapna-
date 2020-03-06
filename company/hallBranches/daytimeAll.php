@@ -78,10 +78,11 @@ else
 
 
 <div class="container row m-auto">
-    <a href="hallInfo.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cogs fa-5x"></i><h4> Change info</h4></a>
-    <a href="galleryhall.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-images fa-5x"></i> <h4> Gallery</h4></a>
-    <a href="HallprizeLists.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-list fa-5x"></i> <h4> Prize list</h4></a>
-    <a href="comment.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-comments fa-5x"></i> <h4> Comments</h4></a>
+    <a href="hallInfo.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cogs fa-3x"></i><h4> Change info</h4></a>
+    <a href="galleryhall.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-images fa-3x"></i> <h4> Gallery</h4></a>
+    <a href="HallprizeLists.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-list fa-3x"></i> <h4> Prize list</h4></a>
+    <a href="extraItems/Hallitem.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-comments fa-3x"></i> <h4> Extra items</h4></a>
+    <a href="comment.php?hall=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-comments fa-3x"></i> <h4> Comments</h4></a>
 </div>
 
 

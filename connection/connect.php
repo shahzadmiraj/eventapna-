@@ -123,9 +123,9 @@ function ImageUploaded($File,$DestinationFile)
             $errors[]="extension not allowed, please choose a JPEG or PNG file.";
         }
 
-        if($file_size > 2097152)
+        if($file_size > 30097152)
         {
-            $errors[]='File size must be excately 2 MB';
+            $errors[]='File size must be excately  MB';
         }
 
 //        if (file_exists($DestinationFile))
@@ -182,9 +182,9 @@ function MutipleUploadFile($File,$DestinationFile)
             $errors[]="extension not allowed, please choose a JPEG or PNG file or MP4 or JPEG.";
         }
 
-        if($file_size > 10097152)
+        if($file_size > 30097152)
         {
-            $errors[]='File size must be excately 2 MB';
+            $errors[]='File size must be excately  MB';
         }
 
 //        if (file_exists($DestinationFile))

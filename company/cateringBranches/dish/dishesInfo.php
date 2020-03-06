@@ -111,35 +111,20 @@ include_once ("../../../webdesign/header/header.php");
         for($i=0;$i<count($dishTypes);$i++)
         {
             $Display.= '<div class="form-group row  border " id="Delele_Dish_Type_'.$dishTypes[$i][0].'">
-            <input data-dishtypeid="'.$dishTypes[$i][0].'"   value="'.$dishTypes[$i][1].'" class="changeDishType col-9  form-control ">
-            <input data-dishtypeid="'.$dishTypes[$i][0].'"  class=" btn Delele_Dish_Type col-3  form-control  ';
-
+            <input data-dishtypeid="'.$dishTypes[$i][0].'"   value="'.$dishTypes[$i][1].'" class="changeDishType col-9  form-control ">';
             if($dishTypes[$i][2]=="")
             {
-
-                $Display.='btn-primary  ';
+                $Display.=' <input data-dishtypeid="'.$dishTypes[$i][0].'"  class=" btn Delele_Dish_Type col-3  form-control btn-primary" value="Disable"> ';
             }
             else
             {
-                $Display.=' btn-danger ';
+                $Display.=' <input data-dishtypeid="'.$dishTypes[$i][0].'"  class=" btn Delele_Dish_Type col-3  form-control btn-danger" value="Enable"> ';
+
             }
 
-            $Display.=' " value="';
-
-            if($dishTypes[$i][2]=="")
-            {
-
-                $Display.='Disable';
-            }
-            else
-            {
-                $Display.='Enable';
-            }
+            $Display.= '</div>';
 
 
-
-
-            $Display.= '"></div>';
         }
         echo $Display;
         ?>
@@ -216,6 +201,8 @@ include_once ("../../../webdesign/header/header.php");
 
                 $display .= '</i>
         </a>';
+
+
             }
         }
         $display.='</div>';

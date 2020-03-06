@@ -18,7 +18,8 @@
     <div id="loader"></div>
 </div>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background: #ee0979;  /* fallback for old browsers */
+<div class="fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark " style="background: #ee0979;  /* fallback for old browsers */
 background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 ">
@@ -136,6 +137,28 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
 
 </nav>
+   <!-- <div class="container-fluid badge-light form-inline ">
+
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-4 form-inline row m-auto">
+        <img src="../../gmail.png" style="width: 50px">
+        <label class="col-8 col-sm-6 col-md-6 col-lg-9 col-xl-8">hall/catering Name</label>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-4 form-inline row m-auto">
+            <img src="../../gmail.png" style="width: 50px">
+            <label class="col-8 col-sm-6 col-md-6 col-lg-9 col-xl-8">user Name</label>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-4 form-inline row m-auto alert-primary">
+            <img src="../../gmail.png" style="width: 50px">
+            <label class="col-8 col-sm-6 col-md-6 col-lg-9 col-xl-8">Customer Name with order no 1</label>
+        </div>
+
+
+    </div>-->
+
+
+</div>
 <div style="margin-top: 80px">
 
 </div>
