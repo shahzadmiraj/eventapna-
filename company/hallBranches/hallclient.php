@@ -23,6 +23,8 @@ $owndetail=queryReceive($sql);
 $sql='SELECT `isFood`, `price`, `describe`,`package_name` FROM `hallprice` WHERE id='.$packageid.'';
 $packagedtail=queryReceive($sql);
 
+$sql='SELECT `id`, `longitude`, `expire`, `country`, `city`, `latitude`, `active`, `address` FROM `location` WHERE id='.$hallinformations[0][6].'';
+$locationDetail=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>
@@ -218,8 +220,75 @@ else
 
 
 
+<div class="container bg-white">
+
+    <h1 class="font-weight-light  text-lg-left mt-4 mb-0">Package Detail</h1>
+    <hr class="mt-2 mb-3">
 
 
+    <?php
+
+    //$sql='SELECT id,name FROM dish_type WHERE catering_id='.$cateringid.'';
+    $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE (hall_id='.$hallid.')&&(ISNULL(expire))';
+
+    $Category=queryReceive($sql);
+    $Display='';
+    $display='<div class="form-group row ">';
+    for($j=0;$j<count($Category);$j++)
+    {
+
+        $display.='<h4 class="col-12 newcolor" align="center">'.$Category[$j][1].'</h4>';
+
+
+
+        //  $sql = 'SELECT d.name, d.id, (SELECT dt.name from dish_type as dt WHERE dt.id=d.dish_type_id),(SELECT dt.isExpire from dish_type as dt WHERE dt.id=d.dish_type_id), d.isExpire,d.image FROM dish as d WHERE dish_type_id=' . $Category[$j][0] . ' ';
+
+        $sql='SELECT ex.id,ex.name,ex.price,ex.image,ex.active FROM Extra_Item as ex WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$Category[$j][0].')';
+        $kinds = queryReceive($sql);
+
+
+
+        $display.='<div class="container-fluid"><div class="card-deck">';
+        for ($i = 0; $i < count($kinds); $i++)
+        {
+
+
+            $display.='
+        <div class="card mb-4 col-12 col-md-6 col-lg-4 col-xl-3">';
+
+            if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
+            {
+                $display.='
+            <img class="card-img-top img-fluid" src="../../../images/hallExtra/'.$kinds[$i][3].'" alt="Card image cap"  >';
+            }
+            else
+            {
+
+                $display.='
+            <img class="card-img-top img-fluid" src="https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg" alt="Card image cap">';
+            }
+
+            $display.='   <div class="card-body ">
+                <h4 class="card-title">'.$kinds[$i][1].'</h4>
+              <h6 class=" "><i class="far fa-money-bill-alt mr-3"></i><i>'.$kinds[$i][2].'    <button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger float-right">Delete</button>
+</h6>
+            </div>
+        </div>
+        <div class="w-100 d-none d-sm-block d-md-none"></div>';
+        }
+        $display.='</div></div>';
+
+    }
+
+    $display.='</div>';
+    echo $display;
+
+
+    ?>
+
+
+
+</div>
 
 
 
@@ -266,16 +335,16 @@ else
 
             <h5 class="m-3">
                 <i class="fas fa-users"></i>
-                  Maximum Guest: <span class="text-white"><?php echo $hallinformations[0][0];?></span></h5>
+                  Maximum Guest: <span class="text-white"><?php echo $hallinformations[0][1];?></span></h5>
 
             <h5 class="m-3">
                 <i class="fas fa-columns"></i>
-                Number of partitions: <span class="text-white"><?php echo $hallinformations[0][0];?></span></h5>
+                Number of partitions: <span class="text-white"><?php echo $hallinformations[0][2];?></span></h5>
             <h5 class="m-3">
                 <i class="fas fa-parking"></i>Parking : <span class="text-white"><?php
 
 
-                if($hallinformations[0][0]==1)
+                if($hallinformations[0][2]==1)
                 {
                     echo " Yes";
                 }
@@ -296,9 +365,76 @@ else
                 echo $halltype[$hallinformations[0][5]];
 
                 ?> </span></h5>
+
+
+
+
+            <h5 class="m-3">
+                <i class="fas fa-columns"></i>
+                Distance from your location is : <span class="text-white"><?php echo $_GET['distance']." KM";?></span>
+            </h5>
+
+            <h5 class="m-3">
+                <i class="fas fa-columns"></i>
+                Address : <span class="text-white"><?php echo $locationDetail[0][7]; ?></span>
+            </h5>
+
+            <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
         </div>
     </div>
 
+</div>
+
+
+
+
+<div class="form-group row" hidden>
+
+    <label for="" class="col-form-label">Address: </label>
+    <div class="input-group mb-3 input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+        </div>
+        <input  name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Box" size="104">
+    </div>
+</div>
+
+
+<div hidden>
+    <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude"></label>
+    <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude"></label>
+    <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+    <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country"></label>
+</div>
+<script src="../../map/javascript.js"></script>
+
+
+
+
+
+
+<script>
+    urlData="gallery/galleryServer.php";
+</script>
+<div class="d-block">
+    <?php
+    $destination="../../images/hall/";
+    include_once ("gallery/galleryPage.php");
+    ?>
+</div>
+
+
+<script>
+
+    var urldata="../companyServer.php";
+
+</script>
+
+<div  class="d-block">
+
+    <?php
+    include_once ("../hallBranches/comment/comentServering.php");
+    ?>
 </div>
 
 
@@ -311,42 +447,22 @@ else
 
 
 
-
-<?php
-include_once ("../../webdesign/footer/footer.php");
-?>
 <script>
 
 
     $(document).ready(function ()
     {
-        $("#submitmultiphotos").change(function (e)
-        {
-            e.preventDefault();
-            var formData=new FormData($(this)[0]);
-            $.ajax({
-                url:"",
-                method:"POST",
-                data:formData,
-                contentType: false,
-                processData: false,
 
-                beforeSend: function() {
-                    $("#preloader").show();
-                },
-                success:function (data)
-                {
-                    $("#preloader").hide();
-                        location.reload();
+        latitude=<?php echo $locationDetail[0][5];?>;
+        longitude=<?php echo $locationDetail[0][1]; ?>;
 
+        //callback constantmap function
+        // $.ajax({
+        //     url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=constantmap",
+        //     dataType: "script",
+        //     cache: false
+        // });
 
-                }
-            });
-
-
-
-
-        });
 
 
 
@@ -354,11 +470,13 @@ include_once ("../../webdesign/footer/footer.php");
 
     });
 
-
-
-
-
-
 </script>
+
+
+
+
+<?php
+include_once ("../../webdesign/footer/footer.php");
+?>
 </body>
 </html>

@@ -45,7 +45,7 @@ WHERE
 }
 
 
-function HallUserDesire($currentdate,$perHead,$dayTime)
+function HallUserDesire($currentdate,$perHead,$dayTime,$latitude,$longitude)
 {
     $time=$dayTime;
     if($dayTime=="09:00:00")
@@ -55,7 +55,7 @@ function HallUserDesire($currentdate,$perHead,$dayTime)
     else
         $dayTime="Evening";
 
-    $hallIds=SortDistance(33.6844,73.0479,"Pakistan");
+    $hallIds=SortDistance($latitude,$longitude,"Pakistan");
 
 
     $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
@@ -95,7 +95,7 @@ function showHalls($sql,$Distance)
 
         $display.='
         
-       <a href="company/hallBranches/hallclient.php?hallid='.$AllHalls[$i][0].'&packageid='.$AllHalls[$i][4].'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'" class="card-header transparencyjumbo col-sm-11 col-md-6 col-xl-4">
+       <a href="company/hallBranches/hallclient.php?hallid='.$AllHalls[$i][0].'&packageid='.$AllHalls[$i][4].'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'&distance='.$Distance.' " class="card-header transparencyjumbo col-sm-11 col-md-6 col-xl-4">
 
             <!-- Card image -->
             <div class="view overlay">
@@ -111,7 +111,7 @@ function showHalls($sql,$Distance)
 
         }
         $display.='" alt="Snow" style="width:100%;height: 100%">
-                    <h5 class="top-right text-dark font-weight-bold"> ';
+                    <h5 class="top-right text-white font-weight-bold"> ';
 
         $display.=$Distance;
 
@@ -126,11 +126,7 @@ function showHalls($sql,$Distance)
                 <h4 class="card-title font-weight-bold text-center"> '.$AllHalls[$i][2].'</h4>
                 <!-- Data -->
 
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
+                
                 <h3 class="text-right"><i class="far fa-money-bill-alt"></i><span class="font-weight-bold"> RS:<i class="text-warning"> '.$AllHalls[$i][7].' </i></span></h3>
                 <h4><i class="fas fa-clock"></i> Time <span class="text-warning">'.$AllHalls[$i][8].'</span> </h4>
                 <h4><i class="far fa-calendar-alt"></i> Month <span class="text-warning">'.$AllHalls[$i][5].'</span></h4>

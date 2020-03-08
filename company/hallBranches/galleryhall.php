@@ -69,99 +69,23 @@ else
         <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>
 </div>
-<div class="container">
+
+
+<script>
+    urlData="gallery/galleryServer.php";
+</script>
+<?php
+$destination="../../images/hall/";
+include_once ("gallery/galleryPage.php");
+?>
 
 
 
-        <h1 class="font-weight-light text-lg-left mt-4 mb-3">Gallery</h1>
-
-
-
-
-
-
-        <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
-            <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
-            <input type="submit" name="submit" value="Upload" class="btn btn-success col-4">
-        </form>
-        <?php
-
-        if(isset($_FILES['userfile']))
-        {
-
-            $file_array=reArray($_FILES['userfile']);
-            $Distination='';
-            for ($i=0;$i<count($file_array);$i++)
-            {
-                $Distination= '../../images/hall/'.$file_array[$i]['name'];
-                $error=MutipleUploadFile($file_array[$i],$Distination);
-                if(count($error)>0)
-                {
-                    echo '<h4 class="badge-danger">'.$file_array[$i]['name'].'.'.$error[0].'</h4>';
-                }
-                else
-                {
-                    $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$Distination.'",NULL,NULL,'.$hallid.')';
-                    querySend($sql);
-                }
-
-            }
-            unset($_FILES['userfile']);
-
-        }
-
-
-
-        ?>
-
-
-
-        <hr class="mt-3 mb-5 border-white">
-
-        <div class="row text-center text-lg-left">
-
-
-            <?php
-
-
-            $sql='SELECT `id`, `image` FROM `images` WHERE hall_id='.$hallid.'' ;
-            echo showGallery($sql);
-
-            ?>
-
-
-        </div>
-
-
-
-</div>
 
 
 
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
-
-<script>
-
-    $(document).ready(function ()
-    {
-
-
-
-
-
-
-
-
-
-
-
-
-    });
-
-
-
-</script>
 </body>
 </html>

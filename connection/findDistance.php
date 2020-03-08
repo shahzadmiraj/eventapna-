@@ -51,7 +51,7 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit)
 function SortDistance($lat,$lon,$country)
 {
 
-    $sql="SELECT h.id,l.latitude,l.longitude FROM hall as h INNER join location as l on (h.location_id=l.id) WHERE (ISNULL(h.expire))AND(l.country='$country')";
+    $sql="SELECT h.id,l.latitude,l.longitude FROM hall as h INNER join location as l on (h.location_id=l.id) WHERE (ISNULL(h.expire))AND(ISNULL(l.expire))";
 
     $data=queryReceive($sql);
 //    $data=array(

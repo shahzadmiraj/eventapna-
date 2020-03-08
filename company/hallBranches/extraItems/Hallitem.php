@@ -168,7 +168,7 @@ $display.='<div class="container-fluid"><div class="card-deck">';
 
       $display.='   <div class="card-body ">
                 <h4 class="card-title">'.$kinds[$i][1].'</h4>
-              <h6 class=" ">'.$kinds[$i][2].'    <button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger float-right">Delete</button>
+              <h6 class=" "><i class="far fa-money-bill-alt mr-3"></i><i>'.$kinds[$i][2].'    <button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger float-right">Delete</button>
 </h6>
             </div>
         </div>

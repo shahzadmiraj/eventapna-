@@ -202,6 +202,7 @@ include_once ("../../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
+        getLocation();
 
 
 
@@ -251,7 +252,7 @@ include_once ("../../webdesign/footer/footer.php");
     });
 
 
-    getLocation();
+
     $(document).ready(function()
     {
         $.ajax({

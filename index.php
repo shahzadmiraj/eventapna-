@@ -32,6 +32,7 @@ include_once ("connection/indexEdit.php");
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="webdesign/css/complete.css">
     <link rel="stylesheet" href="webdesign/css/loader.css">
+    <link rel="stylesheet" href="map/style.css">
 
 
     <style>
@@ -67,11 +68,7 @@ include_once ("connection/indexEdit.php");
 <body>
 <?php
 include_once ("webdesign/header/header.php");
-
-
 ?>
-
-
 
 <div class="bd-example">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
@@ -82,21 +79,21 @@ include_once ("webdesign/header/header.php");
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item  active">
-                <img src="style1.jpg" class="d-block w-100" alt="...">
+                <img src="https://blog.bridals.pk/wp-content/uploads/2018/11/soanam-banne-1024x512.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption ">
                     <h5 class="display-4">Hall Booking</h5>
                     <p>book your nearest Hall,Marquee and Dera and get 10% discount</p>
                 </div>
             </div>
             <div class="carousel-item  ">
-                <img src="dolar.jpeg" class="d-block w-100" alt="...">
+                <img src="https://i.ytimg.com/vi/nOPKg6I4Zfs/maxresdefault.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption ">
-                    <h5 class="display-4">Free Company Register</h5>
+                    <h6 >Free Company Register first  40 owner</h6>
                     <p>Register hall and catering company and get free software</p>
                 </div>
             </div>
             <div class="carousel-item ">
-                <img src="https://indiebookbutler.com/wp-content/uploads/2015/08/Free.jpg" class="d-block w-100" alt="...">
+                <img src="https://www.brides.com/thmb/8N9PzFuItfby0vjkyjka-hfQhsE=/3615x2033/filters:fill(auto,1)/__opt__aboutcom__coeus__resources__content_migration__brides__proteus__5be5dd5661c7180ad90ce2d7__169-5f4244ae78c040a88344f8a6f6e5436a.jpeg" class="d-block w-100" alt="...">
                 <div class="carousel-caption ">
                     <div class="col-12 p-0 m-0">
 
@@ -131,67 +128,97 @@ include_once ("webdesign/header/header.php");
     </div>
 </div>
 
+<div class="container table-light  m-auto ">
+<form method="get" action="" >
 
 
-
-
-<div class="container">
-
-
-
-
-    <div class="jumbotron card card-image mr-5 ml-5 transparencyjumbo " style="margin-top: -15px;background-repeat: no-repeat; background-size: cover;">
-        <form method="get" action="">
-
-
-            <div class="text-white  text-center  row" >
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fas fa-clock"></i></div>
-                    </div>
-                    <select name="daytime" class="custom-select "  size="1">
-                        <option value="09:00:00">Morning Time </option>
-                        <option value="12:00:00">Afternoon Time</option>
-                        <option value="18:00:00">Evening Time</option>
-                    </select>
-                </div>
+    <div class="text-white  text-center  row" >
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-clock"></i></div>
             </div>
+            <select name="daytime" class="custom-select "  size="1">
+                <option value="09:00:00">Morning Time </option>
+                <option value="12:00:00">Afternoon Time</option>
+                <option value="18:00:00">Evening Time</option>
+            </select>
+        </div>
+    </div>
 
 
 
 
-            <div class="text-white  text-center  row" >
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                    </div>
-                    <input required name="Date" type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
-                </div>
+    <div class="text-white  text-center  row" >
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
             </div>
+            <input required name="Date" type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
+        </div>
+    </div>
 
 
-            <div class="text-white  text-center  row" >
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fas fa-utensils"></i></div>
-                    </div>
-                    <select name="perhead" class="custom-select "  size="1">
-                        <option value="0">Per head Only Seating</option>
-                        <option value="1">Per head Seating + Food</option>
-                    </select>
-                </div>
+    <div class="text-white  text-center  row" >
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-utensils"></i></div>
             </div>
+            <select name="perhead" class="custom-select "  size="1">
+                <option value="0">Per head Only Seating</option>
+                <option value="1">Per head Seating + Food</option>
+            </select>
+        </div>
+    </div>
 
-
-            <div class="m-auto">
-                <button value="submit" type="submit" class="btn btn-danger"><i class="fas fa-check"></i>
-                    Submit</button>
+    <div class="form-group row">
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
             </div>
-        </form>
+            <input  value="<?php
+
+            if(isset($_GET['address']))
+            {
+                echo $_GET['address'];
+            }
 
 
+
+            ?>" name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
+        </div>
+    </div>
+
+
+    <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
+    <div hidden>
+        <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude"></label>
+        <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude"></label>
+        <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+        <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country"></label>
 
     </div>
+
+
+
+    <div class="mt-5 mb-5">
+        <button value="submit" type="submit" class="btn btn-danger col-12"><i class="fas fa-check"></i>
+            Find Hall</button>
+    </div>
+
+</form>
+</div>
+
+
+
+<div class="container mt-5">
+
+
+
+
+
+
+
+
 
 
 
@@ -221,7 +248,7 @@ include_once ("webdesign/header/header.php");
 
         if(isset($_GET["Date"]))
         {
-            echo HallUserDesire($_GET["Date"],$_GET["perhead"],$_GET["daytime"]);
+            echo HallUserDesire($_GET["Date"],$_GET["perhead"],$_GET["daytime"],$_GET['latitude'],$_GET['longitude']);
         }
         else
         {
@@ -243,15 +270,45 @@ include_once ("webdesign/header/header.php");
 <?php
 include_once ("webdesign/footer/footer.php");
 ?>
+
+
+
+<script src="map/javascript.js"></script>
+
+
+
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function()
+    {
+        <?php
+        if(!isset($_GET['latitude']))
+        {
+            echo '
+        getLocation();';
+        }
+        else
+        {
+            ?>
+        latitude=<?php echo $_GET['latitude'];?>;
+            longitude=<?php echo $_GET['longitude']; ?>;
+        <?php
+        }
 
+        ?>
+            /*$.ajax({
+                url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+                dataType: "script",
+                cache: false
+            });*/
 
+    });
+
+    $(document).ready(function ()
+    {
         $('.carousel').carousel({
             interval: 5000
         });
-
 
     });
 

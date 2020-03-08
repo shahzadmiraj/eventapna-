@@ -202,7 +202,7 @@ function MutipleUploadFile($File,$DestinationFile)
 
 
 }
-    function showGallery($sql)
+    function showGallery($sql,$destination)
     {
         $result=queryReceive($sql);
 
@@ -211,7 +211,7 @@ function MutipleUploadFile($File,$DestinationFile)
         $extensions= array("jpeg","jpg","png");
         for($k=0;$k<count($result);$k++)
         {
-            if(file_exists($result[$k][1]))
+            if(file_exists($destination.$result[$k][1]))
             {
 
 
@@ -222,9 +222,9 @@ function MutipleUploadFile($File,$DestinationFile)
                     //image file
 
                     $display .= '
-                        <div class="col-lg-4 col-md-6 col-12 mb-2 mt-2">
+                        <div class="col-12 col-lg-3 col-md-4 col-xl-3   mb-2 mt-2">
                             <a href="#" class="d-block mb-4 h-100">
-                                <img class="img-fluid img-thumbnail" src="' . $result[$k][1] . '" alt="">
+                                <img class="img-thumbnail" src="'.$destination.''. $result[$k][1] . '" alt="" style="width:100%;height:60vh">
                             </a>
                         </div>';
                 } else {
@@ -234,11 +234,11 @@ function MutipleUploadFile($File,$DestinationFile)
                     $video = substr_replace($source, "", -4);
                     $display .= '
                          
-                          <div class="col-lg-4 col-md-6 col-12 mb-2 mt-2">
+                          <div class="col-lg-4 col-md-6  col-xl-3 col-12 mb-2 mt-2">
                                 <div class="embed-responsive embed-responsive-16by9 d-block mb-4 h-100">
                                     <video width="320" height="440" controls class="card"  >
-                                        <source src="' . $video . '.mp4" type="video/mp4">
-                                        <source src="' . $video . '.ogg" type="video/ogg">
+                                        <source src="'.$destination.'' . $video . '.mp4" type="video/mp4">
+                                        <source src="'.$destination.'' . $video . '.ogg" type="video/ogg">
                                         Your browser does not support the video tag.
                                     </video>
                                 </div>
