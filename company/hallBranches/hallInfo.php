@@ -40,8 +40,8 @@ $hallid=$id;
 $companyid=$_COOKIE['companyid'];
 $sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
 $halldetail=queryReceive($sql);
-
-
+$sql='SELECT `id`, `longitude`, `expire`, `country`, `city`, `latitude`, `active`, `address` FROM `location` WHERE id='.$halldetail[0][7].'';
+$location=queryReceive($sql);
 ?>
 <!DOCTYPE html>
 <head>
@@ -56,6 +56,7 @@ $halldetail=queryReceive($sql);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
+    <link rel="stylesheet" href="../../map/style.css">
     <style>
 
         #formhall
@@ -99,6 +100,9 @@ else
     <h1> Hall Setting </h1>
     <hr class="mt-2 mb-3 border-white">
     <form class="shadow card-body" id="formhall" >
+
+        <input type="text" hidden name="previousaddress" value="<?php echo $location[0][7]; ?>">
+        <input type="text" hidden name="previousaddressid" value="<?php echo $location[0][0]; ?>">
         <input type="number" hidden name="hallid" value="<?php echo $hallid; ?>">
 
         <input type="text" hidden name="previousimage" value="<?php echo $halldetail[0][5]; ?>">
@@ -145,7 +149,6 @@ else
                         }
                     }
 
-
                     ?>
                 </select>
             </div>
@@ -165,9 +168,6 @@ else
                 <input name="image" type="file" class="form-control">
             </div>
 
-        </div>
-        <div class="form-group row">
-            <label class="col-form-label"><i class="fas fa-map-marker-alt"> </i>Hall Branch Address</label>
         </div>
         <div class="form-group row">
             <label class="col-form-label">Maximum Capacity of guests in hall:</label>
@@ -217,7 +217,36 @@ else
             </div>
 
         </div>
-        <div class="form-group row mb-5">
+
+
+
+        <h4   class="text-center"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</h4>
+        <hr>
+
+
+
+
+        <div class="form-group row">
+
+            <label for="" class="col-form-label">Address: </label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+                <input name="address"  value="<?php echo $location[0][7];?>" id="map-search" class="controls form-control" type="text" placeholder="Search Box" size="104">
+            </div>
+        </div>
+
+
+        <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
+        <div hidden>
+            <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude" value="<?php echo $location[0][5];?>"></label>
+            <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude" value="<?php echo $location[0][1];?>"></label>
+            <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City" value="<?php echo $location[0][4];?>"></label>
+            <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country" value="<?php echo $location[0][3];?>"></label>
+        </div>
+
+        <div class="form-group row mt-5">
 
 
             <?php
@@ -250,6 +279,7 @@ else
 include_once ("../../webdesign/footer/footer.php");
 ?>
 
+<script src="../../map/javascript.js"></script>
 <script>
 
     $(document).ready(function ()
@@ -286,18 +316,17 @@ include_once ("../../webdesign/footer/footer.php");
 
 
         });
+    });
 
-
-
-
-
-
-
-
-
-
-
-
+        latitude=<?php echo $location[0][5];?>;
+        longitude=<?php echo $location[0][1];?>;
+    $(document).ready(function()
+    {
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
+        });
     });
 
 

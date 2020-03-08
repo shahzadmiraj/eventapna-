@@ -9,6 +9,8 @@ include_once ("../../../connection/connect.php");
 
 $id=1;
 $hall=$id;
+$order=1;
+$userid=1;
 
 ?>
 <!DOCTYPE html>
@@ -48,23 +50,68 @@ else
 ?>
     );background-size:100% 100%;background-repeat: no-repeat">
     <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 text-center"><i class="fas fa-hamburger fa-3x"></i> Extra items Detail</h1>
+        <h5 class="display-5 text-center"><i class="fas fa-hamburger fa-3x"></i> Extra items Detail</h5>
         <p class="lead">Extra items information such as Sound system ,Dancing floor ,Fog light ,Snow system Price manager others </p>
         <h5 class="text-center"> <a href="../../companyRegister/companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h5>
     </div>
 </div>
 
 
-
-
-
-
-
 <div class="container">
 
+<form id="formitems">
+    <input type="hidden" name="order" value="<?php echo $order;?>">
+    <input type="hidden" name="userid" value="<?php echo $userid;?>" >
+    <div class="container card badge-warning">
+        <h1 class="text-center">Selected Item of order</h1>
+        <hr>
+        <div class="card-deck" id="additems">
+<!--
+            <div id="jsid1" class="card mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary">
+                <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap" style="height: 30vh">
+                <div class="card-body ">
+                    <h4 class="card-title">Name</h4>
+                    <h6 class="float-right ">price</h6>
+                    <button  data-jsid="1" class="btn btn-danger">Delete</button>
+                    <input type="hidden" name="selecteditem[]" value="">
+                </div>
+            </div>
+-->
 
 
-    <div class="col-12 card shadow mb-2 p-4 ">
+
+
+
+
+        </div>
+
+
+
+
+
+
+        <div class="form-group row">
+            <button id="cancel" class="btn btn-danger col-6">Cancel</button>
+            <button id="btnsubmit" class="btn btn-primary col-6">Save</button>
+        </div>
+    </div>
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+<h1 class="text-center mt-3">Select Item</h1>
+<hr>
+    <div class="container card">
 
         <?php
 
@@ -108,7 +155,7 @@ else
 
 
                 $display.='
-        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder card mb-4 col-12 col-md-6 col-lg-4 col-xl-3">';
+        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder card mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary ">';
 
 
 $display.=$imagespath;
@@ -153,13 +200,69 @@ include_once ("../../../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
-        $(document).on("click",".AddItemOrder",function ()
+        var javaid=0;
+        $(document).on("click",".AddItemOrder",function (e)
         {
+            e.preventDefault();
                 var amount=$(this).data("amount");
                 var id=$(this).data("itemsid");
                 var name=$(this).data("name");
                 var image=$(this).data("image");
+            var text='<div id="jsid'+javaid+'" class="card mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary">\n' +
+            '                <img class="card-img-top img-fluid" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
+            '                <div class="card-body ">\n' +
+            '                    <h4 class="card-title">'+name+'</h4>\n' +
+            '                    <h6 class="float-right ">'+amount+'</h6>\n' +
+            '                    <button  data-jsid="'+javaid+'" class="btn btn-danger deleteitems">Delete</button>\n' +
+            '                    <input type="hidden" name="selecteditem[]" value="'+id+'">\n' +
+            '                </div>\n' +
+            '            </div>';
 
+            $("#additems").append(text);
+            javaid++;
+        });
+        $(document).on("click",".deleteitems",function (e)
+        {
+            e.preventDefault();
+            var id=$(this).data("jsid");
+            $("#jsid"+id).remove();
+        });
+
+        $("#cancel").click(function () {
+
+            window.history.back();
+        });
+
+
+
+        $("#btnsubmit").click(function ()
+        {
+            var formdata=new FormData($('#formitems')[0]);
+            formdata.append("option","additemsInOrder");
+            $.ajax({
+                url:"orderitemServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+
+                    if(data!='')
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
+                       window.history.back();
+                    }
+                }
+            });
 
         });
 

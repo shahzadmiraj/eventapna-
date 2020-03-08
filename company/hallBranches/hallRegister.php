@@ -13,9 +13,12 @@ $hallBranches='';
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
+
     <script src="../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -23,6 +26,7 @@ $hallBranches='';
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
+    <link rel="stylesheet" href="../../map/style.css">
     <style>
 
         form
@@ -105,9 +109,6 @@ include_once ("../../webdesign/header/header.php");
 
     </div>
     <div class="form-group row">
-        <label class="col-form-label"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</label>
-    </div>
-    <div class="form-group row">
         <label class="col-form-label ">Maximum Capacity of guests in hall:</label>
 <!--        <input name="capacity" class="form-control col-4" type="number">-->
 
@@ -146,18 +147,43 @@ include_once ("../../webdesign/header/header.php");
         <input name="parking" class="form-check-input  " type="checkbox">
         <label class="form-check-label "><i class="fas fa-parking"></i> Have Your own parking</label>
     </div>
+
+
+
+
+        <h4   class="text-center"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</h4>
+    <hr>
+
+
+
+
     <div class="form-group row">
-<!--        <input id="cancel" type="button" class="btn btn-danger col-4 form-control"  value="cancel">-->
-<!--        <input id="submit" type="button" class=" btn btn-success col-4 form-control" value="Submit">-->
+
+        <label for="" class="col-form-label">Address: </label>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+            </div>
+            <input name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Box" size="104">
+        </div>
+    </div>
 
 
-        <button id="cancel" type="button" class="btn btn-danger col-4 form-control"  value="Cancel"><span class="fas fa-window-close "></span>Cancel</button>
-        <button id="submit" type="button" class=" btn btn-success col-4 form-control" value="Submit"><i class="fas fa-check "></i>Submit</button>
-
-
-
+    <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
+    <div hidden>
+        <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude"></label>
+        <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude"></label>
+        <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+        <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country"></label>
 
     </div>
+
+
+    <div class="form-group row mt-5">
+        <button id="cancel" type="button" class="btn btn-danger col-6 form-control"  value="Cancel"><span class="fas fa-window-close "></span>Cancel</button>
+        <button id="submit" type="button" class=" btn btn-success col-6 form-control" value="Submit"><i class="fas fa-check "></i>Submit</button>
+    </div>
+
 
 
 </form>
@@ -165,13 +191,21 @@ include_once ("../../webdesign/header/header.php");
 
 
 
+<script src="../../map/javascript.js"></script>
 
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
+
 <script>
 
-    $(document).ready(function () {
+
+    $(document).ready(function ()
+    {
+
+
+
+
         $('#submit').click(function ()
         {
             if($.trim($("#hallname").val()).length==0)
@@ -213,6 +247,17 @@ include_once ("../../webdesign/footer/footer.php");
         {
             window.history.back();
 
+        });
+    });
+
+
+    getLocation();
+    $(document).ready(function()
+    {
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
         });
     });
 

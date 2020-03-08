@@ -206,6 +206,7 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="CreateHall")
     {
+        $timestamp = date('Y-m-d H:i:s');
         $companyid=$_POST['companyid'];
         $hallname=$_POST['hallname'];
         $hallimage='';
@@ -232,7 +233,21 @@ if(isset($_POST['option']))
         $halltype=$_POST['halltype'];
         $capacity=chechIsEmpty($_POST['capacity']);
         $partition=chechIsEmpty($_POST['partition']);
-        $sql='INSERT INTO `hall`(`id`, `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`) VALUES (NULL,"'.$hallname.'",'.$capacity.',"'.$daytime.'",'.$partition.','.$parking.',NULL,"'.$hallimage.'",'.$halltype.',NULL,'.$companyid.')';
+        $address=$_POST['address'];
+        $latitude=$_POST['latitude'];
+        $longitude=$_POST['longitude'];
+        $city=$_POST['city'];
+        $country=$_POST['country'];
+
+
+        $sql='INSERT INTO `location`(`id`, `longitude`, `expire`, `country`, `city`, `latitude`, `active`, `address`) VALUES (NULL,'.$longitude.',NULL,"'.$country.'","'.$city.'","'.$latitude.'","'.$timestamp.'","'.$address.'")';
+        querySend($sql);
+        $addressid=mysqli_insert_id($connect);
+
+
+
+
+        $sql='INSERT INTO `hall`(`id`, `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`,`active`) VALUES (NULL,"'.$hallname.'",'.$capacity.',"'.$daytime.'",'.$partition.','.$parking.',NULL,"'.$hallimage.'",'.$halltype.','.$addressid.','.$companyid.',"'.$timestamp.'")';
         querySend($sql);
         $hallid=mysqli_insert_id($connect);
 
@@ -240,7 +255,6 @@ if(isset($_POST['option']))
         $daytimearray=array("Morning","Afternoon","Evening");
         for($i=0;$i<count($daytimearray);$i++)
         {
-
             createOnlyAllSeating($hallid,$daytimearray[$i]);
         }
 
@@ -690,10 +704,30 @@ WHERE  id='.$order.'';
             $parking=1;
 
         }
+        $timestamp = date('Y-m-d H:i:s');
         $halltype=$_POST['halltype'];
         $capacity=chechIsEmpty($_POST['capacity']);
         $partition=chechIsEmpty($_POST['partition']);
-        $sql='UPDATE `hall` SET `name`="'.$hallname.'",`max_guests`='.$capacity.',`noOfPartitions`='.$partition.',`ownParking`='.$parking.',`image`="'.$hallimage.'",`hallType`='.$halltype.' WHERE id='.$hallid.'';
+
+        $address=$_POST['address'];
+        $latitude=$_POST['latitude'];
+        $longitude=$_POST['longitude'];
+        $city=$_POST['city'];
+        $country=$_POST['country'];
+        $previousaddress=$_POST['previousaddress'];
+        $previousaddressid=$_POST['previousaddressid'];
+        if($previousaddress!=$address)
+        {
+
+            $sql='UPDATE `location` SET expire="'.$timestamp.'"  WHERE id='.$previousaddressid.'';
+            querySend($sql);
+            $sql='INSERT INTO `location`(`id`, `longitude`, `expire`, `country`, `city`, `latitude`, `active`, `address`) VALUES (NULL,'.$longitude.',NULL,"'.$country.'","'.$city.'","'.$latitude.'","'.$timestamp.'","'.$address.'")';
+            querySend($sql);
+            $addressid=mysqli_insert_id($connect);
+            $previousaddressid=$addressid;
+        }
+
+        $sql='UPDATE `hall` SET `name`="'.$hallname.'",`max_guests`='.$capacity.',`noOfPartitions`='.$partition.',`ownParking`='.$parking.',`image`="'.$hallimage.'",`hallType`='.$halltype.',`location_id`='.$previousaddressid.' WHERE id='.$hallid.'';
         querySend($sql);
     }
     else if($_POST['option']=="cateringedit")
