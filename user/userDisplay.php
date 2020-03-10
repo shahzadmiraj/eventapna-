@@ -8,6 +8,7 @@ $cateringid='';
 
 if(isset($_SESSION['branchtype']))
 {
+
     if($_SESSION['branchtype']=="hall")
     {
         $hallid=$_SESSION['branchtypeid'];
@@ -16,13 +17,22 @@ if(isset($_SESSION['branchtype']))
     {
         $cateringid=$_SESSION['branchtypeid'];
     }
+
+
 }
 else
 {
     header("location:../company/companyRegister/companydisplay.php");
 }
 
-
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
 
 ?>
 
@@ -121,7 +131,7 @@ echo $display;
 
     <div class="container row m-auto">
 <!--        $OrderStatus=array("running","cancel","delieved","clear");-->
-            <a href="../customer/CustomerCreate.php" class="h-25 col-5 shadow text-dark m-2 text-center">
+            <a href="../customer/CustomerCreate.php?" class="h-25 col-5 shadow text-dark m-2 text-center">
                 <i class="fas fa-cart-plus fa-5x"></i><h3>Order Create</h3></a>
 
         <a href="../order/FindOrder.php?order_status=Today_Orders" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-book-reader fa-5x"></i><h3>Today Orders</h3></a>

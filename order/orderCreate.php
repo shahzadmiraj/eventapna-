@@ -178,6 +178,9 @@ include_once ("../webdesign/footer/footer.php");
 <script>
     $(document).ready(function ()
     {
+        // location.replace("../company/companyRegister/companydisplay.php");
+        //
+        // //history.replaceState(null,null,"../company/companyRegister/companydisplay.php");
        $("#submit").click(function (e)
        {
            e.preventDefault();

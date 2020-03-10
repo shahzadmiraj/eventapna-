@@ -8,7 +8,7 @@
 include  ("../../connection/connect.php");
 if(!isset($_SESSION['order']))
 {
-    header("location:hallorder.php");
+    header("location:../../user/userDisplay.php");
 }
 if(!isset($_SESSION['customer']))
 {
@@ -27,8 +27,13 @@ $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as
 $detailorder=queryReceive($sql);
 
 $sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$detailorder[0][1].') AND (ISNULL(c.expire))';
-
 $cateringids=queryReceive($sql);
+
+
+$sql='SELECT sum(ei.price) FROM hall_extra_items as hei  INNER JOIN Extra_Item as ei
+on(hei.Extra_Item_id=ei.id)
+WHERE (hei.orderDetail_id='.$orderid.') AND(ISNULL(hei.expire)) ';
+$priceDetailOfExtraItem=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>
@@ -63,8 +68,79 @@ include_once ("../../webdesign/header/header.php");
 
 </div>
 
-<div class="container card-header shadow">
-<form class="form">
+<div class="container table-light shadow">
+
+
+    <div class="form-group form-inline">
+        <h4 class="m-auto">Extra Items detail   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i><?php echo $priceDetailOfExtraItem[0][0];?></span></h4>
+        <a href="orderInfo/orderItem.php" class="btn btn-primary" >manage items</a>
+    </div>
+    <hr>
+
+    <div class="container form-inline">
+
+        <?php
+        $display='';
+
+
+        $sql='SELECT hei.id,(SELECT ei.name from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.price from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.image from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),hei.active FROM hall_extra_items as hei  WHERE (ISNULL(hei.expire)) AND (hei.orderDetail_id='.$orderid.')';
+            $kinds = queryReceive($sql);
+
+
+            $orignalImage='';
+            $imagespath='';
+            $display.='<div class="container-fluid"><div class="card-deck ">';
+            for ($i = 0; $i < count($kinds); $i++)
+            {
+
+                if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
+                {
+                    $orignalImage='../../../images/hallExtra/'.$kinds[$i][3];
+                    $imagespath='
+            <img class="card-img-top img-fluid" src="'.$orignalImage.'" alt="Card image cap"  style="height: 30vh">';
+                }
+                else
+                {
+                    $orignalImage='https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg';
+                    $imagespath='
+            <img  class="card-img-top img-fluid" src="'.$orignalImage.'" alt="Card image cap" style="height: 30vh">';
+                }
+
+
+                $display.='
+        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder col-12 col-md-6 col-lg-4 col-xl-3  ">';
+
+
+                $display.=$imagespath;
+                $display.='   <div class="card-body ">
+                <h4 class="card-title">'.$kinds[$i][1].'</h4>
+              <h6 class="float-right "><i class="far fa-money-bill-alt"></i>'.$kinds[$i][2].'
+</h6>
+            </div>
+        </div>
+        <div class="w-100 d-none d-sm-block d-md-none"></div>';
+            }
+            $display.='</div></div>';
+
+        echo $display;
+
+
+        ?>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+<form class="form mt-5" >
+    <h3>Order information</h3>
+    <hr>
     <input type="hidden" name="userid" value="<?php echo $userid;?>">
 
     <div class="form-group row">

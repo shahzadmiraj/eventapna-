@@ -6,7 +6,10 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
 $order=$_SESSION['order'];
 $sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
 WHERE od.id='.$order.'';

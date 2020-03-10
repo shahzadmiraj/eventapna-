@@ -19,14 +19,9 @@ if(isset($_SESSION['typebranch']))
         $cateringid=$_SESSION['branchtypeid'];
     }
 }
-if(isset($_SESSION['order']))
-{
-    unset($_SESSION['order']);
-}
-
 if(isset($_SESSION['customer']))
 {
-    unset($_SESSION['customer']);
+    header("location:customerEdit.php");
 }
 ?>
 <!DOCTYPE html>

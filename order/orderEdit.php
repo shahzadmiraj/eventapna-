@@ -11,10 +11,6 @@ if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");
 }
-if(!isset($_SESSION['customer']))
-{
-    header("location:../customer/CustomerCreate.php");
-}
 $companyid=$_COOKIE['companyid'];
 $userid=$_COOKIE['userid'];
 $orderId=$_SESSION['order'];
@@ -327,7 +323,7 @@ include_once ("../webdesign/header/header.php");
             {
                 echo '
             <a href="../customer/customerEdit.php"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
-             <button id="submit" class="form-control col-6 btn btn-primary" data-href="../dish/dishDisplay.php"><i class="fas fa-check "></i>  Save</button>';
+             <button type="submit" id="submit" class="form-control col-6 btn btn-primary" data-href="../dish/dishDisplay.php"><i class="fas fa-check "></i>  Save</button>';
 
             }
             ?>

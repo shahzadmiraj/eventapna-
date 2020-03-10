@@ -84,6 +84,18 @@ function checknumberOtherNull($value)
     return $value;
 }
 
+function isSetOtherNULL($value)
+{
+
+
+    if(!isset($value))
+    {
+        $value='NULL';
+    }
+
+    return $value;
+}
+
 function chechIsEmpty($value)
 {
     if($value=="")

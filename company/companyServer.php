@@ -573,33 +573,32 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)AN
             $currentdate=date('Y-m-d');
             if($time=="Morning")
             {
-                $time="9:00";
+                $time="09:00:00";
             }
             else if($time=="Afternoon")
             {
 
-                $time="12:00";
+                $time="12:00:00";
             }
-            else {
+            else
+                {
 
-                    $time="18:00";
-                }
+                $time = "18:00:00";
+            }
 
-
-            $catering="";
-            $notice="";
+            $cateringid="NULL";
+            $catering="NULL";
             if($perheadwith==1)
             {
-                $catering="Running";
-                $notice="alert";
+                $catering="'Running'";
+                $cateringid=$_POST['cateringid'];
             }
             $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, 
-        `sheftCatering`, `sheftHall`, `sheftCateringUser`, `sheftHallUser`, `address_id`, `person_id`, 
+         `address_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
-        `status_catering`, `notice`,`describe`) 
-        VALUES (NULL,'.$hallid.',NULL,'.$packageid.','.$userid.',NULL,
-        NULL,NULL,NULL,NULL,'.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
-        "'.$time.'","'.$catering.'","'.$notice.'","'.$describe.'")';
+        `status_catering`,`describe`) 
+        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageid.','.$userid.',NULL,'.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
+        "'.$time.'",'.$catering.',"'.$describe.'")';
             querySend($sql);
             $_SESSION['order']=mysqli_insert_id($connect);
 

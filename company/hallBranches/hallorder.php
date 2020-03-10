@@ -6,10 +6,15 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
+if(isset($_SESSION['order']))
+{
+    header("location:EdithallOrder.php");
+}
 if(!isset($_SESSION['customer']))
 {
-    header("location:../../customer/CustomerCreate.php");
+    header("location:../../user/userDisplay.php");
 }
+
 $hallid=$_SESSION['branchtypeid'];
 $personid=$_SESSION['customer'];
 $userid=$_COOKIE['userid'];
@@ -92,9 +97,6 @@ include_once ("../../webdesign/header/header.php");
 </div>
 <div class="form-group row">
     <label class="col-form-label">Time</label>
-
-
-
     <div class="input-group mb-3 input-group-lg">
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-clock"></i></span>

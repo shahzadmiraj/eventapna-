@@ -17,3 +17,10 @@ if($_POST['option']=="additemsInOrder")
         }
     }
 }
+else if($_POST['option']=="deletedDelecteditems")
+{
+    $timestamp = date('Y-m-d H:i:s');
+    $id=$_POST['id'];
+    $sql='UPDATE `hall_extra_items` SET expire="'.$timestamp.'" WHERE id='.$id.'';
+    querySend($sql);
+}

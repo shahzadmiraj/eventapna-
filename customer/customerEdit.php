@@ -8,7 +8,7 @@
 include_once ("../connection/connect.php");
 if(!isset($_SESSION['customer']))
 {
-    header("location:CustomerCreate.php");
+    header("location:../user/userDisplay.php");
 }
 $customerId="";
 $customerId=$_SESSION['customer'];
@@ -324,7 +324,7 @@ p.id='.$customerId.'';
             if(isset($_GET['action']))
             {
                 echo '
-            <a href="../order/PreviewOrder.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Done</a>';
+            <button id="btnbackhistory"  class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Done</button>';
 
             }
             else if($_SESSION['branchtype']=="hall")
@@ -362,7 +362,7 @@ p.id='.$customerId.'';
                     //7 go to create order of catering
                     echo '
 
-            <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
+            <a href="../user/userDisplay.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
                     <a href="../order/orderCreate.php" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i> Order Create</a>   
                     
                      ';
@@ -376,7 +376,7 @@ p.id='.$customerId.'';
                     //15 oder of catering edit
                     echo '
 
-            <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
+            <a href="../user/userDisplay.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
         <a href="../order/orderEdit.php" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Edit order</a>';
 
 
@@ -554,7 +554,8 @@ p.id='.$customerId.'';
 
 
      });
-     $("#btnbackhistory").click(function () {
+     $("#btnbackhistory").click(function (e) {
+         e.preventDefault();
         window.history.back();
      });
 
