@@ -7,8 +7,14 @@
  */
 include_once ("../connection/connect.php");
 $orderid=$_SESSION['order'];
-$sql='SELECT h.id, h.hall_id, h.catering_id, h.hallprice_id, h.user_id, h.address_id, h.total_person, h.status_hall, h.destination_date, h.destination_time, h.status_catering, h.comments, h.orderDetail_id, h.total_amount,(SELECT c.name FROM catering as c WHERE c.id=h.catering_id),(SELECT ha.name FROM hall as ha WHERE ha.id=h.hall_id ),(SELECT hp.isFood FROM hallprice as hp WHERE hp.id=h.hallprice_id),(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=h.hallprice_id),(SELECT u.username FROM user  as u WHERE u.id=h.user_id),h.changeTimeDate FROM history_order as h WHERE h.orderDetail_id='.$orderid.'';
-$Allorder=queryReceive($sql);
+
+$sql='SELECT `hall_id` FROM `orderDetail` WHERE id='.$orderid.'';
+$isHall=queryReceive($sql);
+
+//remove hallprice_id from sql below in wher clause then you can get packages id  column
+
+$sql='SELECT (SELECT u.username FROM user as u WHERE u.id=ho.user_id),ho.active,ho.user_id FROM HistoryOrder as ho WHERE ISNULL(ho.expire) AND (ho.orderDetail_id='.$orderid.') AND (ho.ColumnName!="hallprice_id") GROUP BY ho.active,ho.user_id';
+$KindOFOrder=queryReceive($sql);
 
 function timingConvert($Time)
 {
@@ -63,179 +69,192 @@ include_once ("../webdesign/header/header.php");
 
 
     <?php
-    for($i=0;$i<count($Allorder);$i++)
+
+
+
+
+
+
+
+    for($i=0;$i<count($KindOFOrder);$i++)
     {
+
 
 
         ?>
 
 
         <form class="card card-header badge-light m-4">
+            <h6><i class="fas fa-users"></i><?php echo $KindOFOrder[$i][0];?><i class="fas fa-clock"></i><?php echo $KindOFOrder[$i][1];?></h6>
+            <hr>
+
+            <?php
 
 
-            <div class="form-group row">
-                <label class="col-form-label"> <span><i class="fas fa-users"></i></span> UserName</label>
-                <label class="col-form-label ownText"> <?php echo $Allorder[$i][18]; ?></label>
-            </div>
 
+            $sql='SELECT ho.ColumnName,ho.columnValue FROM HistoryOrder as ho WHERE (ho.active="'.$KindOFOrder[$i][1].'")AND (ho.user_id='.$KindOFOrder[$i][2].')AND (ho.orderDetail_id='.$orderid.')';
+
+            $infoDetail=queryReceive($sql);
+
+            for($j=0;$j<count($infoDetail);$j++)
+            {
+
+                if($infoDetail[$j][0]=="hall_id")
+                {
+                    $sql='SELECT h.name FROM hall as h WHERE h.id='.$infoDetail[$j][1].'';
+                    $HallName=queryReceive($sql);
+
+                    echo '  <div class="form-group row">
+                <label for="date" class="col-form-label"> <span><i class="far fa-calendar-alt"></i></span>Hall Order in Branch</label>
+                <label class="col-form-label ownText">'.$HallName[0][0].' </label>
+            </div>';
+
+                }
+                else if($infoDetail[$j][0]=="catering_id")
+                {
+                    $sql='SELECT c.name FROM catering as c WHERE c.id='.$infoDetail[$j][1].'';
+                    $CateringName=queryReceive($sql);
+
+                    echo '  <div class="form-group row">
+                <label for="date" class="col-form-label"> <span><i class="far fa-calendar-alt"></i></span>Catering Order in Branch</label>
+                <label class="col-form-label ownText">'.$CateringName[0][0].' </label>
+            </div>';
+
+                }
+
+                else if($infoDetail[$j][0]=="hallprice_id")
+                {
+
+                }
+                else if($infoDetail[$j][0]=="address_id")
+                {
+                    $sql = 'SELECT `id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id` FROM `address` WHERE id=' . $infoDetail[$j][1] . '';
+                    $AddressInfo = queryReceive($sql);
+
+                    ?>
+                    <P align="center"><i class="fas fa-map-marker-alt mr-2"></i>Delivery Address(optional)</P>
+                    <div class="form-group row">
+                        <label for="area" class="col-form-label"> <span><i class="fas fa-city"></i></span> Area / Block
+                        </label>
+
+                        <label class="col-form-label ownText"> <?php
+                            echo $AddressInfo[0][2];
+                            ?></label>
+
+                    </div>
+                    <div class="form-group row">
+                        <label for="streetNO" class="col-form-label"> <span><i class="fas fa-road"></i></span> Street no
+                            #</label>
+
+                        <label class="col-form-label ownText"> <?php
+                            echo $AddressInfo[0][3];
+                            ?></label>
+
+                    </div>
+                    <div class="form-group row">
+                        <label for="houseno" class="col-form-label"> <span><i class="fas fa-street-view"></i></span> House
+                            no# </label>
+                        <label class="col-form-label ownText"> <?php
+                            echo $AddressInfo[0][4];
+                            ?></label>
+
+
+                    </div>
+
+            <?php
+                }
+                else if($infoDetail[$j][0]=="total_amount")
+                {
+                    echo '<div class="form-group row">
+                <label class="col-form-label" for="total_amount"> <span><i class="far fa-money-bill-alt"></i></span>
+                    Total amount</label>
+                <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
+            </div>';
+
+                }
+                else if($infoDetail[$j][0]=="total_person")
+                {
+                    echo '
             <div class="form-group row">
                 <label for="persons" class="col-form-label"> <span><i class="fas fa-users"></i></span> No of
                     guests</label>
-                <label class="col-form-label ownText"> <?php echo $Allorder[$i][6]; ?></label>
-            </div>
+                <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
+            </div>';
+
+                }
+                else if($infoDetail[$j][0]=="status_hall")
+                {
+                    echo ' <div class="form-group row">
+                    <label for="orderStatus" class="col-form-label"><span><i class="far fa-eye"></i></span>Hall Status
+                    </label>
+                    <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
+
+                </div>';
 
 
-            <div class="form-group row">
-                <label for="time" class="col-form-label"> <span><i class="fas fa-clock"></i></span> Delivery
-                    Time</label>
-                <label class="col-form-label ownText">
-                    <?php
-
-                    if (isset($Allorder[$i][2])) {
-                        echo timingConvert($Allorder[$i][9]);
-
-                    } else {
-                        echo $Allorder[$i][9];
-                    }
-
-
-                    ?>
-                </label>
-            </div>
-
+                }
+                else if($infoDetail[$j][0]=="destination_date")
+                {
+                  echo '
             <div class="form-group row">
                 <label for="date" class="col-form-label"> <span><i class="far fa-calendar-alt"></i></span> Delivery Date</label>
-                <label class="col-form-label ownText"> <?php echo $Allorder[$i][8]; ?></label>
-            </div>
+                <label class="col-form-label ownText">'.$infoDetail[$j][1].' </label>
+            </div>';
 
 
-            <div class="form-group row">
-                <label for="date" class="col-form-label"> <span><i class="far fa-calendar-alt"></i></span> Order
-                    changing At</label>
-                <label class="col-form-label ownText"> <?php echo $Allorder[$i][19]; ?></label>
-            </div>
+                }
+                else if($infoDetail[$j][0]=="destination_time")
+                {
+                    $Show='';
+                    $Show= ' <div class="form-group row">
+                <label for="time" class="col-form-label"> <span><i class="fas fa-clock"></i></span> Delivery
+                    Time</label>
+                <label class="col-form-label ownText">';
 
+                    if (count($isHall)>0)
+                    {
+                        $Show.= timingConvert($infoDetail[$j][1]);
+
+                    } else
+                    {
+                        $Show.= $infoDetail[$j][1];
+                    }
+
+                    $Show.='</label>
+            </div>';
+                    echo $Show;
+                }
+                else if($infoDetail[$j][0]=="status_catering")
+                {
+                    echo '
+                <div class="form-group row">
+                    <label for="orderStatus" class="col-form-label"><span><i class="far fa-eye"></i></span>Catering
+                        Status </label>
+                    <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
+                </div>';
+                }
+                else if($infoDetail[$j][0]=="describe")
+                {
+                    echo '
             <div class="form-group row">
                 <label for="describe" class="col-form-label"> <span><i class="fas fa-comments"></i></span>
                     Describe order </label>
 
-                <label class="col-form-label ownText"> <?php echo $Allorder[$i][11]; ?></label>
-            </div>
-
-
-            <?php
-            if (isset($Allorder[$i][2])) {
-
-
-                //hall
-                ?>
-
-                <div class="form-group row">
-                    <label for="branchOrder" class="col-form-label"> <span><i class="far fa-eye"></i></span>Catering
-                        Branch:</label>
-                    <label class="col-form-label ownText"> <?php echo $Allorder[$i][14]; ?></label>
-                </div>
-
-
-                <div class="form-group row">
-                    <label for="orderStatus" class="col-form-label"><span><i class="far fa-eye"></i></span>Catering
-                        Status </label>
-                    <label class="col-form-label ownText"> <?php echo $Allorder[$i][10]; ?></label>
-                </div>
-
-
-                <?php
-                if (($Allorder[$i][17]) != '') {
-
-
-                    ?>
-                    <div class="form-group row">
-                        <label for="orderStatus" class="col-form-label"><span><i class="far fa-eye"></i></span>Package
-                            Name </label>
-                        <label class="col-form-label ownText"> <?php echo $Allorder[$i][17]; ?></label>
-                    </div>
-
-                    <?php
+                <label class="col-form-label ownText">'.$infoDetail[$j][1].' </label>
+            </div>';
 
                 }
+
+
+
             }
             ?>
 
 
 
 
-            <?php
-            if (isset($Allorder[$i][1])) {
-                //catering
-                ?>
 
 
-                <div class="form-group row">
-                    <label for="branchOrder" class="col-form-label"> <span><i class="far fa-eye"></i></span>Hall Branch:</label>
-
-                    <label class="col-form-label ownText"> <?php echo $Allorder[$i][15]; ?></label>
-                </div>
-
-
-                <div class="form-group row">
-                    <label for="orderStatus" class="col-form-label"><span><i class="far fa-eye"></i></span>Hall Status
-                    </label>
-                    <label class="col-form-label ownText"> <?php echo $Allorder[$i][7]; ?></label>
-
-                </div>
-
-                <?php
-            }
-            ?>
-
-
-            <div class="form-group row">
-                <label class="col-form-label" for="total_amount"> <span><i class="far fa-money-bill-alt"></i></span>
-                    Total amount</label>
-                <label class="col-form-label ownText"> <?php echo $Allorder[$i][13]; ?></label>
-            </div>
-
-
-            <?php
-            if (isset($Allorder[$i][5])) {
-                $sql = 'SELECT `id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id` FROM `address` WHERE id=' . $Allorder[$i][5] . '';
-                $AddressInfo = queryReceive($sql);
-
-                ?>
-                <P align="center"><i class="fas fa-map-marker-alt mr-2"></i>Delivery Address(optional)</P>
-                <div class="form-group row">
-                    <label for="area" class="col-form-label"> <span><i class="fas fa-city"></i></span> Area / Block
-                    </label>
-
-                    <label class="col-form-label ownText"> <?php
-                        echo $AddressInfo[0][2];
-                        ?></label>
-
-                </div>
-                <div class="form-group row">
-                    <label for="streetNO" class="col-form-label"> <span><i class="fas fa-road"></i></span> Street no
-                        #</label>
-
-                    <label class="col-form-label ownText"> <?php
-                        echo $AddressInfo[0][3];
-                        ?></label>
-
-                </div>
-                <div class="form-group row">
-                    <label for="houseno" class="col-form-label"> <span><i class="fas fa-street-view"></i></span> House
-                        no# </label>
-                    <label class="col-form-label ownText"> <?php
-                        echo $AddressInfo[0][4];
-                        ?></label>
-
-
-                </div>
-
-
-                <?php
-
-            }
-            ?>
 
 
         </form>

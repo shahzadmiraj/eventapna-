@@ -8,62 +8,85 @@
 include_once ("../connection/connect.php");
 function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$HallOrderBranch,$describe,$catering)
 {
-    $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe` FROM `orderDetail` WHERE id='.$order.'';
+    $status=false;
+    $timestamp = date('Y-m-d H:i:s');
+    $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe`, `user_id` FROM `orderDetail` WHERE id='.$order.'';
     $PreviouseDetailOrder=queryReceive($sql);
 
     if($PreviouseDetailOrder[0][3]!=$packageid)
     {
-        return 1;
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"hallprice_id","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][3].'")';
+        querySend($sql);
+        $status=true;
     }
-    else if(checknumberOtherNull($PreviouseDetailOrder[0][2])!=$cateringid)
+    if(checknumberOtherNull($PreviouseDetailOrder[0][2])!=$cateringid)
     {
 
-        return 1;
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"catering_id","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][2].'")';
+        querySend($sql);
+        $status=true;
     }
-    else if($PreviouseDetailOrder[0][7]!=$date)
+     if($PreviouseDetailOrder[0][7]!=$date)
     {
-
-        return 1;
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"destination_date","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][7].'")';
+        querySend($sql);
+        $status=true;
     }
-    else if($PreviouseDetailOrder[0][9]!=$time)
+    if($PreviouseDetailOrder[0][9]!=$time)
     {
-
-        return 1;
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"destination_time","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][9].'")';
+        querySend($sql);
+        $status=true;
     }
-    else if($PreviouseDetailOrder[0][5]!=$guests)
+     if($PreviouseDetailOrder[0][5]!=$guests)
     {
-
-        return 1;
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"total_person","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][5].'")';
+        querySend($sql);
+        $status=true;
     }
-    else if($PreviouseDetailOrder[0][6]!=$orderStatus)
+     if($PreviouseDetailOrder[0][6]!=$orderStatus)
     {
 
         //hall status
-        return 1;
+
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"status_hall","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][6].'")';
+        querySend($sql);
+        $status=true;
     }
-    else if($PreviouseDetailOrder[0][1]!=$HallOrderBranch)
+    if($PreviouseDetailOrder[0][1]!=$HallOrderBranch)
     {
 
-        return 1;
+
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"hall_id","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][1].'")';
+        querySend($sql);
+        $status=true;
     }
-    else if($PreviouseDetailOrder[0][4]!=$totalamount)
+    if($PreviouseDetailOrder[0][4]!=$totalamount)
     {
 
-        return 1;
+
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"total_amount","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][4].'")';
+        querySend($sql);
+        $status=true;
     }
-    else if($PreviouseDetailOrder[0][11]!=$describe)
+    if($PreviouseDetailOrder[0][11]!=$describe)
     {
 
-        return 1;
+
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"describe","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][11].'")';
+        querySend($sql);
+        $status=true;
     }
 
-    else if($PreviouseDetailOrder[0][10]!=$catering)
+    if($PreviouseDetailOrder[0][10]!=$catering)
     {
 
         //catering status
-        return 1;
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"status_catering","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][10].'")';
+        querySend($sql);
+        $status=true;
     }
-    return 0;
+    return$status;
 }
 
 function createOnlyAllSeating($hallid,$daytime)
@@ -656,20 +679,6 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)AN
 
         if(checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$branchOrder,$describe,$catering))
         {
-
-            // branchOrder hall order in branch
-            //userid
-
-
-            //get all information of order
-            $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `address_id`, `person_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe` FROM `orderDetail` WHERE id='.$order.'';
-            $previousDetail=queryReceive($sql);
-
-            //make history of order
-            $sql='INSERT INTO `history_order`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `address_id`, `total_person`, `status_hall`, `destination_date`, `destination_time`, `status_catering`, `comments`, `orderDetail_id`,`total_amount`, `changeTimeDate`) VALUES (NULL,'.checknumberOtherNull($previousDetail[0][1]).','.checknumberOtherNull($previousDetail[0][2]).','.checknumberOtherNull($previousDetail[0][3]).','.$previousDetail[0][4].','.checknumberOtherNull($previousDetail[0][5]).','.$previousDetail[0][8].',"'.$previousDetail[0][9].'","'.$previousDetail[0][10].'","'.$previousDetail[0][12].'","'.$previousDetail[0][13].'","'.$previousDetail[0][14].'",'.$previousDetail[0][0].','.$previousDetail[0][7].',"'.$timestamp.'")';
-            querySend($sql);
-
-
             $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`hallprice_id`='.$packageid.',
 `total_amount`='.$totalamount.',`total_person`='.$guests.',`status_hall`
 ="'.$orderStatus.'",`destination_date`="'.$date.'",`destination_time`="'.$time.'",
