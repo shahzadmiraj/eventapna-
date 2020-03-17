@@ -45,7 +45,7 @@ class PDF extends FPDF
         $this->Image('../gmail.png', 5, $this->GetY(), 12);
 
 
-        $this->Cell(0,10,"Event Guru (website:www.eventguru.com) , (Gmail:group.of.shaheen@gmail.com) , (whatsapp:0923350498004)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
+        $this->Cell(0,10,"EVENT APNA (website:www.eventapna.com) , (Gmail:group.of.shaheen@gmail.com) , (whatsapp:0923350498004)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
     }
 
 
@@ -159,7 +159,7 @@ $attributeDetail=queryReceive($sql);
 
 
     }
-    function hallorderPrint($detailorder,$person,$numbers,$menu,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate)
+    function hallorderPrint($detailorder,$person,$numbers,$menu,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate,$DetailExtraItems)
     {
         $this->HeaderCompany($branchinfo,$owerinfo);
 
@@ -198,7 +198,21 @@ $attributeDetail=queryReceive($sql);
 
 
         $this->Cell(45,10,"Hall Timing : ",0,0);
-        $this->Cell(45,10,$detailorder[0][16],0,0);
+        $Eventtime='';
+        if($detailorder[0][16]=="09:00:00")
+        {
+            $Eventtime="Morning";
+        }
+        else if($detailorder[0][16]=="12:00:00")
+        {
+            $Eventtime="Afternoon";
+        }
+        else
+        {
+            $Eventtime="Evening";
+        }
+
+        $this->Cell(45,10,$Eventtime,0,0);
         $this->Cell(45,10,"per Head  : ",0,0);
         $this->Cell(45,10,$detailorder[0][3],0,1);
 
@@ -219,6 +233,32 @@ $attributeDetail=queryReceive($sql);
 
             $this->Cell(189,10,"",0,1);
         }
+        $AmountExtraItems=0;
+
+        if(count($DetailExtraItems)>0)
+        {
+            $this->Cell(189,10,"Extra Item Detail : ",1,1,"C");
+            $isNewRow=0;
+            for($i=0;$i<count($DetailExtraItems);$i++)
+            {
+                if(($i+1)%2==0)
+                {
+                    $isNewRow=1;
+                }
+                else
+                {
+                    $isNewRow=0;
+                }
+                $AmountExtraItems+=$DetailExtraItems[$i][1];
+                $this->Cell(45,10,$DetailExtraItems[$i][0],0,0);
+                $this->Cell(45,10,$DetailExtraItems[$i][1],0,$isNewRow);
+            }
+
+            $this->Cell(45,10,"Total Amount : ",0,0);
+            $this->Cell(45,10,$AmountExtraItems,0,1);
+        }
+
+
 
         $this->Cell(189,10,"Payments Detial : ",1,1,"C");
         $this->Cell(45,10,"Total Amount : ",0,0);
@@ -226,7 +266,7 @@ $attributeDetail=queryReceive($sql);
         $this->Cell(45,10,"Per Head Rate :",0,0);
         if($detailorder[0][12]==0)
             $detailorder[0][12]=1;
-        $this->Cell(45,10,$detailorder[0][11]/$detailorder[0][12],0,1);
+        $this->Cell(45,10,($detailorder[0][11]/$detailorder[0][12]),0,1);
 
 
         $this->Cell(45,10,"Received Amount : ",0,0);
@@ -256,9 +296,6 @@ $attributeDetail=queryReceive($sql);
             }
             $this->Cell(189,10,"",0,1);
             $this->Cell(189,10,"Description : ".$detailorder[0][20],0,1);
-
-
-
 
 
         }
@@ -383,9 +420,12 @@ WHERE
                 $sql = 'SELECT `dishname`, `image` FROM `menu` WHERE (hallprice_id='.$detailorder[0][21] . ') AND ISNULL(expire)';
                 $menu = queryReceive($sql);
             }
+            $sql='SELECT (SELECT ei.name FROM Extra_Item as ei WHERE ei.id=hei.Extra_Item_id), (SELECT ei.price FROM Extra_Item as ei WHERE ei.id=hei.Extra_Item_id) from hall_extra_items as hei
+WHERE (hei.orderDetail_id='.$orderId.')AND(ISNULL(hei.expire))';
+            $DetailExtraItems=queryReceive($sql);
 
 
-            $this->hallorderPrint($detailorder,$person,$numbers,$menu,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate);
+            $this->hallorderPrint($detailorder,$person,$numbers,$menu,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate,$DetailExtraItems);
 
         }
 

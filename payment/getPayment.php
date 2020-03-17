@@ -14,11 +14,15 @@
 //}
 
 include_once ("../connection/connect.php");
-
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+}
 if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");
 }
+
 
 $userId=$_COOKIE['userid'];
 $orderDetail_id=$_SESSION['order'];
@@ -81,9 +85,8 @@ include_once ("../webdesign/header/header.php");
             ?></label>
     </div>
 </div>
-<div class="container">
 
-    <form class="col-12 shadow card-body" id="from2">
+    <form class="card container" id="from2">
         <input hidden name="user_id" value="<?php
         echo $userId;
         ?>">
@@ -148,7 +151,7 @@ include_once ("../webdesign/header/header.php");
                     <span class="input-group-text"><i class="fas fa-star"></i></span>
                 </div>
                 <span  id="showRange" class="form-control col-2"></span>
-                <input  id="rangeInput" step="1" type="range" max="5" min="1" value="3" name="rating" class="col-6">
+                <input  id="rangeInput" step="1" type="range" max="5" min="1" value="3" name="rating" class="col-6 ">
             </div>
         </div>
         <div class="form-group row">
@@ -173,15 +176,14 @@ include_once ("../webdesign/header/header.php");
 
 
 
-        <div class="form-group row justify-content-center m-auto">
-            <a href="../order/PreviewOrder.php?order=<?php echo $orderDetail_id;?>" class="form-control col-4 btn-danger btn"><i class="fas fa-times-circle"></i>Cancel</a>
-            <button id="submitBtnfrom" type="submit" class="form-control col-4 btn-primary btn"><i class="fas fa-check "></i>Submit</button>
+        <div class="form-group row ">
+            <button id="backbtn" class="form-control col-6 btn-danger btn"><i class="fas fa-times-circle"></i>Cancel</button>
+            <button id="submitBtnfrom" type="submit" class="form-control col-6 btn-primary btn"><i class="fas fa-check "></i>Submit</button>
 
         </div>
 
     </form>
 
-</div>
 
 
 <?php
@@ -191,7 +193,14 @@ include_once ("../webdesign/footer/footer.php");
 
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
+        $("#backbtn").click(function (e)
+        {
+            e.preventDefault();
+            window.history.back();
+
+        });
 
         $('#showRange').html($("#rangeInput").val())
 

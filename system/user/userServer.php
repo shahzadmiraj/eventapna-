@@ -38,25 +38,17 @@ if(isset($_POST['option']))
 
         $name = trim($_POST['name']);
         $numberArray = $_POST['number'];
-        $isowner=0;
-
-        if(isset($_POST['isowner']))
-        {
-            if($_POST['isowner']=="yes")
-            {
-                $isowner=1;
-            }
-        }
+        $userType=$_POST['usertype'];
         $cnic = $_POST['cnic'];
         $city = $_POST['city'];
         $area = $_POST['area'];
         $streetNo = chechIsEmpty($_POST['streetNo']);
         $houseNo = chechIsEmpty($_POST['houseNo']);
         $date = date('Y-m-d');
-        $sql = 'INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'")';
+        $sql = 'INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`,`active`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'","'.$timestamp.'")';
         querySend($sql);
         $last_id = mysqli_insert_id($connect);
-        $sql="INSERT INTO `address` (`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL, '".$streetNo."', '".$houseNo."', '".$last_id."', '".$city."', '".$area."');";
+        $sql="INSERT INTO `address` (`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL, '".$streetNo."', '".$houseNo."', '".$last_id."', '".$city."', '".$area."')";
         querySend($sql);
         for ($i=0;$i<count($numberArray);$i++)
         {
@@ -65,7 +57,7 @@ if(isset($_POST['option']))
             querySend($sql);
         }
         $customerId = $last_id;
-        $sql='INSERT INTO `user`(`id`, `username`, `password`, `person_id`, `isExpire`,`isowner`,`company_id`) VALUES (NULL,"'.$username.'","'.$password.'",'.$customerId.',NULL,"'.$isowner.'",'.$companyid.')';
+        $sql='INSERT INTO `user`(`id`, `username`, `password`, `person_id`, `isExpire`,`userType`,`company_id`,`active`) VALUES (NULL,"'.$username.'","'.$password.'",'.$customerId.',NULL,"'.$userType.'",'.$companyid.',"'.$timestamp.'")';
         querySend($sql);
 
     }
@@ -131,15 +123,14 @@ if(isset($_POST['option']))
     }
     else if ($_POST['option']=="authorChange")
     {
+        $PreviousUsername=$_POST['PreviousUsername'];
+        $Previouspassword=$_POST['Previouspassword'];
+        $Previoustype=$_POST['Previoustype'];
         $userid=$_POST['userid'];
         $username=$_POST['username'];
         $password=$_POST['password'];
         $password1=$_POST['password1'];
-//        $isowner=0;
-//        if(isset($_POST['isowner']))
-//        {
-//            $isowner=1;
-//        }
+        $userType=$_POST['usertype'];
         if(strlen($username)<5)
         {
             echo "username must be greater then 5 letters";
@@ -156,16 +147,19 @@ if(isset($_POST['option']))
             echo "Password does not match";
             exit();
         }
-
-        $sql='SELECT u.id FROM user as u WHERE (u.password="'.$password.'") AND (u.username="'.$username.'")';
-        $userExist=queryReceive($sql);
-        if(count($userExist)!=0)
+        if($PreviousUsername!=$username)
         {
-            echo "user is already exist";
-            exit();
+            $sql = 'SELECT u.id FROM user as u WHERE (u.password="' . $password . '") AND (u.username="' . $username . '")';
+            $userExist = queryReceive($sql);
+            if (count($userExist) != 0) {
+                echo "user is already exist";
+                exit();
+            }
         }
-        $sql='UPDATE `user` SET `username`="'.$username.'",`password`="'.$password.'" WHERE id='.$userid.'';
+        $sql='UPDATE `user` SET `username`="'.$username.'",`password`="'.$password.'",`userType`="'.$userType.'" WHERE id='.$userid.'';
         querySend($sql);
+        setcookie("usertype",'',time() - (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
+        setcookie("usertype",$userType,time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
     }
 }
 ?>

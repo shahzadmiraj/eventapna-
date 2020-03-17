@@ -6,6 +6,11 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+
+}
 $hallid="";
 $cateringid='';
 if(isset($_SESSION['typebranch']))
@@ -60,7 +65,7 @@ include_once ("../webdesign/header/header.php");
 
 
 
-<div class="container card-body">
+<div class="container card">
 
 
 <form id="form">

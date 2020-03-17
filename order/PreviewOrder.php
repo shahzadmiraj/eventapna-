@@ -6,6 +6,10 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+}
 include_once ("../connection/printOrderDetail.php");
 if(!isset($_SESSION['order']))
 {
@@ -113,38 +117,37 @@ include_once ("../webdesign/header/header.php");
 
 
 
-<div class="container row m-auto">
+<div class="container row m-auto ">
 
 
-    <a href="?action=see " class="h-25 col-5 shadow text-dark m-2 text-center fa-4x"   resource=""><i class="fas fa-eye"></i><h4>See Bill / Preview order</h4></a>
-    <a href="?action=Download" class="h-25 col-5 shadow text-dark m-2 text-center fa-4x" download><i class="fas fa-cloud-download-alt"></i><h4>Download Bill</h4></a>
+    <a href="?action=see " class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"   resource=""><i class="fas fa-eye"></i><h6>See Bill / Preview order</h6></a>
+    <a href="?action=Download" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x" download><i class="fas fa-cloud-download-alt"></i><h6>Download Bill</h6></a>
 
 
 
-        <a href="../customer/customerEdit.php?action=preview" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-user-edit fa-4x"></i><h4>Customer Preview</h4></a>
+        <a href="../customer/customerEdit.php?action=preview" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-user-edit fa-3x"></i><h6>Customer Preview</h6></a>
         <?php
             if($hallid!="")
             {
                 //1 hall order edit                //2 make hall order to user displaye
-                echo '<a href="../company/hallBranches/EdithallOrder.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-4x"></i><h4>Order Edit</h4></a>';
+                echo '<a href="../company/hallBranches/EdithallOrder.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Order Edit</h6></a>';
 
             }
             else
             {
                 //catering order editor                  //2 make catering order to user displaye
-                echo '<a href="orderEdit.php?action=preview" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-4x"></i><h4>Order edit</h4></a>';
+                echo '<a href="orderEdit.php?action=preview" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Order edit</h6></a>';
             }
         ?>
-    <a href="../user/userDisplay.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-grip-horizontal fa-4x"></i><h4>User Display</h4></a>
-    <a href="../dish/AllSelectedDishes.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-file-word fa-4x"></i><h4>Bill Detail </h4></a>
-            <a href="../payment/paymentHistory.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-history fa-4x"></i><h4>Payment History</h4></a>
+    <a href="../dish/AllSelectedDishes.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-file-word fa-3x"></i><h6>Bill Detail </h6></a>
+            <a href="../payment/paymentHistory.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-history fa-3x"></i><h6>Payment History</h6></a>
 
-    <a href="HistoryOrder.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-history fa-4x"></i><h4> Order History</h4></a>
+    <a href="HistoryOrder.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-eraser fa-3x"></i><h6>Order Changing history </h6></a>
 
-            <a href="../payment/getPayment.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-money-bill-alt fa-4x"></i><h4>Get payment from customer</h4></a>
-            <a href="../payment/paymentDisplaySend.php" class="h-25 col-5 shadow text-dark m-2 text-center"> <i class="fas fa-share-alt fa-4x"></i><h4>Transfer payment <p>(user to user)</p> </h4></a>
+            <a href="../payment/getPayment.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="far fa-money-bill-alt fa-3x"></i><h6>Get payment from customer</h6></a>
+            <a href="../payment/paymentDisplaySend.php" class="h-25 col-5 shadow btn-info m-2 text-center"> <i class="fas fa-share-alt fa-3x"></i><h6>Transfer payment <p>(user to user)</p> </h6></a>
 
-    <a href="../payment/transferPaymentReceive.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-clipboard-check fa-4x"></i><h4>Payment Receiving Request <p>(user to user)</p> </h4></a>
+    <a href="../payment/transferPaymentReceive.php" class="h-25 col-5 shadow btn-info  m-2 text-center"><i class="fas fa-clipboard-check fa-3x"></i><h6>Payment Receiving Request <p>(user to user)</p> </h6></a>
 
 
 </div>

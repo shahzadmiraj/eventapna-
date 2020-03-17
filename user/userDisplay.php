@@ -71,13 +71,13 @@ if($_SESSION['branchtype']=="hall")
 
     $display.= '<div class="jumbotron  shadow" style="background-image: url(';
 
-    if(file_exists('../images/hall/'.$hallinfo[0][1]))
+    if((file_exists('../images/hall/'.$hallinfo[0][1]))&&($hallinfo[0][1]!=""))
     {
         $display.="'../images/hall/".$hallinfo[0][1]."'";
     }
     else
     {
-        $display.='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
+        $display.='https://xlixinfotech.com/wp-content/uploads/2020/01/Distribution-Management-Software.png';
 
     }
 
@@ -88,7 +88,7 @@ if($_SESSION['branchtype']=="hall")
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 ">'.$hallinfo[0][0].'</h1>
         <h3><i class="fas fa-tasks mr-3"></i>User Display</h3>
-        <p class="lead">Trace your orders and payments </p>
+        <h3 >manage your orders and payments </h3>
     </div>
 </div>';
 }
@@ -104,13 +104,13 @@ else
 
 
 
-    if(file_exists('../images/catering/'.$cateringinfo[0][1]))
+    if((file_exists('../images/catering/'.$cateringinfo[0][1]))&&($cateringinfo[0][1]!=""))
     {
         $display.="'../images/catering/".$cateringinfo[0][1]."'";
     }
     else
         {
-        $display .= 'https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg';
+        $display .= 'https://xlixinfotech.com/wp-content/uploads/2020/01/Distribution-Management-Software.png';
 
     }
 
@@ -120,7 +120,7 @@ else
         <h1 class="display-5 ">'.$cateringinfo[0][0].'</h1>
                <h3><i class="fas fa-tasks mr-3"></i>User Display</h3>
 
-        <p class="lead">.Trace your orders and payments</p>
+        <h3 >.Trace your orders and payments</h3>
     </div>
 </div>';
 }
@@ -131,20 +131,23 @@ echo $display;
 
     <div class="container row m-auto">
 <!--        $OrderStatus=array("running","cancel","delieved","clear");-->
-            <a href="../customer/CustomerCreate.php?" class="h-25 col-5 shadow text-dark m-2 text-center">
-                <i class="fas fa-cart-plus fa-5x"></i><h3>Order Create</h3></a>
+            <a href="../customer/CustomerCreate.php?" class="h-25 col-5 shadow btn-warning m-2 text-center">
+                <i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
 
-        <a href="../order/FindOrder.php?order_status=Today_Orders" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-book-reader fa-5x"></i><h3>Today Orders</h3></a>
-        <a href="../order/FindOrder.php?order_status=Running" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cart-arrow-down fa-5x"></i><h3>Running Order</h3></a>
-            <a href="../order/FindOrder.php?order_status=Delieved" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-truck fa-5x"></i><h3>Deliever Orders</h3></a>
-            <a href="../order/FindOrder.php?order_status=Clear" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-thumbs-up fa-5x"></i><h3>Clear Orders</h3></a>
-            <a href="../order/FindOrder.php?order_status=Cancel" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="far fa-trash-alt fa-5x"></i><h3>Cancel Orders</h3></a>
+        <a href="../order/FindOrder.php?order_status=Today_Orders" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Today Orders</h6></a>
+        <a href="../order/FindOrder.php?order_status=Running" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
+            <a href="../order/FindOrder.php?order_status=Delieved" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
+            <a href="../order/FindOrder.php?order_status=Clear" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
+            <a href="../order/FindOrder.php?order_status=Cancel" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
 <!--            <a href="/public_html/payment/transferPaymentReceive.php?option=userDisplay" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-money-bill-alt fa-5x"></i><h3>Receive payment</h3></a>-->
     <!--        <a href="/public_html/system/dish/dishesDetail.php" class="h-25 col-6"><h1>Guideline Dishes</h1></a>
             <a href="/public_html/system/user/usercreate.php" class="h-25 col-6"><h1>User Create</h1></a>
     -->
-        <a  href="../payment/RemainingAmount.php" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fab fa-amazon-pay fa-5x"></i><h3>All Orders Payments info</h3></a>
+        <a  href="../payment/RemainingAmount.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>
     </div>
+
+
+
 
 
 

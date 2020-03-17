@@ -71,9 +71,9 @@
             <div class="col-md-4 col-lg-4 col-xl-3 mx-auto mb-4">
 
                 <!-- Content -->
-                <h6 class="text-uppercase font-weight-bold">Event Guru</h6>
+                <h6 class="text-uppercase font-weight-bold">EVENT APNA</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                <p>This website provide software to their company.Company can manage their orders by using software.when company use Event Guru software it can Solve many issues such as booking date,Time ,Avaibility,Accurate Price List  </p>
+                <p>This website provide software to their company.Company can manage their orders by using software.when company use EVENT APNA software it can Solve many issues such as booking date,Time ,Avaibility,Accurate Price List  </p>
 
             </div>
             <!-- Grid column -->
@@ -85,16 +85,16 @@
                 <h6 class="text-uppercase font-weight-bold">Products</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="/public_html/company/companyRegister/companyRegister.php" class="text-white">Marquee Management software</a>
+                    <a href="<?php echo $Root;?>company/companyRegister/companyRegister.php" class="text-white">Marquee Management software</a>
                 </p>
                 <p>
-                    <a href="/public_html/company/companyRegister/companyRegister.php" class="text-white">Hall Management software</a>
+                    <a href="<?php echo $Root;?>company/companyRegister/companyRegister.php" class="text-white">Hall Management software</a>
                 </p>
                 <p>
-                    <a href="/public_html/company/companyRegister/companyRegister.php" class="text-white">Catering Management software</a>
+                    <a href="<?php echo $Root;?>company/companyRegister/companyRegister.php" class="text-white">Catering Management software</a>
                 </p>
                 <p>
-                    <a href="/public_html/company/companyRegister/companyRegister.php" class="text-white">Dera / Open area Management software</a>
+                    <a href="<?php echo $Root;?>company/companyRegister/companyRegister.php" class="text-white">Dera / Open area Management software</a>
                 </p>
             </div>
 

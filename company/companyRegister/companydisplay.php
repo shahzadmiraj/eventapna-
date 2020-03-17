@@ -23,6 +23,11 @@ if(isset($_SESSION['customer']))
 {
     unset($_SESSION['customer']);
 }
+if(isset($_SESSION['branchtype']))
+{
+    unset($_SESSION['branchtype']);
+        unset($_SESSION['branchtypeid']);
+}
 if(isset($_GET['branchtype']))
 {
     if($_GET['branchtype']=="hall")
@@ -48,6 +53,12 @@ $halls=queryReceive($sql);
 
 $sql='SELECT `id`, `name`,`image` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
 $caterings=queryReceive($sql);
+
+if((count($halls)==0)AND(count($caterings)==0))
+{
+    header("location:companyEdit.php");
+}
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -96,7 +107,7 @@ include_once ("../../webdesign/header/header.php");
         <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][0];?></h1>
         <p>check your orders of hall and as well as catering</p>
         <?php
-         if($_COOKIE['isOwner']==1)
+         if($_COOKIE['usertype']=='Owner')
          {
              echo ' <h1 class="text-center"> <a href="companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
                 ';

@@ -7,7 +7,10 @@
  */
 include_once ("../connection/connect.php");
 
-
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+}
 if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");
@@ -99,7 +102,7 @@ for ($i=0;$i<count($Yourpayment);$i++)
     ?>
 
 
-    <div class="card-header shadow-lg  col-12 border mt-5">
+    <div class="card shadow-lg  container mt-5">
 
 
 
@@ -124,18 +127,18 @@ for ($i=0;$i<count($Yourpayment);$i++)
 
 
 
-        <div class="form-group row">
+        <div class="form-group row ">
             <label class="col-form-label"> User </label>
 
 
-            <div class="input-group mb-3 input-group-lg ">
+            <div class="input-group mb-3 input-group-lg  " >
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
-                <select id="userIdlabel<?php
+                <select style="background-color: #7dff38;" id="userIdlabel<?php
                 echo $paymentDetail[0][0];
                 ?>" class="form-control">
-                    <option value="none">None</option>
+                    <option  value="none">None</option>
                     <?php
                     $sql = 'SELECT id, username FROM user WHERE (id !=' . $userId . ') AND (company_id=' . $companyid . ') ';
                     $userDetail = queryReceive($sql);
@@ -144,6 +147,23 @@ for ($i=0;$i<count($Yourpayment);$i++)
                     }
                     ?>
                 </select>
+
+                <div class="input-group-prepend">
+
+                    <input data-paymentid="<?php echo $paymentDetail[0][0]; ?>" type="button"
+                           class="paymentsend btn btn-success " value="<?php
+
+                    if ($paymentDetail[0][5] == 0) {
+                        echo "Send";
+                    } else if ($paymentDetail[0][5] == 1) {
+                        echo "Confirming";
+                    } else {
+                        echo "not part of this";
+                    }
+                    ?>">
+                </div>
+
+
             </div>
 
         </div>
@@ -223,20 +243,7 @@ for ($i=0;$i<count($Yourpayment);$i++)
         </div>
 
 
-        <div class="form-group row">
-            <input data-paymentid="<?php echo $paymentDetail[0][0]; ?>" type="button"
-                   class="paymentsend col-6 btn btn-success" value="<?php
 
-            if ($paymentDetail[0][5] == 0) {
-                echo "Send";
-            } else if ($paymentDetail[0][5] == 1) {
-                echo "Confirming";
-            } else {
-                echo "not part of this";
-            }
-            ?>">
-
-        </div>
 
     </div>
 

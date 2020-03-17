@@ -76,12 +76,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
 </div>
 
-<div class="container">
-
-
-
-
-<form id="submitpackage" >
+<form id="submitpackage" class="card container" >
 
 
 
@@ -122,53 +117,53 @@ include_once ("../../webdesign/header/header.php");
 
     </div>
 
-<div id="shownonperivious">
-            <div class="form-group row">
-                <lable class="col-form-label">Packages Name</lable>
+    <div id="shownonperivious">
+        <div class="form-group row">
+            <lable for="packagename" class="col-form-label">Packages Name</lable>
 
 
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
-                    </div>
-                    <input name="packagename" class="form-control" type="text" placeholder="chicken menu,mutton menu">
-
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
                 </div>
+                <input id="packagename" name="packagename" class="form-control" type="text" placeholder="chicken menu,mutton menu">
+
             </div>
+        </div>
 
-            <div class="form-group row">
-                <lable class="col-form-label">Packages Rate per head</lable>
+        <div class="form-group row">
+            <lable for="rate" class="col-form-label">Packages Rate per head</lable>
 
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
-                    </div>
-                    <input name="rate" class="form-control" type="number" placeholder="Price like 1000 per head">
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                 </div>
+                <input id="rate" name="rate" class="form-control" type="number" placeholder="Price like 1000 per head">
             </div>
+        </div>
 
-            <div class="form-group row">
-                <lable class="col-form-label">Packages Description</lable>
+        <div class="form-group row">
+            <lable for="describe" class="col-form-label">Packages Description</lable>
 
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                    </div>
-                    <textarea name="describe" class="form-control" placeholder="describe package information for client" ></textarea>
-
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
                 </div>
+                <textarea id="describe" name="describe" class="form-control" placeholder="describe package information for client" ></textarea>
+
             </div>
+        </div>
 
 
 
 
-                <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Your Package</h3>
+        <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Your Package</h3>
 
-                <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 40vh">
+        <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 40vh">
 
-                </div>
+        </div>
 
-</div>
+    </div>
 
 
 
@@ -177,6 +172,9 @@ include_once ("../../webdesign/header/header.php");
         <button id="btnsubmit" type="button" value="Submit" class="btn btn-primary col-5 float-right"><i class="fas fa-check "></i>Submit</button>
     </div>
 </form>
+
+<div class="container ">
+
     <hr class="border">
     <h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>Select Dishes</h3>
 
@@ -202,8 +200,9 @@ include_once ("../../webdesign/header/header.php");
 
         <?php
 
+
         $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)';
-        echo dishesOfPakage($sql);
+       echo dishesOfPakage($sql);
 
         ?>
     </div>
@@ -255,10 +254,24 @@ include_once ("../../webdesign/header/header.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 
-<script>
+<script type="text/javascript">
 $(document).ready(function ()
 {
     var numbers=0;
+
+    function Addmenu(dishname,image)
+    {
+       var text="<div id=\"dishtempid"+numbers+"\" class=\"col-4 alert-danger border m-1 form-group p-0\" style=\"height: 30vh;\" >\n" +
+            "            <img src=\""+image+"\" class=\"col-12\" style=\"height: 15vh\">\n" +
+            "            <p class=\"col-form-label\" class=\"form-control col-12\">"+dishname+"</p>\n" +
+            "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"form-control col-12 touchdish btn btn-danger\">\n" +
+            "            <input hidden type=\"text\"  name=\"dishname[]\"  value=\""+dishname+"\">\n" +
+            "             <input hidden type=\"text\"  name=\"image[]\"  value=\""+image+"\">\n" +
+            "        </div>";
+        numbers++;
+        return text;
+    }
+
    $(document).on("click",".touchdish",function ()
    {
        var text='';
@@ -274,14 +287,7 @@ $(document).ready(function ()
        else
        {
 
-           text="<div id=\"dishtempid"+numbers+"\" class=\"col-4 alert-danger border m-1 form-group p-0\" style=\"height: 30vh;\" >\n" +
-               "            <img src=\""+image+"\" class=\"col-12\" style=\"height: 15vh\">\n" +
-               "            <p class=\"col-form-label\" class=\"form-control col-12\">"+dishname+"</p>\n" +
-               "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"form-control col-12 touchdish btn btn-danger\">\n" +
-               "            <input hidden type=\"text\"  name=\"dishname[]\"  value=\""+dishname+"\">\n" +
-               "             <input hidden type=\"text\"  name=\"image[]\"  value=\""+image+"\">\n" +
-               "        </div>";
-           numbers++;
+           text=Addmenu(dishname,image);
            $("#selectedmenu").append(text);
 
        }
@@ -289,14 +295,56 @@ $(document).ready(function ()
    });
    $("#perivious").change(function ()
    {
+       var  packagename=$("#packagename");
+       var rate=$("#rate");
+       var describe=$("#describe");
+       var formdata=new FormData;
        if($(this).val()!="none")
        {
-           $("#shownonperivious").hide('slow');
+           formdata.append("option","jsonPackagesDetail");
+           formdata.append("packagesid",$(this).val());
+           $.ajax({
+               url:"packages/PACKServer.php",
+               method:"POST",
+               data:formdata,
+               contentType: false,
+               processData: false,
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+
+                   $("#selectedmenu").html("");
+                   var text;
+                  var obj=JSON.parse(data);
+                   packagename.val(obj[0][0].package_name);
+                   rate.val(obj[0][0].price);
+                   describe.val(obj[0][0].describe);
+                   $.each( obj[1], function( key, value )
+                   {
+                     //  console.log(value.id);
+                        text=Addmenu(value.dishname,value.image);
+                       $("#selectedmenu").append(text);
+                   });
+
+
+                  $("#preloader").hide();
+               }
+           });
+
+
+           //$("#shownonperivious").hide('slow');
        }
        else
        {
+           packagename.val("");
+           rate.val("");
+           describe.val("");
+           $("#selectedmenu").html("");
 
-           $("#shownonperivious").show('slow');
+        //   $("#shownonperivious").show('slow');
        }
 
    });

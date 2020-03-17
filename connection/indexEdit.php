@@ -34,6 +34,7 @@ left join orderDetail as od on (h.id=od.hall_id)
 
 
 WHERE
+(hp.price>0)AND
   (h.id='.$hallIds[$i][0].')AND
  ((od.hall_id IS NULL) or ((od.status_hall="Cancel")AND
 (od.destination_date between "' . $currentdate . '" AND "' . $maxDate . '" ))) AND (ISNULL(h.expire)) AND
@@ -74,6 +75,7 @@ left join orderDetail as od on (h.id=od.hall_id)
 
 
 WHERE
+(hp.price>0)AND
   (h.id='.$hallIds[$i][0].')AND(hp.isFood='.$perHead.')AND
  ((od.hall_id IS NULL) or ((od.status_hall="Cancel")AND
 (od.destination_date="'.$currentdate.'" ) AND od.destination_time="'.$time.'")) AND (ISNULL(h.expire)) AND
@@ -95,12 +97,12 @@ function showHalls($sql,$Distance)
 
         $display.='
         
-       <a href="company/hallBranches/hallclient.php?hallid='.$AllHalls[$i][0].'&packageid='.$AllHalls[$i][4].'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'&distance='.$Distance.' " class="card-header transparencyjumbo col-sm-11 col-md-6 col-xl-4">
+       <a href="company/hallBranches/hallclient.php?hallDetail='.base64url_encode($AllHalls[$i][0]).'&package='.base64url_encode($AllHalls[$i][4]).'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'&distance='.$Distance.' " class="card m-2 shadow col-12 col-sm-6 col-md-5 col-xl-3">
 
             <!-- Card image -->
-            <div class="view overlay">
+            <div class="view overlay card-img">
                 <div class="container pictures">
-                    <img src="';
+                    <img class="img-fluid" src="';
         if(file_exists('images/hall/'.$AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
         {
             $display.="images/hall/".$AllHalls[$i][1];
@@ -110,8 +112,8 @@ function showHalls($sql,$Distance)
             $display.='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
 
         }
-        $display.='" alt="Snow" style="width:100%;height: 100%">
-                    <h5 class="top-right text-white font-weight-bold"> ';
+        $display.='" alt="Snow" style="width:100%;height: 50vh;">
+                    <h5 class="top-right btn-secondary font-weight-bold"> ';
 
         $display.=$Distance;
 
@@ -120,27 +122,27 @@ function showHalls($sql,$Distance)
             </div>
 
             <!-- Card content -->
-            <div class="card-body">
+            <div class="card-header">
 
                 <!-- Title -->
-                <h4 class="card-title font-weight-bold text-center"> '.$AllHalls[$i][2].'</h4>
+                <h4 class="card-title font-weight-bold text-center "> '.$AllHalls[$i][2].'</h4>
                 <!-- Data -->
 
                 
-                <h3 class="text-right"><i class="far fa-money-bill-alt"></i><span class="font-weight-bold"> RS:<i class="text-warning"> '.$AllHalls[$i][7].' </i></span></h3>
-                <h4><i class="fas fa-clock"></i> Time <span class="text-warning">'.$AllHalls[$i][8].'</span> </h4>
-                <h4><i class="far fa-calendar-alt"></i> Month <span class="text-warning">'.$AllHalls[$i][5].'</span></h4>
-                <h4><i class="fas fa-users"></i> Max Guests  <span class="text-warning">'.$AllHalls[$i][3].'</span></h4>
-                <h4><i class="fab fa-accusoft"></i> Hall Type: <span class="text-warning">'.$halltype[$AllHalls[$i][10]].'</span></h4>';
+                <h3 class="text-right text-danger "><i class="far fa-money-bill-alt"></i><span class="font-weight-bold"> RS:'.$AllHalls[$i][7].' </span></h3>
+                <h5><i class="fas fa-clock"></i> Time <span class="text-warning">'.$AllHalls[$i][8].'</span> </h5>
+                <h5><i class="far fa-calendar-alt"></i> Month <span class="text-warning">'.$AllHalls[$i][5].'</span></h5>
+                <h5><i class="fas fa-users"></i> Max Guests  <span class="text-warning">'.$AllHalls[$i][3].'</span></h5>
+                <h5><i class="fab fa-accusoft"></i> Hall Type: <span class="text-warning">'.$halltype[$AllHalls[$i][10]].'</span></h5>';
         if( $AllHalls[$i][6]==0)
         {
             $display.='
-                <h4><i class="material-icons">airline_seat_recline_normal</i> <span class="text-warning">with Seating</span></h4>';
+                <h6><i class="material-icons">airline_seat_recline_normal</i> <span class="text-warning">with Seating</span></h6>';
         }
         else
         {
             $display.='
-                <h4><i class="material-icons">fastfood</i> package name  <span class="text-warning">'.$AllHalls[$i][9].'</span></h4>';
+                <h6><i class="material-icons">fastfood</i> package name  <span class="text-warning">'.$AllHalls[$i][9].'</span></h6>';
         }
 
 

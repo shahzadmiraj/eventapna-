@@ -1,4 +1,13 @@
+<?php
 
+
+include_once ('../../connection/connect.php');
+if(isset($_COOKIE['companyid']))
+{
+    header("location:companyEdit.php");
+}
+
+?>
 
 <!DOCTYPE html>
 <head>
@@ -38,7 +47,7 @@ include_once ("../../webdesign/header/header.php");
 
 
 <div class="container">
-    <div class="transparencyinputs">
+    <div class="card">
 <form>
     <div  class="form-group row">
     <label  class="form-check-label">Company Name</label>
@@ -49,7 +58,7 @@ include_once ("../../webdesign/header/header.php");
                 <span class="input-group-text" ><i class="fas fa-building"></i>
                 </span>
             </div>
-            <input placeholder="Your Company Name" id="companyName"  class="form-control" type="text" name="companyName">
+            <input required placeholder="Your Company Name" id="companyName"  class="form-control" type="text" name="companyName">
         </div>
 
 
@@ -208,7 +217,7 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row">
         <button class="col-6 form-control btn btn-danger" id="cancelCustomer"><i class="fas fa-window-close"></i>Cancel</button>
-        <button class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
+        <button type="submit" class="col-6 form-control btn btn-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 </form>
     </div>
@@ -263,14 +272,14 @@ include_once ("../../webdesign/footer/footer.php");
         {
             e.preventDefault();
 
-            if(!(($("#username").val().length>5) && ($("#username").length<9)))
+            if(!(($("#username").val().length>5) && ($("#username").length<19)))
             {
-                alert("Username must be 6 to 8 letters");
+                alert("Username must be 6 to 18 letters");
                 return false;
             }
-            if(!(($("#password").val().length>5) && ($("#password").length<9)))
+            if(!(($("#password").val().length>5) && ($("#password").length<19)))
             {
-                alert("password must be 6 to 8 letters");
+                alert("password must be 6 to 18 letters");
                 return false;
             }
             if($("#password1").val()!=($("#password").val()))

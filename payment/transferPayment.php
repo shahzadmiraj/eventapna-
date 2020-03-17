@@ -7,7 +7,11 @@
  */
 
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
 
+}
 if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");

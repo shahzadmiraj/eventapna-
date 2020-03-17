@@ -37,7 +37,7 @@ if(isset($_GET['action']))
     header("location:../../company/companyRegister/companyEdit.php");
 }
 $userid=$id;
-$sql='SELECT  `username`, `password`, `person_id`, `isExpire`, `isowner` FROM `user` WHERE id='.$userid.'';
+$sql='SELECT  `username`, `password`, `person_id`, `isExpire`, `usertype` FROM `user` WHERE id='.$userid.'';
 $userdetail=queryReceive($sql);
 $customerId=$userdetail[0][2];
 $sql = "SELECT `name`, `cnic`, `id`, `date`, `image` FROM `person` WHERE id=".$customerId."";
@@ -82,7 +82,7 @@ include_once ("../../webdesign/header/header.php");
 
 </div>
 
-<div class="container ">
+<div class="container-fluid">
 
     <form id="changeImage" class="col-12" style="margin-top: -50px">
 
@@ -92,7 +92,7 @@ include_once ("../../webdesign/header/header.php");
         <input name="image" hidden value="<?php echo $person[0][4] ?>">
         <div class=" form-group row justify-content-center">
             <img src="<?php
-            if(file_exists('../../images/users/'.$person[0][4]))
+            if((file_exists('../../images/users/'.$person[0][4]))&&($person[0][4]!=""))
             {
                 echo '../../images/users/'.$person[0][4];
             }
@@ -122,6 +122,13 @@ include_once ("../../webdesign/header/header.php");
     </form>
 
     <form class="col-12 card shadow p-4 mb-3" id="authorchanging">
+        <?php
+        echo '<input type="hidden" name="PreviousUsername" value="'.$userdetail[0][0].'">
+        <input type="hidden" name="Previouspassword" value="'.$userdetail[0][1].'">
+        <input type="hidden" name="Previoustype" value="'.$userdetail[0][4].'">
+        
+        '
+        ?>
         <h3 align="center"> Create LogIn form</h3>
         <input hidden name="userid" value="<?php echo $userid;?>">
         <div class="form-group row">
@@ -165,6 +172,50 @@ include_once ("../../webdesign/header/header.php");
             </div>
 
         </div>
+
+
+        <div class="form-group row">
+            <label for="usertype" class="col-form-label">Type of User:</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-award"></i></span>
+                </div>
+                <select name="usertype" class="form-control">
+
+                    <?php
+
+                    if($userdetail[0][4]=="Owner")
+                    {
+                        echo ' <option value="Owner">Owner (Company And Order Management)</option>
+                    <option value="Manager">Manager (Order Management)</option>
+                    <option value="Viewer">Viewer (Order Viewer)</option>';
+                    }
+                    else if($userdetail[0][4]=="Manager")
+                    {
+                        echo '
+                    <option value="Manager">Manager (Order Management)</option>
+                    <option value="Owner">Owner (Company And Order Management)</option>
+                    <option value="Viewer">Viewer (Order Viewer)</option>';
+                    }
+                    else if($userdetail[0][4]=="Viewer")
+                    {
+
+                        echo '
+                    <option value="Viewer">Viewer (Order Viewer)</option>   
+                    <option value="Manager">Manager (Order Management)</option>
+                    <option value="Owner">Owner (Company And Order Management)</option>
+                    ';
+                    }
+
+
+
+
+                    ?>
+
+                </select>
+            </div>
+        </div>
+
         <div class="col-12 row justify-content-center">
 
 
@@ -181,7 +232,7 @@ include_once ("../../webdesign/header/header.php");
             }
 
             ?>
-            <input id="authorbtn" type="button" class="float-right btn btn-outline-primary col-6" value="Save">
+            <input id="authorbtn" type="button" class="float-right btn btn-primary col-6" value="Save">
 
 
 
@@ -190,7 +241,7 @@ include_once ("../../webdesign/header/header.php");
         </div>
     </form>
 
-    <form id="form" >
+    <form id="form" class="card container-fluid" >
         <?php
         echo '<input id="customerId" type="number" hidden value="'.$customerId.'">';
         ?>
@@ -509,14 +560,14 @@ include_once ("../../webdesign/footer/footer.php");
         $("#authorbtn").click(function ()
         {
 
-            if(!(($("#username").val().length>5) && ($("#username").length<9)))
+            if(!(($("#username").val().length>5) && ($("#username").length<19)))
             {
-                alert("Username must be 6 to 8 letters")
+                alert("Username must be 6 to 18 letters")
                 return false;
             }
-            if(!(($("#password").val().length>5) && ($("#password").length<9)))
+            if(!(($("#password").val().length>5) && ($("#password").length<19)))
             {
-                alert("password must be 6 to 8 letters")
+                alert("password must be 6 to 18 letters")
                 return false;
             }
             var formdata=new FormData($("#authorchanging")[0]);

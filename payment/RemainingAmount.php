@@ -9,10 +9,19 @@
 
 include_once ("../connection/connect.php");
 
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
 
 if(!isset($_SESSION['branchtype']))
 {
-    header("location:../user/userDisplay.php");
+    header("location:../company/companyRegister/companydisplay.php");
+
 }
 if(isset($_GET['action']))
 {

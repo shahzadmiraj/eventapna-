@@ -7,14 +7,18 @@
  */
 
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+
+}
 if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");
 }
 if(isset($_GET['action']))
 {
-    $_SESSION['tempid']=$_GET['action'];
-    header("location:dishPreview.php");
+    header("location:dishPreview.php?dish=".base64url_encode($_GET['action']));
 }
 $orderId=$_SESSION['order'];
 
@@ -52,10 +56,8 @@ include_once ("../webdesign/header/header.php");
 
 
 
-<div class="container">
 
-
-    <div class="row justify-content-center col-12" style="margin-top: -60px">
+    <div class="row justify-content-center container-fluid" style="margin-top: -60px">
 
         <div class="card text-center card-header">
             <img src="
@@ -123,7 +125,7 @@ include_once ("../webdesign/header/header.php");
     <table class="table table-striped table-dark">
         <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col"><h1 class="far fa-trash-alt"></h1>Delete</th>
             <th scope="col"><h1 class="fas fa-concierge-bell"></h1><br> DishName</th>
             <th scope="col"><h1 class="fas fa-hashtag "></h1><br>Quantity</th>
             <th scope="col"><h1 class="far fa-money-bill-alt"></h1><br>Each price</th>
@@ -144,14 +146,12 @@ where
         {
             $totalAmount+=(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3];
             echo '   
-            <tr class="dishdetail" data-id="'.$dishesDetail[$i][0].'">
-            <th scope="row">'.($i+1).'</th>
+            <tr class="Redirect" data-id="'.base64url_encode($dishesDetail[$i][0]).'">
+            <th scope="row"><i class="fas fa-minus-circle btn btn-danger dishdetail" data-id="'.$dishesDetail[$i][0].'"></i></th>
             <td>'.$dishesDetail[$i][1].'</td>
             <td>'.$dishesDetail[$i][2].'</td>
             <td>'.$dishesDetail[$i][3].'</td>
             <td>'.(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3].'</td>
-            
-            
              </tr>
             ';
         }
@@ -196,7 +196,7 @@ where
 
 
 
-</div>
+
 
 
 
@@ -206,12 +206,54 @@ include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
 
-        $(".dishdetail").click(function ()
+
+
+        $(".dishdetail").click(function (e)
         {
+            e.preventDefault();
             var id=$(this).data("id");
-            window.location.href="?action="+id;
+            var formdata=new FormData;
+            formdata.append('option',"removeDish");
+            formdata.append("dishId",id);
+            $.ajax({
+                url:"dishServer.php",
+                data:formdata,
+                method:"POST",
+                contentType: false,
+                processData: false,
+                dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+
+
+                    if(data!="")
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
+                        location.reload();
+                    }
+                }
+            });
+
+        });
+
+
+        $(".Redirect").click(function (e)
+        {
+
+            e.preventDefault();
+            var id=$(this).data("id");
+            window.location.href='dishPreview.php?dish='+id;
 
         });
 

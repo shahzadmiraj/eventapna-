@@ -6,88 +6,7 @@
  * Time: 17:20
  */
 include_once ("../connection/connect.php");
-function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$HallOrderBranch,$describe,$catering)
-{
-    $status=false;
-    $timestamp = date('Y-m-d H:i:s');
-    $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe`, `user_id` FROM `orderDetail` WHERE id='.$order.'';
-    $PreviouseDetailOrder=queryReceive($sql);
 
-    if($PreviouseDetailOrder[0][3]!=$packageid)
-    {
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"hallprice_id","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][3].'")';
-        querySend($sql);
-        $status=true;
-    }
-    if(checknumberOtherNull($PreviouseDetailOrder[0][2])!=$cateringid)
-    {
-
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"catering_id","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][2].'")';
-        querySend($sql);
-        $status=true;
-    }
-     if($PreviouseDetailOrder[0][7]!=$date)
-    {
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"destination_date","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][7].'")';
-        querySend($sql);
-        $status=true;
-    }
-    if($PreviouseDetailOrder[0][9]!=$time)
-    {
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"destination_time","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][9].'")';
-        querySend($sql);
-        $status=true;
-    }
-     if($PreviouseDetailOrder[0][5]!=$guests)
-    {
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"total_person","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][5].'")';
-        querySend($sql);
-        $status=true;
-    }
-     if($PreviouseDetailOrder[0][6]!=$orderStatus)
-    {
-
-        //hall status
-
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"status_hall","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][6].'")';
-        querySend($sql);
-        $status=true;
-    }
-    if($PreviouseDetailOrder[0][1]!=$HallOrderBranch)
-    {
-
-
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"hall_id","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][1].'")';
-        querySend($sql);
-        $status=true;
-    }
-    if($PreviouseDetailOrder[0][4]!=$totalamount)
-    {
-
-
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"total_amount","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][4].'")';
-        querySend($sql);
-        $status=true;
-    }
-    if($PreviouseDetailOrder[0][11]!=$describe)
-    {
-
-
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"describe","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][11].'")';
-        querySend($sql);
-        $status=true;
-    }
-
-    if($PreviouseDetailOrder[0][10]!=$catering)
-    {
-
-        //catering status
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"status_catering","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][10].'")';
-        querySend($sql);
-        $status=true;
-    }
-    return$status;
-}
 
 function createOnlyAllSeating($hallid,$daytime)
 {
@@ -106,7 +25,7 @@ if(isset($_POST['option']))
 
         $username=chechIsEmpty($_POST['username']);
         $password=chechIsEmpty($_POST['password']);
-        $sql='SELECT u.id FROM user as u WHERE (u.password="'.$password.'") AND (u.username="'.$username.'")';
+        $sql='SELECT u.id FROM user as u WHERE  (u.username="'.$username.'")';
         $userExist=queryReceive($sql);
         if(count($userExist)!=0)
         {
@@ -130,14 +49,13 @@ if(isset($_POST['option']))
 
         $name = trim($_POST['name']);
         $numberArray = $_POST['number'];
-        $isowner=1;
         $cnic = $_POST['cnic'];
         $city = $_POST['city'];
         $area = $_POST['area'];
         $streetNo = chechIsEmpty($_POST['streetNo']);
         $houseNo = chechIsEmpty($_POST['houseNo']);
         $date = date('Y-m-d');
-        $sql='INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'")';
+        $sql='INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`,`active`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'","'.$timestamp.'")';
         querySend($sql);
         $last_id = mysqli_insert_id($connect);
         $sql="INSERT INTO `address` (`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL, '".$streetNo."', '".$houseNo."', '".$last_id."', '".$city."', '".$area."');";
@@ -149,11 +67,11 @@ if(isset($_POST['option']))
             querySend($sql);
         }
         $customerId = $last_id;
-        $sql='INSERT INTO `user`(`id`, `username`, `password`, `person_id`, `isExpire`,`isowner`, `company_id`) VALUES (NULL,"'.$username.'","'.$password.'",'.$customerId.',NULL,"'.$isowner.'",NULL)';
+        $sql='INSERT INTO `user`(`id`, `username`, `password`, `person_id`, `isExpire`,`userType`, `company_id`,`active`) VALUES (NULL,"'.$username.'","'.$password.'",'.$customerId.',NULL,"Owner",NULL,"'.$timestamp.'")';
         querySend($sql);
         $userid = mysqli_insert_id($connect);
 
-        $sql='INSERT INTO `company`(`id`, `name`, `expire`, `user_id`) VALUES (NULL,"'.$_POST['companyName'].'",NULL,'.$userid.')';
+        $sql='INSERT INTO `company`(`id`, `name`, `expire`, `user_id`,`active`) VALUES (NULL,"'.$_POST['companyName'].'",NULL,'.$userid.',"'.$timestamp.'")';
         querySend($sql);
         $companyid=mysqli_insert_id($connect);
 
@@ -161,7 +79,7 @@ if(isset($_POST['option']))
         querySend($sql);
 
         setcookie('userid',$userid , time() + (86400 * 30), "/");
-        setcookie("isOwner",1,time() + (86400 * 30), "/");
+        setcookie("usertype","Owner",time() + (86400 * 30), "/");
         setcookie("username",$username,time() + (86400 * 30), "/");
         setcookie("companyid",$companyid,time() + (86400 * 30), "/");
         setcookie("userimage",$image,time() + (86400 * 30), "/");
@@ -184,7 +102,7 @@ if(isset($_POST['option']))
             $Cateringimage =$_FILES['image']['name'];
 
         }
-        $sql='INSERT INTO `catering`(`id`, `name`, `expire`, `image`, `location_id`, `company_id`) VALUES (NULL,"'.$namecatering.'",NULL,"'.$Cateringimage.'",NULL,'.$companyid.')';
+        $sql='INSERT INTO `catering`(`id`, `name`, `expire`, `image`, `location_id`, `company_id`,`active`) VALUES (NULL,"'.$namecatering.'",NULL,"'.$Cateringimage.'",NULL,'.$companyid.',"'.$timestamp.'")';
         querySend($sql);
         $cateringid=mysqli_insert_id($connect);
             if(!isset($_POST['dishtypename']))
@@ -291,7 +209,7 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="CreatePackage")
     {
-        if($_POST['perivious']!="none")
+        /*if($_POST['perivious']!="none")
         {
             $packid=$_POST['perivious'];
             $month=$_POST['month'];
@@ -311,11 +229,12 @@ if(isset($_POST['option']))
                 querySend($sql);
             }
                 exit();
-        }
+        }*/
 
 
         if(!isset($_POST['dishname']))
         {
+            echo "Please Select Dishes ";
             exit();
         }
         $dishnames=$_POST['dishname'];
@@ -338,93 +257,7 @@ if(isset($_POST['option']))
     else if($_POST['option']=="showdaytimelist")
     {
 
-        $hallname=$_POST['hallname'];
-        $hallid=$_POST['hallid'];
-        $encodehallid=base64url_encode($hallid);
 
-        $daytime=$_POST['daytime'];
-        $companyid=$_POST['companyid'];
-        $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-
-        $display='<table class="col-12 border-white border">
-        <thead>
-
-        <tr>
-            <th scope="col" >
-                <h4 align="center"><i class="fas fa-list-ol mr-3"></i>'.$daytime.' Prize list</h4>
-            </th>
-        </tr>
-        </thead>
-        <tbody>';
-        for($i=0;$i<count($monthsArray);$i++)
-        {
-            $sql='SELECT `id`,`price` FROM `hallprice` WHERE (hall_id='.$hallid.')AND (isFood=0) AND (dayTime="'.$daytime.'") AND ISNULL(expire)
-AND (month="'.$monthsArray[$i].'")';
-            $detailList=queryReceive($sql);
-            $display.='
-        <tr>
-            <td scope="col" >
-                <h4 align="center">'.$monthsArray[$i].'</h4>
-                <div class="alert-light col-12 card">
-                
-                
-               
-                
-                <div class="form-group row col-12 p-0 ">
-                         <label class="col-form-label col-4"> Prize Only Seating </label>
-                        <div class="input-group  input-group-lg col-8">
-                            <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
-                            </div>
-                             <input data-menuid="'.$detailList[0][0].'" class="changeSeating form-control" type="number" value="'.$detailList[0][1].'">
-                        </div>
-
-                 </div>
-
-                   
-                   
-                   
-                   
-                   
-                    <h3 align="center" class="col-12 mt-3">List of packages with Food</h3>
-                    <a  href="addnewpackage.php?hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&hall='.$encodehallid.'" class="form-control  btn-primary col-12 text-center"><i class="fas fa-plus-square"></i> Add New Package</a>
-                    
-                    
-                    
-                    <div class="form-group row ">';
-
-            $sql='SELECT `id`,`expire`, `package_name` FROM `hallprice` WHERE (hall_id='.$hallid.')
-AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)AND ISNULL(expire)';
-            $ALLpackages=queryReceive($sql);
-            for ($j=0;$j<count($ALLpackages);$j++)
-            {
-
-                //only difference of colors
-                if($ALLpackages[$j][1]!="")
-                {
-                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hall='.$encodehallid.'" class="btn btn-danger col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
-
-                }
-                else
-                {
-                    $display.= '<a href="?editpackage=yes&hallname='.$hallname.'&month='.$monthsArray[$i].'&daytime='.$daytime.'&packageid='.$ALLpackages[$j][0].'&hall='.$encodehallid.'" class="btn btn-warning col-sm-4 col-md-3 col-xl-3 m-1">'.$ALLpackages[$j][2].'</a>';
-                }
-
-
-
-            }
-
-
-            $display.='</div></div>
-            </td>
-        </tr>';
-
-
-        }
-        $display.='
-        </tbody>
-    </table>';
-        echo $display;
 
     }
     else if($_POST['option']=="changeSeating")
@@ -677,7 +510,7 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)AN
         $timestamp = date('Y-m-d H:i:s');
 
 
-        if(checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$branchOrder,$describe,$catering))
+        if(checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$branchOrder,$describe,$catering,$timestamp))
         {
             $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`hallprice_id`='.$packageid.',
 `total_amount`='.$totalamount.',`total_person`='.$guests.',`status_hall`

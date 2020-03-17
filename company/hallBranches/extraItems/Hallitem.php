@@ -46,22 +46,18 @@ include_once ("../../../webdesign/header/header.php");
 
 ?>
 <div class="jumbotron  shadow text-center " style="background-image: url(<?php
-if((file_exists('../../../images/catering/'.$cateringdetail[0][2])) &&($cateringdetail[0][2]!=""))
-{
-    echo "'../../../images/catering/".$cateringdetail[0][2]."'";
-}
-else
-{
-    echo "https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg";
-}
+
+    echo "https://media.istockphoto.com/photos/photo-studio-with-lighting-equipment-and-digital-camera-picture-id639474056";
+
 
 
 
 ?>
     );background-size:100% 100%;background-repeat: no-repeat">
     <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 text-center"><i class="fas fa-hamburger fa-3x"></i> Extra items Detail</h1>
+        <h1 class="text-center"><i class="fas fa-sitemap fa-1x"></i> Extra items Detail</h1>
         <p class="lead">Extra items information such as Sound system ,Dancing floor ,Fog light ,Snow system Price manager others </p>
+        <h6>You can add fog light ,smog ,dancing floor and extra items with sperate charges</h6>
         <h5 class="text-center"> <a href="../../companyRegister/companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h5>
     </div>
 </div>
@@ -81,7 +77,7 @@ else
 
     <h3 align="center"> Catergories information</h3>
     <div class="col-12 form-group row font-weight-bold border">
-        <label class="col-9  col-form-label "><i class="fas fa-utensils mr-1"></i>Catergory</label>
+        <label class="col-9  col-form-label "><i class="fas fa-sitemap"></i>Catergory</label>
         <label class="col-3  col-form-label ">Delete</label>
     </div>
 
@@ -98,7 +94,7 @@ else
         {
             $Display.= '<div class="form-group row  border " id="Delele_Dish_Type_'.$Category[$i][0].'">
             <input type=text" data-id="'.$Category[$i][0].'"   value="'.$Category[$i][1].'" class="changeCategory col-9  form-control ">
-            <button data-option="deleteCategory"   data-id='.$Category[$i][0].'  class="actionDelete btn  col-3  form-control btn-danger" >Delete</button>
+            <button data-option="deleteCategory"   data-id='.$Category[$i][0].'  class="actionDelete btn  col-3  form-control btn-danger" ><i class="fas fa-minus-circle"></i> Delete</button>
             ';
 
             $Display.= '</div>';
@@ -116,7 +112,7 @@ else
     <div class="col-12 row mb-4">
         <h3 class="rounded mx-auto d-block m-4 col-6" align="center"> Extra items information</h3>
         <?php
-        echo '        <a  href="CreateItem.php?hall='.$encoded.'" class="float-right btn btn-success col-4 form-control mt-4">Add Extra item +</a>
+        echo '        <a  href="CreateItem.php?hall='.$encoded.'" class="float-right btn btn-success col-4 form-control mt-4"><i class="fas fa-plus"></i> Add Extra item</a>
 ';
         ?>
     </div>

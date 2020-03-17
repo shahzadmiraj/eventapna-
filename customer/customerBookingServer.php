@@ -45,7 +45,7 @@ if(isset($_POST['option']))
 
 
 
-        $sql = 'INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'")';
+        $sql = 'INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`,`active`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'","'.$timestamp.'")';
         querySend($sql);
         $last_id = mysqli_insert_id($connect);
         $sql='INSERT INTO `address`(`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL,"'.$streetNo.'","'.$houseNo.'",'.$last_id.',"'.$city.'","'.$area.'")';
@@ -60,12 +60,8 @@ if(isset($_POST['option']))
     }
     else
     {
-
         //if($_POST['option']=="customerExist")
         $value=$_POST['value'];
-
-
-
             $sql='SELECT  n.person_id FROM number as n WHERE n.number="'.$value.'"';
             $customerexist=queryReceive($sql);
             if(count($customerexist)>0)
@@ -74,10 +70,6 @@ if(isset($_POST['option']))
                 $_SESSION['customer']=$customerexist[0][0];
                 echo "customerexist";
             }
-
-
-
-
     }
 }
 

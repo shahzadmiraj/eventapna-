@@ -17,11 +17,19 @@ if(!isset($_POST['option']))
     echo "option is not created";
     exit();
 }
+
 $orderId='';
 if(isset($_SESSION['order']))
 {
 
     $orderId=$_SESSION['order'];
+}
+if($_POST['option']=="removeDish")
+{
+    $timestamp = date('Y-m-d H:i:s');
+    $dishId=base64url_decode($_POST['dishId']);
+    $sql='UPDATE `dish_detail` SET `expire_date`="'.$timestamp.'" WHERE id='.$dishId.'';
+    querySend($sql);
 }
 
 if($_POST['option']=='createDish')

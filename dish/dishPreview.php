@@ -7,10 +7,28 @@
  */
 include_once ("../connection/connect.php");
 
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
 
-
-
-$dishDetailId=$_SESSION['tempid'];
+}
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
+$dishDetailId='';
+if(isset($_GET['dish']))
+{
+    $dishDetailId=base64url_decode($_GET['dish']);
+    if(!is_numeric($dishDetailId))
+    {
+        exit();
+    }
+}
+else
+{
+    exit();
+}
 
 
 $sql='SELECT `describe`, `price`, `quantity`, `dish_id` FROM `dish_detail` WHERE id='.$dishDetailId.'';

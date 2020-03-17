@@ -47,15 +47,15 @@ include_once ("../../../webdesign/header/header.php");
 <div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
 
     <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-cart-plus fa-2x"></i>Add Item </h3>
+        <h3 ><i class="fas fa-plus"></i> <i class="fas fa-drum"></i> Add Item </h3>
+        <h6>You can add fog light ,smog ,dancing floor and extra items with sperate charges</h6>
     </div>
 </div>
 
 
 
 
-<div class="container ">
-    <form class="card-body">
+    <form class="card container">
         <input type="number" hidden name="hall" value=<?php echo $hall;?>  >
 
         <div class="form-group row">
@@ -64,7 +64,7 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                    <span class="input-group-text"><i class="fas fa-drum"></i></span>
                 </div>
                 <input type="text" name="name" class="form-control " placeholder="name of extra item">
             </div>
@@ -78,7 +78,7 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                    <span class="input-group-text"><i class="fas fa-camera-retro"></i></span>
                 </div>
                 <input type="file" name="image" class="form-control ">
             </div>
@@ -91,7 +91,7 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
                 <input type="number" name="Price" class="form-control " placeholder="Price of extra item">
             </div>
@@ -106,7 +106,7 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                    <span class="input-group-text"><i class="fas fa-sitemap"></i></span>
                 </div>
                 <select name="typeofitem" id="typeofitem" class="form-control">
                     <option value="other">other</option>
@@ -131,7 +131,7 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                    <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
                 </div>
                 <input type="number" name="otherTypeName" class="form-control " placeholder="other  type name">
             </div>
@@ -147,7 +147,6 @@ include_once ("../../../webdesign/header/header.php");
         </div>
     </form>
 
-</div>
 
 
 
@@ -170,8 +169,9 @@ include_once ("../../../webdesign/footer/footer.php");
             }
         });
 
-        $("#Back").click(function () {
-
+        $("#Back").click(function (e)
+        {
+            e.preventDefault();
             window.history.back();
         });
 

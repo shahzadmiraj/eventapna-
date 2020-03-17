@@ -1,8 +1,19 @@
 
 <?php
 include_once ('../../connection/connect.php');
-$hallid=$_GET['hallid'];
-$packageid=$_GET['packageid'];
+
+
+$hallid=base64url_decode($_GET['hallDetail']);
+if(!is_numeric($hallid))
+{
+    header("location:../../index.php");
+}
+$packageid=base64url_decode($_GET['package']);
+
+if(!is_numeric($packageid))
+{
+    header("location:../../index.php");
+}
 $date=$_GET['date'];
 $time=$_GET['time'];
 

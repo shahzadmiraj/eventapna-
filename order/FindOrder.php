@@ -7,6 +7,19 @@
  */
 include_once ("../connection/connect.php");
 
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+}
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
+
 
 if(isset($_GET['action']))
 {
@@ -20,6 +33,7 @@ $cateringid="";
 $hallorcater="";
 $order_info=$_GET['order_status'];
 $order_status=$order_info;
+
 
 
 if(isset($_SESSION['branchtype']))

@@ -6,6 +6,15 @@
  * Time: 16:48
  */
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+
+}
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
 
 if((!isset($_POST['dishid']))&&($_SESSION['order']))
 {

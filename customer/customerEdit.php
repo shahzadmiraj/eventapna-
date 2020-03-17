@@ -6,6 +6,11 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+
+}
 if(!isset($_SESSION['customer']))
 {
     header("location:../user/userDisplay.php");
@@ -101,7 +106,7 @@ include_once ("../webdesign/header/header.php");
 </form>
 
 
-<div class="container card-body" >
+<div class="container card" >
 
 <form id="form" >
     <?php

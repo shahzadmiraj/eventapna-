@@ -39,9 +39,8 @@ include_once ("../../webdesign/header/header.php");
 
 </div>
 
-<div class="container" >
 
-    <form id="form" >
+    <form id="form" class="card container-fluid" >
         <div class="col-12 card shadow p-4 mb-3">
             <div class="form-group row">
                 <label for="username" class="col-form-label">User Name</label>
@@ -70,10 +69,25 @@ include_once ("../../webdesign/header/header.php");
 
 
             </div>
-            <div class=" col-12">
-                <input value="yes" type="checkbox" id="isowner" name="isowner">
-                <span class="form-check-label">Is this user is a owner</span>
+
+
+            <div class="form-group row">
+                <label for="usertype" class="col-form-label">Type of User:</label>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-award"></i></span>
+                    </div>
+                    <select name="usertype" class="form-control">
+                        <option value="Owner">Owner (Company And Order Management)</option>
+                        <option value="Manager">Manager (Order Management)</option>
+                        <option value="Viewer">Viewer (Order Viewer)</option>
+                    </select>
+                </div>
             </div>
+
+
+
+
         </div>
         <input id="customer" hidden value="">
         <div class="form-group row">
@@ -210,7 +224,7 @@ include_once ("../../webdesign/header/header.php");
         <button class="col-6 form-control btn btn-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
         </div>
     </form>
-</div>
+
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>

@@ -62,7 +62,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
 </div>
-<form class="form container">
+<form class="form container card">
     <input type="number" hidden name="hallid" value="<?php echo $hallid;?>">
     <input type="number" hidden name="personid" value="<?php echo $personid;?>">
     <input type="number" hidden name="userid" value="<?php echo $userid;?>">

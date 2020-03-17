@@ -24,14 +24,7 @@ function orderChange($post,$AddressId)
     $orderid=$post['orderid'];
     $userid=$post['CurrentUserid'];
     $total_amount=$post['total_amount'];
-    $timestamp = date('Y-m-d H:i:s');
-    //get all information of order
-    $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `address_id`, `person_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe` FROM `orderDetail` WHERE id='.$orderid.'';
-    $previousDetail=queryReceive($sql);
 
-    //make history of order
-    $sql='INSERT INTO `history_order`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `address_id`, `total_person`, `status_hall`, `destination_date`, `destination_time`, `status_catering`, `comments`, `orderDetail_id`, `total_amount`, `changeTimeDate`) VALUES (NULL,'.checknumberOtherNull($previousDetail[0][1]).','.$previousDetail[0][2].','.checknumberOtherNull($previousDetail[0][3]).','.$previousDetail[0][4].','.$previousDetail[0][5].','.$previousDetail[0][8].',"'.$previousDetail[0][9].'","'.$previousDetail[0][10].'","'.$previousDetail[0][12].'","'.$previousDetail[0][13].'","'.$previousDetail[0][14].'",'.$previousDetail[0][0].','.$previousDetail[0][7].',"'.$timestamp.'")';
-    querySend($sql);
 
     //update order
     $sql='UPDATE `orderDetail` SET `catering_id`='.$branchOrder.',`user_id`='.$userid.',`address_id`='.$AddressId.',`total_person`='.$total_person.',`destination_date`="'.$destination_date.'",`destination_time`="'.$destination_time.'",`status_catering`="'.$status_catering.'",`describe`="'.$describe.'", `total_amount`='.$total_amount.' WHERE id='.$orderid.'';
@@ -179,6 +172,8 @@ if($_POST['function']=="add") {
 else if($_POST['function']=="orderSaveAfterChange")
 {
 
+    $timestamp = date('Y-m-d H:i:s');
+    $status=false;
     $PreviousAddressId=$_POST['PreviousAddressId'];
 
     $post=array();
@@ -186,18 +181,31 @@ else if($_POST['function']=="orderSaveAfterChange")
     if(checkAddress($post))
     {
         CreateNewAddress($post);
-        $PreviousAddressId=mysqli_insert_id($connect);
-        orderChange($post,$PreviousAddressId);
+        $PreviousAddressId = mysqli_insert_id($connect);
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"address_id","'.$timestamp.'",NULL,'.$_POST['orderid'].','.$_POST['PreviousUserid'].',"'.$_POST['PreviousAddressId'].'")';
+        querySend($sql);
+
+       $status=true;
     }
-    else
+    $total_person=chechIsEmpty($post['total_person']);
+    $destination_time=$post['destination_time'];
+    $destination_date=$post['destination_date'];
+    $describe=$post['describe'];
+    $status_catering=$post['status_catering'];
+    $branchOrder=$post['branchOrder'];
+    $orderid=$post['orderid'];
+    $userid=$post['CurrentUserid'];
+    $total_amount=$post['total_amount'];
+
+    if(checkChangeHallOrder($orderid,NULL,$branchOrder,$destination_date,$destination_time,NULL,$total_person,NULL,$total_amount,NULL,$describe,$status_catering,$timestamp))
     {
-        if(CheckOrder($post))
-        {
-            orderChange($post,$PreviousAddressId);
-        }
-
+        $status=true;
     }
+    if ($status)
+    {
 
+        orderChange($post, $PreviousAddressId);
+    }
 
 
 

@@ -10,6 +10,19 @@ if((isset($_COOKIE['companyid']))&&(!isset($_GET['action'])))
 {
     header("location:company/companyRegister/companydisplay.php");
 }
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
+if(isset($_SESSION['branchtype']))
+{
+    unset($_SESSION['branchtype']);
+    unset($_SESSION['branchtypeid']);
+}
 
 include_once ("connection/indexEdit.php");
 
@@ -129,7 +142,8 @@ include_once ("webdesign/header/header.php");
 </div>
 
 <div class="container table-light  m-auto ">
-<form method="get" action="" >
+<form method="get" action="" id="formseachHall" >
+
 
 
     <div class="text-white  text-center  row" >
@@ -153,7 +167,7 @@ include_once ("webdesign/header/header.php");
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
             </div>
-            <input required name="Date" type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
+            <input  name="Date" type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
         </div>
     </div>
 
@@ -201,7 +215,7 @@ include_once ("webdesign/header/header.php");
 
 
     <div class="mt-5 mb-5">
-        <button value="submit" type="submit" class="btn btn-danger col-12"><i class="fas fa-check"></i>
+        <button id="submitBtnfrom" value="submit" type="submit" class="btn btn-danger col-12"><i class="fas fa-check"></i>
             Find Hall</button>
     </div>
 
@@ -210,34 +224,7 @@ include_once ("webdesign/header/header.php");
 
 
 
-<div class="container mt-5">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="row" >
+<div class="container-fluid badge-light row m-auto">
 
 
         <?php
@@ -260,7 +247,6 @@ include_once ("webdesign/header/header.php");
 
 
 
-    </div>
 
 
 
@@ -287,20 +273,28 @@ include_once ("webdesign/footer/footer.php");
             echo '
         getLocation();';
         }
-        else
+        else if(isset($_GET['latitude']))
         {
-            ?>
-        latitude=<?php echo $_GET['latitude'];?>;
-            longitude=<?php echo $_GET['longitude']; ?>;
-        <?php
+            if((is_numeric($_GET['latitude'])AND(is_numeric( $_GET['longitude']))))
+                    {
+                    ?>
+                    latitude =<?php echo $_GET['latitude'];?>;
+                    longitude =<?php echo $_GET['longitude']; ?>;
+                    <?php
+                    }
+            else{
+                echo '
+        getLocation();';
+            }
+
         }
 
         ?>
-            /*$.ajax({
+            $.ajax({
                 url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
                 dataType: "script",
                 cache: false
-            });*/
+            });
 
     });
 
@@ -308,6 +302,76 @@ include_once ("webdesign/footer/footer.php");
     {
         $('.carousel').carousel({
             interval: 5000
+        });
+
+
+
+        $("#submitBtnfrom").click(function (e)
+        {
+            e.preventDefault();
+            var date=$("#inlineFormInputGroupUsername2");
+            var destination=$("#map-search");
+            var latitude=$("#latitude");
+            var longitude=$("#longitude");
+            var turn=false;
+
+            if(date.val()=="")
+            {
+                date.addClass("btn-danger");
+                turn=true;
+            }
+            else
+            {
+                if(date.hasClass("btn-danger"))
+                {
+                    date.removeClass("btn-danger");
+                }
+
+            }
+            if((destination.val()=="")||(latitude.val()=="")||(longitude.val()==""))
+            {
+                destination.addClass("btn-danger");
+                turn=true;
+            }
+            else
+            {
+
+                if(destination.hasClass("btn-danger"))
+                {
+                    destination.removeClass("btn-danger");
+                }
+            }
+            if(turn)
+            {
+                alert("Please submit Complete form");
+                return false;
+            }
+
+            var formdata=new FormData($("#formseachHall")[0]);
+            formdata.append("action","home");
+            $.ajax({
+                url:"index.php",
+                method:"get",
+                data:formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    if(data!='')
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
+                        window.history.back();
+                    }
+                }
+            });
         });
 
     });

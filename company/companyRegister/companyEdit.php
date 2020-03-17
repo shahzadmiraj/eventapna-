@@ -7,6 +7,15 @@ if(!isset($_COOKIE['companyid']))
 {
     header("location:../../user/userLogin.php");
 }
+
+if(isset($_SESSION['order']))
+{
+    unset($_SESSION['order']);
+}
+if(isset($_SESSION['customer']))
+{
+    unset($_SESSION['customer']);
+}
 if(isset($_GET['action']))
 {
     //$_SESSION['tempid']=$_GET['id'];
@@ -92,7 +101,7 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-<div class="jumbotron  shadow " style="background-image: url(https://i2.wp.com/findlawyer.com.ng/wp-content/uploads/2018/05/Pros-and-Cons-of-Working-at-Large-Companies.jpg?resize=1024%2C512&ssl=1);background-size:100% 115%;background-repeat: no-repeat;">
+<div class="jumbotron  shadow " style="background-image: url(https://www.hashmicro.com/blog/wp-content/uploads/2018/06/pudgedesign.png);background-size:100% 115%;background-repeat: no-repeat;">
 
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][1];?><br>Edit your company</h1>

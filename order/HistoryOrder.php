@@ -6,6 +6,14 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+}
+if(!isset($_SESSION['order']))
+{
+    header("location:../user/userDisplay.php");
+}
 $orderid=$_SESSION['order'];
 
 $sql='SELECT `hall_id` FROM `orderDetail` WHERE id='.$orderid.'';

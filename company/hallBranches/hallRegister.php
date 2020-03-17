@@ -52,7 +52,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
 </div>
 
-<form class="card-body ">
+<form class="card container">
     <div class="form-group row">
     <label class="col-form-label">Hall Branch Name:</label>
 <!--    <input name="hallname" class="form-control col-8" type="text">-->

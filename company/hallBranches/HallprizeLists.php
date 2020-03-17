@@ -1,5 +1,6 @@
 <?php
 include_once ('../../connection/connect.php');
+include_once('packages/packagesServerfunction.php');
 
 if(!isset($_GET['hall']))
 {
@@ -76,32 +77,50 @@ else
         <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>
 </div>
-<div class="container">
+<h3 class="text-white">Prize list Management</h3>
+<hr class="mt-2 mb-3 border-white">
 
-    <h1>Prize list Setting</h1>
-    <hr class="mt-2 mb-3 border-white">
 
-    <div class="form-group row ">
-        <div data-daytime="Morning" class="col-4 daytime p-0"style="height: 25vh">
-            <div class="card-header">
+    <div class="form-group row  container m-auto badge-light">
+        <div data-daytime="Morning" class="col-4 daytime"style="height: 25vh">
+            <a  class="btn btn-primary">
                 <img class="rounded-circle" src="https://www.incimages.com/uploaded_files/image/970x450/getty_503667408_2000133320009280259_352507.jpg"  style="height: 20vh;width: 100%;">
-                <p align="center" >Morning Prize list</p>
-            </div>
+                <p   class="text-white"><i class="fas fa-coffee"></i> Morning </p>
+            </a>
         </div>
-        <div data-daytime="Afternoon" class=" daytime col-4 p-0"style="height: 25vh">
-            <div class="card-header">
+        <div  data-daytime="Afternoon" class="daytime col-4" style="height: 25vh">
+            <a  class="btn btn-warning">
                 <img class="rounded-circle" src="https://www.ellieteramoto.com/wordpress/wp-content/uploads/2018/11/the-sun-and-lake-kussharo-hokkaido-japan.jpg" style="height: 20vh;width: 100%">
-                <p align="center" >Afternoon Prize list</p>
-            </div>
+                <p class="text-white" ><i class="fas fa-sun"></i> Afternoon</p>
+            </a>
         </div>
-        <div data-daytime="Evening" class=" daytime col-4 p-0"style="height: 25vh">
-            <div class="card-header">
+        <div data-daytime="Evening" class="daytime col-4" style="height: 25vh">
+            <a  class="btn btn-dark">
                 <img class="rounded-circle" src="https://www.murals.shop/1777-thickbox_default/starry-sky-half-moon-scenic-cloudscape-wall-mural.jpg"  style="height: 20vh;width: 100%">
-                <p align="center" >Evening Prize list</p>
-            </div>
+                <p class="text-white" ><i class="fas fa-moon"></i> Evening </p>
+            </a>
         </div>
     </div>
-    <div  class="border" id="showDaytimes">
+
+
+
+
+
+
+    <div  class="border mt-5" id="showDaytimes">
+        <?php
+        if(isset($_GET['daytime']))
+        {
+            echo showPrizrListDetail($halldetail[0][0],$hallid,$_GET['daytime'],$companyid);
+        }
+        else
+        {
+
+          echo  showPrizrListDetail($halldetail[0][0],$hallid,"Morning",$companyid);
+        }
+
+
+        ?>
 
 
 
@@ -109,7 +128,6 @@ else
 
 
 
-</div>
 
 
 
@@ -122,38 +140,13 @@ include_once ("../../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
-        function showdaytimelist(daytime)
-        {
-            var formdata=new FormData();
-            formdata.append("option","showdaytimelist");
-            formdata.append("daytime",daytime);
-            formdata.append("hallid","<?php echo $hallid; ?>");
-            formdata.append("companyid","<?php echo $companyid;?>");
-            formdata.append("hallname","<?php echo $halldetail[0][0]; ?>")
-            $.ajax({
-                url:"../companyServer.php",
-                method:"POST",
-                data:formdata,
-                contentType: false,
-                processData: false,
-
-                beforeSend: function() {
-                    $("#preloader").show();
-                },
-                success:function (data)
-                {
-                    $("#preloader").hide();
-                    $("#showDaytimes").hide().html(data).show('slow');
-                }
-            });
-        }
 
         $(".daytime").click(function ()
         {
             var daytime=$(this).data("daytime");
-            showdaytimelist(daytime);
+            window.location.href="?daytime="+daytime+"&hall=<?php echo $_GET['hall'];?>";
+
         }) ;
-        showdaytimelist("Morning");
 
         $(document).on("change",".changeSeating",function () {
             var id=$(this).data("menuid");

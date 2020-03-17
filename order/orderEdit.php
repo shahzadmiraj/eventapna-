@@ -6,7 +6,10 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+}
 if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");
@@ -14,7 +17,7 @@ if(!isset($_SESSION['order']))
 $companyid=$_COOKIE['companyid'];
 $userid=$_COOKIE['userid'];
 $orderId=$_SESSION['order'];
-$sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id`,`catering_id` FROM `orderDetail` WHERE id='.$orderId.'';
+$sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id`,`catering_id` ,`user_id` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
 $addressId=$orderDetail[0][8];
 $sql='SELECT `id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id` FROM `address` WHERE id='.$addressId.'';
@@ -51,11 +54,13 @@ include_once ("../webdesign/header/header.php");
     </div>
 </div>
 
-<div class="container">
-    <form class="card-body" id="editorder">
+<div class="">
+    <form class="card container" id="editorder">
         <?php
             echo '<input name="orderid" type="number" hidden value="'.$orderDetail[0][0].'">
             
+            
+            <input name="PreviousUserid" type="number" hidden value="'.$orderDetail[0][11].'">
             <input name="Previoustotal_amount" type="number" hidden value="'.$orderDetail[0][1].'">
             <input name="PreviousTotal_person" type="number" hidden value="'.$orderDetail[0][3].'">
             <input name="PreviousDestination_time" type="time" hidden value="'.$orderDetail[0][7].'">

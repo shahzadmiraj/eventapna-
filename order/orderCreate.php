@@ -6,6 +6,10 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+if(!isset($_SESSION['branchtype']))
+{
+    header("location:../company/companyRegister/companydisplay.php");
+}
 if(isset($_SESSION['order']))
 {
     header("location:orderEdit.php");
@@ -47,8 +51,8 @@ include_once ("../webdesign/header/header.php");
 
 
 
-<div class="container ">
-    <form class="card-body">
+<div class="container card ">
+    <form >
         <input type="number" hidden name="customer" value=<?php echo $customer;?>   >
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
         <div class="form-group row">
