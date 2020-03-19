@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
+/*if(!isset($_SESSION['branchtype']))
 {
     header("location:../company/companyRegister/companydisplay.php");
 
@@ -14,13 +14,13 @@ if(!isset($_SESSION['branchtype']))
 if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");
-}
-$order=$_SESSION['order'];
+}*/
+$order=$_SESSION['order']=1;
 $sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
 WHERE od.id='.$order.'';
 $hallpackage=queryReceive($sql);
-$cateringid=$hallpackage[0][3];
-$sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(dt.isExpire) AND (dt.catering_id='.$cateringid.')';
+$cateringid=$hallpackage[0][3]=1;
+$sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
 $dishTypeDetail=queryReceive($sql);
 ?>
 <!DOCTYPE html>
@@ -55,52 +55,25 @@ include_once ("../webdesign/header/header.php");
 </div>
 
 
-<div id="selectmenu" class="alert-info  m-2 form-group row shadow" >
+<div id="selectmenu" class="form-inline badge-light "  >
 
 
 </div>
 
 
-    <form class="card-header container border mb-5 " id="formid" method="post" action="dishCreate.php">
+    <form  id="formid" method="post" action="dishCreate.php" class="container alert-light ">
+        <h1>Selecting Dishes </h1>
+        <hr>
 
-        <div class="col-12" id="selected">
-    <div class="form-group row">
-        <label  class="text-center col-form-label col-8"><i class="fas fa-concierge-bell fa-2x col-12"></i>Dish Name</label>
-        <label class="text-center col-form-label col-3" hidden> <i class="fas fa-sort-amount-up fa-2x col-12"></i>Types</label>
-        <label class=" text-center col-form-label col-4"><i class="fas fa-trash-alt fa-2x col-12"></i>Delete</label>
-    </div>
-
+        <div id="showSelectedDishes" class="form-inline badge-light "  >
 
 
         </div>
 
 
-        <div class="form-group row col-12 justify-content-center ">
 
-        <?php
-           /* if(isset($_GET['option']))
-            {
-                if($_GET['option']=="orderCreate")
-                {
-                    echo '<a href="../order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=dishDisplay" class="col-5 form-control btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Order</a>';
-                }
-                else if($_GET['option']=="orderEdit")
-                {
+        <div class="form-group row col-12 justify-content-center mt-5 ">
 
-                    echo '<button id="cancelDish" type="button" class="col-5 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</button>';
-                }
-            }
-            else
-            {
-                echo '<button id="cancelDish" type="button" class="col-5 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</button>';
-            }*/
-           //10
-        //13
-
-        ?>
-
-<!--            <button id="cancelDish" type="button" class="col-5 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</button>
--->
             <a href="../order/orderEdit.php" type="button" class="col-6 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
 
             <button id="submit" type="submit" class="btn-success form-control btn col-6"><i class="fas fa-check "></i>Submit</button>
@@ -109,7 +82,9 @@ include_once ("../webdesign/header/header.php");
     </form>
 
 
-<div class="container">
+<div class="container badge-light" >
+    <h1>Catering Dishes</h1>
+    <hr>
     <?php
 
         $display='';
@@ -117,8 +92,9 @@ include_once ("../webdesign/header/header.php");
         {
             $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"> '.$dishTypeDetail[$i][1].'</h2>';
 
-            $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(isExpire)) AND(catering_id='.$cateringid.')';
+            $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(expire)) AND(catering_id='.$cateringid.')';
             $dishDetail=queryReceive($sql);
+            //print_r($dishDetail);
             $display.='<div id="dishtype'.$i.'"  class="row" style="display: none">';
             for ($j=0;$j<count($dishDetail);$j++)
             {
@@ -146,7 +122,7 @@ include_once ("../webdesign/header/header.php");
         
             <p  class="font-weight-bold p-0 card-title col-12
             ">' . $dishDetail[$j][0] . '</p>
-            <button type="button" data-dishname="'. $dishDetail[$j][0] .'" data-dishid="'. $dishDetail[$j][1] .'" class="add col-12 mb-0 btn btn-primary">Select</button>
+            <button type="button" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary">Select</button>
        
         </div>';
             }
@@ -160,29 +136,108 @@ include_once ("../webdesign/header/header.php");
 
 
 
+
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content"  id="AddDishDetail"  >
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
 <?php
 include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 
-    $(document).ready(function () {
 
-       $(document).on('click','.add',function () {
+    $(document).ready(function ()
+    {
+
+
+
+       var countofdish=0;
+
+        $(document).on("click",".DishAddOnform",function ()
+        {
+
+            var dishName=$(this).data("dishname");
+            var dishid=$(this).data("dishid");
+            var price=$(this).data("price");
+            var formdata = new FormData;
+            formdata.append("dishid", dishid);
+            formdata.append("dishName",dishName);
+            formdata.append("countofdish",countofdish);
+            formdata.append("price",price);
+            formdata.append("option", "AddDishOnForm");
+            $.ajax({
+                url: "DishDisplayServer.php",
+                method: "POST",
+                data: formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    $("#showSelectedDishes").append(data);
+                    countofdish++;
+                }
+
+            });
+
+
+        });
+
+
+
+
+        $(".adddish").click(function ()
+       {
            var dishName=$(this).data("dishname");
-           var dishId=$(this).data("dishid");
-           $('#selected').append('\n' +
-               '            <div class="form-group row " id="dishid_'+dishId+'">\n' +
-               '                <h2 class="col-8 border">'+dishName+'</h2>\n' +
-               '                <input type="number" hidden value="1" name="types[]" class="form-control col-3">\n' +
-               '                <input type="number" hidden name="dishid[]" value="'+dishId+'">\n' +
-               '                <button  type="button" class="remove border-white form-control col-4 btn-danger" data-dishid="'+dishId+'"><i class="fas fa-trash-alt"></i></button>\n' +
-               '            </div>');
+           var dishid=$(this).data("dishid");
+           var formdata = new FormData;
+           formdata.append("dishid", dishid);
+           formdata.append("dishName",dishName);
+           formdata.append("option", "showPriceofAllDishes");
 
-       }) ;
+           $.ajax({
+               url: "DishDisplayServer.php",
+               method: "POST",
+               data: formdata,
+               contentType: false,
+               processData: false,
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+                   $("#preloader").hide();
+                   $("#AddDishDetail").html(data);
+               }
+
+           });
+       });
+
 
        $(document).on('click','.remove',function () {
           var id=$(this).data("dishid");
-          $("#dishid_"+id).remove();
+          $("#remove"+id).remove();
        });
 
 
@@ -243,10 +298,10 @@ include_once ("../webdesign/footer/footer.php");
 
         <?php
 
-            if($hallpackage[0][2]==1)
-            {
-                echo 'menushow(' . $hallpackage[0][0] . ',' . $hallpackage[0][1] . ');';
-            }
+//            if($hallpackage[0][2]==1)
+//            {
+//                echo 'menushow(' . $hallpackage[0][0] . ',' . $hallpackage[0][1] . ');';
+//            }
 
     ?>
 

@@ -22,6 +22,8 @@ if((!is_numeric($id))||$id=="")
     header("location:../../companyRegister/companyEdit.php");
 }
 $cateringid=$id;
+
+$userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -53,16 +55,18 @@ include_once ("../../../webdesign/header/header.php");
     </div>
 </div>
 
-<div class="container">
+<div class="container card">
 
     <form>
+
+        <input type="number" hidden name="userid" value="<?php echo $userid;?>">
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
         <div class="form-group row">
             <label class="col-form-label">Dish Name</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-concierge-bell"></i></span>
                 </div>
                 <input name="dishname" class="form-control" type="text" placeholder="Dish name etc chicken biryan">
             </div>
@@ -88,7 +92,7 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fa fa-calculator" aria-hidden="true"></i></span>
                 </div>
                 <input id="attributetext" class="form-control" type="text" placeholder="etc rice,chieken ,... ">
                 <input id="addAttribute" type="button" class="col-2 form-control btn-primary" value="+">
@@ -96,9 +100,32 @@ include_once ("../../../webdesign/header/header.php");
 
 
         </div>
-       <div class="col-12" id="attributeHere">
+       <div class="card" id="attributeHere">
 
        </div>
+
+
+
+        <div class="card" style="overflow-x: scroll"  id="addtable">
+
+
+        </div>
+
+
+        <div class="form-group row" id="singleprice">
+            <label class="col-form-label">Dish Price</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                </div>
+                <input name="dishprice" class="form-control" type="text" placeholder="Dish Price">
+            </div>
+
+        </div>
+
+
+
         <div class="form-group row">
             <label class="col-form-label">Dish Type</label>
 
@@ -108,13 +135,13 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-calendar-minus"></i></span>
                 </div>
 
                 <select id="dishtype" name="dishtype" class="form-control">
                     <?php
 
-                    $sql='SELECT `id`, `name` FROM `dish_type` WHERE (ISNULL(isExpire))AND(catering_id='.$cateringid.')';
+                    $sql='SELECT `id`, `name` FROM `dish_type` WHERE (ISNULL(expire))AND(catering_id='.$cateringid.')';
                     $dish_type=queryReceive($sql);
 
                     for($i=0;$i<count($dish_type);$i++)
@@ -137,7 +164,7 @@ include_once ("../../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-calendar-minus"></i></span>
                 </div>
                 <input type="text" name="otherdishType" class="form-control" placeholder="add new dish type">
             </div>
@@ -170,7 +197,93 @@ include_once ("../../../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
+        var attributecount=0;
+        var rowadded=0;
+        function rowaddedfucntion()
+        {
+            var text= '   <tr id="deletePrice'+rowadded+'">\n' +
+                '                    <th scope="row"><button data-deleterow="'+rowadded+'"  class="btn btn-danger deleteRow"><i class="fas fa-trash-alt"></i>Delete</button></th>\n' ;
 
+
+
+            $(".nameofattribute").each( function() {
+                text+= ' <td><i class="fa fa-calculator" aria-hidden="true"></i><input type="number" name="quantity[]" class="" placeholder="Quantity"></td>\n' ;
+            });
+
+
+
+            text+= ' <td><i class="fas fa-money-bill-alt"></i><input type="number" name="price[]" class="" placeholder="Price"></td>\n' +
+                '\n' +
+                '                </tr>\n' ;
+            rowadded++;
+
+
+            $("#appendrow").append(text);
+
+        }
+        $(document).on('click',".deleteRow",function (e)
+        {
+            e.preventDefault();
+            var id=$(this).data("deleterow");
+            $("#deletePrice"+id).remove();
+        });
+
+
+        function refreshTable()
+        {
+            if(attributecount==0)
+            {
+                $("#addtable").html("");
+                $("#singleprice").show();
+                return false;
+            }
+
+            $("#singleprice").hide();
+            var text=' <div class="m-auto form-inline">\n' +
+                '\n' +
+                '                <h6 class="col-8">Price control with combination of attribute</h6>\n' +
+                '                <button id="addCombination" class="btn btn-success float-right col-4 ">Add</button>\n' +
+                '            </div>\n' +
+                '\n' +
+                '            <table class="table table-striped"   >\n' +
+                '\n' +
+                '                <thead id="headingrow">\n' +
+                '\n' +
+                '                <tr>\n' +
+                '                    <th scope="col"><i class="fas fa-trash-alt"></i>Delete</th>\n' ;
+
+
+            $(".nameofattribute").each( function() {
+                text+=' <th scope="col"><i class="fa fa-calculator" aria-hidden="true"></i>'+$(this).val()+'</th>\n';
+            });
+
+            text+=   ' <th scope="col"><i class="fas fa-money-bill-alt"></i> Price </th>\n' +
+                '                </tr>\n' +
+                '                </thead>\n' +
+                '                <tbody id="appendrow">\n' +
+
+                '                </tbody>\n' +
+                '            </table>';
+
+            $("#addtable").html(text);
+
+
+
+            rowaddedfucntion();
+
+        }
+
+        $(document).on('click','#addCombination',function (e)
+        {
+            e.preventDefault();
+
+
+
+            rowaddedfucntion();
+
+
+
+        });
 
 
         function checkdishType()
@@ -200,18 +313,25 @@ include_once ("../../../webdesign/footer/footer.php");
             var text=$("#attributetext").val();
             $("#attributeHere").append('<div class="form-group row" id="removeid_'+rows+'">\n' +
                 '               <label class="col-4 col-form-label">Attribute Name</label>\n' +
-                '               <input value="'+text+'" name="attribute[]" class="col-6 form-control" type="text">\n' +
+                '               <input readonly data-removeid="'+rows+'" value="'+text+'" name="attribute[]" class="col-6 form-control nameofattribute" type="text">\n' +
                 '               <input data-removeid="'+rows+'" type="button" class="col-2 form-control btn-danger removeattribute" value="-">\n' +
                 '           </div>');
             $("#attributetext").val("");
-            rows++;
+            attributecount++;
+            refreshTable();
 
+
+
+
+            rows++;
         }) ;
 
         $(document).on('click','.removeattribute',function ()
         {
             var id=$(this).data("removeid");
             $("#removeid_"+id).remove();
+            attributecount--;
+            refreshTable();
 
         });
 

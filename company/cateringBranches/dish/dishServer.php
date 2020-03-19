@@ -12,6 +12,7 @@ if(isset($_POST['option']))
     {
         $dishname=chechIsEmpty($_POST['dishname']);
         $cateringid=$_POST['cateringid'];
+        $userid=$_POST['userid'];
         $dishimage='';
         if(!empty($_FILES['image']["name"]))
         {
@@ -28,7 +29,9 @@ if(isset($_POST['option']))
         if($_POST["dishtype"]=="others")
         {
             $dishtypename=$_POST['otherdishType'];
-            $sql='INSERT INTO `dish_type`(`id`, `name`, `isExpire`,`catering_id`) VALUES (NULL,"'.$dishtypename.'",NULL,'.$cateringid.')';
+
+            $sql='INSERT INTO `dish_type`(`id`, `name`, `expire`, `catering_id`, `active`, `user_id`) VALUES (NULL,"'.$dishtypename.'",NULL,'.$cateringid.',"'.$timestamp.'",'.$userid.')';
+            //$sql='INSERT INTO `dish_type`(`id`, `name`, `isExpire`,`catering_id`) VALUES (NULL,"'.$dishtypename.'",NULL,'.$cateringid.')';
             querySend($sql);
             $dishtype=mysqli_insert_id($connect);
         }
@@ -36,17 +39,38 @@ if(isset($_POST['option']))
         {
             $dishtype=$_POST["dishtype"];
         }
-        $sql='INSERT INTO `dish`(`name`, `id`, `image`, `isExpire`, `dish_type_id`,`catering_id`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",NULL,'.$dishtype.','.$cateringid.')';
+        $sql='INSERT INTO `dish`(`name`, `id`, `image`, `dish_type_id`, `expire`, `catering_id`, `active`, `user_id`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",'.$dishtype.',NULL,'.$cateringid.',"'.$timestamp.'",'.$userid.')';
+       // $sql='INSERT INTO `dish`(`name`, `id`, `image`, `isExpire`, `dish_type_id`,`catering_id`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",NULL,'.$dishtype.','.$cateringid.')';
         querySend($sql);
         $dishid=mysqli_insert_id($connect);
+        $countAttribute=0;
             if(isset($_POST['attribute']))
             {
                 $addAttributes = $_POST['attribute'];
+                $countAttribute=count($addAttributes);
+                $CountQuantity=0;
 
-                for ($i = 0; $i < count($addAttributes); $i++) {
-                    $sql = 'INSERT INTO `attribute`(`name`, `id`, `isExpire`, `dish_id`) VALUES ("'.$addAttributes[$i].'",NULL,NULL,'.$dishid.')';
+                $prices=$_POST['price'];
+                $quantity=$_POST['quantity'];
+                for($i=0;$i<count($prices);$i++)
+                {
+                    $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`) VALUES (NULL,"'.$timestamp.'",NULL,'.$prices[$i].','.$dishid.','.$userid.')';
                     querySend($sql);
+                    $dishWithAttributeid=mysqli_insert_id($connect);
+                    for($j=0;$j<$countAttribute;$j++)
+                    {
+                        $sql='INSERT INTO `attribute`(`name`, `id`, `expire`, `active`, `quantity`, `dishWithAttribute_id`, `user_id`) VALUES ("'.$addAttributes[$j].'",NULL,NULL,"'.$timestamp.'",'.checknumberOtherNull($quantity[$CountQuantity]).','.$dishWithAttributeid.','.$userid.')';
+                        querySend($sql);
+                        $CountQuantity++;
+                    }
+
                 }
+            }
+            else
+            {
+                $dishprice=$_POST['dishprice'];
+                $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`) VALUES (NULL,"'.$timestamp.'",NULL,'.$dishprice.','.$dishid.','.$userid.')';
+                querySend($sql);
             }
 
 
@@ -89,19 +113,37 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="ExpireDish")
     {
+        $dishid=$_POST['dishid'];
+        $sql='UPDATE dish SET expire="'.$timestamp.'" WHERE id='.$dishid.'';
+        querySend($sql);
+    }
+    else if($_POST['option']=="ExpireDishPrice")
+    {
         $timestamp = date('Y-m-d H:i:s');
         $dishid=$_POST['dishid'];
-        $value=$_POST['value'];
-        if($value=="Show dish")
-        {
-            $sql='UPDATE dish as d SET d.isExpire=NULL  WHERE d.id='.$dishid.'';
-        }
-        else
-        {
-            $sql='UPDATE dish as d SET d.isExpire="'.$timestamp.'"  WHERE d.id='.$dishid.'';
-        }
-
+        $sql='UPDATE dishWithAttribute SET expire="'.$timestamp.'" WHERE id='.$dishid.'';
         querySend($sql);
+    }
+    else if($_POST['option']=="addnewDishprice")
+    {
+        $userid=$_POST['userid'];
+        $addAttributes = $_POST['attribute'];
+        $countAttribute=count($addAttributes);
+        $dishid=$_POST['dishid'];
+
+        $price=checknumberOtherNull($_POST['price']);
+        $quantity=$_POST['quantity'];
+
+            $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`) VALUES (NULL,"'.$timestamp.'",NULL,'.$price.','.$dishid.','.$userid.')';
+            querySend($sql);
+            $dishWithAttributeid=mysqli_insert_id($connect);
+            for($j=0;$j<$countAttribute;$j++)
+            {
+                $sql='INSERT INTO `attribute`(`name`, `id`, `expire`, `active`, `quantity`, `dishWithAttribute_id`, `user_id`) VALUES ("'.$addAttributes[$j].'",NULL,NULL,"'.$timestamp.'",'.checknumberOtherNull($quantity[$j]).','.$dishWithAttributeid.','.$userid.')';
+                querySend($sql);
+            }
+
+
     }
     else if($_POST['option']=="changeDishType")
     {

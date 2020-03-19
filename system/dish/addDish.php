@@ -46,7 +46,7 @@ else
         );background-size:100% 100%;background-repeat: no-repeat">
 
     <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i><?php echo $cateringdetail[0][0];?> Edit Catering Branches</h1>
+        <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i> Edit Catering Branches</h1>
         <p class="lead">Edit dishes information,dishes type,images and others </p>
     </div>
 </div>

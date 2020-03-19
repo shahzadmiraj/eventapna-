@@ -6,7 +6,7 @@
  * Time: 13:49
  */
 include_once ("../connection/connect.php");
-
+/*
 if(!isset($_SESSION['branchtype']))
 {
     header("location:../company/companyRegister/companydisplay.php");
@@ -28,7 +28,7 @@ if(isset($_GET['dish']))
 else
 {
     exit();
-}
+}*/
 
 
 $sql='SELECT `describe`, `price`, `quantity`, `dish_id` FROM `dish_detail` WHERE id='.$dishDetailId.'';

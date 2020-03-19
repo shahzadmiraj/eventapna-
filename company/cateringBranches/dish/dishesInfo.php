@@ -97,7 +97,7 @@ include_once ("../../../webdesign/header/header.php");
     <h3 align="center"> Dish Type information</h3>
     <div class="col-12 form-group row font-weight-bold border">
         <label class="col-9  col-form-label "><i class="fas fa-utensils mr-1"></i>Name Dish type</label>
-        <label class="col-3  col-form-label ">Detail</label>
+        <label class="col-3  col-form-label "><i class="far fa-trash-alt"></i>DELETE</label>
     </div>
 
     <div  class="col-12">
@@ -105,7 +105,7 @@ include_once ("../../../webdesign/header/header.php");
 
         <?php
 
-        $sql='SELECT `id`, `name`, `isExpire` FROM `dish_type` WHERE catering_id='.$cateringid.'';
+        $sql='SELECT `id`, `name`, `expire` FROM `dish_type` WHERE (ISNULL(expire))AND (catering_id='.$cateringid.')';
         $dishTypes=queryReceive($sql);
         $Display='';
         for($i=0;$i<count($dishTypes);$i++)
@@ -144,7 +144,7 @@ include_once ("../../../webdesign/header/header.php");
 
         <?php
 
-        $sql='SELECT id,name FROM dish_type WHERE catering_id='.$cateringid.'';
+        $sql='SELECT id,name FROM dish_type WHERE (ISNULL(expire))AND (catering_id='.$cateringid.')';
 
         $dishTypes=queryReceive($sql);
         $Display='';
@@ -157,7 +157,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-            $sql = 'SELECT d.name, d.id, (SELECT dt.name from dish_type as dt WHERE dt.id=d.dish_type_id),(SELECT dt.isExpire from dish_type as dt WHERE dt.id=d.dish_type_id), d.isExpire,d.image FROM dish as d WHERE dish_type_id=' . $dishTypes[$j][0] . ' ';
+            $sql = 'SELECT d.name, d.id, (SELECT dt.name from dish_type as dt WHERE dt.id=d.dish_type_id),(SELECT dt.expire from dish_type as dt WHERE dt.id=d.dish_type_id), d.expire,d.image FROM dish as d WHERE (dish_type_id=' . $dishTypes[$j][0] . ')AND((ISNULL(d.expire))) ';
 
 
             $Dishes = queryReceive($sql);
@@ -181,7 +181,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
                 $display.='" style="height: 20vh" class="col-12">  
-            <p class="col-12 p-0" ><i class="fas fa-utensils mr-1"></i>' . $Dishes[$i][0] . '</p>
+            <p class="col-12 p-0" ><i class="fas fa-utensils mr-1"></i><i class="fas fa-concierge-bell"></i>' . $Dishes[$i][0] . '</p>
             <i class="col-12 ';
 
 

@@ -24,10 +24,13 @@ if(((!is_numeric($id))||$id=="")||((!is_numeric($packageid))||$packageid==""))
 
 $cateringid=$id;
 $dishID=$packageid;
-$sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image, d.dish_type_id, d.isExpire FROM dish as d WHERE d.id='.$dishID.'';
+$sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image,(SELECT u.username FROM user as u WHERE u.id=d.user_id),d.active,d.id FROM dish as d WHERE d.id='.$dishID.'';
 $dishDetail=queryReceive($sql);
-$sql='SELECT `name`, `id`, `dish_id`, `isExpire` FROM `attribute` WHERE ISNULL(isExpire) AND (dish_id='.$dishID.')';
-$attributes=queryReceive($sql);
+
+$sql='SELECT dwa.id, dwa.active, dwa.expire, dwa.price, dwa.dish_id,(SELECT u.username FROM user as u WHERE u.id=dwa.user_id)  FROM dishWithAttribute as dwa WHERE (ISNULL(dwa.expire)) AND (dwa.dish_id='.$dishDetail[0][5].')';
+$dishWithAttribute=queryReceive($sql);
+$userid=$_COOKIE['userid'];
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -58,7 +61,7 @@ include_once ("../../../webdesign/header/header.php");
         <p class="lead">Edit dish such as chieken biryan,halwa ...</p>
     </div>
 </div>
-<div class="container">
+<div class="container card">
 
         <div class="col-12 shadow card-header p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
@@ -82,30 +85,14 @@ include_once ("../../../webdesign/header/header.php");
 
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                        <span class="input-group-text"><i class="fas fa-concierge-bell"></i></span>
                     </div>
-                    <input data-column="name"  value="<?php echo $dishDetail[0][0]; ?>" class="dishchange form-control" type="text">
+                    <input data-column="name"  readonly   value="<?php echo $dishDetail[0][0]; ?>" class="dishchange form-control" type="text">
                 </div>
 
 
 
             </div>
-            <form id="formImage" class="form-group row">
-                <label class="col-form-label"> Changes images</label>
-                <input type="text" hidden name="imagepath" value="<?php echo $dishDetail[0][2]; ?>">
-
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
-                    </div>
-                    <input id="dishImage"  name="image"  class="form-control" type="file">
-
-                </div>
-
-
-
-
-            </form>
             <div class="form-group row">
                 <label class="col-form-label">Dish Type</label>
 
@@ -114,96 +101,207 @@ include_once ("../../../webdesign/header/header.php");
 
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                        <span class="input-group-text"><i class="fas fa-calendar-minus"></i>
                     </div>
 
 
-                    <select data-column="dishType_id" class="dishchange form-control">
 
-                        <?php
-                        echo '<option value="'.$dishDetail[0][3].'">'.$dishDetail[0][1].'</option>';
-
-                        $sql='SELECT `id`, `name` FROM `dish_type` WHERE (id!='.$dishDetail[0][3].') AND (catering_id='.$cateringid.')' ;
-
-                        $dish_type=queryReceive($sql);
-                        for($i=0;$i<count($dish_type);$i++)
-                        {
-                            echo '<option value="'.$dish_type[$i][0].'">'.$dish_type[$i][1].'</option>';
-                        }
-
-                        ?>
-                    </select>
+                    <input data-column="dish_type" readonly  value="<?php echo $dishDetail[0][1]; ?>" class="dishchange form-control" type="text">
 
                 </div>
 
             </div>
 
-            <div class="card mb-3 p-4" id="existAttributes">
-                <h4 align="center">Exist Attributes</h4>
-
-                <?php
-                for($i=0;$i<count($attributes);$i++)
-                {
-                    echo ' 
-                <div class="form-group row " id="delete_'.$attributes[$i][1].'">
-                    <label class="col-form-label">Attribute Name</label>
-                    
-                    <div class="input-group mb-3 input-group-lg">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-camera"></i></span>
-                        </div>
-                        <input data-attributeid="'.$attributes[$i][1].'" value="'.$attributes[$i][0].'" class="changeAttributes form-control" type="text">
-                        <input data-attributeid="'.$attributes[$i][1].'" type="button" class="RemoveAttribute col-2 form-control btn-secondary" value="-">
-                    </div>
-                 
-                </div>';
-                }
-
-                ?>
 
 
-
-            </div>
-            <h1 class="m-5">New attribute</h1>
-            <hr>
             <div class="form-group row">
-                <label class="col-form-label">Attribute Name</label>
+                <label class="col-form-label">Dish Active Date:</label>
+
 
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input id="attributetext" class="form-control" type="text" placeholder="add new rice,mutton,...">
-                    <input id="addAttribute" type="button" class="col-2 form-control btn-primary" value="+">
-
+                    <input  readonly    value="<?php echo $dishDetail[0][4]; ?>" class="form-control" type="text">
                 </div>
 
 
 
-
             </div>
 
-            <form id="formAttribute">
-            <div class="col-12" id="attributeHere">
 
+
+            <div class="form-group row">
+                <label class="col-form-label">Dish Active User :</label>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-plus"></i></span>
+                    </div>
+                    <input readonly     value="<?php echo $dishDetail[0][3]; ?>" class="form-control" type="text">
+                </div>
+            </div>
+
+
+            <hr>
+            <div class="m-auto form-inline">
+
+                                <h6 class="col-8">Price control with combination of attribute</h6>
+
+
+                <!-- Button trigger modal -->
+                <button  type="button" class="btn btn-success float-right col-4" data-toggle="modal" data-target="#exampleModal">
+                    + Add
+                </button>
+
+                <!-- Modal -->
+                <form id="formaddprice">
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-concierge-bell"></i> Dish Name :<?php echo $dishDetail[0][0]; ?></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body form">
+
+
+                                <?php
+
+
+                                $sql='SELECT name FROM attribute WHERE (ISNULL(expire))AND(dishWithAttribute_id='.$dishWithAttribute[0][0].')
+GROUP by name';
+                                $TypeOfAttribute=queryReceive($sql);
+                                echo '<input hidden name="dishid" value="'.$dishDetail[0][5].'">
+                                <input hidden name="userid" value="'.$userid.'">
+                                
+                                ';
+
+
+                                for($i=0;$i<count($TypeOfAttribute);$i++)
+                                {
+                                    echo '
+                             
+                               
+                                            <div class="form-group row">
+                <label class="col-form-label">'.$TypeOfAttribute[$i][0].'</label>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">  <i class="fa fa-calculator" aria-hidden="true"></i> </span>
+                    </div>
+                     
+                                    <input hidden type="number" name="attribute[]" value="'.$TypeOfAttribute[$i][0].'">
+                                    <input type="number" name="quantity[]" class="form-control">
+                </div>
+            </div>
+                                
+                                
+                                
+                                
+                                ';
+                                }
+
+                                echo '
+                               
+                                   <div class="form-group row">
+                <label class="col-form-label">Price :</label>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-money-bill-alt"></i></span>
+                    </div>
+                    <input type="number" name="price" class="form-control">
+                </div>
+            </div>
+                                
+                                
+                                
+                                ';
+
+
+                                ?>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button id="addCombination" type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             </form>
 
+
+
+
+                <div class="row">
+
+
+
+                    <?php
+
+
+                    $display='';
+
+                    for($j=0;$j<count($dishWithAttribute);$j++)
+                    {
+
+                        $display.='  <div class="card" style="width: 18rem;">
+                <div class="card-header text-danger">
+                   <i class="fas fa-money-bill-alt"></i> '.$dishWithAttribute[$j][3].'
+                </div>
+                   <ul class="list-group list-group-flush">
+                ';
+                        $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishWithAttribute[$j][0].')';
+                        $AttributeDetail=queryReceive($sql);
+
+
+                        for($i=0;$i<count($AttributeDetail);$i++)
+                        {
+                            $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].':'.$AttributeDetail[$i][1].'</li>';
+                        }
+
+                        $display.='  
+                     <li class="list-group-item"><i class="fas fa-user-plus"></i>'.$dishWithAttribute[$j][5].'</li>
+                    <li class="list-group-item"><i class="far fa-calendar-alt"></i>'.$dishWithAttribute[$j][1].'</li>
+                </ul>
+                <div class="card-footer  m-auto">
+                    <button  data-deleteid="'.$dishWithAttribute[$j][0].'" class="btn btn-danger deleteprice "><i class="far fa-trash-alt"></i>Delete</button>
+                </div>
+            </div>';
+
+                    }
+
+
+
+
+
+echo $display;
+                    ?>
+
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-header text-danger">
+                    <i class="fas fa-money-bill-alt"></i>  Price
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i> AttributeName:quantity</li>
+                    <li class="list-group-item"><i class="fas fa-user-plus"></i> Name:</li>
+                    <li class="list-group-item"><i class="far fa-calendar-alt"></i>Active Date:</li>
+                </ul>
+                <div class="card-footer  m-auto">
+                    <button class="btn btn-danger "><i class="far fa-trash-alt"></i>Delete</button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
             <div class="form-group row">
 
-                <?php
-                    if($dishDetail[0][4]=="")
-                    {
-                        echo '<input id="RemoveDish" type="button" class=" col-4 form-control btn-danger" value="Hide dish">';
-                    }
-                    else
-                    {
-
-                        echo '<input id="RemoveDish" type="button" class=" col-4 form-control btn-primary " value="Show dish">';
-                    }
-                ?>
-
-                <input id="submit" type="button" value="Submit" class="col-8 form-control btn-success">
+              <button id="deletedish" data-dishid="<?php echo $dishDetail[0][5]; ?>" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete Dish</button>
             </div>
 
 
@@ -225,15 +323,19 @@ include_once ("../../../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
-        var dishid=$("#dishid").val();
-        $("#RemoveDish").click(function ()
-        {
-            var value=$(this).val();
 
+
+
+
+        $(".deleteprice").click(function (e)
+        {
+            e.preventDefault();
+
+            var dishid=$(this).data("deleteid");
             $.ajax({
                 url:"dishServer.php",
                 method:"POST",
-                data:{value:value,dishid:dishid,option:"ExpireDish"},
+                data:{dishid:dishid,option:"ExpireDishPrice"},
                 dataType:"text",
 
                 beforeSend: function() {
@@ -248,7 +350,36 @@ include_once ("../../../webdesign/footer/footer.php");
                     }
                     else
                     {
+                        location.reload();
+                    }
+                }
+            });
 
+        });
+
+
+        $("#deletedish").click(function (e)
+        {
+            e.preventDefault();
+            var dishid=$(this).data("dishid");
+            $.ajax({
+                url:"dishServer.php",
+                method:"POST",
+                data:{dishid:dishid,option:"ExpireDish"},
+                dataType:"text",
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    if(data!='')
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
                         window.history.back();
                     }
                 }
@@ -256,9 +387,10 @@ include_once ("../../../webdesign/footer/footer.php");
 
         });
 
+
         var rows=0;
 
-        $("#addAttribute").click(function ()
+      /*  $("#addAttribute").click(function ()
         {
             var text=$("#attributetext").val();
             $("#attributeHere").append('<div class="col-12 form-group row" id="removeid_'+rows+'">\n' +
@@ -276,16 +408,14 @@ include_once ("../../../webdesign/footer/footer.php");
             var id=$(this).data("removeid");
             $("#removeid_"+id).remove();
 
-        });
+        });*/
 
 
-        $("#submit").click(function (e)
+        $("#addCombination").click(function (e)
         {
             e.preventDefault();
-            var dishid=$("#dishid").val();
-            var formdata=new FormData($("#formAttribute")[0]);
-            formdata.append("option","attributesCreate");
-            formdata.append("dishid",dishid);
+            var formdata=new FormData($("#formaddprice")[0]);
+            formdata.append("option","addnewDishprice");
             $.ajax({
                 url:"dishServer.php",
                 method:"POST",
@@ -306,12 +436,13 @@ include_once ("../../../webdesign/footer/footer.php");
                     else
                     {
 
-                        window.history.back();
+                        location.reload();
                     }
                 }
             });
         });
 
+/*
         $(document).on("change",'.changeAttributes',function () {
            var attributeid=$(this).data("attributeid");
            var text=$(this).val();
@@ -424,6 +555,7 @@ include_once ("../../../webdesign/footer/footer.php");
 
 
         });
+*/
 
 
     });
