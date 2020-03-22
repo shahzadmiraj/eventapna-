@@ -35,14 +35,9 @@ if($_POST['option']=="removeDish")
 
 if($_POST['option']=='createDish')
 {
+    $orderid=$_POST['orderid'];
+    $userid=$_POST['userid'];
     $dishId=$_POST['dishId'];
-    $attributesId=array();
-    $attributesValue=array();
-    if(isset($_POST['attributeId']))
-    {
-        $attributesId=$_POST['attributeId'];
-        $attributesValue=$_POST['attributeValue'];
-    }
     $each_price=chechIsEmpty($_POST['each_price']);
     $quantity=chechIsEmpty($_POST['quantity']);
     $describe=$_POST['describe'];
@@ -50,15 +45,10 @@ if($_POST['option']=='createDish')
 
 
     $CurrentDateTime=date('Y-m-d H:i:s');
-    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `price`, `expire_date`, `quantity`, `dish_id`, `orderDetail_id`)VALUES(NULL,"'.$describe.'","'.$each_price.'",NULL,"'.$quantity.'",'.$dishId.','.$orderId.')';
+   // $sql='INSERT INTO `dish_detail`(`id`, `describe`, `price`, `expire_date`, `quantity`, `dish_id`, `orderDetail_id`)VALUES(NULL,"'.$describe.'","'.$each_price.'",NULL,"'.$quantity.'",'.$dishId.','.$orderId.')';
+
+    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `expire`, `quantity`, `orderDetail_id`, `user_id`, `dishWithAttribute_id`, `active`, `price`, `expireUser`) VALUES (NULL,"'.$describe.'",NULL,'.$quantity.','.$orderId.','.$userid.','.$dishId.',"'.$timestamp.'",'.$each_price.',NULL)';
     querySend($sql);
-    $dishDetailId=mysqli_insert_id($connect);
-    for ($i=0;$i<count($attributesId);$i++)
-    {
-        $sql='INSERT INTO `attribute_name`(`id`, `quantity`, `attribute_id`, `dish_detail_id`) 
-VALUES (NULL,"'.$attributesValue[$i].'",'.$attributesId[$i].','.$dishDetailId.')';
-        querySend($sql);
-    }
 
 }
 else if($_POST["option"]=='attributeChange')

@@ -27,6 +27,7 @@ $dishesName=$_POST['dishesName'];
 $dishesid=$_POST['dishesid'];
 $prices=$_POST['prices'];
 $images=$_POST['images'];
+$userid=$_COOKIE['userid'];
 
 
 ?>
@@ -79,11 +80,18 @@ include_once ("../webdesign/header/header.php");
         ?>
 
         <form id="form_<?php echo $j; ?>">
+            <input hidden type="number" name="orderid" value="<?php echo $orderId;?>">
+
+            <input hidden type="number" name="userid" value="<?php echo $userid;?>">
+
+
+            <input hidden type="number" name="dishId" value="<?php echo $dishesid[$j];?>">
+
 
             <div class="card shadow-lg p-4 mb-4 border  col-12">
 
 
-                    <div class="col-6 m-auto card">
+                    <div class="m-auto card">
                         <?php
 
                         $image='';
@@ -101,14 +109,14 @@ include_once ("../webdesign/header/header.php");
 
 
 
-                        <img src="<?php echo $image;?>'" style="height: 20vh;width: 100%">
-                        <p class="card-header"><?php echo $dishesName[$j]; ?></p>
+                        <img src="<?php echo $image;?>" style="height: 20vh;width: 100%">
+                        <h4 ><?php echo $dishesName[$j]; ?></h4>
                 </div>
 
 
                 <div class="form-group row">
 
-                    <ul class="">
+                    <ul>
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishesid[$j].')';
                 $AttributeDetail=queryReceive($sql);
