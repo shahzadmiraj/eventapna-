@@ -32,27 +32,22 @@ if(isset($_POST['option']))
         $name = trim($_POST['name']);
         $numberArray = $_POST['number'];
         $cnic = chechIsEmpty($_POST['cnic']);
-        $city = chechIsEmpty($_POST['city']);
-        $area = chechIsEmpty($_POST['area']);
-        $streetNo = chechIsEmpty($_POST['streetNo']);
-        $houseNo = chechIsEmpty($_POST['houseNo']);
-        $date = date('Y-m-d');
+       $address=$_POST['address'];
+       $userid=$_POST['userid'];
 
 
 
 
 
 
+$sql='INSERT INTO `person`(`name`, `cnic`, `id`, `image`, `active`, `expire`, `address`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$image.'","'.$timestamp.'",NULL,"'.$address.'")';
 
-
-        $sql = 'INSERT INTO `person`(`name`, `cnic`, `id`, `date`, `image`,`active`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$date.'","'.$image.'","'.$timestamp.'")';
         querySend($sql);
         $last_id = mysqli_insert_id($connect);
-        $sql='INSERT INTO `address`(`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL,"'.$streetNo.'","'.$houseNo.'",'.$last_id.',"'.$city.'","'.$area.'")';
-        querySend($sql);
-        for ($i = 0; $i < count($numberArray); $i++) {
 
-            $sql='INSERT INTO `number`(`number`, `id`, `is_number_active`, `person_id`) VALUES ("'.$numberArray[$i].'",NULL,1,'.$last_id.')';
+        for ($i = 0; $i < count($numberArray); $i++)
+        {
+            $sql='INSERT INTO `number`(`number`, `id`, `person_id`, `active`, `expire`, `userActive`, `userExpire`) VALUES ("'.$numberArray[$i].'",NULL,'.$last_id.',"'.$timestamp.'",NULL,'.$userid.',NULL)';
             querySend($sql);
         }
         $customerId = $last_id;

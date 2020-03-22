@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
+/*if(!isset($_SESSION['branchtype']))
 {
     header("location:../company/companyRegister/companydisplay.php");
 
@@ -27,7 +27,8 @@ if(isset($_SESSION['typebranch']))
 if(isset($_SESSION['customer']))
 {
     header("location:customerEdit.php");
-}
+}*/
+$userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -69,6 +70,7 @@ include_once ("../webdesign/header/header.php");
 
 
 <form id="form">
+    <input hidden name="userid" value="<?php echo $userid;?>">
 
         <input id="customer" hidden value="">
     <div class="form-group row">
@@ -139,77 +141,21 @@ include_once ("../webdesign/header/header.php");
 
 
         </div>
-
-            <h3 align="center"> <i class="fas fa-map-marker-alt"></i>Address(optional)</h3>
         <div class="form-group row">
-            <label for="city" class="col-form-label">City:</label>
+            <label for="address" class="col-form-label">address:</label>
 
 
 
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-city"></i></span>
+                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i>Address</span>
                 </div>
-                <input type="text" id="city" name="city" class="form-control" placeholder="city">
+                <input type="text" id="address" name="address" class="form-control" placeholder="address">
             </div>
-
-
         </div>
 
-        <div class="form-group row">
-            <label for="area" class="col-form-label">Area/ Block:</label>
 
-
-
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-road"></i></span>
-                </div>
-                <input type="text"  id="area" name="area" class="form-control" placeholder="Area/ Block">
-            </div>
-
-
-
-
-        </div>
-
-        <div class="form-group row">
-            <label for="streetNo" class="col-form-label ">Street No :</label>
-
-
-
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
-                </div>
-                <input type="number" id="streetNo" name="streetNo" class="form-control" placeholder="street no  1,2,3,4,...">            </div>
-
-
-
-
-
-        </div>
-
-        <div class="form-group row">
-            <label for="houseNo" class="col-form-label">House No:</label>
-
-
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-home"></i></span>
-                </div>
-                <input type="number" id="houseNo" name="houseNo" class="form-control" placeholder="house no 1,2,3,....">
-            </div>
-
-
-
-
-
-        </div>
         <div class="form-group row m-auto">
             <a href="../user/userDisplay.php" type="button" class="col-5 form-control btn btn-danger"><i class="fas fa-window-close"></i>Cancel</a>
             <button type="button" class="col-5 form-control btn btn-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
