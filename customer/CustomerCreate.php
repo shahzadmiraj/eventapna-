@@ -28,6 +28,7 @@ if(isset($_SESSION['customer']))
 {
     header("location:customerEdit.php");
 }*/
+$hallid=1;
 $userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>

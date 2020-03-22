@@ -38,18 +38,20 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="deleteNumber")
     {
-
+        $userid=$_POST['userid'];
         $id=$_POST['id'];
-        $sql='DELETE FROM number  WHERE id='.$id.'';
+        //$sql='DELETE FROM number  WHERE id='.$id.'';
+        $sql='UPDATE `number` SET `expire`="'.$timestamp.'",`userExpire`='.$userid.' WHERE id='.$id.'';
         querySend($sql);
     }
     else if($_POST['option']=="addNumber")
     {
-
-        $customerId = $_POST['customerid'];
+             $userid=$_POST['userid'];
+             $customerId = $_POST['customerid'];
             $numberText=$_POST['number'];
-            $sql='INSERT INTO `number`(`number`, `id`, `is_number_active`, `person_id`) VALUES ("'.$numberText.'",NULL,1,"'.$customerId.'")';
-            querySend($sql);
+
+        $sql='INSERT INTO `number`(`number`, `id`, `person_id`, `active`, `expire`, `userActive`, `userExpire`) VALUES ("'.$numberText.'",NULL,'.$customerId.',"'.$timestamp.'",NULL,'.$userid.',NULL)';
+        querySend($sql);
 
     }
     else if($_POST['option']=="changeImage")

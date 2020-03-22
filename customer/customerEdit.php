@@ -15,6 +15,7 @@ if(!isset($_SESSION['customer']))
 {
     header("location:../user/userDisplay.php");
 }
+$_SESSION['customer']=3;
 $customerId="";
 $customerId=$_SESSION['customer'];
 $hallid="";
@@ -32,16 +33,14 @@ if(isset($_SESSION['typebranch']))
     }
 }
 
-$sql = "SELECT `name`, `cnic`, `id`, `date`, `image` FROM `person` WHERE id=".$customerId."";
+$sql = "SELECT `name`, `cnic`, `id`, 1, `image`, `address` FROM `person` WHERE id=".$customerId."";
 $person=queryReceive($sql);
-$sql = "SELECT a.id, a.address_city, a.address_town, a.address_street_no, a.address_house_no, a.person_id FROM address as a inner JOIN person p ON a.person_id=p.id
-WHERE a.person_id=$customerId
-ORDER by a.person_id;";
-$address=queryReceive($sql);
-$sql="SELECT n.number, n.id, n.is_number_active, n.person_id FROM number as n inner JOIN person as p ON p.id=n.person_id
-WHERE p.id=$customerId
+
+$sql="SELECT n.number, n.id,1, n.person_id FROM number as n inner JOIN person as p ON p.id=n.person_id
+WHERE (p.id=$customerId)AND(ISNULL(n.expire))
 order BY n.id";
 $numbers=queryReceive($sql);
+$userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -127,8 +126,8 @@ include_once ("../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-phone-volume"></i></span>
             </div>
-             <input  class=" numberchange  allnumber form-control " type="text" name="number[]" value="'.$numbers[$i][0].'" id="number_'.$numbers[$i][1].'" data-columne="number" data-columneid='.$numbers[$i][1].'>
-             <input class="form-control btn btn-danger remove_number col-3 " id="remove_numbers_'.$numbers[$i][1].'" data-removenumber="'.$numbers[$i][1].'" value="-">
+             <input readonly class=" numberchange  allnumber form-control " type="text" name="number[]" value="'.$numbers[$i][0].'" id="number_'.$numbers[$i][1].'" data-columne="number" data-columneid='.$numbers[$i][1].'>
+             <input class="form-control btn btn-danger remove_number col-3 " id="remove_numbers_'.$numbers[$i][1].'" data-removenumber="'.$numbers[$i][1].'"    data-userid="'.$userid.'" value="-">
             
             </div>
                         
@@ -144,8 +143,8 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                 </div>
-                <input id="newNumber"  name="newNumber"class="form-control" placeholder="New number 092xxxxx" >
-                <input type="button" value="+" class="col-3 btn-success form-control" id="newadd">
+                <input type="number" id="newNumber"  name="newNumber"class="form-control" placeholder="New number 092xxxxx" >
+                <input type="button" value="+" class="col-3 btn-success form-control" id="newadd" data-userid="<?php echo $userid;?>">
             </div>
 
 
@@ -174,10 +173,6 @@ include_once ("../webdesign/header/header.php");
         </div>
         <div class="form-group row">
             <label for="cnic" class="col-form-label "> CNIC:</label>
-
-
-
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-id-card"></i></span>
@@ -191,75 +186,30 @@ include_once ("../webdesign/header/header.php");
 
 
         </div>
-
-        <h3 align="center">  <i class="fas fa-map-marker-alt"></i>Address(optional)</h3>
-        <div class="form-group row">
-            <label for="city" class="col-form-label"> City:</label>
+    <div class="form-group row">
+        <label for="address" class="col-form-label">Address:</label>
 
 
 
 
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-city"></i></span>
-                </div>
-                <?php
-                echo '<input  type="text"  id="city" name="city" class=" addresschange form-control" value="'.$address[0][1].'" data-columne="address_city">';
-                ?>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
             </div>
 
-
-
-        </div>
-
-        <div class="form-group row">
-            <label for="area" class="col-form-label "> Area/ Block:</label>
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-road"></i></span>
-                </div>
-
-                <?php
-                echo '<input  type="text" id="area" name="area" class=" addresschange form-control " value="'.$address[0][2].'" data-columne="address_town">';
-                ?>
-            </div>
-
+            <?php
+            echo '
+             <textarea  id="address" name="address" class="personchange  form-control" placeholder="address" data-columne="address">'.$person[0][5].'</textarea>';
+            ?>
 
         </div>
-
-        <div class="form-group row">
-            <label for="streetNo" class="col-form-label ">Street No :</label>
+    </div>
 
 
 
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
-                </div>
-                <?php
-                echo '     <input type="number"  id="streetNo" name="streetNo" class=" addresschange form-control" value="'.$address[0][3].'" data-columne="address_street_no">';
-                ?>
-            </div>
-
-        </div>
-
-        <div class="form-group row">
-            <label for="houseNo" class="col-form-label ">House No:</label>
 
 
 
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-home"></i></span>
-                </div>
-                <?php
-                echo '<input type="number" id="houseNo" name="houseNo" class=" addresschange form-control" value="'.$address[0][4].'" data-columne="address_house_no">';
-                ?>
-            </div>
-
-        </div>
         <div class="col-12 shadow">
             <h4 align="center"><i class="fas fa-user-tag mr-2"></i>Customer personality</h4>
             <?php
@@ -478,10 +428,11 @@ p.id='.$customerId.'';
      $("#newadd").click(function ()
      {
 
+            var userid=$(this).data("userid");
          var numberText=$('#newNumber').val();
          $.ajax({
              url: "customerEditServer.php",
-             data:{option:"addNumber",number:numberText,customerid:customerid},
+             data:{option:"addNumber",number:numberText,customerid:customerid,userid:userid},
              dataType:"text",
              method:"POST",
 
@@ -504,11 +455,13 @@ p.id='.$customerId.'';
      });
 
 
-     $(document).on("click",".remove_number",function () {
+     $(document).on("click",".remove_number",function ()
+     {
+         var userid=$(this).data("userid");
          var id=$(this).data("removenumber");
          $.ajax({
              url: "customerEditServer.php",
-             data:{ id:id,option:"deleteNumber"},
+             data:{ id:id,option:"deleteNumber",userid:userid},
              dataType:"text",
              method:"POST",
 
