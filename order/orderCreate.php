@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
+/*if(!isset($_SESSION['branchtype']))
 {
     header("location:../company/companyRegister/companydisplay.php");
 }
@@ -15,8 +15,9 @@ if(isset($_SESSION['order']))
     header("location:orderEdit.php");
 }
 
-$cateringid=$_SESSION['branchtypeid'];
-$customer=$_SESSION['customer'];
+$cateringid=$_SESSION['branchtypeid'];*/
+$customer=3;
+$cateringid=1;
 
 ?>
 <!DOCTYPE html>
@@ -100,53 +101,20 @@ include_once ("../webdesign/header/header.php");
 
         </div>
 
-        <h3 align="center">  <i class="fas fa-map-marker-alt mr-2"></i>Delivery Address(optional)</h3>
-
         <div class="form-group row">
-            <label for="area" class="col-form-label">Area / Block </label>
-
-
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-city"></i></span>
-                </div>
-                <input type="text" name="area" id="area" class="form-control" placeholder="block address ..">
-
-            </div>
-
-        </div>
-        <div class="form-group row">
-            <label for="streetNO" class="col-form-label">Street no #</label>
-
+            <label for="address" class="col-form-label">Address:</label>
 
 
 
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-road"></i></span>
+                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
                 </div>
-
-                <input type="number" name="streetno" id="streetNO" class="form-control" placeholder="street no 1,2,3....">
+                <textarea  id="address" name="address" class="form-control form-control" placeholder="order destination address "></textarea>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="houseno" class="col-form-label">House no# </label>
 
-
-
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
-                </div>
-                <input  type="number" name="houseno" id="houseno" class="form-control" placeholder="house no 1,2,.....">
-            </div>
-
-
-
-        </div>
         <div class="form-group row">
             <label for="describe" class="col-form-label">Describe order </label>
 
@@ -160,10 +128,8 @@ include_once ("../webdesign/header/header.php");
                 <textarea  id="describe" name="describe" class="form-control form-control" placeholder="order comment /requirements"></textarea>
             </div>
 
-
-
-
         </div>
+
         <div class="form-group row justify-content-center">
 
             <a href="../customer/customerEdit.php" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>

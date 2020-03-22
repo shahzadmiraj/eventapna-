@@ -143,25 +143,10 @@ if($_POST['function']=="add") {
     {
         $date='"'.$_POST['date'].'"';
     }
-
-    $area=$_POST['area'];
-    $streetno=chechIsEmpty($_POST['streetno']);
-    $houseno=chechIsEmpty($_POST['houseno']);
+    $address=$_POST['address'];
     $describe=$_POST['describe'];
 
-
-    $currentDate=date('Y-m-d');
-    $CurrenttimeDate = date('Y-m-d H:i:s');
-    $sql='INSERT INTO `address`(`id`, `address_street_no`, `address_house_no`, `person_id`, `address_city`, `address_town`) VALUES (NULL,"'.$streetno.'","'.$houseno.'","'.$customerId.'","lahore","'.$area.'")';
-    querySend($sql);
-    $address_id=mysqli_insert_id($connect);
-    $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`,
- `user_id`,
- `address_id`, `person_id`, 
-`total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, 
-`destination_time`, `status_catering`,`describe`) VALUES 
-(NULL,NULL,'.$cateringid.',NULL,'.$userid.','.$address_id.','.$customerId.',0,'.$persons.',NULL,'.$date.',"'.$currentDate.'",
-'.$time.',"Running","'.$describe.'")';
+$sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `person_id`,`total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`,`status_catering`, `describe`,  `address`, `location_id`, `discount`, `extracharges`)VALUES (NULL,NULL,'.$cateringid.',NULL,'.$userid.','.$customerId.',NULL,'.$persons.',NULL,'.$date.',"'.$timestamp.'",'.$time.',"Running","'.$describe.'","'.$address.'",NULL,NULL,NULL)';
     querySend($sql);
     $ordeID=mysqli_insert_id($connect);
     $_SESSION['order']=$ordeID;

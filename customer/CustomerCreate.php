@@ -150,7 +150,7 @@ include_once ("../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i>Address</span>
+                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
                 </div>
                 <input type="text" id="address" name="address" class="form-control" placeholder="address">
             </div>

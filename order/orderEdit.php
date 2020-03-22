@@ -16,12 +16,10 @@ if(!isset($_SESSION['order']))
 }
 $companyid=$_COOKIE['companyid'];
 $userid=$_COOKIE['userid'];
-$orderId=$_SESSION['order'];
-$sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`, `address_id`, `person_id`,`catering_id` ,`user_id` FROM `orderDetail` WHERE id='.$orderId.'';
+$orderId=$_SESSION['order']=1;
+$sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`,1, `person_id`,`catering_id` ,`user_id`, `discount`, `extracharges`, `address` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
-$addressId=$orderDetail[0][8];
-$sql='SELECT `id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id` FROM `address` WHERE id='.$addressId.'';
-$addresDetail=queryReceive($sql);
+
 
 ?>
 <!DOCTYPE html>
@@ -67,10 +65,10 @@ include_once ("../webdesign/header/header.php");
             <input name="PreviousDestination_date" type="date" hidden value="'.$orderDetail[0][5].'">
             <input name="PreviousDescribe" type="text" hidden value="'.$orderDetail[0][2].'">
             <input name="PreviousStatus_catering" type="text" hidden value="'.$orderDetail[0][4].'">
-            <input name="PreviousTown" type="text" hidden value="'.$addresDetail[0][2].'">
-            <input name="PreviousStreet_no" type="number" hidden value="'.$addresDetail[0][3].'">
-            <input name="PreviousHouse_no" type="number" hidden value="'.$addresDetail[0][4].'">
-            <input name="PreviousAddressId" type="number" hidden value="'.$addresDetail[0][0].'">
+       
+       
+       
+       
             <input name="PreviousBranchOrder" type="number" hidden value="'.$orderDetail[0][10].'">
             <input name="CurrentUserid" type="number" hidden value="'.$userid.'">
             
@@ -78,7 +76,7 @@ include_once ("../webdesign/header/header.php");
         ?>
 
         <div class="form-group row">
-            <label for="persons" class="col-form-label"> no of guests</label>
+            <label for="persons" class="col-form-label"> No of guests</label>
 
 
             <div class="input-group mb-3 input-group-lg">
@@ -92,7 +90,7 @@ include_once ("../webdesign/header/header.php");
 
 
         <div class="form-group row">
-            <label for="time" class="col-form-label">delivery Time</label>
+            <label for="time" class="col-form-label">Delivery Time</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -106,7 +104,7 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="form-group row">
-            <label for="date" class="col-form-label">delivery Date</label>
+            <label for="date" class="col-form-label">Delivery Date</label>
 
 
 
@@ -123,7 +121,7 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="form-group row">
-            <label for="describe" class="col-form-label">describe order </label>
+            <label for="describe" class="col-form-label">Describe order </label>
 
 
 
@@ -207,81 +205,83 @@ include_once ("../webdesign/header/header.php");
         </div>
 
 
+        <div class="form-group row">
+            <label for="address" class="col-form-label">Address:</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                </div>
+                <textarea  id="address" name="address" class="form-control form-control" placeholder="destination address "><?php echo $orderDetail[0][14];?>  </textarea>
+            </div>
+        </div>
+
 
 
         <div class="form-group row">
-            <label class="form-check-label" for="total_amount">total amount</label>
-
-
+            <label class="form-check-label" for="total_amount">Auto Total amount</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input  name="total_amount" type="number" class="form-control"  value=<?php echo $orderDetail[0][1];?>>
+                <input  readonly name="total_amount" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][1];?>>
             </div>
-
-
 
         </div>
 
 
 
-        <h3 align="center">  <i class="fas fa-map-marker-alt mr-2"></i>Delivery Address(optional)</h3>
         <div class="form-group row">
-            <label for="area" class="col-form-label">area / block </label>
-
-
+            <label class="form-check-label" for="Discount">Discount </label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-city"></i></span>
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input  name="town" type="text"  id="area" class="form-control" value="<?php echo $addresDetail[0][2];?>">
-
+                <input   name="Discount" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][12];?>>
             </div>
 
         </div>
+
         <div class="form-group row">
-            <label for="streetNO" class="col-form-label">Street no #</label>
-
-
-
-
+            <label class="form-check-label" for="Charges">Extra Charges </label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-road"></i></span>
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-
-                <input name="street_no"  type="number"  id="streetNO" class="form-control" value=<?php echo $addresDetail[0][3];?>>
+                <input   name="Charges" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][13];?>>
             </div>
 
         </div>
-        <div class="form-group row">
-            <label for="houseno" class="col-form-label">house no# </label>
 
+
+
+        <div class="form-group row">
+            <label class="form-check-label" for="remaining">Remaining Amount </label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input  name="house_no"  type="number"  id="houseno" class="form-control" value=<?php echo $addresDetail[0][4];?>>
+                <input readonly  id="remaining" name="remaining" type="number" class="form-control"  value=<?php echo (int) ($orderDetail[0][1]-$orderDetail[0][12]+$orderDetail[0][13]);?>>
             </div>
-
-
 
         </div>
 
 
+
+
+
         <div class="form-group row">
-            <label class="form-check-label" for="booking_date">order booking date</label>
+            <label class="form-check-label" for="booking_date">Order booking date</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-business-time"></i></span>
                 </div>
-                <input  type="date" readonly class="form-control" id="booking_date"  value="<?php echo $orderDetail[0][6];?>">
+                <input  type="datetime" readonly class="form-control" id="booking_date"  value="<?php echo $orderDetail[0][6];?>">
             </div>
 
 
