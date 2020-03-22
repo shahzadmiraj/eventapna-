@@ -10,7 +10,7 @@
 include_once ("../connection/connect.php");
 
 $userid=$_COOKIE['userid'];
-function orderChange($post,$AddressId)
+function orderChange($post)
 {
 //chechIsEmpty
     //checknumberOtherNull
@@ -24,10 +24,14 @@ function orderChange($post,$AddressId)
     $orderid=$post['orderid'];
     $userid=$post['CurrentUserid'];
     $total_amount=$post['total_amount'];
+    $Discount=$post['Discount'];
+    $Charges=$post['Charges'];
+    $address=$post['address'];
 
 
     //update order
-    $sql='UPDATE `orderDetail` SET `catering_id`='.$branchOrder.',`user_id`='.$userid.',`address_id`='.$AddressId.',`total_person`='.$total_person.',`destination_date`="'.$destination_date.'",`destination_time`="'.$destination_time.'",`status_catering`="'.$status_catering.'",`describe`="'.$describe.'", `total_amount`='.$total_amount.' WHERE id='.$orderid.'';
+    $sql='UPDATE `orderDetail` SET  `address`="'.$address.'",`discount`='.$Discount.',`extracharges`='.$Charges.',`catering_id`='.$branchOrder.',`user_id`='.$userid.',`total_person`='.$total_person.',`destination_date`="'.$destination_date.'",`destination_time`="'.$destination_time.'",`status_catering`="'.$status_catering.'",`describe`="'.$describe.'", `total_amount`='.$total_amount.' WHERE `id` = '.$orderid.'';
+
     querySend($sql);
 
 
@@ -158,20 +162,8 @@ else if($_POST['function']=="orderSaveAfterChange")
 {
 
     $timestamp = date('Y-m-d H:i:s');
-    $status=false;
-    $PreviousAddressId=$_POST['PreviousAddressId'];
-
     $post=array();
     $post=$_POST;
-    if(checkAddress($post))
-    {
-        CreateNewAddress($post);
-        $PreviousAddressId = mysqli_insert_id($connect);
-        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"address_id","'.$timestamp.'",NULL,'.$_POST['orderid'].','.$_POST['PreviousUserid'].',"'.$_POST['PreviousAddressId'].'")';
-        querySend($sql);
-
-       $status=true;
-    }
     $total_person=chechIsEmpty($post['total_person']);
     $destination_time=$post['destination_time'];
     $destination_date=$post['destination_date'];
@@ -181,15 +173,14 @@ else if($_POST['function']=="orderSaveAfterChange")
     $orderid=$post['orderid'];
     $userid=$post['CurrentUserid'];
     $total_amount=$post['total_amount'];
+    $address=$_POST['address'];
+    $Charges=$_POST['Charges'];
+    $Discount=$_POST['Discount'];
 
-    if(checkChangeHallOrder($orderid,NULL,$branchOrder,$destination_date,$destination_time,NULL,$total_person,NULL,$total_amount,NULL,$describe,$status_catering,$timestamp))
-    {
-        $status=true;
-    }
-    if ($status)
-    {
 
-        orderChange($post, $PreviousAddressId);
+    if(checkChangeHallOrder($orderid,NULL,$branchOrder,$destination_date,$destination_time,NULL,$total_person,NULL,$total_amount,NULL,$describe,$status_catering,$timestamp,$address,$Charges,$Discount))
+    {
+        orderChange($post);
     }
 
 

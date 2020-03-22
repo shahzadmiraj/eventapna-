@@ -391,11 +391,32 @@ function showRemainings($sql)
 
 
 
-function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$HallOrderBranch,$describe,$catering,$timestamp)
+function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$HallOrderBranch,$describe,$catering,$timestamp,$address,$Charges,$Discount)
 {
     $status=false;
-    $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe`, `user_id` FROM `orderDetail` WHERE id='.$order.'';
+    $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe`, `user_id`, `discount`, `extracharges`,`address`  FROM `orderDetail` WHERE id='.$order.'';
     $PreviouseDetailOrder=queryReceive($sql);
+
+    if((int)checknumberOtherNull($PreviouseDetailOrder[0][15])!=$address)
+    {
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"address","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][15].'")';
+        querySend($sql);
+        $status=true;
+
+    }
+    if((int)checknumberOtherNull($PreviouseDetailOrder[0][14])!=(int)$Charges)
+    {
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"extracharges","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][14].'")';
+        querySend($sql);
+        $status=true;
+    }
+    if((int)checknumberOtherNull($PreviouseDetailOrder[0][13])!=(int)$Discount)
+    {
+        $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"discount","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][13].'")';
+        querySend($sql);
+        $status=true;
+    }
+
 
     if($PreviouseDetailOrder[0][3]!=$packageid)
     {
@@ -445,7 +466,7 @@ function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perhead
         querySend($sql);
         $status=true;
     }
-    if($PreviouseDetailOrder[0][4]!=$totalamount)
+    if((int)$PreviouseDetailOrder[0][4]!=(int)$totalamount)
     {
 
 

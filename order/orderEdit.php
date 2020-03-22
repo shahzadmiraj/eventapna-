@@ -370,6 +370,7 @@ include_once ("../webdesign/footer/footer.php");
 
                     if (data != '') {
                         alert(data);
+                        //console.log(data);
                     } else
                     {
                         if(href.localeCompare("back")!=1)
