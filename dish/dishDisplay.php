@@ -16,8 +16,8 @@ if(!isset($_SESSION['order']))
     header("location:../user/userDisplay.php");
 }*/
 $order=$_SESSION['order']=1;
-$sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
-WHERE od.id='.$order.'';
+//$sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
+//WHERE od.id='.$order.'';
 $hallpackage=queryReceive($sql);
 $cateringid=$hallpackage[0][3]=1;
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
@@ -108,9 +108,9 @@ include_once ("../webdesign/header/header.php");
                 $image='';
 
 
-                if(file_exists('../images/dishImages/'.$dishDetail[0][2])&&($dishDetail[0][2]!=""))
+                if(file_exists('../images/dishImages/'.$dishDetail[$j][2])&&($dishDetail[$j][2]!=""))
                 {
-                    $image= '../images/dishImages/'.$dishDetail[0][2];
+                    $image= '../images/dishImages/'.$dishDetail[$j][2];
                 }
                 else
                 {
@@ -122,7 +122,7 @@ include_once ("../webdesign/header/header.php");
         
             <p  class="font-weight-bold p-0 card-title col-12
             ">' . $dishDetail[$j][0] . '</p>
-            <button type="button" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary">Select</button>
+            <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary">Select</button>
        
         </div>';
             }
@@ -172,10 +172,12 @@ include_once ("../webdesign/footer/footer.php");
         $(document).on("click",".DishAddOnform",function ()
         {
 
+            var image=$(this).data("image");
             var dishName=$(this).data("dishname");
             var dishid=$(this).data("dishid");
             var price=$(this).data("price");
             var formdata = new FormData;
+            formdata.append("image",image);
             formdata.append("dishid", dishid);
             formdata.append("dishName",dishName);
             formdata.append("countofdish",countofdish);
@@ -208,10 +210,12 @@ include_once ("../webdesign/footer/footer.php");
 
         $(".adddish").click(function ()
        {
+           var image=$(this).data("image");
            var dishName=$(this).data("dishname");
            var dishid=$(this).data("dishid");
            var formdata = new FormData;
            formdata.append("dishid", dishid);
+           formdata.append("image",image);
            formdata.append("dishName",dishName);
            formdata.append("option", "showPriceofAllDishes");
 

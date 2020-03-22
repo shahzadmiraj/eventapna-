@@ -6,22 +6,28 @@
  * Time: 16:48
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
-
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
-
-if((!isset($_POST['dishid']))&&($_SESSION['order']))
-{
-    header("location:AllSelectedDishes.php");
-    exit();
-}
+//if(!isset($_SESSION['branchtype']))
+//{
+//    header("location:../company/companyRegister/companydisplay.php");
+//
+//}
+//if(!isset($_SESSION['order']))
+//{
+//    header("location:../user/userDisplay.php");
+//}
+//
+//if((!isset($_POST['dishid']))&&($_SESSION['order']))
+//{
+//    header("location:AllSelectedDishes.php");
+//    exit();
+//}
+$_SESSION['order']=1;
 $orderId=$_SESSION['order'];
+$dishesName=$_POST['dishesName'];
+$dishesid=$_POST['dishesid'];
+$prices=$_POST['prices'];
+$images=$_POST['images'];
+
 
 ?>
 
@@ -61,133 +67,117 @@ include_once ("../webdesign/header/header.php");
 
 <div class="container">
 
+    <h4 align="center" class="alert-light">Total number of dishes<input readonly type="number" id="totalRemaing" class="btn font-weight-bold " value="<?php echo count($dishesid);?>"></h4>
+
     <input hidden type="number" id="orderIdindish" value="<?php echo $orderId;?>">
 
     <?php
-    $dishesId=$_POST['dishid'];
-    $types=$_POST['types'];
-    $totalDishes=0;
-    $display='';
-    $number=0;
-    for ($i=0;$i<count($types);$i++)
+    for($j=0;$j<count($dishesid);$j++)
     {
-        $totalDishes+=$types[$i];
-        for ($k=$types[$i];$k>0;$k--)
-        {
-            $value=$dishesId[$i];
-            $sql = 'SELECT d.id,d.name,d.image FROM dish as d WHERE d.id=' . $value . '';
-            $dishDetail = queryReceive($sql);
-            $display .= '
-    <form  id="form_' . $number . '">
-
-        <div class="card shadow-lg p-4 mb-4 border  col-12">';
-            $image='';
 
 
-            if(file_exists('../images/dishImages/'.$dishDetail[0][2])&&($dishDetail[0][2]!=""))
-            {
-                $image= '../images/dishImages/'.$dishDetail[0][2];
-            }
-            else
-            {
-                $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
-            }
-        $display.='<div class="row">
-<div class="col-6 m-auto card-body">
-<img src="'.$image.'" style="height: 20vh;width: 100%">
-<p class="card-header">'.$dishDetail[0][1].'</p>
-</div>
-</div>';
+        ?>
+
+        <form id="form_<?php echo $j; ?>">
+
+            <div class="card shadow-lg p-4 mb-4 border  col-12">
+
+
+                    <div class="col-6 m-auto card">
+                        <?php
+
+                        $image='';
+
+
+                        if(file_exists('../images/dishImages/'.$images[$j])&&($images[$j]!=""))
+                        {
+                            $image= '../images/dishImages/'.$images[$j];
+                        }
+                        else
+                        {
+                            $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+                        }
+                        ?>
 
 
 
-
-
-//            <h2 align="center">' . $dishDetail[0][1] . '</h2>
-            $display.='<input hidden type="number" name="dishId" value="' . $value . '">';
-
-
-            $sql = 'SELECT a.id,a.name FROM attribute as a INNER JOIN dish as d
-on d.id=a.dish_id
-WHERE (d.id=' . $value . ') AND (ISNULL(a.isExpire))';
-
-            $attributeDetail = queryReceive($sql);
-            for ($j = 0; $j < count($attributeDetail); $j++) {
-                $display .= ' <div class="form-group row">
-            <label  class="col-form-label">' . $attributeDetail[$j][1] . '</label>
-            <input hidden name="attributeId[]"  value="' . $attributeDetail[$j][0] . '">
-            
-            <div class="input-group mb-3 input-group-lg">
-    <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-sticky-note"></i></span>
-    </div>
-                <input name="attributeValue[]" class="form-control" type="number" placeholder="etc rice,mutton,..">
-
-</div>
-            
-            
-            
-            
-        </div>';
-
-            }
-
-            $display .= ' <div class="form-group row">
-                <label  class="col-form-label">each price</label>
-                
-                
-                <div class="input-group mb-3 input-group-lg">
-    <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
-    </div>
-                <input name="each_price" class="form-control" type="number" placeholder="etc one dish price 1000xx">
-</div>
-                
-                
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label">Quantity</label>
-                
-                
-                           <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-sort-amount-up"></i></span>
+                        <img src="<?php echo $image;?>'" style="height: 20vh;width: 100%">
+                        <p class="card-header"><?php echo $dishesName[$j]; ?></p>
                 </div>
-                                <input name="quantity" class="form-control" type="number" placeholder="how many dishes 1,2,3,...">
-            
-            </div> 
-                            
-                
-                
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label">describe</label>
-                
-                
-                                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+
+
+                <div class="form-group row">
+
+                    <ul class="">
+                <?
+                $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishesid[$j].')';
+                $AttributeDetail=queryReceive($sql);
+
+                // special dish with attribute and quantity
+                for($i=0;$i<count($AttributeDetail);$i++)
+                {
+                    echo ' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].' :  '.$AttributeDetail[$i][1].'</li>';
+                }
+                ?>
+
+                    </ul>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-form-label">each price</label>
+
+
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                        </div>
+                        <input  readonly name="each_price" class="form-control" type="number" placeholder="etc one dish price 1000xx" value="<?php echo $prices[$j]; ?>">
                     </div>
-                <textarea  name="describe" class="form-control" type="text" placeholder="important comments for dish"></textarea>
+
                 </div>
-                
-                
-            </div>
-            <div class="form-group row justify-content-center">
-                <button type="button" data-formid="' . $number . '" class="cancelForm form-control btn col-5 btn-danger" value="cancel"><i class="fas fa-trash-alt"></i>Cancel</button>
-                <button type="button" data-formid="' . $number . '" class="submitForm form-control btn col-5 btn-primary" value="submit"><i class="fas fa-check "></i>Submit</button>
-            </div>
-        </div>
 
-    </form>';
-            $number++;
+                <div class="form-group row">
+                    <label class="col-form-label">Quantity</label>
 
-        }
+
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-sort-amount-up"></i></span>
+                        </div>
+                        <input name="quantity" class="form-control" type="number" placeholder="how many dishes 1,2,3,...">
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label">describe</label>
+
+
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                        </div>
+                        <textarea name="describe" class="form-control" type="text" placeholder="important comments for dish"></textarea>
+                    </div>
+
+
+                </div>
+                <div class="form-group row justify-content-center">
+                    <button type="button" data-formid="<?php echo $j;?>" class="cancelForm form-control btn col-5 btn-danger" value="cancel"><i class="fas fa-trash-alt"></i>Cancel
+                    </button>
+                    <button type="button" data-formid="<?php echo $j;?>" class="submitForm form-control btn col-5 btn-primary" value="submit"><i class="fas fa-check "></i>Submit</button>
+                </div>
+            </div>
+
+        </form>
+
+        <?php
     }
-    echo $display;
-
-    echo '<h4 align="center">total number of dishes<input readonly type="number" id="totalRemaing" value='.$totalDishes.'></h4>';
     ?>
+
+
 </div>
 
 
@@ -208,6 +198,7 @@ include_once ("../webdesign/footer/footer.php");
             {
                 window.location.href="AllSelectedDishes.php";
             }
+         $("#totalRemaing").val(totalitems);
        }
 
        $(document).on('click','.submitForm',function ()

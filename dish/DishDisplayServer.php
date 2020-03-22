@@ -3,6 +3,7 @@
 include_once ("../connection/connect.php");
 if($_POST['option']=="showPriceofAllDishes")
 {
+    $image=$_POST['image'];
     $dishid=$_POST['dishid'];
     $dishName=$_POST['dishName'];
 
@@ -83,7 +84,7 @@ if($_POST['option']=="showPriceofAllDishes")
 
         $display.=  '</ul>
                     <div class="card-footer m-auto">
-                        <button    data-price="'.$dishWithAttribute[$j][3].'" data-dishname="'.$dishName.'"  data-dishid="'.$dishWithAttribute[$j][0].'"  class="btn btn-success  DishAddOnform "><i class=" far fa-check-circle"></i>Select</button>
+                        <button    data-$image="'.$image.'"  data-price="'.$dishWithAttribute[$j][3].'" data-dishname="'.$dishName.'"  data-dishid="'.$dishWithAttribute[$j][0].'"  class="btn btn-success  DishAddOnform "><i class=" far fa-check-circle"></i>Select</button>
                     </div>
                 </div>';
 
@@ -105,6 +106,7 @@ if($_POST['option']=="showPriceofAllDishes")
 }
 else if($_POST['option']=="AddDishOnForm")
 {
+    $image=$_POST['image'];
     $price=$_POST['price'];
     $dishid=$_POST['dishid'];
     $dishName=$_POST['dishName'];
@@ -134,6 +136,7 @@ else if($_POST['option']=="AddDishOnForm")
                                 <input type="text" hidden  name="dishesName[]" value="'.$dishName.'"> 
                               <input type="number" hidden  name="dishesid[]" value="'.$dishid.'"> 
                                <input type="number" hidden  name="prices[]" value="'.$price.'">
+                               <input type="text" hidden  name="images[]" value="'.$image.'">
                           <button type="button"  data-dishid="'.$countofdish.'" class="btn btn-danger remove "><i class="far fa-trash-alt"></i>Delete</button>
                     </div>
                 </div>';
