@@ -194,11 +194,6 @@ include_once ("../../webdesign/header/header.php");
 
 <div class="form-group row">
     <label class="col-form-label">Auto Total amount:</label>
-
-
-
-
-
     <div class="input-group mb-3 input-group-lg">
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>

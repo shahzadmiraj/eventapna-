@@ -397,12 +397,11 @@ function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perhead
     $sql='SELECT `id`, `hall_id`, `catering_id`, `hallprice_id`, `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, `status_catering`, `describe`, `user_id`, `discount`, `extracharges`,`address`  FROM `orderDetail` WHERE id='.$order.'';
     $PreviouseDetailOrder=queryReceive($sql);
 
-    if((int)checknumberOtherNull($PreviouseDetailOrder[0][15])!=$address)
+    if($PreviouseDetailOrder[0][15]!=$address)
     {
         $sql='INSERT INTO `HistoryOrder`(`id`, `ColumnName`, `active`, `expire`, `orderDetail_id`, `user_id`, `columnValue`) VALUES (NULL,"address","'.$timestamp.'",NULL,'.$PreviouseDetailOrder[0][0].','.$PreviouseDetailOrder[0][12].',"'.$PreviouseDetailOrder[0][15].'")';
         querySend($sql);
         $status=true;
-
     }
     if((int)checknumberOtherNull($PreviouseDetailOrder[0][14])!=(int)$Charges)
     {
@@ -483,7 +482,7 @@ function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perhead
         $status=true;
     }
 
-    if(checknumberOtherNull($PreviouseDetailOrder[0][10])!=$catering)
+    if(($PreviouseDetailOrder[0][10]!=checknumberOtherNull($catering))AND(checknumberOtherNull($PreviouseDetailOrder[0][2])!=$cateringid))
     {
 
         //catering status

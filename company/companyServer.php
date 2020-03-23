@@ -480,6 +480,8 @@ if(isset($_POST['option']))
 
         $describe=$_POST['describe'];
         $totalamount=chechIsEmpty($_POST['totalamount']);
+        $Discount=chechIsEmpty($_POST['Discount']);
+        $Charges=chechIsEmpty($_POST['Charges']);
         $catering="";
         if($time=="Morning")
         {
@@ -512,12 +514,12 @@ if(isset($_POST['option']))
         $timestamp = date('Y-m-d H:i:s');
 
 
-        if(checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$branchOrder,$describe,$catering,$timestamp))
+        if(checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$branchOrder,$describe,$catering,$timestamp,NULL,$Charges,$Discount))
         {
             $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`hallprice_id`='.$packageid.',
 `total_amount`='.$totalamount.',`total_person`='.$guests.',`status_hall`
 ="'.$orderStatus.'",`destination_date`="'.$date.'",`destination_time`="'.$time.'",
-`status_catering`="'.$catering.'",`describe`="'.$describe.'" , `hall_id`='.$branchOrder.',`user_id`='.$userid.'
+`status_catering`="'.$catering.'",`describe`="'.$describe.'" , `hall_id`='.$branchOrder.',`user_id`='.$userid.',`discount`='.$Discount.',`extracharges`='.$Charges.'
 WHERE  id='.$order.'';
             querySend($sql);
         }

@@ -16,14 +16,14 @@ if(!isset($_SESSION['customer']))
 }
 $companyid=$_COOKIE['companyid'];
 $userid=$_COOKIE['userid'];
-//$hallid=$_SESSION['branchtypeid'];
+$hallid=$_SESSION['branchtypeid'];
 $orderid=$_SESSION['order'];
 $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
  `user_id`, 1, 1, 1, 
- 1, `address_id`, `person_id`, `total_amount`, 
+ 1, 1, `person_id`, `total_amount`, 
  `total_person`, `status_hall`, `destination_date`, 
  `booking_date`, `destination_time`, `status_catering`, 
- 1,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderid.'';
+ 1,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id), `discount`, `extracharges` FROM `orderDetail` WHERE id='.$orderid.'';
 $detailorder=queryReceive($sql);
 
 $sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$detailorder[0][1].') AND (ISNULL(c.expire))';
@@ -70,8 +70,13 @@ include_once ("../../webdesign/header/header.php");
 
 <div class="container table-light shadow">
 
+    <?php
+        echo '<input type="number" hidden id="extraamount" value="'.$priceDetailOfExtraItem[0][0].'">';
+    ?>
+
 
     <div class="form-group form-inline">
+
         <h4 class="m-auto">Extra Items detail   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i><?php echo $priceDetailOfExtraItem[0][0];?></span></h4>
         <a href="orderInfo/orderItem.php" class="btn btn-primary" >manage items</a>
     </div>
@@ -341,35 +346,61 @@ include_once ("../../webdesign/header/header.php");
 
 
     </div>
-    <div class="form-group row">
-        <label class="col-form-label">Describe /Comments</label>
 
 
-
-
-
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-comments"></i></span>
-            </div>
-
-            <textarea  name="describe" class="form-control"><?php echo $detailorder[0][19]; ?></textarea></textarea>
-
-        </div>
-
-
-    </div>
     <div class="form-group row">
         <label class="col-form-label">Total amount:</label>
-
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
             </div>
-            <input name="totalamount" type="number" class="form-control" value="<?php echo $detailorder[0][11]; ?>">
+            <input readonly id="totalamount" name="totalamount" type="number" class="form-control" value="<?php echo $detailorder[0][11]; ?>">
         </div>
     </div>
+
+
+    <div class="form-group row">
+        <label class="form-check-label" for="Discount">Discount </label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input value="<?php echo $detailorder[0][23];?>" placeholder="Discount" id="Discount"  name="Discount" type="number" class="form-control"  >
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="form-check-label" for="Charges">Extra Charges </label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input  value="<?php echo $detailorder[0][24];?>" placeholder="Extra Charges "  id="Charges" name="Charges" type="number" class="form-control"  >
+        </div>
+
+    </div>
+
+
+
+    <div class="form-group row">
+        <label class="form-check-label" for="remaining">Remaining Amount </label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input placeholder="Remaining Amount " readonly  id="remaining" name="remaining" type="number" class="form-control" >
+        </div>
+
+    </div>
+
+
+
+
 
 
     <?php
@@ -441,6 +472,25 @@ include_once ("../../webdesign/header/header.php");
 
     </div>
 
+    <div class="form-group row">
+        <label class="col-form-label">Describe /Comments</label>
+
+
+
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+            </div>
+
+            <textarea  name="describe" class="form-control"><?php echo $detailorder[0][19]; ?></textarea></textarea>
+
+        </div>
+
+
+    </div>
+
 
 
     <div class="form-group row">
@@ -452,7 +502,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-business-time"></i></span>
             </div>
-            <input readonly type="date" class="form-control" value="<?php echo $detailorder[0][15]; ?>">
+            <input readonly type="datetime" class="form-control" value="<?php echo $detailorder[0][15]; ?>">
         </div>
     </div>
 
@@ -469,7 +519,45 @@ include_once ("../../webdesign/header/header.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
+        function valueChangeAuto()
+        {
+           // var extraAmount=$("#extraamount").val();
+            var guests=$("#guests").val();
+            var packageid;
+            var amount;
+            var AutoTotalAmount=0;
+            if($("input[name='defaultExampleRadios']:checked"))
+            {
+                packageid=$("input[name='defaultExampleRadios']:checked").val();
+                amount=$("#selectpricefix"+packageid).val();
+                AutoTotalAmount=parseInt(amount)*parseInt(guests);
+            }
+          //  AutoTotalAmount+=parseInt(extraAmount);
+            $("#totalamount").val(AutoTotalAmount);
+        }
+        $("#guests").change(function ()
+        {
+            valueChangeAuto();
+        });
+        function RemainingAmount()
+        {
+            var totalamount= $("#totalamount").val();
+            var newDiscount=$("#Discount").val();
+            var newcharges=$("#Charges").val();
+            $("#remaining").val(totalamount+newcharges-newDiscount);
+        }
+        RemainingAmount();
+
+        $("#Discount").change(function ()
+        {
+            RemainingAmount();
+        });
+        $("#Charges").change(function ()
+        {
+            RemainingAmount();
+        });
 
         function barnches()
         {

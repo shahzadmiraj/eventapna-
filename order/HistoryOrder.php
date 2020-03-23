@@ -175,7 +175,35 @@ include_once ("../webdesign/header/header.php");
                 {
                     echo '<div class="form-group row">
                 <label class="col-form-label" for="total_amount"> <span><i class="far fa-money-bill-alt"></i></span>
-                    Total amount</label>
+                    Auto Total amount</label>
+                <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
+            </div>';
+
+                }
+                else if($infoDetail[$j][0]=="address")
+                {
+                    echo '<div class="form-group row">
+                <label class="col-form-label" for="total_amount"> <span><i class="far fa-money-bill-alt"></i></span>
+                    Address :</label>
+                <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
+            </div>';
+
+                }
+                else if($infoDetail[$j][0]=="extracharges")
+                {
+                    echo '<div class="form-group row">
+                <label class="col-form-label" for="total_amount"> <span><i class="far fa-money-bill-alt"></i></span>
+                    Extra Charges</label>
+                <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
+            </div>';
+
+                }
+
+                else if($infoDetail[$j][0]=="discount")
+                {
+                    echo '<div class="form-group row">
+                <label class="col-form-label" for="total_amount"> <span><i class="far fa-money-bill-alt"></i></span>
+                    Discount </label>
                 <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
             </div>';
 
