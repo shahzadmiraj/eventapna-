@@ -68,21 +68,22 @@ include_once ("../../webdesign/header/header.php");
 
 </div>
 
-<div class="container table-light shadow">
+
 
     <?php
         echo '<input type="number" hidden id="extraamount" value="'.$priceDetailOfExtraItem[0][0].'">';
     ?>
 
 
-    <div class="form-group form-inline">
 
-        <h4 class="m-auto">Extra Items detail   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i><?php echo $priceDetailOfExtraItem[0][0];?></span></h4>
-        <a href="orderInfo/orderItem.php" class="btn btn-primary" >manage items</a>
-    </div>
-    <hr>
+<div class="container card form-group form-inline">
 
-    <div class="container form-inline">
+    <h4 class="m-auto">Extra Items detail   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i><?php echo $priceDetailOfExtraItem[0][0];?></span></h4>
+    <a href="orderInfo/orderItem.php" class="btn btn-primary" >manage items</a>
+</div>
+<hr>
+
+    <div class="container  card form-inline">
 
         <?php
         $display='';
@@ -113,13 +114,13 @@ include_once ("../../webdesign/header/header.php");
 
 
                 $display.='
-        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder col-12 col-md-6 col-lg-4 col-xl-3  ">';
+        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder badge-light border m-1 col-11 col-md-5 col-lg-3 col-xl-2  ">';
 
 
                 $display.=$imagespath;
-                $display.='   <div class="card-body ">
+                $display.='   <div class=" ">
                 <h4 class="card-title">'.$kinds[$i][1].'</h4>
-              <h6 class="float-right "><i class="far fa-money-bill-alt"></i>'.$kinds[$i][2].'
+              <h6 class=" float-right "><i class="far fa-money-bill-alt"></i>'.$kinds[$i][2].'
 </h6>
             </div>
         </div>
@@ -143,7 +144,7 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-<form class="form mt-5" >
+<form class="form container card" >
     <h3>Order information</h3>
     <hr>
     <input type="hidden" name="userid" value="<?php echo $userid;?>">
@@ -514,7 +515,6 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
 </form>
-</div>
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
@@ -543,9 +543,9 @@ include_once ("../../webdesign/footer/footer.php");
         });
         function RemainingAmount()
         {
-            var totalamount= $("#totalamount").val();
-            var newDiscount=$("#Discount").val();
-            var newcharges=$("#Charges").val();
+            var totalamount= Number($("#totalamount").val());
+            var newDiscount=Number($("#Discount").val());
+            var newcharges=Number($("#Charges").val());
             $("#remaining").val(totalamount+newcharges-newDiscount);
         }
         RemainingAmount();

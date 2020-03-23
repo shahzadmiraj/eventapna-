@@ -22,6 +22,7 @@ $sql='SELECT sum(ei.price) FROM hall_extra_items as hei  INNER JOIN Extra_Item a
 on(hei.Extra_Item_id=ei.id)
 WHERE (hei.orderDetail_id='.$order.') AND(ISNULL(hei.expire)) ';
 $priceDetailOfExtraItem=queryReceive($sql);
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -62,18 +63,19 @@ else
     <div class="card-body " style="opacity: 0.7 ;background: white;">
         <h5 class="display-5 text-center"><i class="fas fa-hamburger fa-3x"></i> Extra items Detail</h5>
         <p class="lead">Extra items information such as Sound system ,Dancing floor ,Fog light ,Snow system Price manager others </p>
-        <h5 class="text-center"> <a href="../../companyRegister/companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h5>
     </div>
 </div>
 
 
-<div class="container">
 
-<form id="formitems">
-    <input type="hidden" name="order" value="<?php echo $order;?>">
-    <input type="hidden" name="userid" value="<?php echo $userid;?>" >
-    <div class="container card badge-warning">
-        <h4 class="m-auto">Selected Item of order   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i>  <input  class="text-primary" type="number" id="AmountSet" value="<?php
+<form id="formitems" class="alert-light">
+
+    <input hidden id="PreviousExtraFixAmount" type="text"  value="<?php echo  $priceDetailOfExtraItem[0][0]; ?>" name="PreviousExtraFixAmount">
+
+    <input hidden id="orderid"  type="text" name="order" value="<?php echo $order;?>">
+    <input hidden type="number" name="userid" value="<?php echo $userid;?>" >
+    <div class="container card">
+        <h4 class="m-auto">Selected Item of order   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i>  <input  name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
           if(empty($priceDetailOfExtraItem[0][0]))
           {
               echo 0;
@@ -85,7 +87,7 @@ else
             ?>"</span></h4>
 
         <hr>
-        <div class="container form-inline" id="additems">
+        <div class="container form-inline " id="additems">
 <!--
             <div id="jsid1" class="card mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary">
                 <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap" style="height: 30vh">
@@ -180,7 +182,6 @@ else
 
 
 
-
 <h1 class="text-center mt-3">Select Item</h1>
 <hr>
     <div class="container card">
@@ -227,7 +228,7 @@ else
 
 
                 $display.='
-        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder card mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary ">';
+        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder card  mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary ">';
 
 
 $display.=$imagespath;
@@ -248,10 +249,6 @@ $display.=$imagespath;
 
 
         ?>
-
-
-
-    </div>
 
 
 
@@ -316,8 +313,8 @@ include_once ("../../../webdesign/footer/footer.php");
             $("#jsid"+id).remove();
         });
 
-        $("#cancel").click(function (e) {
-
+        $("#cancel").click(function (e)
+        {
             e.preventDefault();
             window.history.back();
         });
@@ -328,9 +325,13 @@ include_once ("../../../webdesign/footer/footer.php");
             var id=$(this).data("itemsid");
             var amount=$(this).data("amount");
             SetAmount("Minus",amount);
+            var orderid=$("#orderid").val();
 
+            var CurrentAmount=parseInt($("#AmountSet").val());
             var formdata=new FormData;
-            formdata.append("option","deletedDelecteditems");
+            formdata.append("option","deletedSelecteditems");
+            formdata.append("CurrentAmount",CurrentAmount);
+            formdata.append("orderid",orderid);
             formdata.append("id",id);
             $.ajax({
                 url:"orderitemServer.php",
@@ -358,10 +359,10 @@ include_once ("../../../webdesign/footer/footer.php");
             });
 
         });
-
         $("#btnsubmit").click(function (e)
         {
-            e.preventDefault();
+           e.preventDefault();
+            var orderid=$("#orderid").val();
             var formdata=new FormData($('#formitems')[0]);
             formdata.append("option","additemsInOrder");
             $.ajax({

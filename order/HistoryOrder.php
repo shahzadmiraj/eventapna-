@@ -196,7 +196,6 @@ include_once ("../webdesign/header/header.php");
                     Extra Charges</label>
                 <label class="col-form-label ownText"> '.$infoDetail[$j][1].'</label>
             </div>';
-
                 }
 
                 else if($infoDetail[$j][0]=="discount")
