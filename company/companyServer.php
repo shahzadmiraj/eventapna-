@@ -429,6 +429,8 @@ if(isset($_POST['option']))
             $describe=$_POST['describe'];
             $totalamount=chechIsEmpty($_POST['totalamount']);
             $currentdate=date('Y-m-d');
+            $Discount=chechIsEmpty($_POST['Discount']);
+            $Charges=chechIsEmpty($_POST['Charges']);
             if($time=="Morning")
             {
                 $time="09:00:00";
@@ -440,7 +442,6 @@ if(isset($_POST['option']))
             }
             else
                 {
-
                 $time = "18:00:00";
             }
 
@@ -453,9 +454,9 @@ if(isset($_POST['option']))
             }
             $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
-        `status_catering`,`describe`) 
+        `status_catering`,`describe`, `address`, `location_id`, `discount`, `extracharges`) 
         VALUES (NULL,'.$hallid.','.$cateringid.','.$packageid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
-        "'.$time.'",'.$catering.',"'.$describe.'")';
+        "'.$time.'",'.$catering.',"'.$describe.'",NULL,NULL,'.$Discount.','.$Charges.')';
             querySend($sql);
             $_SESSION['order']=mysqli_insert_id($connect);
 

@@ -191,19 +191,7 @@ include_once ("../../webdesign/header/header.php");
 
 
     </div>
-    <div class="form-group row">
-        <label class="col-form-label">Describe /Comments</label>
 
-
-
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-comments"></i></span>
-            </div>
-            <textarea  name="describe" class="form-control" placeholder="order comments /describe"></textarea>
-
-        </div>
-    </div>
 <div class="form-group row">
     <label class="col-form-label">Auto Total amount:</label>
 
@@ -228,7 +216,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
             </div>
-            <input  id="Discount"  name="Discount" type="number" class="form-control"  >
+            <input placeholder="Discount" id="Discount"  name="Discount" type="number" class="form-control"  >
         </div>
 
     </div>
@@ -240,7 +228,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
             </div>
-            <input   id="Charges" name="Charges" type="number" class="form-control"  >
+            <input  placeholder="Extra Charges "  id="Charges" name="Charges" type="number" class="form-control"  >
         </div>
 
     </div>
@@ -254,18 +242,25 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
             </div>
-            <input readonly  id="remaining" name="remaining" type="number" class="form-control" >
+            <input placeholder="Remaining Amount " readonly  id="remaining" name="remaining" type="number" class="form-control" >
         </div>
 
     </div>
 
+    <div class="form-group row">
+        <label class="col-form-label">Describe /Comments</label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+            </div>
+            <textarea  name="describe" class="form-control" placeholder="order comments /describe"></textarea>
+
+        </div>
+    </div>
+
     <div class="form-group row justify-content-center shadow">
-        <!--
 
-         edit customer 17
-
-
-        -->
         <a href="../../customer/customerEdit.php" class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
         <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i>Submit</button>
     </div>
