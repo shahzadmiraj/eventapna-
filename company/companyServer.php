@@ -352,6 +352,7 @@ if(isset($_POST['option']))
         <input type="radio" data-describe="'.$detailpackage[$i][0].'" value="'.$detailpackage[$i][0].'" class="changeradio custom-control-input" id="defaultUnchecked'.$i.'" name="defaultExampleRadios">
         <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with Rs='.$detailpackage[$i][2].' price</label>
     </div> 
+     <input hidden id="selectpricefix'.$detailpackage[$i][0].'" type="number" value="'.$detailpackage[$i][2].'">
     <input hidden id="describe'.$detailpackage[$i][0].'" type="text" value="'.$detailpackage[$i][3].'">';
             }
 
@@ -364,8 +365,9 @@ if(isset($_POST['option']))
         {
             //with seating menu
             $display.=' <div class="checkclasshas custom-control custom-radio form-group ">
-        <input type="radio"  value="'.$detailpackage[0][0].'" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios" checked>
+        <input type="radio"   value="'.$detailpackage[0][0].'"  class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios" checked>
         <label class="custom-control-label" for="defaultUnchecked"> Only Seating price = '.$detailpackage[0][2].'</label>
+        <input hidden id="selectpricefix'.$detailpackage[0][0].'" type="number" value="'.$detailpackage[0][2].'">
     </div>';
 
         }
@@ -449,11 +451,10 @@ if(isset($_POST['option']))
                 $catering="'Running'";
                 $cateringid=$_POST['cateringid'];
             }
-            $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, 
-         `address_id`, `person_id`, 
+            $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
         `status_catering`,`describe`) 
-        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageid.','.$userid.',NULL,'.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
+        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
         "'.$time.'",'.$catering.',"'.$describe.'")';
             querySend($sql);
             $_SESSION['order']=mysqli_insert_id($connect);

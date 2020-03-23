@@ -24,7 +24,6 @@ else
 {
     header("location:../company/companyRegister/companydisplay.php");
 }
-
 if(isset($_SESSION['order']))
 {
     unset($_SESSION['order']);
@@ -131,9 +130,7 @@ echo $display;
 
     <div class="container row m-auto">
 <!--        $OrderStatus=array("running","cancel","delieved","clear");-->
-            <a href="../customer/CustomerCreate.php?" class="h-25 col-5 shadow btn-warning m-2 text-center">
-                <i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
-
+            <a href="../customer/CustomerCreate.php?" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
         <a href="../order/FindOrder.php?order_status=Today_Orders" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Today Orders</h6></a>
         <a href="../order/FindOrder.php?order_status=Running" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
             <a href="../order/FindOrder.php?order_status=Delieved" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>

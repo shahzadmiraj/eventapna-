@@ -6,16 +6,16 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-/*if(!isset($_SESSION['branchtype']))
+if(!isset($_SESSION['branchtype']))
 {
     header("location:../company/companyRegister/companydisplay.php");
 
 }
 $hallid="";
 $cateringid='';
-if(isset($_SESSION['typebranch']))
+if(isset($_SESSION['branchtype']))
 {
-    if($_SESSION['typebranch']=="hall")
+    if($_SESSION['branchtype']=="hall")
     {
         $hallid=$_SESSION['branchtypeid'];
     }
@@ -27,8 +27,7 @@ if(isset($_SESSION['typebranch']))
 if(isset($_SESSION['customer']))
 {
     header("location:customerEdit.php");
-}*/
-$hallid=1;
+}
 $userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
@@ -143,7 +142,7 @@ include_once ("../webdesign/header/header.php");
 
         </div>
         <div class="form-group row">
-            <label for="address" class="col-form-label">address:</label>
+            <label for="address" class="col-form-label">Address:</label>
 
 
 
@@ -152,7 +151,8 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
                 </div>
-                <input type="text" id="address" name="address" class="form-control" placeholder="address">
+
+            <textarea id="address" name="address" class="form-control" placeholder="address"></textarea>
             </div>
         </div>
 

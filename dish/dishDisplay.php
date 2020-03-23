@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-/*if(!isset($_SESSION['branchtype']))
+if(!isset($_SESSION['branchtype']))
 {
     header("location:../company/companyRegister/companydisplay.php");
 
@@ -14,12 +14,12 @@ include_once ("../connection/connect.php");
 if(!isset($_SESSION['order']))
 {
     header("location:../user/userDisplay.php");
-}*/
-$order=$_SESSION['order']=1;
-//$sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
-//WHERE od.id='.$order.'';
+}
+$order=$_SESSION['order'];
+$sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
+WHERE od.id='.$order.'';
 $hallpackage=queryReceive($sql);
-$cateringid=$hallpackage[0][3]=1;
+$cateringid=$hallpackage[0][3];
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
 $dishTypeDetail=queryReceive($sql);
 ?>
@@ -302,10 +302,10 @@ include_once ("../webdesign/footer/footer.php");
 
         <?php
 
-//            if($hallpackage[0][2]==1)
-//            {
-//                echo 'menushow(' . $hallpackage[0][0] . ',' . $hallpackage[0][1] . ');';
-//            }
+            if($hallpackage[0][2]==1)
+            {
+                echo 'menushow(' . $hallpackage[0][0] . ',' . $hallpackage[0][1] . ');';
+            }
 
     ?>
 

@@ -16,7 +16,7 @@ if(!isset($_SESSION['order']))
 }
 $companyid=$_COOKIE['companyid'];
 $userid=$_COOKIE['userid'];
-$orderId=$_SESSION['order']=1;
+$orderId=$_SESSION['order'];
 $sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`,1, `person_id`,`catering_id` ,`user_id`, `discount`, `extracharges`, `address` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
 

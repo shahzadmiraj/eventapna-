@@ -30,7 +30,7 @@ function orderChange($post)
 
 
     //update order
-    $sql='UPDATE `orderDetail` SET  `address`="'.$address.'",`discount`='.$Discount.',`extracharges`='.$Charges.',`catering_id`='.$branchOrder.',`user_id`='.$userid.',`total_person`='.$total_person.',`destination_date`="'.$destination_date.'",`destination_time`="'.$destination_time.'",`status_catering`="'.$status_catering.'",`describe`="'.$describe.'", `total_amount`='.$total_amount.' WHERE `id` = '.$orderid.'';
+    $sql='UPDATE `orderDetail` SET  `address`="'.$address.'",`discount`='.$Discount.',`extracharges`='.$Charges.',`catering_id`='.$branchOrder.',`user_id`='.$userid.',`total_person`='.$total_person.',`destination_date`="'.$destination_date.'",`destination_time`="'.$destination_time.'",`status_catering`="'.$status_catering.'",`describe`="'.$describe.'" WHERE `id` = '.$orderid.'';
 
     querySend($sql);
 

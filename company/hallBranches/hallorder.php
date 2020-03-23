@@ -76,7 +76,7 @@ include_once ("../../webdesign/header/header.php");
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-users"></i></span>
         </div>
-        <input name="guests" type="number" class="form-control" placeholder="etc 250,300,....persons">
+        <input id="guests" name="guests" type="number" class="form-control" placeholder="etc 250,300,....persons">
     </div>
 
 
@@ -154,7 +154,8 @@ include_once ("../../webdesign/header/header.php");
                 ';
 
 
-        for ($i = 0; $i < count($cateringids); $i++) {
+        for ($i = 0; $i < count($cateringids); $i++)
+        {
             $display .= '
             <option value="' . $cateringids[$i][0] . '">' . $cateringids[$i][1] . '</option>';
 
@@ -184,7 +185,7 @@ include_once ("../../webdesign/header/header.php");
     <div id="groupofpackages" class="col-12 alert-warning shadow">
 
 
-</div>
+    </div>
 
     <div id="selectmenu" class="alert-info  m-2 form-group row shadow" >
 
@@ -204,7 +205,7 @@ include_once ("../../webdesign/header/header.php");
         </div>
     </div>
 <div class="form-group row">
-    <label class="col-form-label">Total amount:</label>
+    <label class="col-form-label">Auto Total amount:</label>
 
 
 
@@ -214,9 +215,49 @@ include_once ("../../webdesign/header/header.php");
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
         </div>
-        <input name="totalamount" type="number" class="form-control" placeholder="etc 10000,20000 total amount">
+        <input readonly id="totalamount" name="totalamount" type="number" class="form-control" placeholder="etc 10000,20000 total amount">
     </div>
 </div>
+
+
+
+    <div class="form-group row">
+        <label class="form-check-label" for="Discount">Discount </label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input  id="Discount"  name="Discount" type="number" class="form-control"  >
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="form-check-label" for="Charges">Extra Charges </label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input   id="Charges" name="Charges" type="number" class="form-control"  >
+        </div>
+
+    </div>
+
+
+
+    <div class="form-group row">
+        <label class="form-check-label" for="remaining">Remaining Amount </label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input readonly  id="remaining" name="remaining" type="number" class="form-control" >
+        </div>
+
+    </div>
 
     <div class="form-group row justify-content-center shadow">
         <!--
@@ -234,8 +275,42 @@ include_once ("../../webdesign/header/header.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
 
+        function valueChangeAuto()
+        {
+            var guests=$("#guests").val();
+            var packageid;
+            var amount;
+            if($("input[name='defaultExampleRadios']:checked"))
+            {
+                packageid=$("input[name='defaultExampleRadios']:checked").val();
+                amount=$("#selectpricefix"+packageid).val();
+                $("#totalamount").val(parseInt(amount)*parseInt(guests));
+
+            }
+        }
+        $("#guests").change(function ()
+        {
+            valueChangeAuto();
+        });
+        function RemainingAmount()
+        {
+            var totalamount= $("#totalamount").val();
+            var newDiscount=$("#Discount").val();
+            var newcharges=$("#Charges").val();
+            $("#remaining").val(totalamount+newcharges-newDiscount);
+        }
+
+        $("#Discount").change(function ()
+        {
+            RemainingAmount();
+        });
+        $("#Charges").change(function ()
+        {
+            RemainingAmount();
+        });
 
         function barnches()
         {
@@ -258,7 +333,8 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 
-        function checkpackage(date, time, perheadwith) {
+        function checkpackage(date, time, perheadwith)
+        {
             if ((date != "") && (time != "") && (perheadwith != "")) {
                 return 1;
             }
@@ -266,13 +342,14 @@ include_once ("../../webdesign/footer/footer.php");
 
         }
 
-        $(".checkpackage").change(function () {
+        $(".checkpackage").change(function ()
+        {
             var date = $("#date").val();
             var month = new Date(date).getMonth();
             var time = $("#time").val();
             var perheadwith = $("#perheadwith").val();
-            if (!checkpackage(date, time, perheadwith)) {
-
+            if (!checkpackage(date, time, perheadwith))
+            {
                 return false;
             }
 
@@ -313,6 +390,7 @@ include_once ("../../webdesign/footer/footer.php");
                         $("#groupofpackages").html(data);
                         $("#submitform").show("slow");
                     }
+                    valueChangeAuto();
 
                 }
 
@@ -325,11 +403,14 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 
-        $(document).on("click","input[type=radio]",function () {
+        $(document).on("click","input[type=radio]",function ()
+        {
 
             var packageid=$("input[name='defaultExampleRadios']:checked").val();
             if($("#perheadwith").val()!="1")
                 return false;
+            //multiples packages
+            valueChangeAuto();
 
             var describe=$("#describe"+packageid).val();
             var formdata = new FormData;

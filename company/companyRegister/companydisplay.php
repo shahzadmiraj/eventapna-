@@ -26,7 +26,7 @@ if(isset($_SESSION['customer']))
 if(isset($_SESSION['branchtype']))
 {
     unset($_SESSION['branchtype']);
-        unset($_SESSION['branchtypeid']);
+    unset($_SESSION['branchtypeid']);
 }
 if(isset($_GET['branchtype']))
 {

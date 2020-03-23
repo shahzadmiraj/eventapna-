@@ -15,7 +15,6 @@ if(!isset($_SESSION['customer']))
 {
     header("location:../user/userDisplay.php");
 }
-$_SESSION['customer']=3;
 $customerId="";
 $customerId=$_SESSION['customer'];
 $hallid="";
