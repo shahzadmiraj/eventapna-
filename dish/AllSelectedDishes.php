@@ -57,38 +57,6 @@ include_once ("../webdesign/header/header.php");
 
 
 
-    <div class="row justify-content-center container-fluid" style="margin-top: -60px">
-
-        <div class="card text-center card-header">
-            <img src="
-
-            <?php
-
-            $sql="SELECT DISTINCT ot.id, (SELECT p.name FROM person as p WHERE p.id=ot.person_id), (SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id=ot.id)) ,ot.id,ot.total_amount, (SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE dd.orderDetail_id=ot.id),(SELECT p.image FROM person as p WHERE p.id=ot.person_id) FROM orderDetail as ot LEFT join payment as py on ot.id=py.orderDetail_id WHERE ot.id=".$orderId."";
-            $details=queryReceive($sql);
-
-            if(file_exists('../images/customerimage/'.$details[0][2])&&($details[0][6]!=""))
-            {
-                echo '../images/customerimage/'.$details[0][6];
-
-            }
-            else
-            {
-                echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
-            }
-
-
-            ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
-            <h5 ><?php
-                echo  $details[0][1];
-                ?></h5>
-            <label >Order ID:<?php
-                echo  $details[0][0];
-                ?></label>
-        </div>
-    </div>
-
-
 
 
 
@@ -123,9 +91,9 @@ include_once ("../webdesign/header/header.php");
 
         ?>
 
-        <a href="" class="card m-2" >
+        <a href="dishPreview.php?dish=<?php echo base64url_encode($detailDishes[$i][0]);?>" class="card m-2" >
             <div class="card-header">
-                <h4><?php echo $detailDishes[$i][10];?></h4>
+                <h4><i class="fas fa-file-word"></i><?php echo $detailDishes[$i][10];?></h4>
             </div>
             <ul class="list-group list-group-flush">
 
@@ -141,18 +109,18 @@ include_once ("../webdesign/header/header.php");
                 }
                 ?>
             </ul>
-            <p><?php echo $detailDishes[$i][1];?></p>
+            <p><i class="fas fa-comments"></i><?php echo $detailDishes[$i][1];?></p>
             <div class="card-footer ">
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                        <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                     </div>
                     <label>Price:<?php echo $detailDishes[$i][8];?></label>
                 </div>
 
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                        <span class="input-group-text"> <i class="fas fa-sort-amount-up"></i></span>
                     </div>
                     <label>Quantity:<?php echo $detailDishes[$i][3];?></label>
                 </div>

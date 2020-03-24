@@ -68,9 +68,10 @@ else if($_POST['option']=='dishDetailChange')
 }
 else if($_POST['option']=='deleteDish')
 {
+    $userid=$_POST['userid'];
     $dishDetailId=$_POST['dishDetailId'];
     $currentDate=date('Y-m-d H:i:s');
-    $sql='UPDATE dish_detail as dd SET dd.expire_date="'.$currentDate.'"  WHERE dd.id='.$dishDetailId.'';
+    $sql='UPDATE dish_detail as dd SET dd.expire="'.$currentDate.'",dd.expireUser='.$userid.'  WHERE dd.id='.$dishDetailId.'';
     querySend($sql);
 
 }
