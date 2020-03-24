@@ -40,7 +40,7 @@ $orderId=$_SESSION['order'];
 
     </style>
 </head>
-<body class="text-white">
+<body>
 
 <?php
 include_once ("../webdesign/header/header.php");
@@ -88,97 +88,13 @@ include_once ("../webdesign/header/header.php");
         </div>
     </div>
 
-    <?php
-
-
-    echo '
-        <div class="col-12 shadow card-header mb-3 border">
-    <div class="form-group row">
-        <label class="col-6 form-check-label"> received amount</label>
-        <label class="col-6 form-check-label">'.(int)$details[0][2].' </label>
-    </div>
-    <div class="form-group row">
-        <label class="col-6 form-check-label"> System  Amount</label>
-        <label class="col-6 form-check-label"> '.(int)$details[0][5].'</label>
-    </div>
-    <div class="form-group row">
-        <label class="col-6 form-check-label"> remaining system amount</label>
-        <label class="col-6 form-check-label">'.(int) ($details[0][5]-$details[0][2]).' </label>
-    </div>
-    <div class="form-group row">
-        <label class="col-6 form-check-label"> your demanded amount</label>
-        <label class="col-6 form-check-label">'.(int) $details[0][4].' </label>
-    </div>
-    <div class="form-group row">
-        <label class="col-6 form-check-label">remaining demand amount </label>
-        <label class="col-6 form-check-label"> '.(int) ($details[0][4]-$details[0][2]).'</label>
-    </div>
-    
-    </div>
-    ';
-    ?>
-
-
-
-<div style="overflow:auto;width:auto" >
-
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr>
-            <th scope="col"><h1 class="far fa-trash-alt"></h1>Delete</th>
-            <th scope="col"><h1 class="fas fa-concierge-bell"></h1><br> DishName</th>
-            <th scope="col"><h1 class="fas fa-hashtag "></h1><br>Quantity</th>
-            <th scope="col"><h1 class="far fa-money-bill-alt"></h1><br>Each price</th>
-            <th scope="col"><h1 class="fas fa-list-alt"></h1><br>Total price</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <?php
-        $sql='SELECT dd.id,d.name,dd.quantity,dd.price,d.id FROM dish_detail as dd INNER JOIN
-dish as d 
-on d.id=dd.dish_id
-where 
- (dd.orderDetail_id='.$orderId.') AND ISNULL(dd.expire_date)';
-        $totalAmount=0;
-        $dishesDetail=queryReceive($sql);
-        for($i=0;$i<count($dishesDetail);$i++)
-        {
-            $totalAmount+=(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3];
-            echo '   
-            <tr class="Redirect" data-id="'.base64url_encode($dishesDetail[$i][0]).'">
-            <th scope="row"><i class="fas fa-minus-circle btn btn-danger dishdetail" data-id="'.$dishesDetail[$i][0].'"></i></th>
-            <td>'.$dishesDetail[$i][1].'</td>
-            <td>'.$dishesDetail[$i][2].'</td>
-            <td>'.$dishesDetail[$i][3].'</td>
-            <td>'.(int)$dishesDetail[$i][2]*(int)$dishesDetail[$i][3].'</td>
-             </tr>
-            ';
-        }
 
 
 
 
 
 
-
-
-        ?>
-
-
-        </tbody>
-    </table>
-
-
-
-</div>
-
-
-
-
-
-
-    <div class="col-12  row justify-content-center ">
+    <div class="container">
 
 
         <?php
@@ -194,6 +110,77 @@ where
 
     </div>
 
+
+
+<div class="container form-inline badge-light">
+
+    <?php
+  $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id)  FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND (dd.orderDetail_id='.$orderId.')';
+   $detailDishes=queryReceive($sql);
+    for($i=0;$i<count($detailDishes);$i++)
+    {
+
+
+        ?>
+
+        <a href="" class="card m-2" >
+            <div class="card-header">
+                <h4><?php echo $detailDishes[$i][10];?></h4>
+            </div>
+            <ul class="list-group list-group-flush">
+
+
+                <?
+                $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$detailDishes[$i][6].')';
+                $AttributeDetail=queryReceive($sql);
+
+                // special dish with attribute and quantity
+                for($j=0;$j<count($AttributeDetail);$j++)
+                {
+                    echo ' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$j][0].' :  '.$AttributeDetail[$j][1].'</li>';
+                }
+                ?>
+            </ul>
+            <p><?php echo $detailDishes[$i][1];?></p>
+            <div class="card-footer ">
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                    </div>
+                    <label>Price:<?php echo $detailDishes[$i][8];?></label>
+                </div>
+
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                    </div>
+                    <label>Quantity:<?php echo $detailDishes[$i][3];?></label>
+                </div>
+
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                    </div>
+                    <label>Total:<?php echo (int) $detailDishes[$i][3]*$detailDishes[$i][8];?></label>
+                </div>
+
+
+            </div>
+        </a>
+
+        <?php
+    }
+    ?>
+
+
+
+
+
+
+
+
+
+</div>
 
 
 

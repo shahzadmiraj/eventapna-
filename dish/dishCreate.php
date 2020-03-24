@@ -16,7 +16,7 @@ if(!isset($_SESSION['order']))
     header("location:../user/userDisplay.php");
 }
 
-if((!isset($_POST['dishid']))&&($_SESSION['order']))
+if(!isset($_POST['dishesid']))
 {
     header("location:AllSelectedDishes.php");
     exit();
