@@ -21,7 +21,8 @@ if(isset($_GET['action']))
     header("location:dishPreview.php?dish=".base64url_encode($_GET['action']));
 }
 $orderId=$_SESSION['order'];
-
+$sql='SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND(dd.orderDetail_id='.$orderId.')';
+$ActiveTotalAmount=queryReceive($sql);
 ?>
 <!DOCTYPE html>
 <head>
@@ -48,7 +49,7 @@ include_once ("../webdesign/header/header.php");
 <div class="jumbotron  shadow" style="background-image: url(https://qph.fs.quoracdn.net/main-qimg-b1822af85b86aabaa253ad7948880cb7);background-size:100% 115%;background-repeat: no-repeat">
 
     <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 class="text-dark"><i class="fas fa-file-word fa-3x mr-2 "></i>BILL DETAIL</h3>
+        <h3 ><i class="fas fa-file-word fa-3x mr-2 "></i>Catering Order Detail</h3>
     </div>
 
 </div>
@@ -62,25 +63,28 @@ include_once ("../webdesign/header/header.php");
 
 
 
-    <div class="container">
+    <div class="container alert-light">
+        <h3>Catering Dishes Detail</h3>
+        <hr>
 
-
-        <?php
-        $sql='SELECT catering_id FROM `orderDetail` WHERE id='.$orderId.'';
-        $cateringidz=queryReceive($sql);
-        if($cateringidz[0][0]!="")
-        {
-            echo ' <a href="dishDisplay.php" class="form-control btn-success col-6"><i class="fas fa-concierge-bell"></i>dish Add +</a>';
-        }
-
-        ?>
-        <a class="nav-link btn btn-warning col-6 form-control" href="../order/PreviewOrder.php"><i class="fas fa-shopping-cart"></i> Order Preview</a>
-
+        <span class="input-group-text">
+        Active Total Amount:<?php echo $ActiveTotalAmount[0][0];?>
+        <a href="dishDisplay.php" class="form-control btn-success btn float-right  "><i class="fas fa-concierge-bell"></i>dish Add +</a>
+        </span>
+        <hr>
     </div>
+
+
+<div class="container card">
+<h3>Current Active Dishes</h3>
+<hr>
+</div>
+
 
 
 
 <div class="container form-inline badge-light">
+
 
     <?php
   $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id)  FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND (dd.orderDetail_id='.$orderId.')';
@@ -139,22 +143,88 @@ include_once ("../webdesign/header/header.php");
         <?php
     }
     ?>
-
-
-
-
-
-
-
-
-
 </div>
 
 
 
 
 
+<div class="container alert-danger mt-5">
+    <h3>Expired Dishes  <input   id="expireControl" class="btn btn-danger" value="Show"></h3>
 
+    <hr>
+</div>
+
+
+
+
+<div class="container form-inline badge-light" id="ExpireDivDishes">
+
+
+    <?php
+    $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id)  FROM dish_detail as dd WHERE (!ISNULL(dd.expire))AND (dd.orderDetail_id='.$orderId.')';
+    $detailDishes=queryReceive($sql);
+    for($i=0;$i<count($detailDishes);$i++)
+    {
+
+
+        ?>
+
+        <a href="dishPreview.php?dish=<?php echo base64url_encode($detailDishes[$i][0]);?>" class="card alert-danger m-2" >
+            <div class="card-header">
+                <h4><i class="fas fa-file-word"></i><?php echo $detailDishes[$i][10];?></h4>
+            </div>
+            <ul class="list-group list-group-flush">
+
+
+                <?
+                $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$detailDishes[$i][6].')';
+                $AttributeDetail=queryReceive($sql);
+
+                // special dish with attribute and quantity
+                for($j=0;$j<count($AttributeDetail);$j++)
+                {
+                    echo ' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$j][0].' :  '.$AttributeDetail[$j][1].'</li>';
+                }
+                ?>
+            </ul>
+            <p><i class="fas fa-comments"></i><?php echo $detailDishes[$i][1];?></p>
+            <div class="card-footer ">
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                    </div>
+                    <label>Price:<?php echo $detailDishes[$i][8];?></label>
+                </div>
+
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-sort-amount-up"></i></span>
+                    </div>
+                    <label>Quantity:<?php echo $detailDishes[$i][3];?></label>
+                </div>
+
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                    </div>
+                    <label>Total:<?php echo (int) $detailDishes[$i][3]*$detailDishes[$i][8];?></label>
+                </div>
+
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-sort-amount-up"></i></span>
+                    </div>
+                    <label><?php echo $detailDishes[$i][2];?></label>
+                </div>
+
+            </div>
+        </a>
+
+        <?php
+    }
+    ?>
+</div>
 
 <?php
 include_once ("../webdesign/footer/footer.php");
@@ -164,6 +234,23 @@ include_once ("../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
+        $("#expireControl").click(function ()
+        {
+            var value=$(this).val();
+            if(value=="Show")
+            {
+                $("#ExpireDivDishes").show('slow');
+                $(this).val("Hide");
+            }
+            else
+            {
+
+                $("#ExpireDivDishes").hide('slow');
+                $(this).val("Show");
+            }
+
+        });
+        $("#ExpireDivDishes").hide('slow');
 
 
         $(".dishdetail").click(function (e)
