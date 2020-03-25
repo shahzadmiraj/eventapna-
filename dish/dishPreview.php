@@ -30,7 +30,7 @@ else
     exit();
 }
 
-
+$orderid=$_SESSION['order'];
 //$sql='SELECT `describe`, `price`, `quantity`, `dish_id` FROM `dish_detail` WHERE id='.$dishDetailId.'';
 $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT (SELECT d.image FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT u.username FROM user as u WHERE u.id=dd.user_id),(SELECT u.username FROM user as u WHERE u.id=dd.expireUser)  FROM dish_detail as dd WHERE  (dd.id='.$dishDetailId.')';
 $dishDetailOfDetai=queryReceive($sql);
@@ -121,6 +121,7 @@ else
 
     <input hidden id="dishDetailID" value="<?php echo $dishDetailOfDetai[0][0];?>">
 
+        <input hidden id="orderid" value="<?php echo $orderid;?>">
 
 
         <input hidden id="userid" value="<?php echo $userid;?>">
@@ -151,7 +152,7 @@ else
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                 </div>
-                <input readonly class="form-control" type="number" value="<?php echo $dishDetailOfDetai[0][3]*$dishDetailOfDetai[0][8];?>">
+                <input id="TotalDishesAmount" readonly class="form-control" type="number" value="<?php echo $dishDetailOfDetai[0][3]*$dishDetailOfDetai[0][8];?>">
             </div>
         </div>
 
@@ -281,11 +282,13 @@ include_once ("../webdesign/footer/footer.php");
 
        $('#cancel_dish').click(function ()
        {
+           var orderid=$("#orderid").val();
            var dishDetailId=$("#dishDetailID").val();
            var userid=$("#userid").val();
+           var totalDishesAmount=$('#TotalDishesAmount').val();
            $.ajax({
                url:"dishServer.php",
-               data: {dishDetailId:dishDetailId,option:"deleteDish",userid:userid },
+               data: {dishDetailId:dishDetailId,option:"deleteDish",userid:userid,totalDishesAmount:totalDishesAmount,orderid:orderid },
                dataType: "text",
                method:"POST",
 

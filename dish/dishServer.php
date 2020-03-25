@@ -41,6 +41,7 @@ if($_POST['option']=='createDish')
     $each_price=chechIsEmpty($_POST['each_price']);
     $quantity=chechIsEmpty($_POST['quantity']);
     $describe=$_POST['describe'];
+    $dishesAmount=(int)$each_price*(int)$quantity;
 
 
 
@@ -49,6 +50,14 @@ if($_POST['option']=='createDish')
 
     $sql='INSERT INTO `dish_detail`(`id`, `describe`, `expire`, `quantity`, `orderDetail_id`, `user_id`, `dishWithAttribute_id`, `active`, `price`, `expireUser`) VALUES (NULL,"'.$describe.'",NULL,'.$quantity.','.$orderId.','.$userid.','.$dishId.',"'.$timestamp.'",'.$each_price.',NULL)';
     querySend($sql);
+    $sql='SELECT od.hall_id,od.total_amount FROM orderDetail as od WHERE od.id='.$orderid.'';
+    $detailhall=queryReceive($sql);
+    if(!isset($detailhall[0][0]))
+    {
+        $totalamount=$detailhall[0][1]+$dishesAmount;
+        $sql='UPDATE `orderDetail` SET `total_amount`='.$totalamount.' WHERE id='.$orderid.'';
+        querySend($sql);
+    }
 
 }
 else if($_POST["option"]=='attributeChange')
@@ -73,6 +82,18 @@ else if($_POST['option']=='deleteDish')
     $currentDate=date('Y-m-d H:i:s');
     $sql='UPDATE dish_detail as dd SET dd.expire="'.$currentDate.'",dd.expireUser='.$userid.'  WHERE dd.id='.$dishDetailId.'';
     querySend($sql);
+    $totalDishesAmount=(int) $_POST['totalDishesAmount'];
+    $orderid=$_POST['orderid'];
+
+    $sql='SELECT od.hall_id,od.total_amount FROM orderDetail as od WHERE od.id='.$orderid.'';
+    $detailhall=queryReceive($sql);
+    if(!isset($detailhall[0][0]))
+    {
+        $totalamount=$detailhall[0][1]-$totalDishesAmount;
+        $sql='UPDATE `orderDetail` SET `total_amount`='.$totalamount.' WHERE id='.$orderid.'';
+        querySend($sql);
+    }
+
 
 }
 else if($_POST['option']=="viewmenu")
