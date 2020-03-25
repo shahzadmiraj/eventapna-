@@ -120,8 +120,8 @@ include_once ("../webdesign/header/header.php");
 <div class="container row m-auto ">
 
 
-    <a href="?action=see " class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"   resource=""><i class="fas fa-eye"></i><h6>See Bill / Preview order</h6></a>
-    <a href="?action=Download" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x" download><i class="fas fa-cloud-download-alt"></i><h6>Download Bill</h6></a>
+    <a href="?action=see " class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"   resource=""><i class="fas fa-eye"></i><h6>See PDF Bill</h6></a>
+    <a href="?action=Download" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x" download><i class="fas fa-cloud-download-alt"></i><h6>Download PDF Bill</h6></a>
 
 
 
@@ -130,16 +130,16 @@ include_once ("../webdesign/header/header.php");
             if($hallid!="")
             {
                 //1 hall order edit                //2 make hall order to user displaye
-                echo '<a href="../company/hallBranches/EdithallOrder.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Order Edit</h6></a>';
+                echo '<a href="../company/hallBranches/EdithallOrder.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Hall Order</h6></a>';
 
             }
             else
             {
                 //catering order editor                  //2 make catering order to user displaye
-                echo '<a href="orderEdit.php?action=preview" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Order edit</h6></a>';
+                echo '<a href="orderEdit.php?action=preview" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Catering  Order</h6></a>';
             }
         ?>
-    <a href="../dish/AllSelectedDishes.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-file-word fa-3x"></i><h6>Bill Detail </h6></a>
+    <a href="../dish/AllSelectedDishes.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-file-word fa-3x"></i><h6>Dishes Booking </h6></a>
             <a href="../payment/paymentHistory.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-history fa-3x"></i><h6>Payment History</h6></a>
 
     <a href="HistoryOrder.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-eraser fa-3x"></i><h6>Order Changing history </h6></a>
