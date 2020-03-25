@@ -49,7 +49,7 @@ class PDF extends FPDF
     }
 
 
-    function cateringorderPrint($detailorder,$person,$numbers,$addresDetail,$dishDetail,$address,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate)
+    function cateringorderPrint($detailorder,$person,$numbers,$dishDetail,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate)
     {
 
 
@@ -70,7 +70,7 @@ class PDF extends FPDF
 
             $this->Cell(189,10,"",0,1);
         }
-        $displayaddress="Delivering Address : ".$addresDetail[0][1]." , ".$addresDetail[0][2]." , ".$addresDetail[0][3]." , ".$addresDetail[0][4];
+        $displayaddress="Delivering Address : ".$detailorder[0][23];
 
         $this->Cell(30,10,'Customer Name ',0,0);
         $this->Cell(30,10,$person[0][0],0,1);
@@ -97,16 +97,16 @@ class PDF extends FPDF
 
 
 
-        $this->Cell(189,10,"Catering Order",1,1,"C");
+        $this->Cell(189,20,"Catering Order",0,1,"C");
 
 
         //order billing
 
 
         $this->Cell(64,10,"Dish Name",1,0);
-        $this->Cell(40,10,"quantity",1,0);
-        $this->Cell(40,10,"price",1,0);
-        $this->Cell(45,10,"total price",1,1);
+        $this->Cell(40,10,"Quantity",1,0);
+        $this->Cell(40,10,"Price",1,0);
+        $this->Cell(45,10,"Total price",1,1);
 
 
         $systemCalculate=0;
@@ -119,43 +119,48 @@ class PDF extends FPDF
             $this->Cell(40,13,$dishDetail[$i][3],1,0);
             $this->Cell(40,13,$dishDetail[$i][2],1,0);
             $systemCalculate+=$dishDetail[$i][3]*$dishDetail[$i][2];
-            $this->Cell(45,13,$systemCalculate,1,1);
+            $this->Cell(45,13,$dishDetail[$i][3]*$dishDetail[$i][2],1,1);
 
 
 
             // detail of dish attributes
-            $sql='SELECT a.name,an.quantity FROM attribute_name as an INNER join attribute as a
-on
-(an.attribute_id=a.id)
-WHERE
-(an.dish_detail_id='.$dishDetail[$i][0].')
-';
-$attributeDetail=queryReceive($sql);
+
+            $sql='SELECT `name`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishDetail[$i][4].')';
+            $AttributeDetail=queryReceive($sql);
 
             $display='';
-            for($j=0;$j<count($attributeDetail);$j++)
+            for($j=0;$j<count($AttributeDetail);$j++)
             {
-                $display.=$attributeDetail[$j][0]."=".$attributeDetail[$j][1]."  ,  ";
+                $display.=$AttributeDetail[$j][0]."=".$AttributeDetail[$j][1]."  ,  ";
             }
             $display.=$dishDetail[$i][1];
             $this->Cell(189,3,$display,0,1);
             $this->Cell(189,0,"",1,1);
         }
-        $this->Cell(144,10,"total Amount= ",1,0);
-        $this->Cell(45,10,$systemCalculate,1,1);
 
-        $this->Cell(144,10,"receive Amount= ",1,0);
-        $this->Cell(45,10,$totalReceivedPayment[0][0],1,1);
 
+        $this->Cell(189,20,"Payments Detial  ",0,1,"C");
+        $this->Cell(144,10,"Amount  ",1,0);
+        $this->Cell(45,10,(int)$detailorder[0][11],1,1);
+
+        $this->Cell(144,10,"Extra Charges ",1,0);
+        $this->Cell(45,10,(int)$detailorder[0][25],1,1);
+
+
+        $this->Cell(144,10,"Discount ",1,0);
+        $this->Cell(45,10,(int)$detailorder[0][24],1,1);
+
+        $this->Cell(144,10,"Paid Amount  ",1,0);
+        $this->Cell(45,10,(int)$totalReceivedPayment[0][0],1,1);
+
+        $AutoAmount=(int)($detailorder[0][11])+(int)($detailorder[0][25])-(int)($detailorder[0][24]);
+
+        $this->Cell(144,10,"Total Amount ",1,0);
+        $this->Cell(45,10,(int)$AutoAmount,1,1);
+
+        $AutoAmount-=(int)($totalReceivedPayment[0][0]);
         $this->Cell(144,10,"Remaining Amount ",1,0);
-        $this->Cell(45,10,$systemCalculate-$totalReceivedPayment[0][0],1,1);
-
-
-        $this->Cell(144,10,"your Demanded Amount= ",1,0);
-        $this->Cell(45,10,$detailorder[0][11],1,1);
-
-        $this->Cell(144,10,"your Demanded Remaining Amount ",1,0);
-        $this->Cell(45,10,$detailorder[0][11]-$totalReceivedPayment[0][0],1,1);
+        $this->Cell(45,10,(int)$AutoAmount,1,1);
 
 
     }
@@ -321,10 +326,10 @@ $attributeDetail=queryReceive($sql);
        // $orderId=9;
         $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
  `user_id`, `booking_date`, `booking_date`, `booking_date`, 
- `booking_date`, `address_id`, `person_id`, `total_amount`, 
+ `booking_date`, 1, `person_id`, `total_amount`, 
  `total_person`, `status_hall`, `destination_date`, 
  `booking_date`, `destination_time`, `status_catering`, 
- `booking_date`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id) FROM `orderDetail` WHERE id='.$orderId.'';
+ `booking_date`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),`address`,`discount`, `extracharges`  FROM `orderDetail` WHERE id='.$orderId.'';
         $detailorder = queryReceive($sql);
 
 
@@ -335,25 +340,21 @@ $attributeDetail=queryReceive($sql);
 
 
         //customer information
-        $sql = "SELECT `name`, `cnic`, `id`, `date`, `image` FROM `person` WHERE id=".$detailorder[0][10]."";
+        $sql = "SELECT `name`, `cnic`, `id` , `address` FROM `person` WHERE id=".$detailorder[0][10]."";
         $person=queryReceive($sql);
 
 
 
 
         //numbers
-        $sql="SELECT n.number, n.id, n.is_number_active, n.person_id FROM number as n inner JOIN person as p ON p.id=n.person_id
-WHERE p.id='".$person[0][2]."' order BY n.id";
+        $sql="SELECT n.number  FROM number as n inner JOIN person as p ON p.id=n.person_id
+WHERE (p.id='".$person[0][2]."')AND(ISNULL(n.expire)) order BY n.id";
         $numbers=queryReceive($sql);
 
 
 
         if($detailorder[0][1]=="")
         {
-                 //catering order
-            $sql = 'SELECT `id`, `address_city`, `address_town`, `address_street_no`, `address_house_no`, `person_id` FROM `address` WHERE id="'.$detailorder[0][9].'"';
-            $addresDetail = queryReceive($sql);
-
 
             $sql='SELECT `name`,`company_id` FROM `catering` WHERE id='.$detailorder[0][2].'';
             $branchinfo=queryReceive($sql);
@@ -367,26 +368,20 @@ INNER join number as n
 on (p.id=n.person_id)
 WHERE
  (c.id='.$branchinfo[0][1].')
- AND
- (n.is_number_active=1)
+ AND(ISNULL(n.expire)) order BY n.id
 ';
             $owerinfo=queryReceive($sql);
 
 
             //detail of order dish
-            $sql='SELECT id,`describe`, `price`, `quantity`, `dish_id`,(SELECT d.name FROM dish as d WHERE d.id=dish_id ) FROM `dish_detail` WHERE (orderDetail_id='.$orderId.')AND(ISNULL(expire_date))';
+            $sql='SELECT id,dd.describe, dd.price, dd.quantity, dd.dishWithAttribute_id,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id) FROM  dish_detail as dd WHERE (dd.orderDetail_id='.$orderId.')AND(ISNULL(dd.expire))';
             $dishDetail=queryReceive($sql);
 
 
-            //person address
-            $sql = "SELECT a.id, a.address_city, a.address_town, a.address_street_no, a.address_house_no, a.person_id FROM address as a inner JOIN person p ON a.person_id=p.id
-WHERE a.person_id=".$detailorder[0][10]."
-ORDER by a.person_id;";
-            $address=queryReceive($sql);
 
 
 
-            $this->cateringorderPrint($detailorder,$person,$numbers,$addresDetail,$dishDetail,$address,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate);
+            $this->cateringorderPrint($detailorder,$person,$numbers,$dishDetail,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate);
 
         }
         else
