@@ -19,8 +19,8 @@ if($_POST['option']=="additemsInOrder")
     $CurrentExtraAmount=$_POST['CurrentExtraAmount'];
     $sql='SELECT od.total_person,(SELECT hp.price FROM hallprice as hp WHERE hp.id=od.hallprice_id) FROM orderDetail as od WHERE od.id='.$order.'';
     $orderDetail=queryReceive($sql);
-    $CurrentAmount=$orderDetail[0][0]*$orderDetail[0][1];
-    $CurrentAmount+=$CurrentExtraAmount;
+    $CurrentAmount=(int)$orderDetail[0][0]*(int)$orderDetail[0][1];
+    $CurrentAmount+=(int)$CurrentExtraAmount;
     $sql='UPDATE orderDetail SET total_amount='.$CurrentAmount.' WHERE id='.$order.'';
     querySend($sql);
 

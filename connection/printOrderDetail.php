@@ -92,6 +92,9 @@ class PDF extends FPDF
         $this->Cell(45,10,$printDate,0,1);
 
 
+        $this->Cell(45,10,"Order no # : ",0,0);
+        $this->Cell(45,10,$detailorder[0][0],0,1);
+
         //$this->Cell(189,10,$displayaddress,0,1);
 
 
@@ -195,6 +198,7 @@ class PDF extends FPDF
         $this->Cell(189,10,"Order Detail",1,1,"C");
 
 
+
         $this->Cell(45,10,"No of Guest : ",0,0);
         $this->Cell(45,10,$detailorder[0][12],0,0);
         $this->Cell(45,10,"Deliver Date : ",0,0);
@@ -226,6 +230,9 @@ class PDF extends FPDF
         $this->Cell(45,10,$detailorder[0][13],0,0);
         $this->Cell(45,10,"booked Date : ",0,0);
         $this->Cell(45,10,$detailorder[0][15],0,1);
+
+        $this->Cell(45,10,"Order no # : ",0,0);
+        $this->Cell(45,10,$detailorder[0][0],0,1);
 
 
 
@@ -265,19 +272,36 @@ class PDF extends FPDF
 
 
 
-        $this->Cell(189,10,"Payments Detial : ",1,1,"C");
-        $this->Cell(45,10,"Total Amount : ",0,0);
-        $this->Cell(45,10,$detailorder[0][11],0,0);
-        $this->Cell(45,10,"Per Head Rate :",0,0);
+        $this->Cell(189,10,"Payments Detial  ",1,1,"C");
+
+        $this->Cell(189,10,"",0,1,"C");
+        $this->Cell(144,10,"Amount  ",1,0);
+        $this->Cell(45,10,(int)$detailorder[0][11],1,1);
+
+        $this->Cell(144,10,"Extra Charges ",1,0);
+        $this->Cell(45,10,(int)$detailorder[0][25],1,1);
+
+
+        $this->Cell(144,10,"Discount ",1,0);
+        $this->Cell(45,10,(int)$detailorder[0][24],1,1);
+
+        $this->Cell(144,10,"Per Head Rate :",1,0);
         if($detailorder[0][12]==0)
             $detailorder[0][12]=1;
-        $this->Cell(45,10,($detailorder[0][11]/$detailorder[0][12]),0,1);
+        $this->Cell(45,10,($detailorder[0][11]/$detailorder[0][12]),1,1);
 
+        $this->Cell(144,10,"Paid Amount  ",1,0);
+        $this->Cell(45,10,(int)$totalReceivedPayment[0][0],1,1);
 
-        $this->Cell(45,10,"Received Amount : ",0,0);
-        $this->Cell(45,10,$totalReceivedPayment[0][0],0,0);
-        $this->Cell(45,10,"Remaining Amount :",0,0);
-        $this->Cell(45,10, ($detailorder[0][11]-$totalReceivedPayment[0][0]),0,1);
+        $AutoAmount=(int)($detailorder[0][11])+(int)($detailorder[0][25])-(int)($detailorder[0][24]);
+
+        $this->Cell(144,10,"Total Amount ",1,0);
+        $this->Cell(45,10,(int)$AutoAmount,1,1);
+
+        $AutoAmount-=(int)($totalReceivedPayment[0][0]);
+        $this->Cell(144,10,"Remaining Amount ",1,0);
+        $this->Cell(45,10,(int)$AutoAmount,1,1);
+
 
 
         if($detailorder[0][3]==1)
@@ -401,8 +425,7 @@ INNER join number as n
 on (p.id=n.person_id)
 WHERE
  (c.id='.$branchinfo[0][1].')
- AND
- (n.is_number_active=1)
+ AND(ISNULL(n.expire)) order BY n.id
 ';
             $owerinfo=queryReceive($sql);
 
