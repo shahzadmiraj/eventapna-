@@ -203,7 +203,7 @@ include_once ("../webdesign/footer/footer.php");
            totalitems--;
             if(totalitems==0)
             {
-                window.location.href="AllSelectedDishes.php";
+                window.location.href="../order/PreviewOrder.php";
             }
          $("#totalRemaing").val(totalitems);
        }
