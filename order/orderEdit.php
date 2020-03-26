@@ -35,6 +35,7 @@ $orderDetail=queryReceive($sql);
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
     <style>
 
     </style>
@@ -114,7 +115,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                <input  name="destination_date"  type="date" class="form-control" value="<?php echo $orderDetail[0][5];?>">
+                <input id="date"  name="destination_date"  type="date" class="form-control" value="<?php echo $orderDetail[0][5];?>">
             </div>
 
 
@@ -352,6 +353,21 @@ include_once ("../webdesign/footer/footer.php");
 
         $(document).on('click', '#submit', function (e) {
             e.preventDefault();
+
+            var state=false;
+
+
+            if(validationWithString("persons","Please Enter no of Guests"))
+                state=true;
+
+            if(validationWithString("time","Please Enter Order Time"))
+                state=true;
+
+            if(validationWithString("date","Please Enter Order Date"))
+                state=true;
+
+            if(state)
+                return false;
             var href = "'" + $(this).data("href") + "'";
             var formdata = new FormData($('#editorder')[0]);
             formdata.append("function", "orderSaveAfterChange");

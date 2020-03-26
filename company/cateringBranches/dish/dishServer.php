@@ -159,12 +159,12 @@ if(isset($_POST['option']))
         if($value=="Disable")
         {
             $timestamp = date('Y-m-d H:i:s');
-            $sql = 'UPDATE dish_type as dt SET dt.isExpire="' . $timestamp . '" WHERE dt.id=' . $id . '';
+            $sql = 'UPDATE dish_type as dt SET dt.expire="' . $timestamp . '" WHERE dt.id=' . $id . '';
         }
         else
         {
 
-            $sql = 'UPDATE dish_type as dt SET dt.isExpire=NULL WHERE dt.id=' . $id . '';
+            $sql = 'UPDATE dish_type as dt SET dt.expire=NULL WHERE dt.id=' . $id . '';
         }
         querySend($sql);
     }

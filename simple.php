@@ -6,7 +6,27 @@
  * Time: 21:31
  */
 
-//<i class="fas fa-concierge-bell"></i> Dish
+
+/*
+ *
+ *
+ *
+ *
+ *
+ *
+ *<i class="far fa-calendar-alt"></i> calender
+ * <i class="fas fa-check "></i>    ok check
+ * <i class="fas fa-arrow-left"></i> back arrow
+ *<i class="fas fa-layer-group"></i> files
+ * <i class="fas fa-sitemap"></i> type
+ * <i class="far fa-money-bill-alt"></i>    amount
+ * <i class="fas fa-camera-retro"></i>  camera
+<i class="fas fa-plus"></i> pluse
+<i class="fas fa-drum"></i> drum
+<i class="fas fa-concierge-bell"></i> Dish
+
+
+*/
 //include  ("../connection/connect.php");
 //date_default_timezone_set("asia/karachi");
 //mysqli_insert_id($connect);
@@ -122,3 +142,27 @@ $('.showDetail').click(function ()
 </script>
 </body>
 </html>
+
+
+
+
+<!--<div class="container badge-light">
+    <h1 class="text-center">kkiiji</h1>
+    <div class="form-inline">
+
+
+
+        <div class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-footer">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick examplet.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>-->

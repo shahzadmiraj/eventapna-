@@ -35,6 +35,7 @@ if((!is_numeric($id))||$id=="")
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../../webdesign/css/complete.css">
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
     <style>
 
@@ -68,9 +69,9 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-<div class="container">
+<div class="container card">
 
-    <h1 class="font-weight-bold">Extra item Catergories</h1>
+    <h3 class="font-weight-bold">Extra item Catergories</h3>
     <hr>
 
 
@@ -81,7 +82,6 @@ include_once ("../../../webdesign/header/header.php");
         <label class="col-3  col-form-label ">Delete</label>
     </div>
 
-    <div  class="col-12">
 
 
         <?php
@@ -94,7 +94,7 @@ include_once ("../../../webdesign/header/header.php");
         {
             $Display.= '<div class="form-group row  border " id="Delele_Dish_Type_'.$Category[$i][0].'">
             <input type=text" data-id="'.$Category[$i][0].'"   value="'.$Category[$i][1].'" class="changeCategory col-9  form-control ">
-            <button data-option="deleteCategory"   data-id='.$Category[$i][0].'  class="actionDelete btn  col-3  form-control btn-danger" ><i class="fas fa-minus-circle"></i> Delete</button>
+            <button data-option="deleteCategory"   data-id='.$Category[$i][0].'  class="actionDelete btn  col-3  form-control btn-outline-danger" ><i class="fas fa-minus-circle"></i> Delete</button>
             ';
 
             $Display.= '</div>';
@@ -104,21 +104,28 @@ include_once ("../../../webdesign/header/header.php");
         echo $Display;
         ?>
 
+</div>
 
 
-    </div>
 
 
-    <div class="col-12 row mb-4">
-        <h3 class="rounded mx-auto d-block m-4 col-6" align="center"> Extra items information</h3>
-        <?php
-        echo '        <a  href="CreateItem.php?hall='.$encoded.'" class="float-right btn btn-success col-4 form-control mt-4"><i class="fas fa-plus"></i> Add Extra item</a>
+    <div class="container badge-light mt-5">
+
+        <div class="text-left">
+            <h4 > Extra items information</h4>
+        </div>
+        <div class="text-right">
+
+            <?php
+            echo '        <a  href="CreateItem.php?hall='.$encoded.'" class="btn btn-success"><i class="fas fa-plus"></i> Add Extra item</a>
 ';
-        ?>
-    </div>
-    <hr>
+            ?>
+        </div>
 
-    <div class="col-12 card shadow mb-2 p-4 ">
+        <hr>
+        <br>
+
+
 
         <?php
 
@@ -127,11 +134,11 @@ include_once ("../../../webdesign/header/header.php");
 
         $Category=queryReceive($sql);
         $Display='';
-        $display='<div class="form-group row ">';
+        $display='';
         for($j=0;$j<count($Category);$j++)
         {
 
-            $display.='<h4 class="col-12 newcolor" align="center">'.$Category[$j][1].'</h4>';
+            $display.='<h4 class="text-center btn-warning"><i class="fas fa-sitemap"></i>'.$Category[$j][1].'</h4>';
 
 
 
@@ -142,13 +149,15 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-$display.='<div class="container-fluid"><div class="card-deck">';
+$display.='<div class="form-inline">';
             for ($i = 0; $i < count($kinds); $i++)
             {
 
 
     $display.='
-        <div class="card mb-4 col-12 col-md-6 col-lg-4 col-xl-3">';
+        <div class="card m-1 col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+       
+        ';
 
         if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
         {
@@ -162,40 +171,56 @@ $display.='<div class="container-fluid"><div class="card-deck">';
             <img class="card-img-top img-fluid" src="https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg" alt="Card image cap">';
         }
 
-      $display.='   <div class="card-body ">
-                <h4 class="card-title">'.$kinds[$i][1].'</h4>
-              <h6 class=" "><i class="far fa-money-bill-alt mr-3"></i><i>'.$kinds[$i][2].'    <button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger float-right">Delete</button>
-</h6>
+      $display.='   <div class="card-footer ">
+   <h5 class="card-title" ><i class="fas fa-drum mr-1"></i>'.$kinds[$i][1].'</h5>   
+              <div class="text-right text-danger">
+              <i class="far fa-money-bill-alt mr-3"></i>'.$kinds[$i][2].' 
+                </div>
+                <div class="text-center">
+              <button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger"><i class="fas fa-minus-circle"></i> Delete</button>
+                </div>
+              
+           
             </div>
-        </div>
-        <div class="w-100 d-none d-sm-block d-md-none"></div>';
+        </div>';
             }
-            $display.='</div></div>';
+            $display.='</div>';
 
         }
-
-        $display.='</div>';
         echo $display;
 
 
         ?>
 
 
+</div>
+
+
+
+
+
+<!--<div class="container badge-light">
+    <h1 class="text-center">kkiiji</h1>
+    <div class="form-inline">
+
+
+
+        <div class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-footer">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick examplet.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+
+
 
     </div>
+</div>-->
 
 
-
-
-
-
-
-
-
-
-
-
-</div>
 <?php
 include_once ("../../../webdesign/footer/footer.php");
 ?>
@@ -206,6 +231,9 @@ include_once ("../../../webdesign/footer/footer.php");
 
         $(document).on("change",".changeCategory",function ()
         {
+            if(validation($(this),"Please enter Catergory Name"))
+                return false;
+
             var id=$(this).data("id");
             var value=$(this).val();
 

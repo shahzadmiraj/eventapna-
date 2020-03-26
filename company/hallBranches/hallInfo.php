@@ -96,10 +96,10 @@ else
 </div>
 
 
-<div class="container">
+<div class="container card">
     <h1> Hall Setting </h1>
-    <hr class="mt-2 mb-3 border-white">
-    <form class="shadow card-body" id="formhall" >
+    <hr class="">
+    <form class="" id="formhall" >
 
         <input type="text" hidden name="previousaddress" value="<?php echo $location[0][7]; ?>">
         <input type="text" hidden name="previousaddressid" value="<?php echo $location[0][0]; ?>">

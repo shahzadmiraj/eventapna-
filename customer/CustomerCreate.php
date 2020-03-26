@@ -43,6 +43,7 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
 
     <style>
 
@@ -178,6 +179,8 @@ include_once ("../webdesign/footer/footer.php");
        {
            //number exist
            var value=$(this).val();
+           if(value=="")
+               return false;
            $.ajax({
                url:"customerBookingServer.php",
                data:{value:value,option:"customerExist"},
@@ -233,23 +236,20 @@ include_once ("../webdesign/footer/footer.php");
           number--;
        });
 
-       $("#submit").click(function (e) {
+       $("#submit").click(function (e)
+       {
            e.preventDefault();
+            var state=false;
+
+           if(validationWithString("name","Please Enter Customer Name"))
+               state=this;
+
+            if(validationClass("allnumber","Please Enter Mobile no"))
+                state=this;
 
 
-
-           if($.trim($("#number").val())=="")
-           {
-               alert("number must be enter");
-               return false;
-           }
-           if($.trim($("#name").val())=="")
-           {
-
-               alert("name must be enter");
-               return false;
-           }
-
+            if(state)
+                return false;
 
            var formdata=new FormData($('form')[0]);
            formdata.append("option","customerCreate");

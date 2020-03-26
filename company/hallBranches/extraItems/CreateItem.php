@@ -34,10 +34,9 @@ $hall=$id;
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href=".../.././webdesign/css/loader.css">
-    <style>
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
+    <link rel="stylesheet" href="../../../webdesign/css/loader.css">
 
-    </style>
 </head>
 <body >
 <?php
@@ -56,6 +55,8 @@ include_once ("../../../webdesign/header/header.php");
 
 
     <form class="card container">
+        <h2>Add Extra Hall items</h2>
+        <hr>
         <input type="number" hidden name="hall" value=<?php echo $hall;?>  >
 
         <div class="form-group row">
@@ -66,10 +67,11 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-drum"></i></span>
                 </div>
-                <input type="text" name="name" class="form-control " placeholder="name of extra item">
+                <input id="name" type="text" name="name" class="form-control " placeholder="name of extra item">
             </div>
 
         </div>
+
 
 
         <div class="form-group row">
@@ -80,7 +82,7 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-camera-retro"></i></span>
                 </div>
-                <input type="file" name="image" class="form-control ">
+                <input  type="file" name="image" class="form-control ">
             </div>
 
         </div>
@@ -93,7 +95,7 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input type="number" name="Price" class="form-control " placeholder="Price of extra item">
+                <input id="Price" type="number" name="Price" class="form-control " placeholder="Price of extra item">
             </div>
 
         </div>
@@ -108,7 +110,7 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-sitemap"></i></span>
                 </div>
-                <select name="typeofitem" id="typeofitem" class="form-control">
+                <select  name="typeofitem" id="typeofitem" class="form-control">
                     <option value="other">other</option>
                     <?php
                     $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE (hall_id='.$hall.')&&(ISNULL(expire))';
@@ -133,7 +135,7 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
                 </div>
-                <input type="number" name="otherTypeName" class="form-control " placeholder="other  type name">
+                <input id="otherTypeName" type="number" name="otherTypeName" class="form-control " placeholder="other  type name">
             </div>
 
         </div>
@@ -141,7 +143,7 @@ include_once ("../../../webdesign/header/header.php");
 
         <div class="form-group row justify-content-center">
 
-            <button id="Back"  class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Cancel</button>
+            <button id="Back"  class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i> Cancel</button>
             <button type="button" id="submit" class="form-control col-5 btn-success"><i class="fas fa-check "></i> Submit</button>
 
         </div>
@@ -156,7 +158,8 @@ include_once ("../../../webdesign/footer/footer.php");
 <script>
     $(document).ready(function ()
     {
-        $("#typeofitem").change(function () {
+        $("#typeofitem").change(function ()
+        {
             var value=$(this).val();
             if(value=="other")
             {
@@ -178,6 +181,25 @@ include_once ("../../../webdesign/footer/footer.php");
         $("#submit").click(function (e)
         {
             e.preventDefault();
+            var state=false;
+
+
+            if(validationWithString("name","Please Enter Item name"))
+                state=true;
+
+            if(validationWithString("Price","Please Enter Item Price"))
+                state=true;
+
+            if($("#typeofitem").val()=="other")
+            {
+                if(validationWithString("otherTypeName","Please Enter Item type"))
+                    state=true;
+            }
+
+
+            if(state)
+                return false;
+
             var formdata=new FormData($('form')[0]);
             formdata.append('option',"addItem");
             $.ajax({

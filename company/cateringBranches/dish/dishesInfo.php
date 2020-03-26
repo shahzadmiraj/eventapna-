@@ -83,15 +83,18 @@ include_once ("../../../webdesign/header/header.php");
     </div>
 <div class="container">
 
-    <h1 class="font-weight-bold">System Dish info </h1>
-    <hr>
 
 
 
 
-    <div  class="col-12 card">
+    <div  class="col-12 badge-light ">
 
-        <h3 align="center"> Dish Type information</h3>
+        <h3 class="font-weight-bold">System Dish info <a  href="addDish.php?catering=<?php echo $encoded;?>" class="float-right btn btn-success col-4 form-control">Add dish +</a></h3>
+
+        <br>
+
+        <h4  class="col-12"> Dish Type information</h4>
+
         <div class="col-12 form-group row font-weight-bold border ">
             <label class="col-9  col-form-label "><i class="fas fa-utensils mr-1"></i>Name Dish type</label>
             <label class="col-3  col-form-label "><i class="far fa-trash-alt"></i>DELETE</label>
@@ -129,14 +132,12 @@ include_once ("../../../webdesign/header/header.php");
     </div>
 
 
-    <div class="col-12 row mb-4">
-        <h3 class="rounded mx-auto d-block m-4 col-6 " align="center"> Dish information</h3>
-        <a  href="addDish.php?catering=<?php echo $encoded;?>" class="float-right btn btn-success col-4 form-control mt-4">Add dish +</a>
-    </div>
-    <hr>
+
 
     <div class="col-12 card shadow mb-2 p-4 ">
 
+        <h3 class=" " align="center"> Dish information</h3>
+        <hr>
         <?php
 
         $sql='SELECT id,name FROM dish_type WHERE (ISNULL(expire))AND (catering_id='.$cateringid.')';
@@ -148,7 +149,7 @@ include_once ("../../../webdesign/header/header.php");
         {
 
 
-            $display.='<h4 class="col-12 newcolor" align="center">'.$dishTypes[$j][1].'</h4>';
+            $display.='<h4 class="col-12 btn-warning" align="center"><i class="fas fa-sitemap mr-1"></i>'.$dishTypes[$j][1].'</h4>';
 
 
 
@@ -176,7 +177,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
                 $display.='" style="height: 20vh" class="col-12">  
-            <h5 class="col-12 p-0" ><i class="fas fa-utensils mr-1 "></i><i class="fas fa-concierge-bell"></i>' . $Dishes[$i][0] . '</h5>
+            <h5 class="col-12 p-0 text-primary" ><i class="fas fa-concierge-bell mr-1"></i>' . $Dishes[$i][0] . '</h5>
             <i class="col-12 ';
 
 

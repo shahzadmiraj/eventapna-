@@ -32,6 +32,7 @@ $customer=$_SESSION['customer'];
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
     <style>
 
     </style>
@@ -52,6 +53,8 @@ include_once ("../webdesign/header/header.php");
 
 
 <div class="container card ">
+    <h1> Create New Order</h1>
+    <hr>
     <form >
         <input type="number" hidden name="customer" value=<?php echo $customer;?>   >
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
@@ -147,12 +150,25 @@ include_once ("../webdesign/footer/footer.php");
 <script>
     $(document).ready(function ()
     {
-        // location.replace("../company/companyRegister/companydisplay.php");
-        //
-        // //history.replaceState(null,null,"../company/companyRegister/companydisplay.php");
        $("#submit").click(function (e)
        {
+
            e.preventDefault();
+           var state=false;
+
+
+           if(validationWithString("persons","Please Enter no of Guests"))
+               state=true;
+
+           if(validationWithString("time","Please Enter Order Time"))
+               state=true;
+
+           if(validationWithString("date","Please Enter Order Date"))
+               state=true;
+
+           if(state)
+               return false;
+
            var formdata=new FormData($('form')[0]);
            formdata.append('function',"add");
            $.ajax({
