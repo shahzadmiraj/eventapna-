@@ -38,6 +38,7 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
     <style>
 
     </style>
@@ -45,7 +46,6 @@ $userid=$_COOKIE['userid'];
 <body>
 <?php
 include_once ("../../../webdesign/header/header.php");
-
 ?>
 <div class="jumbotron  shadow text-center" style="background-image: url(https://shaadishopblog.files.wordpress.com/2015/10/indian-wedding-punjabi-jain-kunal-shveta-bride-groom-hotel-irvine-global-photography-lehenga-sherwani-sera-manohar-delhi-palace-indian-food.jpg?w=720&h=480);background-size:100% 100%;background-repeat: no-repeat">
 
@@ -56,6 +56,8 @@ include_once ("../../../webdesign/header/header.php");
 </div>
 
 <div class="container card">
+    <h4>Add Dish in Catering Branch</h4>
+    <hr>
 
     <form>
 
@@ -68,7 +70,7 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-concierge-bell"></i></span>
                 </div>
-                <input name="dishname" class="form-control" type="text" placeholder="Dish name etc chicken biryan">
+                <input id="dishname" name="dishname" class="form-control" type="text" placeholder="Dish name etc chicken biryan">
             </div>
 
         </div>
@@ -119,7 +121,7 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                 </div>
-                <input name="dishprice" class="form-control" type="text" placeholder="Dish Price">
+                <input   id="dishprice" name="dishprice" class="form-control" type="text" placeholder="Dish Price">
             </div>
 
         </div>
@@ -166,7 +168,7 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-calendar-minus"></i></span>
                 </div>
-                <input type="text" name="otherdishType" class="form-control" placeholder="add new dish type">
+                <input id="otherdishType" type="text" name="otherdishType" class="form-control" placeholder="add new dish type">
             </div>
 
 
@@ -207,12 +209,12 @@ include_once ("../../../webdesign/footer/footer.php");
 
 
             $(".nameofattribute").each( function() {
-                text+= ' <td><i class="fa fa-calculator" aria-hidden="true"></i><input type="number" name="quantity[]" class="" placeholder="Quantity"></td>\n' ;
+                text+= ' <td><i class="fa fa-calculator" aria-hidden="true"></i><input type="number" name="quantity[]" class="Quantity" placeholder="Quantity"></td>\n' ;
             });
 
 
 
-            text+= ' <td><i class="fas fa-money-bill-alt"></i><input type="number" name="price[]" class="" placeholder="Price"></td>\n' +
+            text+= ' <td><i class="fas fa-money-bill-alt"></i><input type="number" name="price[]" class="Price" placeholder="Price"></td>\n' +
                 '\n' +
                 '                </tr>\n' ;
             rowadded++;
@@ -276,12 +278,7 @@ include_once ("../../../webdesign/footer/footer.php");
         $(document).on('click','#addCombination',function (e)
         {
             e.preventDefault();
-
-
-
             rowaddedfucntion();
-
-
 
         });
 
@@ -303,7 +300,6 @@ include_once ("../../../webdesign/footer/footer.php");
         $("#dishtype").change(function ()
         {
             checkdishType();
-
         });
         checkdishType();
 
@@ -311,6 +307,9 @@ include_once ("../../../webdesign/footer/footer.php");
         $("#addAttribute").click(function ()
         {
             var text=$("#attributetext").val();
+            if(validation($("#attributetext"),"Please Enter Attribute Name"))
+                return false;
+
             $("#attributeHere").append('<div class="form-group row" id="removeid_'+rows+'">\n' +
                 '               <label class="col-4 col-form-label">Attribute Name</label>\n' +
                 '               <input readonly data-removeid="'+rows+'" value="'+text+'" name="attribute[]" class="col-6 form-control nameofattribute" type="text">\n' +
@@ -319,10 +318,6 @@ include_once ("../../../webdesign/footer/footer.php");
             $("#attributetext").val("");
             attributecount++;
             refreshTable();
-
-
-
-
             rows++;
         }) ;
 
@@ -336,8 +331,39 @@ include_once ("../../../webdesign/footer/footer.php");
         });
 
 
-        $("#submit").click(function (e) {
+        $("#submit").click(function (e)
+        {
+
+            var state=false;
            e.preventDefault();
+
+            if(validationWithString("dishname","Please enter Dish Name "))
+               state=true;
+
+
+           var DishType=$("#dishtype");
+           if(DishType.val()=="others")
+           {
+                   if(validationWithString("otherdishType","Please enter Dish Type "))
+                   state=true;
+           }
+           if(attributecount==0)
+           {
+               if(validationWithString("dishprice","Please Enter Price"))
+                   state=true;
+           }
+
+
+            if(validationClass("Quantity","Pleas enter Quantity in Attributes"))
+                state=true;
+
+
+            if(validationClass("Price","Pleas enter Quantity in Price"))
+                state=true;
+
+
+            if(state)
+                return false;
            var formdata=new FormData($("form")[0]);
             formdata.append("option","addDishsystem");//addDishsystem
              $.ajax({

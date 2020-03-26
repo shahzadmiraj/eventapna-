@@ -45,6 +45,7 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
     <style>
 
     </style>
@@ -62,6 +63,8 @@ include_once ("../../../webdesign/header/header.php");
     </div>
 </div>
 <div class="container card">
+    <h1><i class="fas fa-concierge-bell"></i>System Dish Edit</h1>
+    <hr>
 
         <div class="col-12 shadow card-header p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
@@ -150,7 +153,7 @@ include_once ("../../../webdesign/header/header.php");
 
                 <!-- Button trigger modal -->
                 <button  type="button" class="btn btn-success float-right col-4" data-toggle="modal" data-target="#exampleModal">
-                    + Add
+                    + Add Price
                 </button>
 
                 <!-- Modal -->
@@ -170,7 +173,7 @@ include_once ("../../../webdesign/header/header.php");
                                 <?php
 
 
-                                $sql='SELECT name FROM attribute WHERE (ISNULL(expire))AND(dishWithAttribute_id='.$dishWithAttribute[0][0].')
+                                $sql='SELECT name FROM attribute WHERE (ISNULL(expire))AND(dishWithAttribute_id='.$dishID.')
 GROUP by name';
                                 $TypeOfAttribute=queryReceive($sql);
                                 echo '<input hidden name="dishid" value="'.$dishDetail[0][5].'">
@@ -192,13 +195,10 @@ GROUP by name';
                     </div>
                      
                                     <input hidden type="number" name="attribute[]" value="'.$TypeOfAttribute[$i][0].'">
-                                    <input type="number" name="quantity[]" class="form-control">
+                                    <input   type="number" name="quantity[]" class="Quantity form-control">
                 </div>
             </div>
-                                
-                                
-                                
-                                
+                               
                                 ';
                                 }
 
@@ -210,7 +210,7 @@ GROUP by name';
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fas fa-money-bill-alt"></i></span>
                     </div>
-                    <input type="number" name="price" class="form-control">
+                    <input id="priceInDish" type="number" name="price" class="form-control">
                 </div>
             </div>
                                 
@@ -246,7 +246,7 @@ GROUP by name';
                     for($j=0;$j<count($dishWithAttribute);$j++)
                     {
 
-                        $display.='  <div class="card" style="width: 18rem;">
+                        $display.='  <div class="card m-2">
                 <div class="card-header text-danger">
                    <i class="fas fa-money-bill-alt"></i> '.$dishWithAttribute[$j][3].'
                 </div>
@@ -266,7 +266,7 @@ GROUP by name';
                     <li class="list-group-item"><i class="far fa-calendar-alt"></i>'.$dishWithAttribute[$j][1].'</li>
                 </ul>
                 <div class="card-footer  m-auto">
-                    <button  data-deleteid="'.$dishWithAttribute[$j][0].'" class="btn btn-danger deleteprice "><i class="far fa-trash-alt"></i>Delete</button>
+                    <button  data-deleteid="'.$dishWithAttribute[$j][0].'" class="btn btn-danger deleteprice "><i class="far fa-trash-alt"></i>Delete Price </button>
                 </div>
             </div>';
 
@@ -280,7 +280,7 @@ echo $display;
                     ?>
 
 
-            <div class="card" style="width: 18rem;">
+           <!-- <div class="card" style="width: 18rem;">
                 <div class="card-header text-danger">
                     <i class="fas fa-money-bill-alt"></i>  Price
                 </div>
@@ -290,23 +290,22 @@ echo $display;
                     <li class="list-group-item"><i class="far fa-calendar-alt"></i>Active Date:</li>
                 </ul>
                 <div class="card-footer  m-auto">
-                    <button class="btn btn-danger "><i class="far fa-trash-alt"></i>Delete</button>
+                    <button class="btn btn-danger "><i class="far fa-trash-alt"></i>Delete Price</button>
                 </div>
-            </div>
+            </div>-->
 
         </div>
 
 
 
 
-            <div class="form-group row">
 
-              <button id="deletedish" data-dishid="<?php echo $dishDetail[0][5]; ?>" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete Dish</button>
-            </div>
 
 
         </div>
 
+
+    <button id="deletedish" data-dishid="<?php echo $dishDetail[0][5]; ?>" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete Dish</button>
 
 
 </div>
@@ -414,6 +413,14 @@ include_once ("../../../webdesign/footer/footer.php");
         $("#addCombination").click(function (e)
         {
             e.preventDefault();
+            var state=false;
+            if(validationWithString("priceInDish","Please Enter Dish Price"))
+                state=true;
+            if(validationClass("Quantity","Please Enter Quantity of Attribute"))
+                state=true;
+
+            if(state)
+                return false;
             var formdata=new FormData($("#formaddprice")[0]);
             formdata.append("option","addnewDishprice");
             $.ajax({

@@ -44,6 +44,7 @@ include_once ("../../../connection/connect.php");
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
     <style>
 
     </style>
@@ -80,13 +81,6 @@ include_once ("../../../webdesign/header/header.php");
 
         </div>
     </div>
-
-
-
-
-
-
-
 <div class="container">
 
     <h1 class="font-weight-bold">System Dish info </h1>
@@ -94,13 +88,14 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-    <h3 align="center"> Dish Type information</h3>
-    <div class="col-12 form-group row font-weight-bold border">
-        <label class="col-9  col-form-label "><i class="fas fa-utensils mr-1"></i>Name Dish type</label>
-        <label class="col-3  col-form-label "><i class="far fa-trash-alt"></i>DELETE</label>
-    </div>
 
-    <div  class="col-12">
+    <div  class="col-12 card">
+
+        <h3 align="center"> Dish Type information</h3>
+        <div class="col-12 form-group row font-weight-bold border ">
+            <label class="col-9  col-form-label "><i class="fas fa-utensils mr-1"></i>Name Dish type</label>
+            <label class="col-3  col-form-label "><i class="far fa-trash-alt"></i>DELETE</label>
+        </div>
 
 
         <?php
@@ -114,7 +109,7 @@ include_once ("../../../webdesign/header/header.php");
             <input data-dishtypeid="'.$dishTypes[$i][0].'"   value="'.$dishTypes[$i][1].'" class="changeDishType col-9  form-control ">';
             if($dishTypes[$i][2]=="")
             {
-                $Display.=' <input data-dishtypeid="'.$dishTypes[$i][0].'"  class=" btn Delele_Dish_Type col-3  form-control btn-primary" value="Disable"> ';
+                $Display.=' <input data-dishtypeid="'.$dishTypes[$i][0].'"  class=" btn Delele_Dish_Type col-3  form-control btn-outline-danger " value="Disable"> ';
             }
             else
             {
@@ -135,7 +130,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
     <div class="col-12 row mb-4">
-        <h3 class="rounded mx-auto d-block m-4 col-6" align="center"> Dish information</h3>
+        <h3 class="rounded mx-auto d-block m-4 col-6 " align="center"> Dish information</h3>
         <a  href="addDish.php?catering=<?php echo $encoded;?>" class="float-right btn btn-success col-4 form-control mt-4">Add dish +</a>
     </div>
     <hr>
@@ -166,7 +161,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
             for ($i = 0; $i < count($Dishes); $i++) {
-                $display .= '<a href="?dishdetail=yes&dishid=' . $Dishes[$i][1]. '&catering='.$encoded.'" class="col-sm-12 col-md-6 col-xl-4 border">
+                $display .= '<a href="?dishdetail=yes&dishid=' . $Dishes[$i][1]. '&catering='.$encoded.'" class="col-sm-10 col-md-4 col-xl-3 col-10 m-1 border badge-light ">
               <img src="';
 
                 if(file_exists('../../../images/dishImages/'.$Dishes[$i][5])&&($Dishes[$i][5]!=""))
@@ -181,7 +176,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
                 $display.='" style="height: 20vh" class="col-12">  
-            <p class="col-12 p-0" ><i class="fas fa-utensils mr-1"></i><i class="fas fa-concierge-bell"></i>' . $Dishes[$i][0] . '</p>
+            <h5 class="col-12 p-0" ><i class="fas fa-utensils mr-1 "></i><i class="fas fa-concierge-bell"></i>' . $Dishes[$i][0] . '</h5>
             <i class="col-12 ';
 
 
@@ -238,6 +233,8 @@ include_once ("../../../webdesign/footer/footer.php");
         $(document).on("change",".changeDishType",function ()
         {
             var id=$(this).data("dishtypeid");
+            if(validation($(this),"Please Enter Dish Type"))
+            return false;
             var value=$(this).val();
             $.ajax({
                 url:"dishServer.php",
