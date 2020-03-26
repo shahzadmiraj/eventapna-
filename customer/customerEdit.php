@@ -54,6 +54,7 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
     <style>
 
     </style>
@@ -429,6 +430,16 @@ p.id='.$customerId.'';
 
             var userid=$(this).data("userid");
          var numberText=$('#newNumber').val();
+
+         var state=false;
+
+         if(validationWithString("newNumber","Please Enter Customer NewNumber"))
+             state=this;
+
+
+
+         if(state)
+             return false;
          $.ajax({
              url: "customerEditServer.php",
              data:{option:"addNumber",number:numberText,customerid:customerid,userid:userid},

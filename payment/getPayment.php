@@ -45,6 +45,7 @@ $customerID=$orderDetailPerson[0][1];
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
     <style>
 
     </style>
@@ -87,6 +88,8 @@ include_once ("../webdesign/header/header.php");
 </div>
 
     <form class="card container" id="from2">
+        <h3>Payment method</h3>
+        <hr>
         <input hidden name="user_id" value="<?php
         echo $userId;
         ?>">
@@ -100,7 +103,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
-                <input type="text" name="name" class="form-control" placeholder="person name etc Ali,Hassan,....">
+                <input id="name" type="text" name="name" class="form-control" placeholder="person name etc Ali,Hassan,....">
 
             </div>
 
@@ -116,7 +119,7 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input type="number" name="Amount" class="form-control" placeholder="amount total etc 1200xxx">
+                <input id="Amount" type="number" name="Amount" class="form-control" placeholder="amount total etc 1200xxx">
 
             </div>
 
@@ -207,8 +210,19 @@ include_once ("../webdesign/footer/footer.php");
         $("#rangeInput").change(function () {
             $('#showRange').html($("#rangeInput").val());
         });
-        $("#submitBtnfrom").click(function (e) {
+        $("#submitBtnfrom").click(function (e)
+        {
             e.preventDefault();
+
+
+            var state=false;
+            if(validationWithString("name","Please Enter Customer Name"))
+                state=true;
+            if(validationWithString("Amount","Please Enter Amount"))
+                state=true;
+
+            if(state)
+                return false;
             var formdata=new FormData($("#from2")[0]);
             formdata.append("option","GetPayment");
              $.ajax({

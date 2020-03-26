@@ -45,6 +45,7 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
 
 
 
@@ -152,7 +153,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-sort-amount-up"></i></span>
                         </div>
-                        <input name="quantity" class="form-control" type="number" placeholder="how many dishes 1,2,3,...">
+                        <input id="quantity<?php echo $j; ?>" name="quantity" class="form-control" type="number" placeholder="how many dishes 1,2,3,...">
 
                     </div>
 
@@ -211,6 +212,12 @@ include_once ("../webdesign/footer/footer.php");
        $(document).on('click','.submitForm',function ()
        {
           var id=$(this).data("formid");
+          var state=false;
+          if(validationWithString("quantity"+id,"Please Enter Quantity of Dishes"))
+              state=true;
+
+          if(state)
+              return false;
           var formdata=new FormData($("#form_"+id)[0]);
           formdata.append("option",'createDish');
            $.ajax({

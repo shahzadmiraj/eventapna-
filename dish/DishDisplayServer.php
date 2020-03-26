@@ -10,9 +10,26 @@ if($_POST['option']=="showPriceofAllDishes")
     $display='    
    
         <div class="modal-header">
-                <h4 class="modal-title">'.$dishName.'  </h4>
+                <h4 class="modal-title"><i class="fas fa-concierge-bell mr-1"></i>'.$dishName.'  </h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+            
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <h4 class="mr-auto">Dish Selected</h4>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                hello,you have successfully selected dish
+            </div>
+        </div>
+        
+        
+        
+        
+        
             <div class="modal-body form-inline ">';
 
 
@@ -114,7 +131,7 @@ else if($_POST['option']=="AddDishOnForm")
     $display='';
 
     $display.=  '<div id="remove'.$countofdish.'" class="card" style="width: 18rem;">
-                          <h5>'.$dishName.'</h5>
+                          <h5><i class="fas fa-concierge-bell mr-1"></i>'.$dishName.'</h5>
                <i class="fas fa-money-bill-alt text-danger float-right"> '.$price.'</i>
                     <ul class="list-group list-group-flush">';
 
@@ -145,3 +162,4 @@ else if($_POST['option']=="AddDishOnForm")
 
 
 }
+

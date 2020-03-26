@@ -166,3 +166,21 @@ $('.showDetail').click(function ()
 
     </div>
 </div>-->
+
+
+
+
+
+$('.toast').toast('show');
+
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <h4 class="mr-auto">Dish Deleted</h4>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        hello,you have successfully Deleted dish
+    </div>
+</div>

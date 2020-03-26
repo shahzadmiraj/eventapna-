@@ -79,7 +79,7 @@ class PDF extends FPDF
         $numberdis="customer # ";
         for($i=0;($i<count($numbers)&&($i!=3));$i++)
         {
-            $numberdis.=$numbers[0][$i]." ,";
+            $numberdis.=$numbers[$i][0]." ,";
         }
         $this->Cell(189,10,$numberdis,0,1);
 
@@ -153,13 +153,15 @@ class PDF extends FPDF
         $this->Cell(144,10,"Discount ",1,0);
         $this->Cell(45,10,(int)$detailorder[0][24],1,1);
 
-        $this->Cell(144,10,"Paid Amount  ",1,0);
-        $this->Cell(45,10,(int)$totalReceivedPayment[0][0],1,1);
-
         $AutoAmount=(int)($detailorder[0][11])+(int)($detailorder[0][25])-(int)($detailorder[0][24]);
 
         $this->Cell(144,10,"Total Amount ",1,0);
         $this->Cell(45,10,(int)$AutoAmount,1,1);
+
+        $this->Cell(144,10,"Paid Amount  ",1,0);
+        $this->Cell(45,10,(int)$totalReceivedPayment[0][0],1,1);
+
+
 
         $AutoAmount-=(int)($totalReceivedPayment[0][0]);
         $this->Cell(144,10,"Remaining Amount ",1,0);
@@ -180,7 +182,7 @@ class PDF extends FPDF
         $numberdis="customer # ";
         for($i=0;($i<count($numbers)&&($i!=3));$i++)
         {
-            $numberdis.=$numbers[0][$i]." ,";
+            $numberdis.=$numbers[$i][0]." ,";
         }
         $this->Cell(189,10,$numberdis,0,1);
 
@@ -290,13 +292,15 @@ class PDF extends FPDF
             $detailorder[0][12]=1;
         $this->Cell(45,10,($detailorder[0][11]/$detailorder[0][12]),1,1);
 
-        $this->Cell(144,10,"Paid Amount  ",1,0);
-        $this->Cell(45,10,(int)$totalReceivedPayment[0][0],1,1);
-
         $AutoAmount=(int)($detailorder[0][11])+(int)($detailorder[0][25])-(int)($detailorder[0][24]);
 
         $this->Cell(144,10,"Total Amount ",1,0);
         $this->Cell(45,10,(int)$AutoAmount,1,1);
+
+
+        $this->Cell(144,10,"Paid Amount  ",1,0);
+        $this->Cell(45,10,(int)$totalReceivedPayment[0][0],1,1);
+
 
         $AutoAmount-=(int)($totalReceivedPayment[0][0]);
         $this->Cell(144,10,"Remaining Amount ",1,0);

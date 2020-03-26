@@ -65,6 +65,20 @@ include_once ("../webdesign/header/header.php");
         <h1>Selecting Dishes </h1>
         <hr>
 
+
+
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <h4 class="mr-auto">Dish Deleted</h4>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                hello,you have successfully Deleted dish
+            </div>
+        </div>
+
         <div id="showSelectedDishes" class="form-inline badge-light "  >
 
 
@@ -90,7 +104,7 @@ include_once ("../webdesign/header/header.php");
         $display='';
         for($i=0;$i<count($dishTypeDetail);$i++)
         {
-            $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"> '.$dishTypeDetail[$i][1].'</h2>';
+            $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"><i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
 
             $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(expire)) AND(catering_id='.$cateringid.')';
             $dishDetail=queryReceive($sql);
@@ -121,8 +135,8 @@ include_once ("../webdesign/header/header.php");
         $display.='<img class="card-img-top " src="'.$image.'" alt="Card image" style="height: 100px" >
         
             <p  class="font-weight-bold p-0 card-title col-12
-            ">' . $dishDetail[$j][0] . '</p>
-            <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary">Select</button>
+            "><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</p>
+            <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary"><i class="fas fa-check "></i>  Select</button>
        
         </div>';
             }
@@ -144,14 +158,20 @@ include_once ("../webdesign/header/header.php");
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
+
+
+
+
         <!-- Modal content-->
         <div class="modal-content"  id="AddDishDetail"  >
 
         </div>
 
     </div>
-</div>
 
+
+
+</div>
 
 
 
@@ -171,7 +191,7 @@ include_once ("../webdesign/footer/footer.php");
 
         $(document).on("click",".DishAddOnform",function ()
         {
-
+            $('.toast').toast('show');
             var image=$(this).data("image");
             var dishName=$(this).data("dishname");
             var dishid=$(this).data("dishid");
@@ -238,8 +258,10 @@ include_once ("../webdesign/footer/footer.php");
            });
        });
 
+       $(document).on('click','.remove',function ()
+       {
 
-       $(document).on('click','.remove',function () {
+           $('.toast').toast('show');
           var id=$(this).data("dishid");
           $("#remove"+id).remove();
        });
