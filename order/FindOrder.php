@@ -51,6 +51,7 @@ $date=date('Y-m-d');
 $description='';
 if(!empty($hallid))
 {
+    //hall order
     $hallorcater="(od.hall_id=".$hallid.")";
     $description=$hallorcater;
     if($_GET['order_status']=="Today_Orders")
@@ -62,12 +63,22 @@ if(!empty($hallid))
 }
 else
 {
-
+        //catering order
     $hallorcater="(od.catering_id=".$cateringid.")";
     $description=$hallorcater;
     if($_GET['order_status']=="Today_Orders")
     {
-        $hallorcater.="AND (od.destination_date='".$date."')";
+        $CurrentDateTime=date('Y-m-d H:i:s');
+        $CurrentDate = date('Y-m-d', strtotime($CurrentDateTime)); // d.m.YYYY
+        $CurrentTime = date('H:i:s', strtotime($CurrentDateTime));
+
+        $NextDateTime=date('Y-m-d H:i:s', strtotime($CurrentDateTime . ' +1 day'));
+        $NextDate = date('Y-m-d', strtotime($NextDateTime)); // d.m.YYYY
+        $NextTime = date('H:i:s', strtotime($NextDateTime));
+
+
+        $hallorcater.="AND (od.destination_date   BETWEEN '".$CurrentDate."' AND '".$NextDate."' )";
+
         $order_status="Running";
     }
     $hallorcater.="AND (od.status_catering='".$order_status."')";
@@ -115,9 +126,9 @@ include_once ("../webdesign/header/header.php");
 </div>
 
 
-<div class="container">
+<div class="container card">
 
-        <form class="col-12 shadow mb-4 newcolor card " id="formId1" style="display: none">
+        <form class="col-12 shadow mb-4 newcolor  " id="formId1" style="display: none">
 
         <div class="form-group row">
             <label class="col-form-label"> Customer name</label>
@@ -255,6 +266,7 @@ include_once ("../webdesign/header/header.php");
 
             <?php
             $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.image FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=od.hallprice_id),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' ';
+         //  echo $sql;
             $orderdetail=queryReceive($sql);
             $display='';
             for ($i=0;$i<count($orderdetail);$i++)
