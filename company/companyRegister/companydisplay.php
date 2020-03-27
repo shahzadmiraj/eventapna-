@@ -115,6 +115,7 @@ include_once ("../../webdesign/header/header.php");
         ?>
     </div>
 </div>
+
 <h1><i class="fas fa-place-of-worship"></i>Hall Branches</h1>
 <hr class="border border-white">
 <div class="col-12 m-1 mb-5 form-group row shadow" id="hallbranches" >

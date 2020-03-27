@@ -119,7 +119,7 @@ include_once ("../webdesign/header/header.php");
 
 <div class="container row m-auto  alert-light">
 <h3 class="col-12 h-25">Order Detail</h3>
-    
+
 
 
     <a href="?action=see " class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"   resource=""><i class="fa fa-print" aria-hidden="true"></i>  <h6>See PDF Bill</h6></a>
