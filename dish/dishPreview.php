@@ -68,7 +68,7 @@ include_once ("../webdesign/header/header.php");
 <div class="jumbotron  shadow" style="background-image: url(http://tongil.com.au/wp-content/uploads/2018/02/ingredients.jpg);background-size:100% 115%;background-repeat: no-repeat">
 
     <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 class="text-dark"><i class="fas fa-file-word fa-3x mr-2 "></i>Dish Edit</h3>
+        <h3 class="text-dark"><i class="fas fa-concierge-bell fa-3x"></i> Dish Detail</h3>
     </div>
 
 </div>
@@ -172,7 +172,7 @@ else
             <label class="col-form-label">Active User:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
                 <input  readonly class="form-control" type="text" value="<?php echo $dishDetailOfDetai[0][12];?>">
             </div>
@@ -182,7 +182,7 @@ else
             <label class="col-form-label">Active Date:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                    <span class="input-group-text"><i class="far fa-calendar-alt"></i> </span>
                 </div>
                 <input  readonly class="form-control" type="datetime" value="<?php echo $dishDetailOfDetai[0][7];?>">
             </div>
@@ -193,13 +193,13 @@ else
          {
              ?>
 
-             <div class="form-group row">
+             <div class="form-group row ">
                  <label class="col-form-label">Expire User:</label>
                  <div class="input-group mb-3 input-group-lg">
                      <div class="input-group-prepend">
-                         <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                         <span class="input-group-text"><i class="fas fa-user"></i> </span>
                      </div>
-                     <input  readonly class="form-control" type="text" value="<?php echo $dishDetailOfDetai[0][13];?>">
+                     <input  readonly class="form-control text-danger" type="text" value="<?php echo $dishDetailOfDetai[0][13];?>">
                  </div>
              </div>
 
@@ -207,16 +207,16 @@ else
                  <label class="col-form-label">Expire Date:</label>
                  <div class="input-group mb-3 input-group-lg">
                      <div class="input-group-prepend">
-                         <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                         <span class="input-group-text"><i class="far fa-calendar-alt"></i>   </span>
                      </div>
-                     <input  readonly class="form-control" type="datetime" value="<?php echo $dishDetailOfDetai[0][2];?>">
+                     <input  readonly class="form-control text-danger" type="datetime" value="<?php echo $dishDetailOfDetai[0][2];?>">
                  </div>
              </div>
              <?php
          }
          else
          {
-             echo ' <button id="cancel_dish"  type="button"  class="cancelForm form-control btn  btn-danger" value="dish cancel"><i class="fas fa-trash-alt"></i>Delete</button>';
+             echo ' <button id="cancel_dish"  type="button"  class="cancelForm form-control btn  btn-danger" value="dish cancel"><i class="fas fa-trash-alt"></i> Delete</button>';
          }
         ?>
 

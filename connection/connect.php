@@ -18,7 +18,6 @@
 session_start();
 date_default_timezone_set("Asia/Karachi");
 //date_default_timezone_get();
-
 $connect=mysqli_connect('localhost',"root","","version1");
 //$connect=mysqli_connect("localhost","id10884474_shahzad","11111111","id10884474_a111");
     if(!$connect)

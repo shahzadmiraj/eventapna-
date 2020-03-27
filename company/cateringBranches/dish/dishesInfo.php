@@ -23,11 +23,6 @@ include_once ("../../../connection/connect.php");
            header("location:../../companyRegister/companyEdit.php");
         }
         $cateringid=$id;
-    if(isset($_GET['dishdetail']))
-    {
-        $encodedDishId=base64url_encode($_GET['dishid']);
-        header("location:EditDish.php?dish=".$encodedDishId."&catering=".$encoded."");
-    }
     $sql = 'SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id=' . $cateringid . '';
     $cateringdetail = queryReceive($sql);
 ?>
@@ -134,95 +129,70 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-    <div class="col-12 card shadow mb-2 p-4 ">
-
-        <h3 class=" " align="center"> Dish information</h3>
-        <hr>
-        <?php
-
-        $sql='SELECT id,name FROM dish_type WHERE (ISNULL(expire))AND (catering_id='.$cateringid.')';
-
-        $dishTypes=queryReceive($sql);
-        $Display='';
-        $display='<div class="form-group row ">';
-        for($j=0;$j<count($dishTypes);$j++)
-        {
-
-
-            $display.='<h4 class="col-12 btn-warning" align="center"><i class="fas fa-sitemap mr-1"></i>'.$dishTypes[$j][1].'</h4>';
-
-
-
-            $sql = 'SELECT d.name, d.id, (SELECT dt.name from dish_type as dt WHERE dt.id=d.dish_type_id),(SELECT dt.expire from dish_type as dt WHERE dt.id=d.dish_type_id), d.expire,d.image FROM dish as d WHERE (dish_type_id=' . $dishTypes[$j][0] . ')AND((ISNULL(d.expire))) ';
-
-
-            $Dishes = queryReceive($sql);
-
-
-
-
-            for ($i = 0; $i < count($Dishes); $i++) {
-                $display .= '<a href="?dishdetail=yes&dishid=' . $Dishes[$i][1]. '&catering='.$encoded.'" class="col-sm-10 col-md-4 col-xl-3 col-10 m-1 border badge-light ">
-              <img src="';
-
-                if(file_exists('../../../images/dishImages/'.$Dishes[$i][5])&&($Dishes[$i][5]!=""))
-                {
-                    $display.='../../../images/dishImages/'.$Dishes[$i][5];
-                }
-                else
-                {
-                    $display.='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
-                }
-
-
-
-                $display.='" style="height: 20vh" class="col-12">  
-            <h5 class="col-12 p-0 text-primary" ><i class="fas fa-concierge-bell mr-1"></i>' . $Dishes[$i][0] . '</h5>
-            <i class="col-12 ';
-
-
-                if (($Dishes[$i][3] == "") && ($Dishes[$i][4] == "")) {
-                    $display .= " text-primary ";
-                } else {
-                    $display .= "text-danger ";
-                }
-
-                $display .= '">';
-                if ($Dishes[$i][3] != "") {
-                    $display .= $Dishes[$i][2] . " Diable ";
-                }
-                if ($Dishes[$i][4] != "") {
-                    $display .= " Dish Diable ";
-                }
-
-                $display .= '</i>
-        </a>';
-
-
-            }
-        }
-        $display.='</div>';
-        echo $display;
-
-
-        ?>
-
-
-
-    </div>
-
-
-
-
-
-
-
-
-
 
 
 
 </div>
+
+
+
+
+
+
+<div class="container badge-light" >
+    <h1>Catering Dishes</h1>
+    <hr>
+    <?php
+
+    $sql='SELECT `id`, `name`, `expire` FROM `dish_type` WHERE (ISNULL(expire))AND (catering_id='.$cateringid.')';
+    $dishTypeDetail=queryReceive($sql);
+    $display='';
+    for($i=0;$i<count($dishTypeDetail);$i++)
+    {
+        $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"><i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
+
+        $sql = 'SELECT d.name, d.id,d.image FROM dish as d WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND((ISNULL(d.expire))) ';
+
+      //  $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(expire)) AND(catering_id='.$cateringid.')';
+        $dishDetail=queryReceive($sql);
+        //print_r($dishDetail);
+        $display.='<div id="dishtype'.$i.'"  class="row" style="display: none">';
+        for ($j=0;$j<count($dishDetail);$j++)
+        {
+            $display .= ' 
+         <a    href="EditDish.php?dish='.base64url_encode($dishDetail[$j][1]).'&catering='.$_GET['catering'].'"  class="col-5 m-2 m-sm-auto  shadow-lg p-3 bg-white rounded" >';
+
+
+
+
+
+            $image='';
+
+
+            if(file_exists('../../../images/dishImages/'.$dishDetail[$j][2])&&($dishDetail[$j][2]!=""))
+            {
+                $image= '../../../images/dishImages/'.$dishDetail[$j][2];
+            }
+            else
+            {
+                $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+            }
+
+
+            $display.='<img class="card-img-top " src="'.$image.'" alt="Card image" style="height: 100px" >
+        
+            <h4  class="font-weight-bold p-0 card-title col-12
+            "><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</h4>       
+        </a>';
+        }
+        $display.='</div>';
+    }
+    echo $display;
+    ?>
+
+</div>
+
+
 <?php
 include_once ("../../../webdesign/footer/footer.php");
 ?>
@@ -230,6 +200,23 @@ include_once ("../../../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
+
+        $(document).on("click",".dishtypes",function () {
+            var display=$(this).data("display");
+            var IdDisplay=$(this).data("dishtype");
+            if(display=="hide")
+            {
+                $("#dishtype"+IdDisplay).show('slow');
+                $(this).data("display","show");
+            }
+            else
+            {
+
+                $("#dishtype"+IdDisplay).hide('slow');
+                $(this).data("display","hide");
+            }
+
+        });
 
         $(document).on("change",".changeDishType",function ()
         {

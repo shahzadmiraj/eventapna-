@@ -3,9 +3,6 @@ include_once ("../connection/connect.php");
 
 $hallid='';
 $cateringid='';
-
-
-
 if(isset($_SESSION['branchtype']))
 {
 
@@ -136,12 +133,29 @@ echo $display;
             <a href="../order/FindOrder.php?order_status=Delieved" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
             <a href="../order/FindOrder.php?order_status=Clear" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
             <a href="../order/FindOrder.php?order_status=Cancel" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
+        <?php
+
+
+        if($_SESSION['branchtype']=="catering")
+        {
+            echo ' <a  href="../company/cateringBranches/dish/dishPriceList.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fa fa-list-ol fa-3x" ></i><h6>Catering Price List</h6></a>';
+        }
+        ?>
 <!--            <a href="/public_html/payment/transferPaymentReceive.php?option=userDisplay" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-money-bill-alt fa-5x"></i><h3>Receive payment</h3></a>-->
     <!--        <a href="/public_html/system/dish/dishesDetail.php" class="h-25 col-6"><h1>Guideline Dishes</h1></a>
             <a href="/public_html/system/user/usercreate.php" class="h-25 col-6"><h1>User Create</h1></a>
     -->
+<!--        <a  href="../company/cateringBranches/dish/dishPriceList.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fa fa-list-ol fa-3x" aria-hidden="true"></i><h6>Catering Price List</h6></a>-->
+
+
+
+
         <a  href="../payment/RemainingAmount.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>
+
+
+
     </div>
+
 
 
 

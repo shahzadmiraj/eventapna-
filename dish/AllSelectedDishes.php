@@ -49,7 +49,7 @@ include_once ("../webdesign/header/header.php");
 <div class="jumbotron  shadow" style="background-image: url(https://qph.fs.quoracdn.net/main-qimg-b1822af85b86aabaa253ad7948880cb7);background-size:100% 115%;background-repeat: no-repeat">
 
     <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-file-word fa-3x mr-2 "></i>Catering Order Detail</h3>
+        <h3 ><i class="fas fa-concierge-bell fa-3x"></i>Catering Order Detail</h3>
     </div>
 
 </div>
@@ -97,7 +97,7 @@ include_once ("../webdesign/header/header.php");
 
         <a href="dishPreview.php?dish=<?php echo base64url_encode($detailDishes[$i][0]);?>" class="card m-2" >
             <div class="card-header">
-                <h4><i class="fas fa-file-word"></i><?php echo $detailDishes[$i][10];?></h4>
+                <h4><i class="fas fa-concierge-bell "></i><?php echo $detailDishes[$i][10];?></h4>
             </div>
             <ul class="list-group list-group-flush">
 
@@ -130,8 +130,8 @@ include_once ("../webdesign/header/header.php");
                 </div>
 
                 <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                    <div class="input-group-prepend ">
+                        <span class="input-group-text text-danger"> <i class="fas fa-money-bill-alt"></i></span>
                     </div>
                     <label>Total:<?php echo (int) $detailDishes[$i][3]*$detailDishes[$i][8];?></label>
                 </div>
@@ -150,7 +150,7 @@ include_once ("../webdesign/header/header.php");
 
 
 <div class="container alert-danger mt-5">
-    <h3>Expired Dishes  <input   id="expireControl" class="btn btn-danger" value="Show"></h3>
+    <h3><i class="fas fa-trash-alt"></i> Expired Dishes  <input   id="expireControl" class="btn btn-danger" value="Show"></h3>
 
     <hr>
 </div>
@@ -172,7 +172,7 @@ include_once ("../webdesign/header/header.php");
 
         <a href="dishPreview.php?dish=<?php echo base64url_encode($detailDishes[$i][0]);?>" class="card alert-danger m-2" >
             <div class="card-header">
-                <h4><i class="fas fa-file-word"></i><?php echo $detailDishes[$i][10];?></h4>
+                <h4><i class="fas fa-concierge-bell"></i>  <?php echo $detailDishes[$i][10];?></h4>
             </div>
             <ul class="list-group list-group-flush">
 
@@ -205,15 +205,15 @@ include_once ("../webdesign/header/header.php");
                 </div>
 
                 <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                    <div class="input-group-prepend ">
+                        <span class="input-group-text text-danger"><i class="fas fa-money-bill-alt"></i></span>
                     </div>
                     <label>Total:<?php echo (int) $detailDishes[$i][3]*$detailDishes[$i][8];?></label>
                 </div>
 
-                <div class="input-group mb-3 input-group-lg">
+                <div class="input-group mb-3 input-group-lg text-danger">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-sort-amount-up"></i></span>
+                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
                     <label><?php echo $detailDishes[$i][2];?></label>
                 </div>

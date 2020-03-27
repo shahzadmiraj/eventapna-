@@ -89,7 +89,7 @@ include_once ("../webdesign/header/header.php");
 </div>
 <div class="row justify-content-center col-12" style="margin-top: -60px">
 
-    <div class="card text-center card-header">
+    <div class="card text-center">
     <img src="<?php
 
 
@@ -117,10 +117,12 @@ include_once ("../webdesign/header/header.php");
 
 
 
-<div class="container row m-auto ">
+<div class="container row m-auto  alert-light">
+<h3 class="col-12 h-25">Order Detail</h3>
+    
 
 
-    <a href="?action=see " class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"   resource=""><i class="fas fa-eye"></i><h6>See PDF Bill</h6></a>
+    <a href="?action=see " class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"   resource=""><i class="fa fa-print" aria-hidden="true"></i>  <h6>See PDF Bill</h6></a>
     <a href="?action=Download" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x" download><i class="fas fa-cloud-download-alt"></i><h6>Download PDF Bill</h6></a>
 
 
@@ -139,7 +141,7 @@ include_once ("../webdesign/header/header.php");
                 echo '<a href="orderEdit.php?action=preview" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Catering  Order</h6></a>';
             }
         ?>
-    <a href="../dish/AllSelectedDishes.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-file-word fa-3x"></i><h6>Dishes Booking </h6></a>
+    <a href="../dish/AllSelectedDishes.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-concierge-bell fa-3x"></i><h6>Dishes Booking </h6></a>
             <a href="../payment/paymentHistory.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-history fa-3x"></i><h6>Payment History</h6></a>
 
     <a href="HistoryOrder.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-eraser fa-3x"></i><h6>Order Changing history </h6></a>

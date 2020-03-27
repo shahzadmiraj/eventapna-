@@ -11,10 +11,11 @@
  *
  *
  *
- *
- *
- *
- *<i class="far fa-calendar-alt"></i> calender
+ * <i class="fas fa-trash-alt"></i> delete
+ *<i class="fas fa-user"></i> user
+ *  <i class="fa fa-list-ol" aria-hidden="true"></i> list no
+ *  <i class="fa fa-print" aria-hidden="true"></i> //print
+ *      <i class="far fa-calendar-alt"></i> calender
  * <i class="fas fa-check "></i>    ok check
  * <i class="fas fa-arrow-left"></i> back arrow
  *<i class="fas fa-layer-group"></i> files
