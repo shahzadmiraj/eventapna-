@@ -18,6 +18,7 @@ $month=$_GET['month'];
 $daytime=$_GET['daytime'];
 $hallid=$id;
 $companyid=$_COOKIE['companyid'];
+$userid=$_COOKIE['userid'];
 
 ?>
 
@@ -78,7 +79,6 @@ include_once ("../../webdesign/header/header.php");
 ?>
 
 <div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/spicy-dishes-dinner-menu-icon-design-grilled-chicken-curry-sauce-vegetable-stew-pasta-pesto-sauce-ham-curry-84629311.jpg);background-size:100% 115%;background-repeat: no-repeat;">
-
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 "><i class="fas fa-plus-square"></i>Add new Package</h1>
         <ol class="list-unstyled">
@@ -175,9 +175,10 @@ include_once ("../../webdesign/header/header.php");
 
 
     <?php
-    echo '<input hidden type="text" name="month"  value="'.$month.'">
-                <input hidden type="text" name="daytime"  value="'.$daytime.'">
+    echo
+        '
                     <input hidden type="text" name="hallid"  value="'.$hallid.'">
+                    <input hidden type="number" name="userid"  value="'.$userid.'">
                     ';
     ?>
 
@@ -204,6 +205,21 @@ include_once ("../../webdesign/header/header.php");
                     <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                 </div>
                 <input id="rate" name="rate" class="form-control" type="number" placeholder="Price like 1000 per head">
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <lable for="PackagesType" class="col-form-label">Packages per head With:</lable>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                </div>
+                <select name="PackagesType" id="PackagesType" class="form-control">
+                    <option value="0">per head only seating </option>
+                    <option value="1">per head Food and seating</option>
+                </select>
             </div>
         </div>
 
@@ -256,7 +272,7 @@ include_once ("../../webdesign/header/header.php");
 </form>
 </div>
 
-<div class="container ">
+<div class="container " id="selectingmenu">
 
     <hr class="border">
     <h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>Select Dishes</h3>
@@ -441,10 +457,34 @@ $(document).ready(function ()
        }
 
    });
+
+   function checkpaktype()
+   {
+       var PackagesType=$("#PackagesType").val();
+       if(PackagesType==0)
+       {
+           $("#selectedmenu").hide('slow');
+           $("#selectingmenu").hide('slow');
+       }
+       else
+       {
+           $("#selectedmenu").show('slow');
+           $("#selectingmenu").show('slow');
+       }
+   }
+
+   $("#PackagesType").change(function ()
+   {
+       checkpaktype();
+   });
+    checkpaktype();
+
    $("#btnsubmit").click(function ()
    {
+
        var formdata=new FormData($('#submitpackage')[0]);
        formdata.append("option","CreatePackage");
+       formdata.append("selectedDates",selectedDates);
        $.ajax({
            url:"../companyServer.php",
            method:"POST",

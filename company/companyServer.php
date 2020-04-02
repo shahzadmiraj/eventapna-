@@ -232,27 +232,44 @@ if(isset($_POST['option']))
         }*/
 
 
-        if(!isset($_POST['dishname']))
+        $selectedDatesString=$_POST['selectedDates'];
+        $selectedDates=explode (",", $selectedDatesString);
+     /*   if(!isset($_POST['dishname']))
         {
             echo "Please Select Dishes ";
             exit();
-        }
-        $dishnames=$_POST['dishname'];
-        $image=$_POST['image'];
-        $month=$_POST['month'];
-        $daytime=$_POST['daytime'];
+        }*/
+        $PackagesType=$_POST['PackagesType'];
+        $userid=$_POST['userid'];
+        $daytime=$_POST['Daytime'];
         $hallid=$_POST['hallid'];
         $packagename=$_POST['packagename'];
         $rate=chechIsEmpty($_POST['rate']);
         $describe=$_POST['describe'];
-        $sql='INSERT INTO `hallprice`(`id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`) VALUES (NULL,"'.$month.'",1,'.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'")';
+        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL)';
         querySend($sql);
         $id=mysqli_insert_id($connect);
-        for ($i=0;$i<count($dishnames);$i++)
+        for ($i=0;$i<count($selectedDates);$i++)
         {
-            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `hallprice_id`) VALUES (NULL,"'.$dishnames[$i].'","'.$image[$i].'",NULL,'.$id.')';
+
+           $date=date('Y-m-d ',strtotime(trim($selectedDates[$i])));
+            $sql = 'INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`) VALUES (NULL,"' . $timestamp . '",NULL,' . $id . ',' . $userid . ',NULL,"' .$date.'")';
             querySend($sql);
         }
+            $dishnames=array();
+            $image=array();
+        if(isset($_POST['dishname']))
+        {
+
+            $dishnames=$_POST['dishname'];
+            $image=$_POST['image'];
+        }
+        for ($i=0;($i<count($dishnames))&&($PackagesType==1);$i++)
+        {
+            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `packages_id`) VALUES (NULL,"'.$dishnames[$i].'","'.$image[$i].'",NULL,'.$id.')';
+            querySend($sql);
+        }
+
     }
     else if($_POST['option']=="showdaytimelist")
     {

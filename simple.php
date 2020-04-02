@@ -185,3 +185,5 @@ $('.toast').toast('show');
         hello,you have successfully Deleted dish
     </div>
 </div>
+
+$selectedDates=explode (",", $selectedDatesString); //string convert into array in php by comma split
