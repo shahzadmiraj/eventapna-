@@ -31,9 +31,22 @@ $companyid=$_COOKIE['companyid'];
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="../../calender/customDatepicker/styles.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="../../calender/customDatepicker/multidatespicker.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../bootstrap.min.js"></script>
+
+
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
+    <script type="text/javascript" src="../../webdesign/JSfile/JSFunction.js"></script>
+
     <style>
 
         form
@@ -76,7 +89,86 @@ include_once ("../../webdesign/header/header.php");
     </div>
 </div>
 
-<form id="submitpackage" class="card container" >
+
+
+
+
+
+
+
+
+
+<div class="container card">
+
+
+
+
+
+
+
+    <div class="form-group row ">
+        <lable for="rate" class="col-form-label">Select Dates:</lable>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+            </div>
+
+
+
+                <textarea placeholder="Select Dates of active pakages" type="text" id="selectedValues" class="date-values form-control" readonly></textarea>
+                <div id="parent" class="container card border-danger p-3" style="display:none;">
+                    <div class="row header-row">
+                        <div class="col-xs previous">
+                            <button type="button" id="previous" onclick="previous()">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="card-header month-selected col-sm" id="monthAndYear">
+                        </div>
+                        <div class="col-sm">
+                            <select class="form-control col-xs-6" name="month" id="month" onchange="change()"></select>
+                        </div>
+                        <div class="col-sm">
+                            <select class="form-control col-xs-6" name="year" id="year" onchange="change()"></select>
+                        </div>
+                        <div class="col-xs next">
+                            <button type="button" id="next" onclick="next()">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <table id="calendar" class="container">
+                        <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        </thead>
+                        <tbody id="calendarBody" ></tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+
+<div class="container card">
+
+
+
+<form id="submitpackage" >
+
 
 
 
@@ -89,33 +181,6 @@ include_once ("../../webdesign/header/header.php");
                     ';
     ?>
 
-
-    <div class="form-group row">
-        <lable class="col-form-label">Same as previous Packages</lable>
-
-
-
-
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
-            </div>
-            <select id="perivious"  name="perivious" class="form-control">
-                <option value="none">None</option>
-                <?php
-                $sql='SELECT hp.package_name,hp.id,hp.price FROM company as c INNER join hall as h on(h.company_id=c.id) INNER join hallprice as hp on (hp.hall_id=h.id) WHERE ISNULL(c.expire) && ISNULL(h.expire) && ISNULL(hp.expire) &&(hp.isFood=1) &&(c.id='.$_COOKIE['companyid'].') GROUP BY(hp.package_name)';
-                $packages=queryReceive($sql);
-                for($i=0;$i<count($packages);$i++)
-                {
-                    echo '<option value="'.$packages[$i][1].'">'.$packages[$i][0].'    with Price  '.$packages[$i][2].'  </option>';
-
-
-                }
-                ?>
-            </select>
-        </div>
-
-    </div>
 
     <div id="shownonperivious">
         <div class="form-group row">
@@ -172,6 +237,7 @@ include_once ("../../webdesign/header/header.php");
         <button id="btnsubmit" type="button" value="Submit" class="btn btn-primary col-5 float-right"><i class="fas fa-check "></i>Submit</button>
     </div>
 </form>
+</div>
 
 <div class="container ">
 
@@ -242,12 +308,22 @@ include_once ("../../webdesign/header/header.php");
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
                     <button type="button" id="submitformDishadd" class="btn btn-primary float-right">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
 
 </div>
 <?php
@@ -438,9 +514,57 @@ $(document).ready(function ()
         });
 
 
+
+
+    });
+
+$(document).ready(function () {
+
+    $("#month").change(function () {
+            if(($.trim($("#year").val())!=""))
+            {
+                $("#calendarBody").show();
+            }
+    });
+
+    $("#year").change(function () {
+        if(($.trim($("#month").val())!=""))
+        {
+            $("#calendarBody").show();
+        }
+    });
+
+    function checkmonthyear()
+    {
+        validationWithString("month","Please select month");
+        validationWithString("year","Please select year");
+        if(($.trim($("#month").val())=="")||($.trim($("#year").val())==""))
+        {
+            $("#calendarBody").hide();
+        }
+        else
+        {
+            $("#calendarBody").show();
+        }
+    }
+
+    $("#next").click(function ()
+    {
+
+        checkmonthyear();
+
+    });
+    $("#previous").click(function ()
+    {
+
+
+        checkmonthyear();
     });
 
 
+
+
+});
 
 
 });
