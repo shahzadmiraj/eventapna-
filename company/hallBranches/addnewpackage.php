@@ -27,7 +27,6 @@ $userid=$_COOKIE['userid'];
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -37,8 +36,6 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="../../calender/customDatepicker/styles.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="../../calender/customDatepicker/multidatespicker.js" type="text/javascript"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
 
@@ -289,7 +286,7 @@ include_once ("../../webdesign/header/header.php");
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
             <input id="searchdish" class="form-control" type="text" placeholder="Search dish">
-            <button type="button" class="btn btn-primary float-right col-4" data-toggle="modal" data-target="#exampleModal">
+            <button id="modelselect" type="button" class="btn btn-primary float-right col-4" data-toggle="modal" data-target="#exampleModal">
                 ADD dish
             </button>
         </div>
@@ -314,7 +311,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button   type="button" class="close closemodel" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -355,10 +352,11 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-
-
-
 </div>
+
+
+
+
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
@@ -367,6 +365,11 @@ include_once ("../../webdesign/footer/footer.php");
 $(document).ready(function ()
 {
     var numbers=0;
+
+    $("#btncancel").click(function () {
+        window.history.back();
+    });
+
 
     function Addmenu(dishname,image)
     {
@@ -477,7 +480,7 @@ $(document).ready(function ()
    {
        checkpaktype();
    });
-    checkpaktype();
+    //checkpaktype();
 
    $("#btnsubmit").click(function ()
    {
@@ -510,12 +513,8 @@ $(document).ready(function ()
        });
 
    });
-   $("#btncancel").click(function () {
-       window.history.back();
-   });
-    $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus')
-    });
+
+
 
     $("#submitformDishadd").click(function (e)
     {
@@ -547,6 +546,10 @@ $(document).ready(function ()
             }
         });
     });
+
+
+
+
     $("#searchdish").keyup(function () {
        var dishname=$(this).val();
 
@@ -574,6 +577,11 @@ $(document).ready(function ()
 
 
     });
+
+
+
+
+
 
 $(document).ready(function () {
 
