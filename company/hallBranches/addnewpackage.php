@@ -208,6 +208,23 @@ include_once ("../../webdesign/header/header.php");
         </div>
 
         <div class="form-group row">
+            <lable for="describe" class="col-form-label">Package Daytime:</lable>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+                <select id="Daytime" name="Daytime" class="form-control" placeholder="Daytime" >
+                    <option value="Morning">Morning</option>
+                    <option value="Afternoon">Afternoon</option>
+                    <option value="Evening">Evening</option>
+
+                </select>
+
+            </div>
+        </div>
+
+        <div class="form-group row">
             <lable for="describe" class="col-form-label">Packages Description</lable>
 
             <div class="input-group mb-3 input-group-lg">
