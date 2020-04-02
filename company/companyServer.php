@@ -266,7 +266,7 @@ if(isset($_POST['option']))
         }
         for ($i=0;($i<count($dishnames))&&($PackagesType==1);$i++)
         {
-            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `packages_id`) VALUES (NULL,"'.$dishnames[$i].'","'.$image[$i].'",NULL,'.$id.')';
+            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `package_id`) VALUES (NULL,"'.$dishnames[$i].'","'.$image[$i].'",NULL,'.$id.')';
             querySend($sql);
         }
 
@@ -628,9 +628,14 @@ WHERE  id='.$order.'';
             }
             $dishimage =$_FILES['image']['name'];
         }
-        $sql='INSERT INTO `systemDish`(`name`, `id`, `image`, `isExpire`, `systemDishType_id`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",NULL,NULL)';
+       /* $sql='INSERT INTO `systemDish`(`name`, `id`, `image`, `isExpire`, `systemDishType_id`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",NULL,NULL)';
+        querySend($sql);*/
+       $userid=$_POST['userid'];
+       $companyid=$_POST['$companyid'];
+       $sql='INSERT INTO `systemItem`(`id`, `image`, `active`, `expire`, `user_id`, `company_id`, `name`) VALUES (NULL,"'.$dishimage.'","'.$timestamp.'",NULL,'.$userid.','.$companyid.',"'.$dishname.'")';
         querySend($sql);
-        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
+       // $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
+        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.')';
         echo dishesOfPakage($sql);
 
     }
@@ -651,8 +656,10 @@ WHERE  id='.$order.'';
     }
     else if($_POST['option']=="dishpredict")
     {
+        $companyid=$_POST['companyid'];
         $dishname=$_POST['dishname'];
-        $sql='SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) AND name LIKE "%'.$dishname.'%"';
+        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.') AND(name LIKE "%'.$dishname.'%")';
+        //$sql='SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) AND name LIKE "%'.$dishname.'%"';
         echo dishesOfPakage($sql);
     }
 

@@ -297,7 +297,9 @@ include_once ("../../webdesign/header/header.php");
         <?php
 
 
-        $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)';
+        //$sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)';
+
+        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.')';
        echo dishesOfPakage($sql);
 
         ?>
@@ -317,6 +319,9 @@ include_once ("../../webdesign/header/header.php");
                 </div>
                 <div class="modal-body">
                     <form id="formDishaddss">
+                        <input hidden value="<?php echo $userid; ?>" name="userid">
+                        <input hidden value="<?php echo $companyid; ?>" name="$companyid">
+
                         <div class="form-group row">
                             <div class="input-group mb-3 input-group-lg">
                                 <div class="input-group-prepend">
@@ -480,10 +485,28 @@ $(document).ready(function ()
    {
        checkpaktype();
    });
-    //checkpaktype();
+    checkpaktype();
 
    $("#btnsubmit").click(function ()
    {
+       var state=false;
+       if(validationWithString("selectedValues","Please Enter dates of packages"))
+       {
+           state=true;
+       }
+
+       if(validationWithString("packagename","Please Enter name of packages"))
+       {
+           state=true;
+       }
+       if(validationWithString("rate","Please Enter rate of packages"))
+       {
+           state=true;
+       }
+       if(state)
+       {
+           return false;
+       }
 
        var formdata=new FormData($('#submitpackage')[0]);
        formdata.append("option","CreatePackage");
@@ -519,11 +542,7 @@ $(document).ready(function ()
     $("#submitformDishadd").click(function (e)
     {
         e.preventDefault();
-        if($.trim($("#dishnameadd").val()).length==0)
-        {
-            alert("please enter dish name");
-            return false;
-        }
+
         var formdata = new FormData($("form")[1]);
         formdata.append("option","formDishadd");
         $.ajax({
@@ -550,11 +569,13 @@ $(document).ready(function ()
 
 
 
-    $("#searchdish").keyup(function () {
+    $("#searchdish").keyup(function ()
+    {
+        var companyid="<?php echo $companyid;?>";
        var dishname=$(this).val();
-
         var formdata=new FormData();
         formdata.append("option","dishpredict");
+        formdata.append("companyid",companyid);
         formdata.append("dishname",dishname);
         $.ajax({
             url:"../companyServer.php",
