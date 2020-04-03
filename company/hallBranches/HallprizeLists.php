@@ -46,13 +46,6 @@ $halldetail=queryReceive($sql);
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <style>
 
-        #showDaytimes
-        {
-            background: #dd3e54;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #6be585, #dd3e54);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #6be585, #dd3e54); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
     </style>
 </head>
 <body>
@@ -61,6 +54,7 @@ $halldetail=queryReceive($sql);
 include_once ("../../webdesign/header/header.php");
 
 ?>
+
 <div class="jumbotron jumbotron-fluid text-center" style="background-image: url(<?php
 if((file_exists('../../images/hall/'.$halldetail[0][5]))&&($halldetail[0][5]!=""))
 {
@@ -77,6 +71,39 @@ else
         <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>
 </div>
+
+
+<div class="container card">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+    </li>
+</ul>
+        </div>
+    </nav>
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">FIRST TABE</div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">SECOND TABE</div>
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">THIRD TABE</div>
+</div>
+</div>
+
+
+<!--
 <h3 class="text-white">Prize list Management</h3>
 <hr class="mt-2 mb-3 border-white">
 
@@ -109,7 +136,7 @@ else
 
     <div  class="border mt-5" id="showDaytimes">
         <?php
-        if(isset($_GET['daytime']))
+/*        if(isset($_GET['daytime']))
         {
             echo showPrizrListDetail($halldetail[0][0],$hallid,$_GET['daytime'],$companyid);
         }
@@ -120,11 +147,18 @@ else
         }
 
 
-        ?>
+        */?>
 
 
 
-    </div>
+    </div>-->
+
+
+
+
+
+
+
 
 
 
