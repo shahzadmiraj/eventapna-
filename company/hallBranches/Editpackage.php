@@ -34,6 +34,12 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <style>
 
         #selectedmenu
@@ -159,12 +165,10 @@ include_once ("../../webdesign/header/header.php");
             <input readonly  class="form-control" type="text" value="<?php echo $packageDetail[0][11];?>">
         </div>
     </div>
-
-
-
     <h2>Calender </h2>
     <hr>
     <div id="calendar" ></div>
+    <hr>
 
 
 
@@ -204,9 +208,24 @@ include_once ("../../webdesign/header/header.php");
         }
         ?>
 
+<h2>Packages all detail</h2>
+<div style="overflow:auto;height: 40vh">
 
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>No:</th>
+            <th>ID date:</th>
+            <th>Date:</th>
+            <th>User Name:</th>
+            <th>Active Date:</th>
+        </tr>
+        </thead>
+        <tbody  id="tableEditpackages">
 
-
+        </tbody>
+    </table>
+</div>
 
 
     <div class="col-12 mt-2 row" >
@@ -238,6 +257,23 @@ include_once ("../../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
+
+        function updateTable()
+        {
+            $.ajax({
+                url:"../../calender/fulcalender/pacakageOption.php",
+                type:"POST",
+                data:{option:"updateEdittable",Packageid:"<?php echo $packageid?>"},
+                success:function(data)
+                {
+                    //console.log(data);
+                    $("#tableEditpackages").html(data);
+                }
+            })
+        }
+
+
+
         var Editformdata=new FormData;
         Editformdata.append("option","SpecificpackageView");
         Editformdata.append("packageid","<?php echo $packageid?>");
@@ -246,9 +282,8 @@ include_once ("../../webdesign/footer/footer.php");
             header:{
                 left:'prev,next today',
                 center:'title',
-                right:'month,agendaWeek,agendaDay,listWeek,dayGridWeek'
+                right:'month,listWeek,dayGridWeek'
             },
-            height: 800,
             events: function(start, end, timezone, callback) {
                 $.ajax({
                     url: '../../calender/fulcalender/pacakageOption.php',
@@ -257,6 +292,7 @@ include_once ("../../webdesign/footer/footer.php");
                     contentType: false,
                     processData: false,
                     success: function(doc) {
+                        updateTable();
                         var obj = jQuery.parseJSON(doc);
                         var events = [];
                         $.each(obj, function(index, value) {
@@ -275,6 +311,7 @@ include_once ("../../webdesign/footer/footer.php");
                         console.log(x);
                         console.log(y);
                     }
+
                 });
             },
             selectable:true,
@@ -292,15 +329,32 @@ include_once ("../../webdesign/footer/footer.php");
                         success:function()
                         {
                             calendar.fullCalendar('refetchEvents');
-                            alert("Event Removed");
+                            updateTable();
+                           // alert("Event Removed");
+                        }
+                    })
+                }
+            },
+            select: function(start, end, allDay)
+            {
+                var selectedDate = $.fullCalendar.formatDate(start, "Y-MM-DD");
+                if(confirm("Are you sure to Add event on this Date "+selectedDate))
+                {
+                    $.ajax({
+                        url:"../../calender/fulcalender/pacakageOption.php",
+                        type:"POST",
+                        data:{option:"InsertNewDate", selectedDate:selectedDate,Packageid:"<?php echo $packageid?>",userid:"<?php echo $userid;?>"},
+                        success:function()
+                        {
+                            calendar.fullCalendar('refetchEvents');
+                            updateTable();
+                          //  alert("Added Successfully");
                         }
                     })
                 }
             }
 
         });
-
-
 
         function checkpaktype()
         {
@@ -322,9 +376,6 @@ include_once ("../../webdesign/footer/footer.php");
             checkpaktype();
         });
         checkpaktype();
-
-
-
         $("#deletePackage").click(function (e)
         {
             e.preventDefault();

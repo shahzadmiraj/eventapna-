@@ -156,4 +156,40 @@ else if($_POST['option']=="DelectEventdate")
     $sql='UPDATE packageDate as pd SET pd.expire="'.$timestamp.'",pd.expireUser='.$userid.'  WHERE pd.id='.$id.'';
     querySend($sql);
 }
+else if($_POST['option']=="InsertNewDate")
+{
+    $selectedDate=$_POST['selectedDate'];
+    $Packageid=$_POST['Packageid'];
+    $selectedDate=$_POST['selectedDate'];
+    $userid=$_POST['userid'];
+    $sql='SELECT active FROM `packageDate` WHERE (package_id='.$Packageid.')AND (ISNULL(expire))AND(selectedDate="'.$selectedDate.'")';
+    $getpackageDetail=queryReceive($sql);
+    if(count($getpackageDetail)>0)
+        exit();
+    $sql='INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`) VALUES (NULL,"'.$timestamp.'",NULL,'.$Packageid.','.$userid.',NULL,"'.$selectedDate.'")';
+    querySend($sql);
+}
+else if($_POST['option']=="updateEdittable")
+{
+    $packageid=$_POST['Packageid'];
+
+    $sql = 'SELECT pd.id,pd.selectedDate,(SELECT u.username FROM user as u WHERE u.id=pd.user_id),pd.active FROM packages as p INNER JOIN packageDate as pd
+on p.id=pd.package_id
+WHERE
+(ISNULL(p.expire))AND (ISNULL(pd.expire))
+AND(p.id='.$packageid.')';
+    $ViewPackages = queryReceive($sql);
+    $display='';
+    for($i=0;$i<count($ViewPackages);$i++)
+    {
+        $display.='<tr>
+            <td>'.$i.'</td>
+            <td>'.$ViewPackages[$i][0].'</td>
+            <td>'.$ViewPackages[$i][1].'</td>
+            <td>'.$ViewPackages[$i][2].'</td>
+            <td>'.$ViewPackages[$i][3].'</td>
+        </tr>';
+    }
+    echo $display;
+}
 ?>
