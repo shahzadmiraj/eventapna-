@@ -27,22 +27,18 @@ echo date_format($date,"Y-m-d H:i:s");*/
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 
     <script>
-        /*function(event)
-        {
-            $.ajax({
-                url:"pacakageOption.php",
-                type:"POST",
-                data:{title:title, start:start, end:end},
-                success:function(data)
-                {
-                    calendar.fullCalendar(event);
-                }
-            });
-        },*/
+
 
         $(document).ready(function() {
+
+
+     var formdata=new FormData;
+     formdata.append("daytime","All");
+     formdata.append("packagetype","All");
+     formdata.append("option","ViewPackages");
+     formdata.append("hallid",1);
             var calendar = $('#calendar').fullCalendar({
-                editable:true,
+                editable:false,
                 header:{
                     left:'prev,next today',
                     center:'title',
@@ -51,18 +47,15 @@ echo date_format($date,"Y-m-d H:i:s");*/
                 events: function(start, end, timezone, callback) {
                     $.ajax({
                         url: 'pacakageOption.php',
-                        data: {
-                            events: 6,
-                            pending: 1,
-                            from: '2020-01-01',
-                            to: '2021-12-31',
-                        },
+                        method:"POST",
+                        data:formdata,
+                        contentType: false,
+                        processData: false,
                         success: function(doc) {
                             var obj = jQuery.parseJSON(doc);
                             var events = [];
                             $.each(obj, function(index, value) {
                                 events.push({
-                                   // id: value['id']
                                     end: value['end'],
                                     id: value['id'],
                                     start: value['start'],
@@ -79,63 +72,8 @@ echo date_format($date,"Y-m-d H:i:s");*/
                         }
                     });
                 },
-                selectable:true,
+                selectable:false,
                 selectHelper:true,
-                select: function(start, end, allDay)
-                {
-                    var title = prompt("Enter Event Title");
-                    if(title)
-                    {
-                        var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                        var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-                        $.ajax({
-                            url:"insert.php",
-                            type:"POST",
-                            data:{title:title, start:start, end:end},
-                            success:function(data)
-                            {
-                                calendar.fullCalendar('refetchEvents');
-                                alert("Added Successfully");
-                            }
-                        });
-                    }
-                },
-                editable:true,
-                eventResize:function(event)
-                {
-                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-                    var title = event.title;
-                    var id = event.id;
-                    $.ajax({
-                        url:"update.php",
-                        type:"POST",
-                        data:{title:title, start:start, end:end, id:id},
-                        success:function(){
-                            calendar.fullCalendar('refetchEvents');
-                            alert('Event Update');
-                        }
-                    });
-                },
-
-                eventDrop:function(event)
-                {
-                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-                    var title = event.title;
-                    var id = event.id;
-                    $.ajax({
-                        url:"update.php",
-                        type:"POST",
-                        data:{title:title, start:start, end:end, id:id},
-                        success:function()
-                        {
-                            calendar.fullCalendar('refetchEvents');
-                            alert("Event Updated");
-                        }
-                    });
-                },
-
                 eventClick:function(event)
                 {
                     if(confirm("Are you sure you want to remove it?"))
@@ -152,9 +90,12 @@ echo date_format($date,"Y-m-d H:i:s");*/
                             }
                         });
                     }
-                },
+                }
 
             });
+            //
+            // $('#calendar').fullCalendar('refetchEvents');
+
         });
 
     </script>

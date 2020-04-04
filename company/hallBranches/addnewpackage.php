@@ -13,9 +13,6 @@ if((!is_numeric($id))||$id=="")
     header("location:../companyRegister/companyEdit.php");
 }
 
-$hallname=$_GET['hallname'];
-$month=$_GET['month'];
-$daytime=$_GET['daytime'];
 $hallid=$id;
 $companyid=$_COOKIE['companyid'];
 $userid=$_COOKIE['userid'];
@@ -78,11 +75,6 @@ include_once ("../../webdesign/header/header.php");
 <div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/spicy-dishes-dinner-menu-icon-design-grilled-chicken-curry-sauce-vegetable-stew-pasta-pesto-sauce-ham-curry-84629311.jpg);background-size:100% 115%;background-repeat: no-repeat;">
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 "><i class="fas fa-plus-square"></i>Add new Package</h1>
-        <ol class="list-unstyled">
-            <li><i class="fas fa-place-of-worship"></i>Hall name:<?php echo $hallname;?></li>
-            <li><i class="fas fa-table"></i>Month:<?php echo $month?></li>
-            <li><i class="far fa-clock"></i>Daytime:<?php echo $daytime;?></li>
-        </ol>
     </div>
 </div>
 

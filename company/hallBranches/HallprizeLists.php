@@ -44,9 +44,23 @@ $halldetail=queryReceive($sql);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <style>
 
     </style>
+
+    <script>
+
+
+
+    </script>
+
 </head>
 <body>
 
@@ -75,83 +89,57 @@ else
 
 <div class="container card">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-
+<h4>Package information</h4>
+    <hr>
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+        <a class="nav-link active daytime"  data-daytime="All" id="pills-All-tab" data-toggle="pill" href="#pills-All" role="tab" aria-controls="pills-All" aria-selected="true">All</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+        <a class="nav-link daytime" data-daytime="Morning" id="pills-Morning-tab" data-toggle="pill" href="#pills-Morning" role="tab" aria-controls="pills-Morning" aria-selected="false">Morning</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+        <a class="nav-link daytime"  data-daytime="Afternoon" id="pills-Afternoon-tab" data-toggle="pill" href="#pills-Afternoon" role="tab" aria-controls="pills-Afternoon" aria-selected="false">Afternoon</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link daytime" data-daytime="Evening" id="pills-Evening-tab" data-toggle="pill" href="#pills-Evening" role="tab" aria-controls="pills-Evening" aria-selected="false">Evening</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link"    href="addnewpackage.php?hall=<?php echo $_GET['hall']; ?>" >Add Package</a>
     </li>
 </ul>
-        </div>
-    </nav>
-<div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">FIRST TABE</div>
-    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">SECOND TABE</div>
-    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">THIRD TABE</div>
+<!--<div class="tab-content" id="pills-tabContent">-->
+<!--    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">FIRST TABE</div>-->
+<!--    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">SECOND TABE</div>-->
+<!--    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">THIRD TABE</div>-->
+<!--</div>-->
+
+
+    <h5>Package type</h5>
+    <hr>
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active PackageType" data-packagetype="All" id="pills-type-All-tab" data-toggle="pill" href="#pills-type-All" role="tab" aria-controls="pills-type-All" aria-selected="true">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link PackageType" data-packagetype="0" id="pills-Only-Seating-tab" data-toggle="pill" href="#pills-Only-Seating" role="tab" aria-controls="pills-Only-Seating" aria-selected="false">Only Seating</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link PackageType" data-packagetype="1" id="pills-FoodAndSeating-tab" data-toggle="pill" href="#pills-FoodAndSeating" role="tab" aria-controls="pills-FoodAndSeating" aria-selected="false">Food+Seating</a>
+                </li>
+            </ul>
+
+
+    <h2>Calender </h2>
+    <hr>
+    <div id="calendar" ></div>
+
+
+
+
 </div>
-</div>
-
-
-<!--
-<h3 class="text-white">Prize list Management</h3>
-<hr class="mt-2 mb-3 border-white">
-
-
-    <div class="form-group row  container m-auto badge-light">
-        <div data-daytime="Morning" class="col-4 daytime"style="height: 25vh">
-            <a  class="btn btn-primary">
-                <img class="rounded-circle" src="https://www.incimages.com/uploaded_files/image/970x450/getty_503667408_2000133320009280259_352507.jpg"  style="height: 20vh;width: 100%;">
-                <p   class="text-white"><i class="fas fa-coffee"></i> Morning </p>
-            </a>
-        </div>
-        <div  data-daytime="Afternoon" class="daytime col-4" style="height: 25vh">
-            <a  class="btn btn-warning">
-                <img class="rounded-circle" src="https://www.ellieteramoto.com/wordpress/wp-content/uploads/2018/11/the-sun-and-lake-kussharo-hokkaido-japan.jpg" style="height: 20vh;width: 100%">
-                <p class="text-white" ><i class="fas fa-sun"></i> Afternoon</p>
-            </a>
-        </div>
-        <div data-daytime="Evening" class="daytime col-4" style="height: 25vh">
-            <a  class="btn btn-dark">
-                <img class="rounded-circle" src="https://www.murals.shop/1777-thickbox_default/starry-sky-half-moon-scenic-cloudscape-wall-mural.jpg"  style="height: 20vh;width: 100%">
-                <p class="text-white" ><i class="fas fa-moon"></i> Evening </p>
-            </a>
-        </div>
-    </div>
-
-
-
-
-
-
-    <div  class="border mt-5" id="showDaytimes">
-        <?php
-/*        if(isset($_GET['daytime']))
-        {
-            echo showPrizrListDetail($halldetail[0][0],$hallid,$_GET['daytime'],$companyid);
-        }
-        else
-        {
-
-          echo  showPrizrListDetail($halldetail[0][0],$hallid,"Morning",$companyid);
-        }
-
-
-        */?>
-
-
-
-    </div>-->
 
 
 
@@ -172,61 +160,89 @@ include_once ("../../webdesign/footer/footer.php");
 
 <script>
 
-    $(document).ready(function ()
-    {
+        $(document).ready(function() {
 
-        $(".daytime").click(function ()
-        {
-            var daytime=$(this).data("daytime");
-            window.location.href="?daytime="+daytime+"&hall=<?php echo $_GET['hall'];?>";
 
-        }) ;
+            var daytime='All';
+            var PackageType='All';
 
-        $(document).on("change",".changeSeating",function () {
-            var id=$(this).data("menuid");
-            var value=$(this).val();
-            var formdata=new FormData();
-            formdata.append("option","changeSeating");
-            formdata.append("packageid",id);
-            formdata.append("value",value);
-            $.ajax({
-                url:"../companyServer.php",
-                method:"POST",
-                data:formdata,
-                contentType: false,
-                processData: false,
+            $(".daytime").click(function ()
+            {
+                daytime=$(this).data("daytime");
+                formdata.append("daytime",daytime);
+                $('#calendar').fullCalendar('refetchEvents');
+            });
+            $(".PackageType").click(function () {
+                PackageType=$(this).data("packagetype");
+                formdata.append("packagetype",PackageType);
+                $('#calendar').fullCalendar('refetchEvents');
+            });
+            var formdata=new FormData;
+            formdata.append("daytime",daytime);
+            formdata.append("packagetype",PackageType);
+            formdata.append("option","ViewPackages");
+            formdata.append("hallid",1);
 
-                beforeSend: function() {
-                    $("#preloader").show();
+
+            var calendar = $('#calendar').fullCalendar({
+                editable:false,
+                header:{
+                    left:'prev,next today',
+                    center:'title',
+                    right:'month,agendaWeek,agendaDay,listWeek,dayGridWeek'
                 },
-                success:function (data)
+                height: 800,
+                events: function(start, end, timezone, callback) {
+                    $.ajax({
+                        url: '../../calender/fulcalender/pacakageOption.php',
+                        method:"POST",
+                        data:formdata,
+                        contentType: false,
+                        processData: false,
+                        success: function(doc) {
+                            var obj = jQuery.parseJSON(doc);
+                            var events = [];
+                            $.each(obj, function(index, value) {
+                                events.push({
+                                    end: value['end'],
+                                    id: value['id'],
+                                    start: value['start'],
+                                    title: value['title'],
+                                });
+                                //console.log(value)
+                            });
+                            callback(events);
+                        },
+                        error: function(e, x, y) {
+                            console.log(e);
+                            console.log(x);
+                            console.log(y);
+                        }
+                    });
+                },
+                selectable:false,
+                selectHelper:true,
+                eventClick:function(event)
                 {
-                    $("#preloader").hide();
-                    if(data!='')
-                    {
-                        alert(data);
-                        return false;
-                    }
+                    var id = event.id;
+                    $.ajax({
+                        url:"../../calender/fulcalender/pacakageOption.php",
+                        type:"POST",
+                        data:{id:id,option:"encordpackage"},
+                        success:function(data)
+                        {
+                            location.href='Editpackage.php?hall='+'<?php echo $_GET['hall']; ?>'+'&pack='+data;
+                        }
+                    });
+
 
                 }
+
             });
+            //
+            // $('#calendar').fullCalendar('refetchEvents');
 
-
-        }) ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-    });
+        });
 
 
 

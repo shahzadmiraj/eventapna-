@@ -9,23 +9,15 @@ $encoded=$_GET['hall'];
 $id=base64url_decode($encoded);
 $encodedPack=$_GET['pack'];
 $packageid=base64url_decode($encodedPack);
-//if(((!is_numeric($id))||$id=="")||((!is_numeric($packageid))||$packageid==""))
-//{
-//    header("location:../companyRegister/companyEdit.php");
-//}
-
-$hallname=$_GET['hallname'];
-$month=$_GET['month'];
-$daytime=$_GET['daytime'];
 $hallid=$id;
 $companyid=$_COOKIE['companyid'];
 
-$sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
+//$sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
+
+
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id) FROM `packages` WHERE (id='.$packageid.')';
 $packageDetail=queryReceive($sql);
-
-
-$sql='SELECT name,id FROM systemDishType WHERE ISNULL(isExpire)';
-$dishtype=queryReceive($sql);
+$userid=$_COOKIE['userid'];
 
 ?>
 
@@ -70,67 +62,128 @@ include_once ("../../webdesign/header/header.php");
 <div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/spicy-dishes-dinner-menu-icon-design-grilled-chicken-curry-sauce-vegetable-stew-pasta-pesto-sauce-ham-curry-84629311.jpg);background-size:100% 115%;background-repeat: no-repeat;">
 
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 "><i class="fas fa-edit"></i>Edit Package <?php echo $packageDetail[0][8]?></h1>
-        <ol class="list-unstyled">
-            <li><i class="fas fa-place-of-worship"></i>Hall name:<?php echo $hallname;?></li>
-            <li><i class="fas fa-table"></i>Month:<?php  echo $month?></li>
-            <li><i class="far fa-clock"></i>Daytime:<?php echo $daytime;?></li>
-        </ol>
+        <h1 class="display-5 "><i class="fas fa-edit"></i>Edit Package</h1>
     </div>
 </div>
 
 <div class="container card">
-    <h4>You can just view package </h4>
+    <h4>You can just manage Dates  and Expire package</h4>
     <div class="form-group row">
         <lable class="col-form-label">Packages Name</lable>
-
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
             </div>
-            <input  readonly data-columnname="package_name"     class="packagechange form-control" type="text" value="<?php echo $packageDetail[0][8];?>">
+            <input  readonly data-columnname="package_name"     class="packagechange form-control" type="text" value="<?php echo $packageDetail[0][7];?>">
         </div>
-
-
     </div>
 
     <div class="form-group row">
         <lable class="col-form-label">Packages Rate per head</lable>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+            </div>
+            <input readonly data-columnname="price" class="packagechange form-control" type="number" value="<?php echo $packageDetail[0][2];?>">
+        </div>
+    </div>
 
-
-
+    <div class="form-group row">
+        <lable for="PackagesType" class="col-form-label">Packages per head With:</lable>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
             </div>
-            <input readonly data-columnname="price" class="packagechange form-control" type="number" value="<?php echo $packageDetail[0][3];?>">
-        </div>
+            <select name="PackagesType" id="PackagesType" class="form-control">
+                <?php
+                if($packageDetail[0][1]==0)
+                {
+                    echo '<option value="0">per head only seating </option>';
+                }
+                else
+                {
+                        echo '
+                <option value="1">per head Food and seating</option>';
+                }
 
+                ?>
+            </select>
+        </div>
     </div>
 
     <div class="form-group row">
-        <lable class="col-form-label">Packages Description</lable>
+        <lable for="describe" class="col-form-label">Package Daytime:</lable>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-comments"></i></span>
             </div>
-            <textarea readonly data-columnname="describe" type="text"  class="packagechange  form-control" value="<?php echo $packageDetail[0][4];?>" > <?php echo $packageDetail[0][4];?></textarea>
+            <select id="Daytime" name="Daytime" class="form-control" placeholder="Daytime" >
+                <?php
+                echo '
+                <option>'.$packageDetail[0][4].'</option>'
+
+                ?>
+            </select>
+
         </div>
-
-
-
     </div>
-<form id="submitpackage">
-    <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Package</h3>
-    <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 50vh">
 
+    <div class="form-group row">
+        <lable class="col-form-label">Packages Description</lable>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+            </div>
+            <textarea readonly data-columnname="describe"  class=" form-control" > <?php echo $packageDetail[0][3];?></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <lable class="col-form-label">Packages Active Date</lable>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+            </div>
+            <input readonly data-columnname="price" class="packagechange form-control" type="datetime" value="<?php echo $packageDetail[0][8];?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <lable class="col-form-label">Packages Active User</lable>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+            </div>
+            <input readonly  class="form-control" type="text" value="<?php echo $packageDetail[0][11];?>">
+        </div>
+    </div>
+
+
+
+    <h2>Calender </h2>
+    <hr>
+    <div id="calendar" ></div>
+
+
+
+
+
+
+
+<form id="submitpackage">
         <?php
-        $sql='SELECT `id`, `dishname`, `image`, `expire`, `hallprice_id` FROM `menu` WHERE (hallprice_id='.$packageid.') AND ISNULL(expire)';
+        $sql='SELECT `id`, `dishname`, `image`, `expire`, `package_id` FROM `menu` WHERE (package_id='.$packageid.') AND ISNULL(expire)';
         $menuDetail=queryReceive($sql);
+        if(count($menuDetail)>0)
+        {
+            echo '
+    <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Package</h3>
+<div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 50vh">
+';
+        }
+
         for($i=0;$i<count($menuDetail);$i++)
         {
 
@@ -145,8 +198,12 @@ include_once ("../../webdesign/header/header.php");
         }
 
 
+        if(count($menuDetail)>0)
+        {
+            echo '</div>';
+        }
         ?>
-    </div>
+
 
 
 
@@ -172,8 +229,6 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-
-
 </div>
 
 <?php
@@ -182,6 +237,94 @@ include_once ("../../webdesign/footer/footer.php");
 <script>
     $(document).ready(function ()
     {
+
+        var Editformdata=new FormData;
+        Editformdata.append("option","SpecificpackageView");
+        Editformdata.append("packageid","<?php echo $packageid?>");
+        var calendar = $('#calendar').fullCalendar({
+            editable:false,
+            header:{
+                left:'prev,next today',
+                center:'title',
+                right:'month,agendaWeek,agendaDay,listWeek,dayGridWeek'
+            },
+            height: 800,
+            events: function(start, end, timezone, callback) {
+                $.ajax({
+                    url: '../../calender/fulcalender/pacakageOption.php',
+                    method:"POST",
+                    data:Editformdata,
+                    contentType: false,
+                    processData: false,
+                    success: function(doc) {
+                        var obj = jQuery.parseJSON(doc);
+                        var events = [];
+                        $.each(obj, function(index, value) {
+                            events.push({
+                                end: value['end'],
+                                id: value['id'],
+                                start: value['start'],
+                                title: value['title'],
+                            });
+                            //console.log(value)
+                        });
+                        callback(events);
+                    },
+                    error: function(e, x, y) {
+                        console.log(e);
+                        console.log(x);
+                        console.log(y);
+                    }
+                });
+            },
+            selectable:true,
+            selectHelper:true,
+            eventClick:function(event)
+            {
+                if(confirm("Are you sure you want to remove it?"))
+                {
+                    var id = event.id;
+                    var userid="<?php echo $userid;?>";
+                    $.ajax({
+                        url:"../../calender/fulcalender/pacakageOption.php",
+                        type:"POST",
+                        data:{id:id,option:"DelectEventdate",userid:userid},
+                        success:function()
+                        {
+                            calendar.fullCalendar('refetchEvents');
+                            alert("Event Removed");
+                        }
+                    })
+                }
+            }
+
+        });
+
+
+
+        function checkpaktype()
+        {
+            var PackagesType=$("#PackagesType").val();
+            if(PackagesType==0)
+            {
+                $("#selectedmenu").hide('slow');
+                $("#selectingmenu").hide('slow');
+            }
+            else
+            {
+                $("#selectedmenu").show('slow');
+                $("#selectingmenu").show('slow');
+            }
+        }
+
+        $("#PackagesType").change(function ()
+        {
+            checkpaktype();
+        });
+        checkpaktype();
+
+
+
         $("#deletePackage").click(function (e)
         {
             e.preventDefault();
