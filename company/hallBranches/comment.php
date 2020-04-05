@@ -34,8 +34,14 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <link rel="stylesheet" href="../../webdesign/css/comment.css">
-    <style>
 
+    <link rel="stylesheet" href="../../Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
+    <link rel="stylesheet" href="../../Fractional-Star-Rating-jsRapStar/index.css" />
+    <script src="../../Fractional-Star-Rating-jsRapStar/jsRapStar.js"></script>
+    <style>
+        .checked {
+            color: orange;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +72,8 @@ else
 </div>
 
 
-<div class="container card">
+
+<div class="container badge-light">
     <h1 class="font-weight-light  mt-4 mb-0">Comments</h1>
     <hr class="mt-2 mb-3">
     <div class="row bootstrap snippets">
@@ -82,7 +89,10 @@ else
                         <div class="panel-body">
                             <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
                             <br>
-
+                            <div id="divMain ">
+                                <div id="demo1" name="stars" value="3" ></div>
+                            </div>
+                            <input name="image" type="file" class="btn-outline-secondary   btn col-5 ">
                             <button id="btncoment" type="button" class="btn btn-info pull-right float-right col-5">Post</button>
                     </form>
 
@@ -92,7 +102,7 @@ else
                    // $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire` FROM `comments` WHERE (hall_id='.$hallid.')&&(ISNULL(expire))';
                    $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, (SELECT u.username FROM user as u 
 where u.id=comments.user_id), (SELECT u.image FROM user as u 
-where u.id=comments.user_id), `PackOrDishId`, `expireUser` FROM `comments` WHERE (hall_id='.$hallid.')AND(ISNULL(expire))';
+where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM `comments` WHERE (hall_id='.$hallid.')AND(ISNULL(expire))';
                     $commentresult=queryReceive($sql);
                     for ($i=0;$i<count($commentresult);$i++)
                     {
@@ -104,7 +114,7 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser` FROM `comments` WHERE
                             <li class="media">
                                 <a href="#" class="pull-left">
                                     <img src="';
-
+                            //userimage
                                     if((file_exists('../../images/users/'.$commentresult[$i][7])) &&($commentresult[$i][7]!=""))
                                     {
                                         $display.='../../images/users/'.$commentresult[$i][7];
@@ -118,19 +128,47 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser` FROM `comments` WHERE
                                 <span class="text-muted pull-right">
                                     <small class="text-dark">'.$commentresult[$i][5].'</small>
                                 </span>
-                                    <strong class="text-primary">@'.$commentresult[$i][6].'</strong>
-                                    <p>
-                                       '.$commentresult[$i][3].'';
+                                    <strong class="text-primary">@'.$commentresult[$i][6].' </strong>
+                             ';
+                                //star out of 5
+                                    for($s=0;$s<5;$s++)
+                                    {
+                                        if($commentresult[$i][10]>$s)
+                                        {
 
+                                            $display.='<span class="fa fa-star checked"></span>';
+                                        }
+                                        else
+                                        {
+                                            $display.='<span class="fa fa-star"></span>';
+                                        }
+                                    }
+
+
+                                    //paragraph of image uploaded comment packageid
+                        $display.='
+                                   <p>';
+
+
+                        //user uploaded image or video
+                        if((file_exists('../../images/hall/'.$commentresult[$i][11])) &&($commentresult[$i][11]!=""))
+                        {
+                            $display.='<img  style="width: 100%;height: 40vh" class="m-2"  src="../../images/hall/'.$commentresult[$i][11].'"><br>';
+                        }
+                        //package id
                                     if($commentresult[$i][9])
                                     {
                                         $display.='
                                                           <span class="alert-light ml-3">Packageid#'.$commentresult[$i][9].'</span>';
                                     }
-                                       $display.='<button type="button" class="btn btn-danger float-right deletecomment" data-deletecomment="'.$commentresult[$i][2].'"><i class="fas fa-trash-alt"></i>Delete</button>
+                                    //comment and delete button
+                                       $display.=$commentresult[$i][3].'<button type="button" class="btn btn-danger float-right deletecomment" data-deletecomment="'.$commentresult[$i][2].'"><i class="fas fa-trash-alt"></i>Delete</button>
+                                    
+                                    
                                     </p>
                                      
                                 </div>
+                                
                             </li>
 
                         </ul>
@@ -138,13 +176,6 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser` FROM `comments` WHERE
                     }
                     echo $display;
                     ?>
-
-
-
-
-
-
-
                 </div>
             </div>
         </div>
@@ -154,8 +185,14 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser` FROM `comments` WHERE
 
 
 <script>
-
-
+    var scores=3;
+    $(document).ready(function(){
+        $('#demo1').jsRapStar({
+            onClick:function(score){
+                $(this)[0].StarF.css({color:'red'});
+                scores=score;
+            }});
+    });
     $(document).ready(function ()
     {
         $(".deletecomment").click(function (e) {
@@ -181,7 +218,7 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser` FROM `comments` WHERE
         {
             var formdata = new FormData($("#commentform")[0]);
             formdata.append("option", "CommentOnHall");
-
+            formdata.append("stars", scores);
             $.ajax({
                 url: "comment/commentHallServer.php",
                 method: "POST",
@@ -195,6 +232,10 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser` FROM `comments` WHERE
                 success:function (data)
                 {
                     $("#preloader").hide();
+                    if(data)
+                    {
+                        alert(data);
+                    }
                     location.reload();
                 }
             });
@@ -202,7 +243,11 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser` FROM `comments` WHERE
 
     });
 
+
 </script>
+
+
+
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
