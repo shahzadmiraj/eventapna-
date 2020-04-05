@@ -15,7 +15,7 @@ $companyid=$_COOKIE['companyid'];
 //$sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
 
 
-$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id) FROM `packages` WHERE (id='.$packageid.')';
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')';
 $packageDetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
 
@@ -133,6 +133,16 @@ include_once ("../../webdesign/header/header.php");
                 ?>
             </select>
 
+        </div>
+    </div>
+    <div class="form-group row">
+        <lable for="rate" class="col-form-label">Minimum Amount of Package Booking</lable>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+            </div>
+            <input readonly id="MinimumAmount" name="MinimumAmount" class="form-control" type="number" placeholder="how much money required to book" value="<?php echo $packageDetail[0][12];?>">
         </div>
     </div>
 

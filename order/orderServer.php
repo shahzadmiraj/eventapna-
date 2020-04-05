@@ -150,7 +150,7 @@ if($_POST['function']=="add") {
     $address=$_POST['address'];
     $describe=$_POST['describe'];
 
-$sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `person_id`,`total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`,`status_catering`, `describe`,  `address`, `location_id`, `discount`, `extracharges`)VALUES (NULL,NULL,'.$cateringid.',NULL,'.$userid.','.$customerId.',NULL,'.$persons.',NULL,'.$date.',"'.$timestamp.'",'.$time.',"Running","'.$describe.'","'.$address.'",NULL,NULL,NULL)';
+$sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `packageDate_id`, `user_id`, `person_id`,`total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`,`status_catering`, `describe`,  `address`, `location_id`, `discount`, `extracharges`)VALUES (NULL,NULL,'.$cateringid.',NULL,'.$userid.','.$customerId.',NULL,'.$persons.',NULL,'.$date.',"'.$timestamp.'",'.$time.',"Running","'.$describe.'","'.$address.'",NULL,NULL,NULL)';
     querySend($sql);
     $ordeID=mysqli_insert_id($connect);
     $_SESSION['order']=$ordeID;

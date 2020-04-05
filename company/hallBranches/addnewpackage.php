@@ -228,6 +228,16 @@ include_once ("../../webdesign/header/header.php");
 
             </div>
         </div>
+        <div class="form-group row">
+            <lable for="rate" class="col-form-label">Minimum Amount of Package Booking</lable>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                </div>
+                <input id="MinimumAmount" name="MinimumAmount" class="form-control" type="number" placeholder="how much money required to book">
+            </div>
+        </div>
 
         <div class="form-group row">
             <lable for="describe" class="col-form-label">Packages Description</lable>
@@ -482,6 +492,11 @@ $(document).ready(function ()
    $("#btnsubmit").click(function ()
    {
        var state=false;
+
+       if(validationWithString("MinimumAmount","Pleas enter minimum Amount to book this package for online customer"))
+       {
+           state=true;
+       }
        if(validationWithString("selectedValues","Please Enter dates of packages"))
        {
            state=true;

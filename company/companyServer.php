@@ -239,6 +239,7 @@ if(isset($_POST['option']))
             echo "Please Select Dishes ";
             exit();
         }*/
+     $MinimumAmount=$_POST['MinimumAmount'];
         $PackagesType=$_POST['PackagesType'];
         $userid=$_POST['userid'];
         $daytime=$_POST['Daytime'];
@@ -246,12 +247,11 @@ if(isset($_POST['option']))
         $packagename=$_POST['packagename'];
         $rate=chechIsEmpty($_POST['rate']);
         $describe=$_POST['describe'];
-        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL)';
+        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, `minimumAmountBooking`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL,'.$MinimumAmount.')';
         querySend($sql);
         $id=mysqli_insert_id($connect);
         for ($i=0;$i<count($selectedDates);$i++)
         {
-
            $date=date('Y-m-d ',strtotime(trim($selectedDates[$i])));
             $sql = 'INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`) VALUES (NULL,"' . $timestamp . '",NULL,' . $id . ',' . $userid . ',NULL,"' .$date.'")';
             querySend($sql);

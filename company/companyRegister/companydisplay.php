@@ -101,6 +101,7 @@ if((count($halls)==0)AND(count($caterings)==0))
 include_once ("../../webdesign/header/header.php");
 
 ?>
+
 <div class="jumbotron  shadow " style="background-image: url(https://i2.wp.com/findlawyer.com.ng/wp-content/uploads/2018/05/Pros-and-Cons-of-Working-at-Large-Companies.jpg?resize=1024%2C512&ssl=1);background-size:100% 115%;background-repeat: no-repeat;">
 
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
@@ -116,19 +117,18 @@ include_once ("../../webdesign/header/header.php");
     </div>
 </div>
 
-<h1><i class="fas fa-place-of-worship"></i>Hall Branches</h1>
+<div class="container card">
+
+<h1 class="text-center"><i class="fas fa-place-of-worship"></i>Hall Branches</h1>
 <hr class="border border-white">
-<div class="col-12 m-1 mb-5 form-group row shadow" id="hallbranches" >
-
-
-
+<div class="col-12 m-1 mb-5 form-group row " id="hallbranches" >
 <?php
 $display='';
 for ($i=0;$i<count($halls);$i++)
 {
   $display.= '
     <a  href="?branchtype=hall&branchtypeid='.$halls[$i][0].'"
-     class="col-sm-12 col-md-4 col-xl-3 m-2 shadow border  text-white" >
+     class="col-sm-12 col-md-4 col-xl-3 m-2 shadow btn btn-light" >
         <img class="card-img-top  col-12 p-0" src="';
 
     if((file_exists('../../images/hall/'.$halls[$i][2]))&&($halls[$i][2]!=""))
@@ -151,9 +151,9 @@ echo $display;
 
 </div>
 
-<h2><i class="fas fa-utensils mr-2"></i>Catering Branches</h2>
+<h2 class="text-center"><i class="fas fa-utensils mr-2"></i>Catering Branches</h2>
 <hr class="border border-white">
-<div class="col-12 m-1 mb-5 form-group row shadow border " id="cateringbranches" >
+<div class="col-12 m-1 mb-5 form-group row  " id="cateringbranches" >
 
 
     <?php
@@ -161,7 +161,7 @@ echo $display;
     for ($i=0;$i<count($caterings);$i++)
     {
         $display.= '
-    <a href="?branchtype=catering&branchtypeid='.$caterings[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 border text-white">
+    <a href="?branchtype=catering&branchtypeid='.$caterings[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 border btn btn-light">
    
         <img class="card-img-top  col-12  p-0" src="';
 
@@ -187,7 +187,7 @@ echo $display;
 
 
 
-
+</div>
 
 <?php
 include_once ("../../webdesign/footer/footer.php");

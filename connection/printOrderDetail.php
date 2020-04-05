@@ -352,12 +352,27 @@ class PDF extends FPDF
 
         //order 9 catering hall 1
        // $orderId=9;
-        $sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
+        $sql='SELECT `id`, `hall_id`, `catering_id`,(SELECT p.isFood FROM orderDetail as od INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p
+on (p.id=pd.package_id)
+WHERE
+(od.id=orderDetail.id)),
  `user_id`, `booking_date`, `booking_date`, `booking_date`, 
  `booking_date`, 1, `person_id`, `total_amount`, 
  `total_person`, `status_hall`, `destination_date`, 
  `booking_date`, `destination_time`, `status_catering`, 
- `booking_date`,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),`address`,`discount`, `extracharges`  FROM `orderDetail` WHERE id='.$orderId.'';
+ `booking_date`,`describe`,(SELECT p.describe FROM orderDetail as od INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p
+on (p.id=pd.package_id)
+WHERE
+(od.id=orderDetail.id)),`packageDate_id`,(SELECT p.price FROM orderDetail as od INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p
+on (p.id=pd.package_id)
+WHERE
+(od.id=orderDetail.id)),`address`,`discount`, `extracharges`  FROM `orderDetail` WHERE id='.$orderId.'';
         $detailorder = queryReceive($sql);
 
 

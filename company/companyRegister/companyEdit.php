@@ -119,12 +119,13 @@ include_once ("../../webdesign/header/header.php");
 
 
                     <!--USERS-->
-<div class="col-12 row mt-5">
-    <h2 align="center" class="col-7"> <i class="fas fa-user  mr-1"></i> Users</h2>
-    <a href="../../system/user/usercreate.php" class="btn btn-success col-5"><i class="fas fa-user-plus"></i> Add User</a>
-</div>
+<div class="form-group row shadow m-auto  card" id="userbranches">
+
+    <div class="col-12 row  ">
+        <h2 align="center" class="col-7 "> <i class="fas fa-user  mr-1"></i> Users</h2>
+        <a href="../../system/user/usercreate.php" class="btn btn-success col-5"><i class="fas fa-user-plus"></i> Add User</a>
+    </div>
     <hr class="border border-white">
-<div class="form-group row shadow m-auto newcolor" id="userbranches">
     <?php
     $sql='SELECT u.id, u.username, u.isExpire,(SELECT p.image FROM person as p WHERE p.id=u.person_id) FROM user as u WHERE u.company_id='.$companyid.'';
     $users=queryReceive($sql);
@@ -132,7 +133,7 @@ include_once ("../../webdesign/header/header.php");
     for($i=0;$i<count($users);$i++)
     {
       $display.='
-    <a href="?action=user&id='.$users[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
+    <a href="?action=user&id='.$users[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 ">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
@@ -167,13 +168,14 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-                    <!--Hall Branches-->
-<div class="col-12 mt-5 row">
-    <h2 align="center" class=" col-6"> <i class="fas fa-place-of-worship mr-2"></i> Halls</h2>
-    <a href="../hallBranches/hallRegister.php" class="btn btn-success col-6"><i class="fas fa-plus"></i><i class="fas fa-place-of-worship mr-2"></i>Add Hall</a>
-</div>
+<div class="form-group row shadow card mt-2" id="hallbranches">
+
+    <!--Hall Branches-->
+    <div class="col-12 row">
+        <h2 align="center" class=" col-6"> <i class="fas fa-place-of-worship mr-2"></i> Halls</h2>
+        <a href="../hallBranches/hallRegister.php" class="btn btn-success col-6"><i class="fas fa-plus"></i><i class="fas fa-place-of-worship mr-2"></i>Add Hall</a>
+    </div>
     <hr class="border border-white">
-<div class="form-group row shadow newcolor " id="hallbranches">
     <?php
     $sql='SELECT `id`, `name`, `expire`, `image` FROM `hall` WHERE company_id='.$companyid.'';
     $halldetails=queryReceive($sql);
@@ -213,13 +215,14 @@ include_once ("../../webdesign/header/header.php");
 </div>
 
 
-                        <!--Catering Branches-->
-<div class="col-12 mt-5  row">
-    <h2 align="center" class="col-7"> <i class="fas fa-utensils"></i> Caterings</h2>
-    <a href="../cateringBranches/catering.php" class="btn btn-success col-5"><i class="fas fa-plus"></i> <i class="fas fa-utensils"></i> Add Catering</a>
-</div>
+<div class="form-group row shadow card mt-2" id="cateringbranches">
+
+    <!--Catering Branches-->
+    <div class="col-12   row">
+        <h2 align="center" class="col-7"> <i class="fas fa-utensils"></i> Caterings</h2>
+        <a href="../cateringBranches/catering.php" class="btn btn-success col-5"><i class="fas fa-plus"></i> <i class="fas fa-utensils"></i> Add Catering</a>
+    </div>
     <hr class="border border-white">
-<div class="form-group row shadow newcolor" id="cateringbranches">
     <?php
     $sql='SELECT `id`, `name`, `expire`, `image` FROM `catering` WHERE company_id='.$companyid.'';
     $cateringdetails=queryReceive($sql);

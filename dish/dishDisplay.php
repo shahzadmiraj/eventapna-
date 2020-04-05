@@ -16,10 +16,23 @@ if(!isset($_SESSION['order']))
     header("location:../user/userDisplay.php");
 }
 $order=$_SESSION['order'];
-$sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
+/*
+ $sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
 WHERE od.id='.$order.'';
+
+
+*/
+$sql='SELECT p.id,p.describe,p.isFood,od.catering_id FROM orderDetail as od INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p
+on (p.id=pd.package_id)
+WHERE
+(od.id='.$order.')
+';
 $hallpackage=queryReceive($sql);
-$cateringid=$hallpackage[0][3];
+$sql='SELECT catering_id FROM `orderDetail` WHERE id='.$order.'';
+$cateringresult=queryReceive($sql);
+$cateringid=$cateringresult[0][0];
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
 $dishTypeDetail=queryReceive($sql);
 ?>
@@ -324,9 +337,11 @@ include_once ("../webdesign/footer/footer.php");
 
         <?php
 
-            if($hallpackage[0][2]==1)
+            if(count($hallpackage)>0)
             {
-                echo 'menushow(' . $hallpackage[0][0] . ',' . $hallpackage[0][1] . ');';
+                if ($hallpackage[0][2] == 1) {
+                    echo 'menushow(' . $hallpackage[0][0] . ',' . $hallpackage[0][1] . ');';
+                }
             }
 
     ?>
