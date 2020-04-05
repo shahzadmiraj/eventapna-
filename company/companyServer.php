@@ -646,15 +646,6 @@ WHERE  id='.$order.'';
         echo dishesOfPakage($sql);
 
     }
-    else if($_POST['option']=="commentAdd")
-    {
-        $hallid=$_POST['hallid'];
-        $comments=$_POST['comment'];
-        $email=$_POST['email'];
-        $currentdatetime=date('Y-m-d H:i:s');
-        $sql='INSERT INTO `comments`(`hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire`) VALUES ('.$hallid.',NULL,NULL,"'.$comments.'","'.$email.'","'.$currentdatetime.'",NULL)';
-        querySend($sql);
-    }
     else if($_POST['option']=="dishpredict")
     {
         $companyid=$_POST['companyid'];

@@ -1,6 +1,6 @@
 
 
-<div class="container">
+<div class="container card">
     <h1 class="font-weight-light  mt-4 mb-0">Comments</h1>
 
     <hr class="mt-2 mb-3">
@@ -20,14 +20,6 @@
                         <div class="panel-body">
                             <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
                             <br>
-
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fas fa-comments"></i></div>
-                                </div>
-                                <input name="email" type="email" class="form-control "  placeholder="Email">
-                            </div>
-
 
                             <button id="btncoment" type="button" class="btn btn-info pull-right float-right col-5">Post</button>
                     </form>
