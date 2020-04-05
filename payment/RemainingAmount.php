@@ -99,7 +99,7 @@ include_once ("../webdesign/header/header.php");
 
 <div class="container">
 
-    <form class="col-12 shadow mb-4 newcolor card " id="formId1" style="display: none">
+    <form class="col-12 shadow mb-4  card " id="formId1" style="display: none">
 
         <div class="form-group row">
             <label class="col-form-label"> Customer name</label>

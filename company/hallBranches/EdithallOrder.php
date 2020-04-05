@@ -18,13 +18,23 @@ $companyid=$_COOKIE['companyid'];
 $userid=$_COOKIE['userid'];
 $hallid=$_SESSION['branchtypeid'];
 $orderid=$_SESSION['order'];
-$sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
+/*$sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
  `user_id`, 1, 1, 1, 
  1, 1, `person_id`, `total_amount`, 
  `total_person`, `status_hall`, `destination_date`, 
  `booking_date`, `destination_time`, `status_catering`, 
- 1,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id), `discount`, `extracharges` FROM `orderDetail` WHERE id='.$orderid.'';
+ 1,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id), `discount`, `extracharges` FROM `orderDetail` WHERE id='.$orderid.'';*/
+
+$sql='select od.id,od.hall_id,od.catering_id,p.isFood,od.user_id,1,1,1,1,1,od.person_id,od.total_amount,od.total_person,od.status_hall,od.destination_date,od.booking_date,od.destination_time,od.status_catering,1,od.describe,p.describe,p.id,p.price,od.discount,od.extracharges FROM orderDetail as od  INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p 
+on (p.id=pd.package_id)
+where 
+(od.id='.$orderid.')';
+
+
 $detailorder=queryReceive($sql);
+
 
 $sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$detailorder[0][1].') AND (ISNULL(c.expire))';
 $cateringids=queryReceive($sql);
@@ -590,7 +600,8 @@ include_once ("../../webdesign/footer/footer.php");
 
         }
 
-        $(".checkpackage").change(function () {
+        $(".checkpackage").change(function ()
+        {
             var date = $("#date").val();
             var month = new Date(date).getMonth();
             var time = $("#time").val();
@@ -598,7 +609,6 @@ include_once ("../../webdesign/footer/footer.php");
             $("#selectmenu").html("");
             if (!checkpackage(date, time, perheadwith))
             {
-
                 return false;
             }
 
@@ -622,22 +632,17 @@ include_once ("../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $("#preloader").hide();
-                    if(perheadwith==1)
+                    $("#groupofpackages").html(data);
+                    valueChangeAuto();
+                    $("#selectmenu").html("");
+                    if($("#packageAvalable").val()=="Yes")
                     {
-                        if (data == "")
-                        {
-                            $("#submitform").hide("slow");
-                            $("#groupofpackages").html(data+"<h1 class='text-danger'>No Packages found:so order not submit</h1>");
-                        } else {
-                            $("#groupofpackages").html(data);
-                            $("#submitform").show("slow");
-                        }
+                        $("#submitform").show("slow");
                     }
                     else
                     {
 
-                        $("#groupofpackages").html(data);
-                        $("#submitform").show("slow");
+                        $("#submitform").hide("slow");
                     }
 
                 }
@@ -668,7 +673,11 @@ include_once ("../../webdesign/footer/footer.php");
                 {
                     $("#preloader").hide();
                     $("#selectmenu").html(data);
-                    $("#selectmenu").append("<h3 align='center' class='col-12'>Menu Description</h3><p class='col-12'>"+describe+"</p>");
+                    if(describe!="")
+                    {
+                        $("#selectmenu").append("<h3 align='center' class='col-12'>package Description</h3><p class='col-12'>" + describe + "</p>");
+                    }
+
                 }
 
 
@@ -681,8 +690,6 @@ include_once ("../../webdesign/footer/footer.php");
         {
 
             var packageid=$("input[name='defaultExampleRadios']:checked").val();
-            if($("#perheadwith").val()!="1")
-                return false;
 
             var describe=$("#describe"+packageid).val();
             menushow(packageid,describe);

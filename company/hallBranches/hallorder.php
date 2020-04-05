@@ -111,10 +111,6 @@ include_once ("../../webdesign/header/header.php");
 <div class="form-group row">
     <label class="col-form-label">Per Head With</label>
 
-
-
-
-
     <div class="input-group mb-3 input-group-lg">
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-utensils"></i></span>
@@ -268,6 +264,8 @@ include_once ("../../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
+        $("#submitform").hide("slow");
+
         function valueChangeAuto()
         {
             var guests=$("#guests").val();
@@ -363,24 +361,18 @@ include_once ("../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $("#preloader").hide();
-                    if(perheadwith==1)
-                    {
-                        if (data == "")
+                    $("#groupofpackages").html(data);
+                    valueChangeAuto();
+                    $("#selectmenu").html("");
+                    if($("#packageAvalable").val()=="Yes")
                         {
-                            $("#submitform").hide("slow");
-                            $("#groupofpackages").html(data+"<h1 class='text-danger'>No Packages found:so order not submit</h1>");
-                        } else {
-                            $("#groupofpackages").html(data);
-                            $("#submitform").show("slow");
-                        }
-                    }
+                                $("#submitform").show("slow");
+                         }
                     else
                     {
 
-                        $("#groupofpackages").html(data);
-                        $("#submitform").show("slow");
+                        $("#submitform").hide("slow");
                     }
-                    valueChangeAuto();
 
                 }
 
@@ -397,8 +389,8 @@ include_once ("../../webdesign/footer/footer.php");
         {
 
             var packageid=$("input[name='defaultExampleRadios']:checked").val();
-            if($("#perheadwith").val()!="1")
-                return false;
+            // if($("#perheadwith").val()!="1")
+            //     return false;
             //multiples packages
             valueChangeAuto();
 
@@ -421,24 +413,17 @@ include_once ("../../webdesign/footer/footer.php");
                 {
                     $("#preloader").hide();
                     $("#selectmenu").html(data);
-                    $("#selectmenu").append("<h3 align='center' class='col-12'>Menu Description</h3><p class='col-12'>"+describe+"</p>");
+                    if(describe!="")
+                    {
+                        $("#selectmenu").append("<h3 align='center' class='col-12'>package Description</h3><p class='col-12'>" + describe + "</p>");
+                    }
+
                 }
-
-
             });
-
         });
         $("#submitform").click(function ()
         {
             var packageid='';
-            var date = $("#date").val();
-            var time = $("#time").val();
-            var perheadwith = $("#perheadwith").val();
-            if (!checkpackage(date, time, perheadwith))
-            {
-                alert("Please select Date,Time and Per Head");
-                return false;
-            }
             if($(".checkclasshas")[0])
             {
                 packageid=$("input[name='defaultExampleRadios']:checked").val();
@@ -448,6 +433,19 @@ include_once ("../../webdesign/footer/footer.php");
                     return false;
                 }
             }
+/*            var state=false;
+            if(validationWithString("date","Please enter date"))
+            {
+                state=true;
+            }
+            if(validationWithString("time","Please enter DayTime"))
+            {
+                state=true;
+            }
+            if(validationWithString("perheadwith","Please Enter package type"))
+            {
+                state=true;
+            }*/
             var formdata = new FormData($("form")[0]);
             formdata.append("packageid", packageid);
             formdata.append("option", "createOrderofHall");

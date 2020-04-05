@@ -190,3 +190,13 @@ $('.toast').toast('show');
 </div>
 
 $selectedDates=explode (",", $selectedDatesString); //string convert into array in php by comma split
+
+
+
+//order packagedate package
+select od.id,od.hall_id,od.catering_id,p.isFood,od.user_id,1,1,1,1,1,od.person_id,od.total_amount,od.total_amount,od.status_hall,od.destination_date,od.booking_date,od.destination_time,od.status_catering,1,od.describe,p.describe,p.id,p.price,od.discount,od.extracharges FROM orderDetail as od  INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p
+on (p.id=pd.package_id)
+where
+(od.id=1)

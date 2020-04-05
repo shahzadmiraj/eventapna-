@@ -18,8 +18,10 @@ od.id,p.name,p.image,od.destination_date,od.destination_time,od.status_hall,od.s
 on (p.id=od.person_id)
 left JOIN number as n
 on (p.id=n.person_id)
-left JOIN hallprice as hp
-on (od.hallprice_id=hp.id)
+left JOIN packageDate as pd
+on (od.packageDate_id=pd.id)
+left JOIN packages as hp
+on (pd.package_id=hp.id)
 WHERE
 
  ';

@@ -17,7 +17,12 @@ if($_POST['option']=="additemsInOrder")
         }
     }
     $CurrentExtraAmount=$_POST['CurrentExtraAmount'];
-    $sql='SELECT od.total_person,(SELECT hp.price FROM hallprice as hp WHERE hp.id=od.hallprice_id) FROM orderDetail as od WHERE od.id='.$order.'';
+    $sql='SELECT od.total_person,(select p.price FROM orderDetail as od  INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p 
+on (p.id=pd.package_id)
+where 
+(od.id='.$order.')) FROM orderDetail as od WHERE od.id='.$order.'';
     $orderDetail=queryReceive($sql);
     $CurrentAmount=(int)$orderDetail[0][0]*(int)$orderDetail[0][1];
     $CurrentAmount+=(int)$CurrentExtraAmount;
@@ -35,7 +40,12 @@ else if($_POST['option']=="deletedSelecteditems")
     querySend($sql);
 
 
-    $sql='SELECT od.total_person,(SELECT hp.price FROM hallprice as hp WHERE hp.id=od.hallprice_id) FROM orderDetail as od WHERE od.id='.$orderid.'';
+    $sql='SELECT od.total_person,(select p.price FROM orderDetail as od  INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p 
+on (p.id=pd.package_id)
+where 
+(od.id='.$order.')) FROM orderDetail as od WHERE od.id='.$orderid.'';
     $orderDetail=queryReceive($sql);
     $CurrentAmount=(int)$orderDetail[0][0]*(int)$orderDetail[0][1];
     $CurrentAmount+=(int)$CurrentExtraAmount;

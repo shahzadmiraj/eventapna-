@@ -344,50 +344,28 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="checkpackages1")
     {
-        $monthno=$_POST['month'];
         $date=$_POST['date'];
         $time=$_POST['time'];
         $perheadwith=$_POST['perheadwith'];
         $hallid=$_POST['hallid'];
-        $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-        $month=$monthsArray[$monthno];
-        $sql='SELECT `id`, `package_name`,`price`,`describe` FROM `hallprice` WHERE ISNULL(expire) AND (month="'.$month.'") AND (dayTime="'.$time.'") And (isFood='.$perheadwith.') AND (hall_id='.$hallid.')';
+        $sql='SELECT distinct p.id,p.package_name,p.price,p.describe,p.isFood,p.minimumAmountBooking,pd.id,pd.selectedDate FROM packages as p INNER join 	packageDate as pd
+on (p.id=pd.package_id)
+WHERE 
+(p.hall_id='.$hallid.')AND (ISNULL(p.expire))AND(ISNULL(pd.expire))
+AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perheadwith.')
+';
         $detailpackage=queryReceive($sql);
-        if(($perheadwith==1)&&(!(count($detailpackage)>0)))
-        {
-            exit();
-        }
 
         $display='<h3 align="center">Packages Detail </h3>';
-        if($perheadwith==1)
-        {
-            //with food menu
-
-            for ($i=0;$i<count($detailpackage);$i++)
+for ($i=0;$i<count($detailpackage);$i++)
             {
-                $display.=' <div class="checkclasshas custom-control custom-radio form-group  ">
-        <input type="radio" data-describe="'.$detailpackage[$i][0].'" value="'.$detailpackage[$i][0].'" class="changeradio custom-control-input" id="defaultUnchecked'.$i.'" name="defaultExampleRadios">
-        <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with Rs='.$detailpackage[$i][2].' price</label>
-    </div> 
-     <input hidden id="selectpricefix'.$detailpackage[$i][0].'" type="number" value="'.$detailpackage[$i][2].'">
-    <input hidden id="describe'.$detailpackage[$i][0].'" type="text" value="'.$detailpackage[$i][3].'">';
+                        $display.=' <div class="checkclasshas custom-control custom-radio form-group  ">
+                <input type="radio" data-describe="'.$detailpackage[$i][0].'" value="'.$detailpackage[$i][6].'" class="changeradio custom-control-input" id="defaultUnchecked'.$i.'" name="defaultExampleRadios">
+                <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with price='.$detailpackage[$i][2].'and minimum amount must be '.$detailpackage[$i][5].'</label>
+                    </div> 
+                <input hidden id="selectpricefix'.$detailpackage[$i][6].'" type="number" value="'.$detailpackage[$i][2].'">
+                <input hidden id="describe'.$detailpackage[$i][6].'" type="text" value="'.$detailpackage[$i][3].'">';
             }
-
-
-
-
-
-        }
-        else
-        {
-            //with seating menu
-            $display.=' <div class="checkclasshas custom-control custom-radio form-group ">
-        <input type="radio"   value="'.$detailpackage[0][0].'"  class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios" checked>
-        <label class="custom-control-label" for="defaultUnchecked"> Only Seating price = '.$detailpackage[0][2].'</label>
-        <input hidden id="selectpricefix'.$detailpackage[0][0].'" type="number" value="'.$detailpackage[0][2].'">
-    </div>';
-
-        }
         if($time=="Morning")
         {
             $time="09:00:00";
@@ -397,28 +375,51 @@ if(isset($_POST['option']))
 
             $time="12:00:00";
         }
-        else {
-
+        else
+            {
             $time="18:00:00";
         }
-        $sql='SELECT id FROM orderDetail as od WHERE (od.booking_date= "'.$date.'") AND (od.destination_time="'.$time.'") AND (od.status_hall="Running") AND (od.hall_id='.$hallid.')';
+        $sql='SELECT od.id,od.total_person FROM orderDetail as od WHERE (od.destination_date= "'.$date.'") AND (od.destination_time="'.$time.'") AND (od.status_hall="Running") AND (od.hall_id='.$hallid.')';
         $detailhalls=queryReceive($sql);
+       // echo $sql;
         if(count($detailhalls)>0)
         {
-            $display.='<h4 class="btn-outline-danger">Already '.count($detailhalls).' function has booked</h4>';
+            $display.='<h4 class="btn btn-danger">Already '.count($detailhalls).' function has booked</h4>';
             for ($i=0;$i<count($detailhalls);$i++)
             {
-                $display.='<p>'.($i+1).' function booked with '.$detailhalls[$i][0].' Guests</p>';
+                $display.='<p>'.($i+1).' function booked with '.$detailhalls[$i][1].' Guests</p>';
             }
         }
+        $display.='<input hidden type="text" id="packageAvalable" value="';
+
+            if(count($detailpackage)>0)
+            {
+                //no of packess is or not
+                $display.="Yes";
+            }
+            else
+            {
+                $display.="No";
+            }
+
+           $display.= '">';
         echo $display;
 
 
     }
     else if($_POST['option']=="viewmenu")
     {
-        $packageid=$_POST['packageid'];
-        $sql='SELECT `dishname`, `image` FROM `menu` WHERE (hallprice_id='.$packageid.') AND ISNULL(expire)';
+        $packageDateid=$_POST['packageid'];
+        $sql='SELECT p.id FROM packageDate as pd INNER join packages as p
+on (p.id=pd.package_id)
+WHERE
+(pd.id='.$packageDateid.')';
+        $packagedetail=queryReceive($sql);
+        if(count($packagedetail)==0)
+            exit();
+
+
+        $sql='SELECT `dishname`, `image` FROM `menu` WHERE (package_id='.$packagedetail[0][0].') AND ISNULL(expire)';
         $menu=queryReceive($sql);
         $display='<h4 align="center" class="col-12">Menu</h4>';
         for ($i=0;$i<count($menu);$i++)
@@ -469,7 +470,7 @@ if(isset($_POST['option']))
                 $catering="'Running'";
                 $cateringid=$_POST['cateringid'];
             }
-            $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `hallprice_id`, `user_id`, `person_id`, 
+            $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `packageDate_id`, `user_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
         `status_catering`,`describe`, `address`, `location_id`, `discount`, `extracharges`) 
         VALUES (NULL,'.$hallid.','.$cateringid.','.$packageid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
@@ -533,7 +534,7 @@ if(isset($_POST['option']))
 
         if(checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$branchOrder,$describe,$catering,$timestamp,NULL,$Charges,$Discount))
         {
-            $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`hallprice_id`='.$packageid.',
+            $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`packageDate_id`='.$packageid.',
 `total_amount`='.$totalamount.',`total_person`='.$guests.',`status_hall`
 ="'.$orderStatus.'",`destination_date`="'.$date.'",`destination_time`="'.$time.'",
 `status_catering`="'.$catering.'",`describe`="'.$describe.'" , `hall_id`='.$branchOrder.',`user_id`='.$userid.',`discount`='.$Discount.',`extracharges`='.$Charges.'

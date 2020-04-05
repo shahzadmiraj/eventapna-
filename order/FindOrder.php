@@ -96,9 +96,7 @@ else
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
-
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-
     <style>
         .newcolor
         {
@@ -265,7 +263,12 @@ include_once ("../webdesign/header/header.php");
 
 
             <?php
-            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.image FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT hp.package_name FROM hallprice as hp WHERE hp.id=od.hallprice_id),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' ';
+            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.name FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT p.package_name FROM orderDetail as od INNER join packageDate as pd
+on (od.packageDate_id=pd.id)
+INNER join packages as p
+on (p.id=pd.package_id)
+WHERE
+(od.id=od.id)),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' ';
          //  echo $sql;
             $orderdetail=queryReceive($sql);
             $display='';

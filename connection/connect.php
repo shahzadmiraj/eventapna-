@@ -324,7 +324,7 @@ function dishesOfPakage($sql)
 
 function showRemainings($sql)
 {
-    $display='<table class="table table-warning newcolor table-responsive text-white">
+    $display='<table class="table table-striped table-light table-responsive ">
     <thead class="font-weight-bold">
     <tr>
             <th scope="col"><h1 class="fas fa-id-card "></h1>order Id</th>
