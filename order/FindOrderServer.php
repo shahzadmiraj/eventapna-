@@ -81,7 +81,7 @@ for ($i=0;$i<count($orderdetail);$i++)
 {
     $display.='
         <a href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'" class="col-12   row  shadow m-3 newcolor">
-        <img src="';
+        <img style="height:8vh" src="';
 
       if(file_exists('../images/customerimage/'.$orderdetail[$i][2])&&($orderdetail[$i][2]!=""))
       {

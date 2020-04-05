@@ -59,7 +59,7 @@ if(!empty($hallid))
         $hallorcater.="AND (od.destination_date='".$date."')";
         $order_status="Running";
     }
-    $hallorcater.="AND (od.status_hall='".$order_status."')";
+    $hallorcater.="AND (od.status_hall='".$order_status."') ";
 }
 else
 {
@@ -258,7 +258,7 @@ include_once ("../webdesign/header/header.php");
 
         </form>
 
-        <div  id="recordsAll">
+        <div  id="recordsAll" >
 
 
 
@@ -268,19 +268,19 @@ on (od.packageDate_id=pd.id)
 INNER join packages as p
 on (p.id=pd.package_id)
 WHERE
-(od.id=od.id)),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' ';
+(od.id=od.id) limit 1),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' ';
          //  echo $sql;
             $orderdetail=queryReceive($sql);
             $display='';
             for ($i=0;$i<count($orderdetail);$i++)
             {
                 $display.='
-        <a href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'';
+        <a   href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'';
 
 
 
                 $display.='" class="col-12   row  shadow m-3 newcolor">
-        <img src="';
+        <img style="height:8vh" src="';
 
                 if(file_exists('../images/customerimage/'.$orderdetail[$i][2])&&($orderdetail[$i][2]!=""))
                 {
