@@ -25,6 +25,9 @@
 <i class="fas fa-plus"></i> pluse
 <i class="fas fa-drum"></i> drum
 <i class="fas fa-concierge-bell"></i> Dish
+<i class="fas fa-clock"></i> clock
+<i class="fas fa-user-clock"></i> clock +user
+<i class="fas fa-chair"></i> chiar seating package
 
 
 */

@@ -100,7 +100,7 @@ include_once ("../../webdesign/header/header.php");
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
             </div>
 
 
@@ -203,7 +203,7 @@ include_once ("../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                    <span class="input-group-text"><i class="fas fa-chair"></i></span>
                 </div>
                 <select name="PackagesType" id="PackagesType" class="form-control">
                     <option value="0">per head only seating </option>
@@ -217,7 +217,7 @@ include_once ("../../webdesign/header/header.php");
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
                 </div>
                 <select id="Daytime" name="Daytime" class="form-control" placeholder="Daytime" >
                     <option value="Morning">Morning</option>

@@ -29,8 +29,8 @@ if(isset($_POST['option']))
     else if($_POST['option']=="PackDelete")
     {
         $id=$_POST['packageid'];
-        $dayAndTime=date('Y-m-d H:i:s');
-        $sql='UPDATE `hallprice` SET expire="'.$dayAndTime.'" WHERE id='.$id.'';
+        $userid=$_POST['userid'];
+        $sql='UPDATE `packages` SET expire="'.$timestamp.'",expireUser='.$userid.' WHERE id='.$id.'';
         querySend($sql);
     }
 

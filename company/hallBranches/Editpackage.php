@@ -99,7 +99,7 @@ include_once ("../../webdesign/header/header.php");
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                <span class="input-group-text"><i class="fas fa-chair"></i></span>
             </div>
             <select name="PackagesType" id="PackagesType" class="form-control">
                 <?php
@@ -123,7 +123,7 @@ include_once ("../../webdesign/header/header.php");
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                <span class="input-group-text"><i class="fas fa-clock"></i></span>
             </div>
             <select id="Daytime" name="Daytime" class="form-control" placeholder="Daytime" >
                 <?php
@@ -150,7 +150,7 @@ include_once ("../../webdesign/header/header.php");
         <lable class="col-form-label">Packages Active Date</lable>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                <span class="input-group-text"><i class="fas fa-user-clock"></i></span>
             </div>
             <input readonly data-columnname="price" class="packagechange form-control" type="datetime" value="<?php echo $packageDetail[0][8];?>">
         </div>
@@ -160,7 +160,7 @@ include_once ("../../webdesign/header/header.php");
         <lable class="col-form-label">Packages Active User</lable>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
             <input readonly  class="form-control" type="text" value="<?php echo $packageDetail[0][11];?>">
         </div>
@@ -229,15 +229,7 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="col-12 mt-2 row" >
-
-        <?php
-        if($packageDetail[0][6]=="")
-        {
-            echo '<button id="deletePackage"    data-packid="'.$packageid.'" href="?action=expire&hall='.$_GET['hall'].'&pack='.$_GET['pack'].'" class="btn btn-danger col-6">Delete</button>';
-
-        }
-        ?>
-        <button id="btnsubmit" type="button" value="OK" class="btn btn-primary col-6"><i class="fas fa-check "></i>OK</button>
+        <button id="deletePackage"  type="button"  class="btn btn-danger col-6 m-auto"><i class="fas fa-trash-alt"></i>Delect Package</button>
     </div>
 
 </form>
@@ -258,14 +250,20 @@ include_once ("../../webdesign/footer/footer.php");
     {
 
 
+
         function updateTable()
         {
             $.ajax({
                 url:"../../calender/fulcalender/pacakageOption.php",
                 type:"POST",
                 data:{option:"updateEdittable",Packageid:"<?php echo $packageid?>"},
-                success:function(data)
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
                 {
+                    $("#preloader").hide();
                     //console.log(data);
                     $("#tableEditpackages").html(data);
                 }
@@ -291,7 +289,12 @@ include_once ("../../webdesign/footer/footer.php");
                     data:Editformdata,
                     contentType: false,
                     processData: false,
-                    success: function(doc) {
+                    beforeSend: function() {
+                        $("#preloader").show();
+                    },
+                    success:function (doc)
+                    {
+                        $("#preloader").hide();
                         updateTable();
                         var obj = jQuery.parseJSON(doc);
                         var events = [];
@@ -326,9 +329,15 @@ include_once ("../../webdesign/footer/footer.php");
                         url:"../../calender/fulcalender/pacakageOption.php",
                         type:"POST",
                         data:{id:id,option:"DelectEventdate",userid:userid},
-                        success:function()
+                        beforeSend: function()
                         {
-                            calendar.fullCalendar('refetchEvents');
+                            $("#preloader").show();
+                         },
+                    success:function (data)
+                    {
+                        $("#preloader").hide();
+
+                        calendar.fullCalendar('refetchEvents');
                             updateTable();
                            // alert("Event Removed");
                         }
@@ -344,9 +353,13 @@ include_once ("../../webdesign/footer/footer.php");
                         url:"../../calender/fulcalender/pacakageOption.php",
                         type:"POST",
                         data:{option:"InsertNewDate", selectedDate:selectedDate,Packageid:"<?php echo $packageid?>",userid:"<?php echo $userid;?>"},
-                        success:function()
+                        beforeSend: function() {
+                            $("#preloader").show();
+                         },
+                         success:function ()
                         {
-                            calendar.fullCalendar('refetchEvents');
+                        $("#preloader").hide();
+                        calendar.fullCalendar('refetchEvents');
                             updateTable();
                           //  alert("Added Successfully");
                         }
@@ -380,9 +393,11 @@ include_once ("../../webdesign/footer/footer.php");
         {
             e.preventDefault();
 
+            var userid="<?php echo $userid;?>";
             var formdata=new FormData;
             formdata.append("option","PackDelete");
             formdata.append("packageid",<?php echo $packageid;?>);
+            formdata.append("userid",<?php echo $userid;?>);
             $.ajax({
                 url:"packages/PACKServer.php",
                 method:"POST",
