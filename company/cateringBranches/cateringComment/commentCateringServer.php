@@ -8,9 +8,9 @@ if($_POST['option']=="commentCatering")
     $image='';
     $packageid='NULL';
 
-    if(isset($_POST['packageid']))
+    if(isset($_POST['packid']))
     {
-        $packageid=$_POST['packageid'];
+        $packageid=$_POST['packid'];
     }
     if(!empty($_FILES['image']["name"]))
     {
