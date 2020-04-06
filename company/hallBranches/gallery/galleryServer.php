@@ -7,8 +7,8 @@ if($_POST['option']=="hallmutiplesimages")
 {
 
     $hallid=$_POST['hallid'];
-
-    $Distination=$_POST['imagePath'];
+    $userid=$_POST["userid"];
+    $Distination="../../../images/hall/";
     if(isset($_FILES['userfile']))
     {
 
@@ -23,7 +23,9 @@ if($_POST['option']=="hallmutiplesimages")
             }
             else
             {
-                $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$file_array[$i]['name'].'",NULL,NULL,'.$hallid.')';
+               // $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$file_array[$i]['name'].'",NULL,NULL,'.$hallid.')';
+
+                $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`, `active`, `user_id`, `expireUser`) VALUES (NULL,"'.$file_array[$i]['name'].'",NULL,NULL,'.$hallid.',"'.$timestamp.'",'.$userid.',NULL)';
                 querySend($sql);
             }
 

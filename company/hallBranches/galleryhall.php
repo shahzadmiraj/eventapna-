@@ -24,6 +24,7 @@ $hallid=$id;
 $companyid=$_COOKIE['companyid'];
 $sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
 $halldetail=queryReceive($sql);
+$userid=$_COOKIE['userid'];
 
 ?>
 <!DOCTYPE html>
@@ -71,21 +72,141 @@ else
 </div>
 
 
-<script>
-    urlData="gallery/galleryServer.php";
-</script>
-<?php
-$destination="../../images/hall/";
-include_once ("gallery/galleryPage.php");
-?>
+
+<div class="container card">
+    <h1 class="font-weight-light text-lg-left mt-4 mb-3">Gallery</h1>
+
+
+    <form id="multiplesimages" enctype="multipart/form-data" class="form-inline">
+        <input hidden type="number" name="hallid" value="<?php echo $hallid;?>">
+        <input hidden type="number" name="userid" value="<?php echo $userid; ?>">
+        <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
+        <input id="submitMultiples" type="submit" name="submit" value="Upload" class="btn btn-success col-4">
+    </form>
+
+
+
+
+    <hr class="mt-3 mb-5 border-white">
+
+    <div class="row text-center text-lg-left">
+        <?php
+
+
+
+        $destination="../../images/hall/";
+        //include_once ("gallery/galleryPage.php");
+
+
+
+
+        $sql='SELECT `id`, `image` FROM `images` WHERE hall_id='.$hallid.'' ;
+        $result=queryReceive($sql);
+
+        $source='';
+        $display='';
+        $extensions= array("jpeg","jpg","png");
+        for($k=0;$k<count($result);$k++)
+        {
+            if((file_exists($destination.$result[$k][1])&&($result[$k][1]!="")))
+            {
+                $passbyreference = explode('.', $result[$k][1]);
+                $file_ext = strtolower(end($passbyreference));
+
+                if (in_array($file_ext, $extensions) === true) {
+                    //image file
+
+                    $display .= '
+                        <div class="col-lg-4 col-md-6  col-xl-3 col-12 mb-2 mt-2 embed-responsive">
+                            <a href="#" class="d-block mb-4 h-100">
+                                <img class="img-thumbnail embed-responsive" src="'.$destination.''. $result[$k][1] . '" alt="" style="width:100%;height:60vh">
+                           
+                            <h4 class="card-img-bottom alert-light">hsabhjads</h4>
+                            </a>
+                        </div>';
+                } else {
+                    //video file
+
+                    $source = $result[$k][1];
+                    $video = substr_replace($source, "", -4);
+                    $display .= '
+                         
+                          <div class="col-lg-4 col-md-6  col-xl-3 col-12 mb-2 mt-2 embed-responsive">
+                                <div class="embed-responsive embed-responsive-16by9 d-block mb-4 h-100">
+                                    <video width="320" height="440" controls class="card"  >
+                                        <source src="'.$destination.'' . $video . '.mp4" type="video/mp4">
+                                        <source src="'.$destination.'' . $video . '.ogg" type="video/ogg">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                           </div>
+                         
+                         ';
+                }
+            }
+
+
+        }
+        echo $display;
+        ?>
 
 
 
 
 
+    </div>
+
+
+
+</div>
 
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
+
+
+
+<script>
+
+    $(document).ready(function ()
+    {
+        $("#submitMultiples").click(function (e)
+        {
+            e.preventDefault();
+            var formData=new FormData($("#multiplesimages")[0]);
+            formData.append("option","hallmutiplesimages");
+            $.ajax({
+                url:"gallery/galleryServer.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    if(data)
+                    {
+                        alert(data);
+                    }
+                    location.reload();
+
+
+                }
+            });
+
+
+
+
+        });
+
+    });
+
+
+
+</script>
 </body>
 </html>
