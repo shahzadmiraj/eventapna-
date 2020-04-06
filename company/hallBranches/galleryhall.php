@@ -80,7 +80,7 @@ else
     <form id="multiplesimages" enctype="multipart/form-data" class="form-inline">
         <input hidden type="number" name="hallid" value="<?php echo $hallid;?>">
         <input hidden type="number" name="userid" value="<?php echo $userid; ?>">
-        <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
+        <input id="userfile" type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
         <input id="submitMultiples" type="submit" name="submit" value="Upload" class="btn btn-success col-4">
     </form>
 
@@ -108,7 +108,7 @@ else
         $extensions= array("jpeg","jpg","png");
         for($k=0;$k<count($result);$k++)
         {
-            if((file_exists($destination.$result[$k][1])&&($result[$k][1]!="")))
+            if((file_exists($destination.$result[$k][1]))&&($result[$k][1]!=""))
             {
                 $passbyreference = explode('.', $result[$k][1]);
                 $file_ext = strtolower(end($passbyreference));
@@ -203,6 +203,7 @@ include_once ("../../webdesign/footer/footer.php");
                     {
                         alert(data);
                     }
+                    $("#userfile").val("");
                     location.reload();
 
 
