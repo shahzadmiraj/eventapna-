@@ -40,6 +40,7 @@ WHERE (p.id=$customerId)AND(ISNULL(n.expire))
 order BY n.id";
 $numbers=queryReceive($sql);
 $userid=$_COOKIE['userid'];
+$companyid=$_COOKIE['companyid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -71,12 +72,17 @@ include_once ("../webdesign/header/header.php");
     </div>
 
 </div>
-<form id="changeImage" class="col-12 row justify-content-center" style="margin-top: -60px">
+
     <?php
     echo '<input name="customerid" hidden value="'.$customerId.'">';
     ?>
-    <input name="image" hidden value="<?php echo $person[0][4] ?>">
 
+
+
+<form id="formEditCustomer">
+<div class="container card" >
+    <input hidden type="number" value="<?php echo $userid;?>" name="userid">
+    <div class="form-group row col-12 justify-content-center ">
         <img src="<?php
 
         if(file_exists('../images/customerimage/'.$person[0][4])&&($person[0][4]!=""))
@@ -90,28 +96,22 @@ include_once ("../webdesign/header/header.php");
         }
 
 
-        ?> " style="height: 30vh;" class="img-thumbnail figure-img rounded-circle" alt="image is not set">
-    <div class="form-group row col-12 justify-content-center ">
-        <label class="form-check-label ">change image:</label>
+        ?> " style="height: 20vh;" class="img-thumbnail figure-img rounded-circle" alt="image is not set">
+
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-camera"></i></span>
             </div>
-            <input name="image" id="submitImage" type="file"  class="form-control">
+            <input name="image"  type="file"  class="form-control">
         </div>
 
     </div>
-</form>
 
-
-<div class="container card" >
-
-<form id="form" >
     <?php
 
 
-    echo '<input id="customerId" type="number" hidden value="'.$customerId.'">';
+    echo '<input id="customerId" type="number" name="customerid" hidden value="'.$customerId.'">';
     ?>
         <div id="number_records">
             <?php
@@ -163,7 +163,7 @@ include_once ("../webdesign/header/header.php");
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
                 <?php
-                echo'<input type="text" id="name"  name="name" class=" personchange form-control" value="'.$person[0][0].'" data-columne="name">';
+                echo'<input type="text" id="name"  name="name" class="form-control" value="'.$person[0][0].'" data-columne="name">';
                 ?>
             </div>
 
@@ -179,7 +179,7 @@ include_once ("../webdesign/header/header.php");
                 </div>
                 <?php
                 echo '
-            <input type="number" id="cnic" name="cnic" class=" personchange form-control " value="'.$person[0][1].'" data-columne="cnic">';
+            <input type="number" id="cnic" name="cnic" class="form-control " value="'.$person[0][1].'" data-columne="cnic">';
                 ?>
             </div>
 
@@ -199,7 +199,7 @@ include_once ("../webdesign/header/header.php");
 
             <?php
             echo '
-             <textarea  id="address" name="address" class="personchange  form-control" placeholder="address" data-columne="address">'.$person[0][5].'</textarea>';
+             <textarea  id="address" name="address" class="form-control" placeholder="address" data-columne="address">'.$person[0][5].'</textarea>';
             ?>
 
         </div>
@@ -279,7 +279,9 @@ p.id='.$customerId.'';
             if(isset($_GET['action']))
             {
                 echo '
-            <button id="btnbackhistory"  class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Done</button>';
+
+            <a  id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Back</a> 
+            <a   id="formcustomer"  data-href="saveAndBack" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Save and Back</a>';
 
             }
             else if($_SESSION['branchtype']=="hall")
@@ -291,8 +293,8 @@ p.id='.$customerId.'';
                     //16 new order of hall
                     echo '
 
-                    <a href="CustomerCreate.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a> 
-                    <a href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Create hall order</a>
+                    <a  id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a> 
+                    <a id="formcustomer" data-href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Create hall order</a>
                     
                     ';
 
@@ -317,8 +319,8 @@ p.id='.$customerId.'';
                     //7 go to create order of catering
                     echo '
 
-            <a href="../user/userDisplay.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
-                    <a href="../order/orderCreate.php" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i> Order Create</a>   
+            <a id="btnbackhistory"  class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
+             <a  id="formcustomer"  data-href="../order/orderCreate.php" class=" col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i> Order Create</a>   
                     
                      ';
 
@@ -330,14 +332,9 @@ p.id='.$customerId.'';
 
                     //15 oder of catering edit
                     echo '
-
             <a href="../user/userDisplay.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
-        <a href="../order/orderEdit.php" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Edit order</a>';
-
-
-
+        <a id="formcustomer" data-href="../order/orderEdit.php" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Edit order</a>';
                 }
-
             }
 
             //6 not this customer
@@ -345,8 +342,8 @@ p.id='.$customerId.'';
             ?>
 
         </div>
-    </form>
 </div>
+</form>
 
 
     <?php
@@ -358,72 +355,38 @@ p.id='.$customerId.'';
  {
 
     var customerid=$("#customerId").val();
-
-     function execute_person_address(column,text,type)
+     function numberAddValidation()
      {
-         $.ajax({
-             url: "customerEditServer.php",
-             data:{columnname:column,value:text,edittype:type,option:"change",customerid:customerid},
+         var value=$("#newNumber").val();
+         return   $.ajax({
+             url:"customerBookingServer.php",
+             data:{value:value,option:"checkExistByChange",company_id:"<?php echo $companyid;?>"},
              dataType:"text",
-             method:"POST",
-
+             method: "POST",
+             async:false,     //async:true, just give work fast not result
              beforeSend: function() {
                  $("#preloader").show();
              },
              success:function (data)
              {
                  $("#preloader").hide();
-                 if(data!='')
+
+                 if(data!="")
                  {
-                     alert(data);
+                     alert(value+"number is also exist so you cant add");
+                     //$("#numberexterorNot").val(1);
+                     return true;
                  }
+                 else
+                 {
+                     // $("#numberexterorNot").val(0);
+                     return false;
+                 }
+
              }
          });
+
      }
-     function execute_number(column,text,type,id)
-     {
-         $.ajax({
-             url: "customerEditServer.php",
-             data:{columnname:column,value:text,edittype:type,id:id,option:"change",customerid:customerid},
-             dataType:"text",
-             method:"POST",
-
-             beforeSend: function() {
-                 $("#preloader").show();
-             },
-             success:function (data)
-             {
-                 $("#preloader").hide();
-                 if(data!='') {
-                     alert(data);
-                 }
-             }
-         });
-     }
-
-    $(document).on('change','.addresschange',function () {
-        //address change
-       var column=$(this).data("columne");
-       var text=$(this).val();
-        execute_person_address(column,text,1);
-    });
-
-     $(document).on('change','.personchange',function () {
-         //personchange change
-         var column=$(this).data("columne");
-         var text=$(this).val();
-         execute_person_address(column,text,2);
-     });
-
-
-     $(document).on('change','.numberchange',function () {
-         //numberchange change
-         var column=$(this).data("columne");
-         var id=$(this).data("columneid");
-         var text=$(this).val();
-         execute_number(column,text,3,id);
-     });
-
 
      $("#newadd").click(function ()
      {
@@ -434,9 +397,12 @@ p.id='.$customerId.'';
          var state=false;
 
          if(validationWithString("newNumber","Please Enter Customer NewNumber"))
-             state=this;
+             state=true;
 
-
+         if(numberAddValidation().responseText==1)
+         {
+             state=true;
+         }
 
          if(state)
              return false;
@@ -492,10 +458,11 @@ p.id='.$customerId.'';
              }
          });
      });
-
-     $("#submitImage").change(function () {
-        var formData=new  FormData($("#changeImage")[0]);
-        formData.append("option","changeImage");
+     $("#formcustomer").click(function ()
+     {
+        var formData=new  FormData($("#formEditCustomer")[0]);
+        var direction=$(this).data("href");
+        formData.append("option","EditCustomerform");
          $.ajax({
              url:"customerEditServer.php",
              method:"POST",
@@ -515,7 +482,15 @@ p.id='.$customerId.'';
                  }
                  else
                  {
-                     location.reload();
+                     if(direction==="saveAndBack")
+                     {
+                         window.history.back();
+                     }
+                     else
+                     {
+                         location.href=direction;
+                     }
+
                  }
              }
          });

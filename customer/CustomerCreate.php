@@ -192,9 +192,6 @@ include_once ("../webdesign/header/header.php");
     </form>
 </div>
 
-<input type="number" hidden id="numberexterorNot" value="0">
-
-
 
 <?php
 include_once ("../webdesign/footer/footer.php");

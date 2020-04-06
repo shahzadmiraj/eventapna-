@@ -8,35 +8,49 @@
 
 include_once ("../connection/connect.php");
 
+function changeCheckCustomer($post)
+{
+    global $timestamp;
+    $state=false;
+    $sql='SELECT `name`, `cnic`, `id`, `image`, `active`, `expire`, `address`, `company_id` FROM `person` WHERE id='.$post["customerid"].'';
+    $previousReault=queryReceive($sql);
+    if($post["image"]!=$previousReault[0][3])
+    {
+        $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`) VALUES (NULL,"person","image","'.$previousReault[0][3].'",'.$post["userid"].',"'.$timestamp.'")';
+        querySend($sql);
+        $state=true;
+    }
+    else  if($post["name"]!=$previousReault[0][0])
+    {
+        $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`) VALUES (NULL,"person","name","'.$previousReault[0][0].'",'.$post["userid"].',"'.$timestamp.'")';
+        querySend($sql);
+        $state=true;
+    }
+    else  if($post["cnic"]!=$previousReault[0][1])
+    {
+        $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`) VALUES (NULL,"person","cnic","'.$previousReault[0][1].'",'.$post["userid"].',"'.$timestamp.'")';
+        querySend($sql);
+        $state=true;
+    }
+    else  if($post["address"]!=$previousReault[0][6])
+    {
+        $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`) VALUES (NULL,"person","address","'.$previousReault[0][6].'",'.$post["userid"].',"'.$timestamp.'")';
+        querySend($sql);
+        $state=true;
+    }
+    return $state;
+
+}
+function updateExistcustomer($post)
+{
+    $sql='UPDATE `person` SET `name`="'.$post["name"].'",`cnic`="'.$post["cnic"].'",`image`="'.$post["image"].'",`address`="'.$post["address"].'" WHERE id='.$post["customerid"].'';
+    querySend($sql);
+}
 
 if(isset($_POST['option']))
 {
 
-    if($_POST['option']=="change")
-    {
-
-        $customerId = $_POST['customerid'];
-            $column_name = $_POST['columnname'];
-            $text = chechIsEmpty($_POST['value']);
-            $number_table = $_POST['edittype'];
-            if ($number_table == 1) {
-                //address table change
-                $sql = 'UPDATE address as a SET a.' . $column_name . '="' . $text . '" WHERE a.person_id=' . $customerId . ' ';
-                querySend($sql);
-            } else if ($number_table == 2) {
-                //person change table change
-                $sql = 'UPDATE person as p SET p.' . $column_name . '="' . $text . '" WHERE p.id=' . $customerId . ' ';
-                querySend($sql);
-            } else if ($number_table == 3) {
-                //number table change
-                $numberId = $_POST['id'];
-                $sql = 'UPDATE number as n SET n.' . $column_name . '="' . $text . '" WHERE (n.person_id=' . $customerId . ') AND (n.id=' . $numberId . ')';
-                querySend($sql);
-            }
-
-
-    }
-    else if($_POST['option']=="deleteNumber")
+     if($_POST['option']=="deleteNumber")
     {
         $userid=$_POST['userid'];
         $id=$_POST['id'];
@@ -54,26 +68,29 @@ if(isset($_POST['option']))
         querySend($sql);
 
     }
-    else if($_POST['option']=="changeImage")
+    else if($_POST['option']=="EditCustomerform")
     {
-        $customerid=$_POST['customerid'];
-        $previouspath=$_POST['image'];
-        $image="../images/customerimage/".$_FILES['image']['name'];
-        $resultimage=ImageUploaded($_FILES,$image);//$dishimage is destination file location;
-        if($resultimage!="")
+        $post=$_POST;
+       $post['image']='';
+        if(!empty($_FILES['image']['name']))
         {
-            print_r($resultimage);
-            exit();
+
+            $image = "../images/customerimage/" . $_FILES['image']['name'];
+            $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
+            if ($resultimage != "") {
+                print_r($resultimage);
+                exit();
+            }
+            $image = $_FILES['image']['name'];
+           $post['image']=$image;
+        }
+        if(changeCheckCustomer($post))
+        {
+            updateExistcustomer($post);
         }
 
-        $image=$_FILES['image']['name'];
 
-        $sql='UPDATE person as p SET p.image="'.$image.'" WHERE p.id='.$customerid.';';
-        querySend($sql);
-        if (file_exists($previouspath))
-        {
-            $deleted = unlink($previouspath);
-        }
+
     }
 }
 
