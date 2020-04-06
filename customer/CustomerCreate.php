@@ -29,6 +29,7 @@ if(isset($_SESSION['customer']))
     header("location:customerEdit.php");
 }
 $userid=$_COOKIE['userid'];
+$companyid=$_COOKIE['companyid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -47,6 +48,28 @@ $userid=$_COOKIE['userid'];
 
     <style>
 
+
+        #mynumberlist {
+            /* Remove default list styling */
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #mynumberlist li a {
+            border: 1px solid #ddd; /* Add a border to all links */
+            margin-top: -1px; /* Prevent double borders */
+            background-color: #f6f6f6; /* Grey background color */
+            padding: 12px; /* Add some padding */
+            text-decoration: none; /* Remove default text underline */
+            font-size: 18px; /* Increase the font-size */
+            color: black; /* Add a black text color */
+            display: block; /* Make it into a block element to fill the whole list */
+        }
+
+        #mynumberlist li a:hover:not(.header) {
+            background-color: #eee; /* Add a hover effect to all links, except for headers */
+        }
     </style>
 
 </head>
@@ -70,8 +93,10 @@ include_once ("../webdesign/header/header.php");
 <div class="container card">
 
 
+
 <form id="form">
     <input hidden name="userid" value="<?php echo $userid;?>">
+    <input hidden name="companyid" value="<?php echo $companyid;?>">
 
         <input id="customer" hidden value="">
     <div class="form-group row">
@@ -81,11 +106,13 @@ include_once ("../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-phone-volume"></i></span>
             </div>
-            <input id="number"class="allnumber form-control" type="number" name="number[]"  placeholder="Phone no 033xxxxxxxx customer" >
+            <input id="number"class="form-control" type="number"   placeholder="Phone no 033xxxxxxxx customer" >
             <input type="button" class="form-control btn-primary col-2" id="Add_btn" value="+">
-
-
         </div>
+
+        <ul id="mynumberlist" class="container">
+        </ul>
+
 
 
 
@@ -165,6 +192,8 @@ include_once ("../webdesign/header/header.php");
     </form>
 </div>
 
+<input type="number" hidden id="numberexterorNot" value="0">
+
 
 
 <?php
@@ -175,15 +204,18 @@ include_once ("../webdesign/footer/footer.php");
    $(document).ready(function ()
    {
 
-       $(document).on("change",".allnumber",function ()
+
+       $(document).on("keyup","#number",function (e)
        {
            //number exist
+
+           e.preventDefault();
            var value=$(this).val();
            if(value=="")
                return false;
            $.ajax({
                url:"customerBookingServer.php",
-               data:{value:value,option:"customerExist"},
+               data:{value:value,option:"checkExistByKeyUp",company_id:"<?php echo $companyid;?>"},
                dataType:"text",
                method: "POST",
 
@@ -193,13 +225,64 @@ include_once ("../webdesign/footer/footer.php");
                success:function (data)
                {
                    $("#preloader").hide();
-                   if(data=="customerexist")
+                  $("#mynumberlist").html(data);
+               }
+           });
+       });
+
+       function numberAddValidation()
+       {
+           var value=$("#number").val();
+           return   $.ajax({
+               url:"customerBookingServer.php",
+               data:{value:value,option:"checkExistByChange",company_id:"<?php echo $companyid;?>"},
+               dataType:"text",
+               method: "POST",
+                async:false,     //async:true, just give work fast not result
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+                   $("#preloader").hide();
+
+                   if(data!="")
                    {
-                           window.location.href="customerEdit.php";
+                       alert(value+"number is also exist so you cant add");
+                       //$("#numberexterorNot").val(1);
+                       return true;
+                   }
+                   else
+                   {
+                      // $("#numberexterorNot").val(0);
+                       return false;
                    }
 
                }
            });
+
+       }
+
+       $(document).on("click",".rightNumber",function (e)
+       {
+           e.preventDefault();
+           var id=$(this).data("number");
+           $.ajax({
+               url:"customerBookingServer.php",
+               data:{option:"RightPerson",id:id},
+               dataType:"text",
+               method: "POST",
+
+               beforeSend: function() {
+                   $("#preloader").show();
+               },
+               success:function (data)
+               {
+                   $("#preloader").hide();
+                   window.location.href="customerEdit.php";
+               }
+           });
+
        });
 
 
@@ -209,22 +292,36 @@ include_once ("../webdesign/footer/footer.php");
           window.history.back();
        });
        var number=0;
-
-
        $('.number_records').map(function () {
            number++;
        }).get().join();
 
        $("#Add_btn").click(function ()
        {
-           if(number>1)
+           if(number>3)
            {
                alert("no of numbers not more then 3");
                return false;
            }
+           if(validationWithString("number","Please enter number"))
+           {
+               return  false;
+           }
+           //console.log(numberAddValidation().responseText);
+           if(numberAddValidation().responseText==1)
+           {
+               return  false;
+           }
+           // if($("#numberexterorNot").val()==1)
+           // {
+           //     return false;
+           // }
+           var numbervalue=$.trim($("#number").val());
+           $("#number").val("");
+
           $("#number_records").append("<div class=\"form-group row\" id=\"Each_number_row_"+number+"\">\n" +
               "                <label for=\"number_"+number+"\" class=\"col-2 col-form-label\">#</label>\n" +
-              "                <input id=\"number_"+number+"\" class=\"allnumber form-control col-8\" type=\"number\" name=\"number[]\">\n" +
+              "                <input value='"+numbervalue+"' readonly id=\"number_"+number+"\" class=\"allnumber form-control col-8\" type=\"number\" name=\"number[]\">\n" +
               "                <input class=\"form-control btn btn-danger col-2 remove_number \" id=\"remove_numbers_"+number+"\" data-removenumber=\""+number+"\" value=\"-\">\n" +
               "            </div>");
            number++;
@@ -239,19 +336,34 @@ include_once ("../webdesign/footer/footer.php");
        $("#submit").click(function (e)
        {
            e.preventDefault();
-            var state=false;
+           var state=false;
 
+           var formdata=new FormData($('form')[0]);
+           if(number==0)
+           {
+               if(validationWithString("number","please Enter number"))
+               {
+                   state=false;
+               }
+              else
+               {
+                   if(numberAddValidation().responseText==1)
+                   {
+                       state=false;
+                       return  false;
+                   }
+                       formdata.append("number[]",$("#number").val());
+               }
+           }
            if(validationWithString("name","Please Enter Customer Name"))
-               state=this;
+               state=true;
 
             if(validationClass("allnumber","Please Enter Mobile no"))
-                state=this;
-
+                state=true;
 
             if(state)
                 return false;
 
-           var formdata=new FormData($('form')[0]);
            formdata.append("option","customerCreate");
            $.ajax({
                url:"customerBookingServer.php",

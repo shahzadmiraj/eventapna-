@@ -8,11 +8,6 @@
 
 include_once ("../connection/connect.php");
 
-
-
-
-if(isset($_POST['option']))
-{
     if($_POST['option']=="customerCreate")
     {
         $image='';
@@ -34,38 +29,67 @@ if(isset($_POST['option']))
         $cnic = chechIsEmpty($_POST['cnic']);
        $address=$_POST['address'];
        $userid=$_POST['userid'];
+        $company_id=$_POST['companyid'];
 
 
 
 
 
-
-$sql='INSERT INTO `person`(`name`, `cnic`, `id`, `image`, `active`, `expire`, `address`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$image.'","'.$timestamp.'",NULL,"'.$address.'")';
+$sql='INSERT INTO `person`(`name`, `cnic`, `id`, `image`, `active`, `expire`, `address`,`company_id`) VALUES ("'.$name.'","'.$cnic.'",NULL,"'.$image.'","'.$timestamp.'",NULL,"'.$address.'",'.$company_id.')';
 
         querySend($sql);
         $last_id = mysqli_insert_id($connect);
 
         for ($i = 0; $i < count($numberArray); $i++)
         {
-            $sql='INSERT INTO `number`(`number`, `id`, `person_id`, `active`, `expire`, `userActive`, `userExpire`) VALUES ("'.$numberArray[$i].'",NULL,'.$last_id.',"'.$timestamp.'",NULL,'.$userid.',NULL)';
+            $sql='INSERT INTO `number`(`number`, `id`, `person_id`, `active`, `expire`, `userActive`, `userExpire`) VALUES ("'.trim($numberArray[$i]).'",NULL,'.$last_id.',"'.$timestamp.'",NULL,'.$userid.',NULL)';
             querySend($sql);
         }
         $customerId = $last_id;
         $_SESSION['customer']=$customerId;
     }
-    else
+    else  if($_POST['option']=="checkExistByChange")
     {
-        //if($_POST['option']=="customerExist")
-        $value=$_POST['value'];
-            $sql='SELECT  n.person_id FROM number as n WHERE n.number="'.$value.'"';
-            $customerexist=queryReceive($sql);
+             $value=$_POST['value'];
+             $company_id=$_POST['company_id'];
+            //$sql='SELECT  n.person_id FROM number as n WHERE n.number="'.$value.'"';
+        $sql='SELECT p.id FROM person as p INNER JOIN 
+number as n
+on (p.id=n.person_id)
+WHERE
+(n.number="'.$value.'")AND(p.company_id='.$company_id.')AND (ISNULL(p.expire))AND(ISNULL(n.expire))';
+        $customerexist=queryReceive($sql);
             if(count($customerexist)>0)
             {
-                //echo $customerexist[0][0];
-                $_SESSION['customer']=$customerexist[0][0];
-                echo "customerexist";
+                echo 1;
             }
     }
-}
+
+    else  if($_POST['option']=="checkExistByKeyUp")
+    {
+        $display='';
+        $value=trim($_POST['value']);
+        if($value=="")
+            exit();
+        $company_id=$_POST['company_id'];
+        //$sql='SELECT  n.person_id FROM number as n WHERE n.number="'.$value.'"';
+        $sql='SELECT p.id,p.name,n.number FROM person as p INNER JOIN 
+number as n
+on (p.id=n.person_id)
+WHERE
+(n.number like "%'.$value.'%")AND(p.company_id='.$company_id.')AND (ISNULL(p.expire))AND(ISNULL(n.expire)) limit 5';
+        $customerexist=queryReceive($sql);
+       for($i=0;$i<count($customerexist);$i++)
+       {
+           $display.='
+            <li><a href="#" data-number="'.$customerexist[$i][0].'" class="rightNumber"><i class="mr-2">'.$customerexist[$i][2].'</i> '.$customerexist[$i][1].'</a></li>';
+       }
+       echo $display;
+    }
+    else if($_POST['option']=="RightPerson")
+    {
+        $_SESSION['customer']=$_POST['id'];
+    }
+
 
 ?>
