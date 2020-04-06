@@ -40,6 +40,11 @@ $userid=$_COOKIE['userid'];
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="../../webdesign/css/comment.css">
+
+    <link rel="stylesheet" href="../../Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
+    <link rel="stylesheet" href="../../Fractional-Star-Rating-jsRapStar/index.css" />
+    <script src="../../Fractional-Star-Rating-jsRapStar/jsRapStar.js"></script>
     <style>
 
         #selectedmenu
@@ -55,6 +60,10 @@ $userid=$_COOKIE['userid'];
             background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+        }
+
+        .checked {
+            color: orange;
         }
     </style>
 </head>
@@ -238,19 +247,123 @@ include_once ("../../webdesign/header/header.php");
 </div>
 
 
-    <div class="col-12 mt-2 row" >
-        <button id="deletePackage"  type="button"  class="btn btn-danger col-6 m-auto"><i class="fas fa-trash-alt"></i>Delect Package</button>
+
+
+
+<div class="col-12 mt-2 row" >
+        <button id="deletePackage"  type="button"  class="btn btn-danger col-12 m-auto"><i class="fas fa-trash-alt"></i>Delect Package</button>
     </div>
 
 </form>
-
-
-
-
-
-
-
 </div>
+
+
+<div class="container badge-light">
+    <h1 class="font-weight-light  mt-4 mb-0">Comments</h1>
+    <hr class="mt-2 mb-3">
+    <div class="row bootstrap snippets">
+
+        <div class="col-md-12 col-md-offset-2 col-sm-12 m-auto">
+            <div class="comment-wrapper">
+                <div class="panel panel-info ">
+                    <form id="commentform">
+                        <?php
+                        echo '<input hidden type="number" name="hallid" value="'.$hallid.'">';
+                        echo '<input hidden type="number" name="userid" value="'.$userid.'">';
+                        echo '<input hidden type="number" name="packageid" value="'.$packageid.'">';
+                        ?>
+                        <div class="panel-body">
+                            <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
+                            <br>
+                            <div id="divMain ">
+                                <div id="demo1" name="stars" value="3" ></div>
+                            </div>
+                            <input name="image" type="file" class="btn-outline-secondary   btn col-5 ">
+                            <button id="btncoment" type="button" class="btn btn-info pull-right float-right col-5">Post</button>
+                    </form>
+
+                    <?php
+                    $display='';
+
+                    // $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire` FROM `comments` WHERE (hall_id='.$hallid.')&&(ISNULL(expire))';
+                    $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, (SELECT u.username FROM user as u 
+where u.id=comments.user_id), (SELECT u.image FROM user as u 
+where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM `comments` WHERE (hall_id='.$hallid.')AND(ISNULL(expire))AND(PackOrDishId='.$packageid.') ';
+                    $commentresult=queryReceive($sql);
+                    for ($i=0;$i<count($commentresult);$i++)
+                    {
+                        $display.='                   
+                    <div class="clearfix" ></div>
+                        <hr>
+                        <ul class="media-list" >
+                                                        
+                            <li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="';
+                        //userimage
+                        if((file_exists('../../images/users/'.$commentresult[$i][7])) &&($commentresult[$i][7]!=""))
+                        {
+                            $display.='../../images/users/'.$commentresult[$i][7];
+                        }
+                        else
+                        {
+                            $display.='https://bootdey.com/img/Content/user_1.jpg"';
+                        }
+                        $display.='alt="" class="img-circle"></a>
+                                <div class="media-body">
+                                <span class="text-muted pull-right">
+                                    <small class="text-dark">'.$commentresult[$i][5].'</small>
+                                </span>
+                                    <strong class="text-primary">@'.$commentresult[$i][6].' </strong>
+                             ';
+                        //star out of 5
+                        for($s=0;$s<5;$s++)
+                        {
+                            if($commentresult[$i][10]>$s)
+                            {
+
+                                $display.='<span class="fa fa-star checked"></span>';
+                            }
+                            else
+                            {
+                                $display.='<span class="fa fa-star"></span>';
+                            }
+                        }
+
+
+                        //paragraph of image uploaded comment packageid
+                        $display.='
+                                   <p>';
+
+
+                        //user uploaded image or video
+                        if((file_exists('../../images/hall/'.$commentresult[$i][11])) &&($commentresult[$i][11]!=""))
+                        {
+                            $display.='<img  style="width: 100%;height: 40vh" class="m-2"  src="../../images/hall/'.$commentresult[$i][11].'"><br>';
+                        }
+
+                        //comment and delete button
+                        $display.=$commentresult[$i][3].'<button hidden type="button" class="btn btn-danger float-right deletecomment" data-deletecomment="'.$commentresult[$i][2].'"><i class="fas fa-trash-alt"></i>Delete</button>
+                                    
+                                    
+                                    </p>
+                                     
+                                </div>
+                                
+                            </li>
+
+                        </ul>
+';
+                    }
+                    echo $display;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 
 <?php
 include_once ("../../webdesign/footer/footer.php");
@@ -665,6 +778,65 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 
+
+    });
+
+
+    var scores=3;
+    $(document).ready(function(){
+        $('#demo1').jsRapStar({
+            onClick:function(score){
+                $(this)[0].StarF.css({color:'red'});
+                scores=score;
+            }});
+    });
+    $(document).ready(function ()
+    {
+        $(".deletecomment").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("deletecomment");
+            var userid = "<?php  echo $userid;?>";
+            $.ajax({
+                url: "comment/commentHallServer.php",
+                method: "POST",
+                data: {id: id, userid: userid, option: "deletecomment"},
+                dataType: "text",
+                beforeSend: function () {
+                    $("#preloader").show();
+                },
+                success: function (data) {
+                    $("#preloader").hide();
+                    location.reload();
+                }
+            });
+        });
+
+        $("#btncoment").click(function ()
+        {
+            var formdata = new FormData($("#commentform")[0]);
+            formdata.append("option", "CommentOnHall");
+            formdata.append("stars", scores);
+            $.ajax({
+                url: "comment/commentHallServer.php",
+                method: "POST",
+                data: formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    if(data)
+                    {
+                        alert(data);
+                    }
+                    location.reload();
+                }
+            });
+        }) ;
 
     });
 

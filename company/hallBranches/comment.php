@@ -156,13 +156,13 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
                             $display.='<img  style="width: 100%;height: 40vh" class="m-2"  src="../../images/hall/'.$commentresult[$i][11].'"><br>';
                         }
                         //package id
-                                    if($commentresult[$i][9])
+                                    if($commentresult[$i][8]!="")
                                     {
                                         $display.='
-                                                          <span class="alert-light ml-3">Packageid#'.$commentresult[$i][9].'</span>';
+                                                          <span class="alert-light ml-3">Packageid#'.$commentresult[$i][8]. '<br></span>';
                                     }
                                     //comment and delete button
-                                       $display.=$commentresult[$i][3].'<button type="button" class="btn btn-danger float-right deletecomment" data-deletecomment="'.$commentresult[$i][2].'"><i class="fas fa-trash-alt"></i>Delete</button>
+                                       $display.=$commentresult[$i][3].'<button hidden type="button" class="btn btn-danger float-right deletecomment" data-deletecomment="'.$commentresult[$i][2].'"><i class="fas fa-trash-alt"></i>Delete</button>
                                     
                                     
                                     </p>

@@ -243,13 +243,8 @@ include_once ("../../webdesign/footer/footer.php");
                         alert(data);
                     }
                     location.reload();
-
-
                 }
             });
-
-
-
 
         });
 

@@ -6,6 +6,12 @@ if($_POST['option']=="CommentOnHall")
 {
     $stars=$_POST['stars'];
     $image='';
+    $packageid='NULL';
+
+        if(isset($_POST['packageid']))
+        {
+            $packageid=$_POST['packageid'];
+        }
     if(!empty($_FILES['image']["name"]))
     {
         $hallimage = "../../../images/hall/" . $_FILES['image']['name'];
@@ -23,7 +29,7 @@ if($_POST['option']=="CommentOnHall")
     $comments=$_POST['comment'];
     $userid=$_POST['userid'];
     //$sql='INSERT INTO `comments`(`hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire`) VALUES ('.$hallid.',NULL,NULL,"'.$comments.'","'.$email.'","'.$currentdatetime.'",NULL)';
-    $sql='INSERT INTO `comments`(`hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, `user_id`, `PackOrDishId`, `expireUser`, `rating`, `image`) VALUES ('.$hallid.',NULL,NULL,"'.$comments.'",NULL,"'.$timestamp.'",'.$userid.',NULL,NULL,'.$stars.',"'.$image.'")';
+    $sql='INSERT INTO `comments`(`hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, `user_id`, `PackOrDishId`, `expireUser`, `rating`, `image`) VALUES ('.$hallid.',NULL,NULL,"'.$comments.'",NULL,"'.$timestamp.'",'.$userid.','.$packageid.',NULL,'.$stars.',"'.$image.'")';
 
     querySend($sql);
 }

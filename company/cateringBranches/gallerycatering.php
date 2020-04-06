@@ -29,6 +29,8 @@ $cateringid=$id;
 $sql='SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id='.$cateringid.'';
 $cateringdetail=queryReceive($sql);
 
+$userid=$_COOKIE['userid'];
+
 
 ?>
 <!DOCTYPE html>
@@ -75,62 +77,102 @@ else
 </div>
 
 
-<div class="container">
 
+<div class="container card">
     <h1 class="font-weight-light text-lg-left mt-4 mb-3">Gallery</h1>
 
 
-    <form action="" method="POST" enctype="multipart/form-data" class="form-inline">
-        <input type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
-        <input type="submit" name="submit" value="Upload" class="btn btn-success col-4">
+    <form id="multiplesimages" enctype="multipart/form-data" class="form-inline">
+        <input hidden type="number" name="cateringid" value="<?php echo $cateringid;?>">
+        <input hidden type="number" name="userid" value="<?php echo $userid; ?>">
+        <input id="userfile" type="file" name="userfile[]" value="" multiple="" class="col-8 btn  btn-light">
+        <input id="submitMultiples" type="submit" name="submit" value="Upload" class="btn btn-success col-4">
     </form>
-    <?php
 
-    if(isset($_FILES['userfile']))
-    {
-
-        $file_array=reArray($_FILES['userfile']);
-        $Distination='';
-        for ($i=0;$i<count($file_array);$i++)
-        {
-            $Distination= '../../images/catering/'.$file_array[$i]['name'];
-            $error=MutipleUploadFile($file_array[$i],$Distination);
-            if(count($error)>0)
-            {
-                echo '<h4 class="badge-danger">'.$file_array[$i]['name'].'.'.$error[0].'</h4>';
-            }
-            else
-            {
-                $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$Distination.'",NULL,'.$cateringid.',NULL)';
-                querySend($sql);
-            }
-
-        }
-        unset($_FILES['userfile']);
-
-    }
-
-
-
-    ?>
 
 
 
     <hr class="mt-3 mb-5 border-white">
 
-    <div class="row text-center text-lg-left">
-
-
+    <div class="row ">
         <?php
 
 
-        $sql='SELECT `id`, `image` FROM `images` WHERE catering_id='.$cateringid.'' ;
-        echo showGallery($sql);
 
+        $destination="../../images/hall/";
+        //include_once ("gallery/galleryPage.php");
+
+
+
+
+        $sql='SELECT `id`, `image`,(SELECT u.username FROM user as u WHERE u.id=images.user_id),active FROM `images` WHERE (ISNULL(expire)) AND(catering_id='.$cateringid.')' ;
+        $result=queryReceive($sql);
+
+        $source='';
+        $display='';
+        $extensions= array("jpeg","jpg","png");
+        for($k=0;$k<count($result);$k++)
+        {
+            if((file_exists($destination.$result[$k][1]))&&($result[$k][1]!=""))
+            {
+                $passbyreference = explode('.', $result[$k][1]);
+                $file_ext = strtolower(end($passbyreference));
+
+                if (in_array($file_ext, $extensions) === true) {
+                    //image file
+
+                    $display .= '
+                        <div class="col-lg-5 m-auto col-md-6  col-xl-4 col-12   embed-responsive border shadow-lg">
+                            <a href="#" class="d-block mb-4 h-100">
+                                <img class="img-thumbnail embed-responsive" src="'.$destination.''. $result[$k][1] . '" alt="" style="width:100%;height:60vh">
+                           
+                            <p class="card-img-bottom alert-light">
+                          <i class="fas fa-user"></i> '.$result[$k][2].'
+                            <i class="far fa-calendar-alt ml-3"></i>'.$result[$k][3].'
+                          
+                            <button data-deletegallery="'.$result[$k][0].'" class="float-right btn btn-danger deleteButtonGallery"><i class="fas fa-trash-alt"></i>Delete</button>
+                            </p>
+                            </a>
+                        </div>';
+                } else {
+                    //video file
+
+                    $source = $result[$k][1];
+                    $video = substr_replace($source, "", -4);
+                    $display .= '
+                         
+                          <div class="col-lg-4 col-md-6  col-xl-3 col-12 mb-2 mt-2 embed-responsive border shadow-lg">
+                                <div class="embed-responsive embed-responsive-16by9 d-block mb-4 h-100">
+                                    <video width="320" height="440" controls class="card"  >
+                                        <source src="'.$destination.'' . $video . '.mp4" type="video/mp4">
+                                        <source src="'.$destination.'' . $video . '.ogg" type="video/ogg">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="card-img-bottom alert-light">
+                           <i class="fas fa-user"></i>'.$result[$k][2].'
+                           <i class="far fa-calendar-alt ml-3"></i> '.$result[$k][3].'
+                         
+                            <button data-deletegallery="'.$result[$k][0].'" class="float-right btn btn-danger deleteButtonGallery"><i class="fas fa-trash-alt"></i>Delete</button>
+                                
+                           </div>
+                         
+                         ';
+                }
+            }
+
+
+        }
+        echo $display;
         ?>
 
 
+
+
+
     </div>
+
+
 
 </div>
 
@@ -141,10 +183,71 @@ else
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
+
     $(document).ready(function ()
     {
+        $("#submitMultiples").click(function (e)
+        {
+            e.preventDefault();
+            var formData=new FormData($("#multiplesimages")[0]);
+            formData.append("option","cateringMutiplesImages");
+            $.ajax({
+                url:"galleryCatering/galleryCateringServer.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    if(data)
+                    {
+                        alert(data);
+                    }
+                    $("#userfile").val("");
+                    location.reload();
 
 
+                }
+            });
+        });
+
+        $(".deleteButtonGallery").click(function (e)
+        {
+            e.preventDefault();
+
+            var id=$(this).data("deletegallery");
+
+            var formData=new FormData;
+            formData.append("option","deleteButtonGallery");
+            formData.append("userid","<?php echo $userid;?>");
+            formData.append("id",id);
+            $.ajax({
+                url:"galleryCatering/galleryCateringServer.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    if(data)
+                    {
+                        alert(data);
+                    }
+                    location.reload();
+                }
+            });
+
+        });
 
     });
 
