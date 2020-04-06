@@ -151,9 +151,9 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
 
 
                         //user uploaded image or video
-                        if((file_exists('../../images/hall/'.$commentresult[$i][11])) &&($commentresult[$i][11]!=""))
+                        if((file_exists('../../images/comment/hallComment/'.$commentresult[$i][11])) &&($commentresult[$i][11]!=""))
                         {
-                            $display.='<img  style="width: 100%;height: 40vh" class="m-2"  src="../../images/hall/'.$commentresult[$i][11].'"><br>';
+                            $display.='<img  style="width: 100%;height: 40vh" class="m-2"  src="../../images/comment/hallComment/'.$commentresult[$i][11].'"><br>';
                         }
                         //package id
                                     if($commentresult[$i][8]!="")

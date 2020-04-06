@@ -14,7 +14,7 @@ if($_POST['option']=="commentCatering")
     }
     if(!empty($_FILES['image']["name"]))
     {
-        $hallimage = "../../../images/hall/" . $_FILES['image']['name'];
+        $hallimage = "../../../images/comment/cateringComment/" . $_FILES['image']['name'];
         $resultimage = ImageUploaded($_FILES, $hallimage);//$dishimage is destination file location;
         if ($resultimage != "")
         {
