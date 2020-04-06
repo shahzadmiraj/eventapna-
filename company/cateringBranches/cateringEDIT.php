@@ -79,7 +79,7 @@ else
     <a href="infoCatering.php?catering=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-cogs fa-5x"></i><h4>Change info</h4></a>
     <a href="gallerycatering.php?catering=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-images fa-5x"></i> <h4>Gallery</h4></a>
     <a href="dish/dishesInfo.php?catering=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-hamburger fa-5x"></i><h4>Dishes Setting</h4></a>
-    <a href="dish/dishesInfo.php?catering=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-hamburger fa-5x"></i><h4>Comments</h4></a>
+    <a href="cateringComment/cateringComment.php?catering=<?php echo $encoded;?>" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-comments fa-5x"></i><h4>Comments</h4></a>
 
 
 
