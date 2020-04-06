@@ -34,6 +34,13 @@ if($_POST['option']=="hallmutiplesimages")
     }
 
 }
+else if($_POST['option']="deleteButtonGallery")
+{
+    $id=$_POST['id'];
+    $userid=$_POST['userid'];
+    $sql='UPDATE `images` SET `expireUser`='.$userid.',expire="'.$timestamp.'" WHERE id='.$id.'';
+    querySend($sql);
+}
 
 
 

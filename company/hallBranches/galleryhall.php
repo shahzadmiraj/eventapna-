@@ -89,7 +89,7 @@ else
 
     <hr class="mt-3 mb-5 border-white">
 
-    <div class="row text-center text-lg-left">
+    <div class="row ">
         <?php
 
 
@@ -100,7 +100,7 @@ else
 
 
 
-        $sql='SELECT `id`, `image` FROM `images` WHERE hall_id='.$hallid.'' ;
+        $sql='SELECT `id`, `image`,(SELECT u.username FROM user as u WHERE u.id=images.user_id),active FROM `images` WHERE (ISNULL(expire)) AND(hall_id='.$hallid.')' ;
         $result=queryReceive($sql);
 
         $source='';
@@ -117,11 +117,16 @@ else
                     //image file
 
                     $display .= '
-                        <div class="col-lg-4 col-md-6  col-xl-3 col-12 mb-2 mt-2 embed-responsive">
+                        <div class="col-lg-5 m-auto col-md-6  col-xl-4 col-12   embed-responsive border shadow-lg">
                             <a href="#" class="d-block mb-4 h-100">
                                 <img class="img-thumbnail embed-responsive" src="'.$destination.''. $result[$k][1] . '" alt="" style="width:100%;height:60vh">
                            
-                            <h4 class="card-img-bottom alert-light">hsabhjads</h4>
+                            <p class="card-img-bottom alert-light">
+                          <i class="fas fa-user"></i> '.$result[$k][2].'
+                            <i class="far fa-calendar-alt ml-3"></i>'.$result[$k][3].'
+                          
+                            <button data-deletegallery="'.$result[$k][0].'" class="float-right btn btn-danger deleteButtonGallery"><i class="fas fa-trash-alt"></i>Delete</button>
+                            </p>
                             </a>
                         </div>';
                 } else {
@@ -131,7 +136,7 @@ else
                     $video = substr_replace($source, "", -4);
                     $display .= '
                          
-                          <div class="col-lg-4 col-md-6  col-xl-3 col-12 mb-2 mt-2 embed-responsive">
+                          <div class="col-lg-4 col-md-6  col-xl-3 col-12 mb-2 mt-2 embed-responsive border shadow-lg">
                                 <div class="embed-responsive embed-responsive-16by9 d-block mb-4 h-100">
                                     <video width="320" height="440" controls class="card"  >
                                         <source src="'.$destination.'' . $video . '.mp4" type="video/mp4">
@@ -139,6 +144,12 @@ else
                                         Your browser does not support the video tag.
                                     </video>
                                 </div>
+                                <p class="card-img-bottom alert-light">
+                           <i class="fas fa-user"></i>'.$result[$k][2].'
+                           <i class="far fa-calendar-alt ml-3"></i> '.$result[$k][3].'
+                         
+                            <button data-deletegallery="'.$result[$k][0].'" class="float-right btn btn-danger deleteButtonGallery"><i class="fas fa-trash-alt"></i>Delete</button>
+                                
                            </div>
                          
                          ';
@@ -175,6 +186,44 @@ include_once ("../../webdesign/footer/footer.php");
             e.preventDefault();
             var formData=new FormData($("#multiplesimages")[0]);
             formData.append("option","hallmutiplesimages");
+            $.ajax({
+                url:"gallery/galleryServer.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    if(data)
+                    {
+                        alert(data);
+                    }
+                    location.reload();
+
+
+                }
+            });
+
+
+
+
+        });
+
+        $(".deleteButtonGallery").click(function (e)
+        {
+            e.preventDefault();
+
+            var id=$(this).data("deletegallery");
+
+            var formData=new FormData;
+            formData.append("option","deleteButtonGallery");
+            formData.append("userid","<?php echo $userid;?>");
+            formData.append("id",id);
             $.ajax({
                 url:"gallery/galleryServer.php",
                 method:"POST",
