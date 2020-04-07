@@ -57,12 +57,18 @@ $cateringdetail=queryReceive($sql);
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
+
+
+    <script src="../../mapRadius/js/gmaps-lat-lng-radius.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
+    <link rel="stylesheet" href="../../mapRadius/css/gmaps-lat-lng-radius.css" type="text/css">
     <style>
 
     </style>
@@ -95,45 +101,115 @@ else
 
 
 
-<div class="container" >
+<div class="container card">
 
     <form id="formcatering">
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid; ?>">
         <input type="text" hidden name="previousimage" value="<?php echo $cateringdetail[0][2]; ?>">
         <div class="form-group row">
             <label class="col-form-label ">Catering Branch Name:</label>
-
-
-
-
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-utensils"></i></span>
                 </div>
                 <input name="cateringname" class="form-control" type="text" value="<?php echo $cateringdetail[0][0]; ?>">
             </div>
-
-
         </div>
         <div class="form-group row">
             <label class="col-form-label ">Catering Branch Image:</label>
-
-
-
-
-
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-camera"></i></span>
                 </div>
                 <input name="image" class="form-control" type="file">
             </div>
-
-
-
         </div>
+
+
+        <div class="form-group row">
+            <label class="col-form-label ">Latitude:</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input id="latitude" name="latitude" class="form-control" type="text">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label ">longitude</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input id="longitude" name="longitude" class="form-control" type="text">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label ">Address</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input id="address" name="address" class="form-control" type="text">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label ">City</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input id="city" name="city" class="form-control" type="text">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label ">Country</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input id="country" name="country" class="form-control" type="text">
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label class="col-form-label ">Target Radius / Online market show dishes with in   </label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input id="radius" name="radius" class="form-control" type="text">
+            </div>
+        </div>
+
+
+
+        <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+        <div id="shape-input" class="controls ">
+            <div class="shape-option selected" data-geo-type="circle">Circle</div>
+            <div hidden class="shape-option" data-geo-type="polygon">Polygon</div></div>
+        <div id="output-container" class="controls" hidden>
+            <button class="copybtn" data-clipboard-target="#pos-output"><img class="clippy" src="https://clipboardjs.com/assets/images/clippy.svg" width="12" alt="Copy to clipboard"></button>
+            <div id="pos-output">Start by searching for the city...</div>
+        </div>
+        <div id="map" style="height: 80vh"></div>
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="form-group row">
             <h3 align="center">  <i class="fas fa-map-marker-alt"></i>Address(optional)</h3>
         </div>
@@ -157,20 +233,9 @@ else
 
         </div>
     </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
+
+
 
 
 
@@ -180,6 +245,16 @@ else
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
+
+    $(document).ready(function() {
+        getLocation();
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
+            dataType: "script",
+            cache: false
+        });
+    });
+
     $(document).ready(function ()
     {
         $("#submiteditcatering").click(function () {

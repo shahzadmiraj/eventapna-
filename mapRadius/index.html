@@ -5,25 +5,41 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/gmaps-lat-lng-radius.css" type="text/css">
+    <script src="../jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
+    <script src="js/gmaps-lat-lng-radius.js"></script>
   </head>
   <body>
-    <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
 
-    <input id="map-search" class="controls" type="text" placeholder="Enter a location">
+  <input id="latitude" type="text" name="latitude">
+  <input id="longitude"  type="text" name="longitude">
+  <input id="address" type="text" name="address">
+  <input id="city" type="text" name="city">
+  <input id="country" type="text" name="country">
+  <input id="radius" type="text" name="radius">
+
+
+    <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
     <div id="shape-input" class="controls">
       <div class="shape-option selected" data-geo-type="circle">Circle</div>
       <div class="shape-option" data-geo-type="polygon">Polygon</div></div>
-
-    <div id="output-container" class="controls">
+    <div hidden id="output-container" class="controls">
       <button class="copybtn" data-clipboard-target="#pos-output"><img class="clippy" src="https://clipboardjs.com/assets/images/clippy.svg" width="12" alt="Copy to clipboard"></button>
       <div id="pos-output">Start by searching for the city...</div>
     </div>
-
     <div id="map" style="height: 40vh"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
-    <script src="js/gmaps-lat-lng-radius.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap"></script>
-    <!-- AIzaSyArHSePssVzJosEXQ0h1Qn6vUU1fMPxce4 -->
+    <script>
+
+      $(document).ready(function() {
+        getLocation();
+        $.ajax({
+          url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
+          dataType: "script",
+          cache: false
+        });
+      });
+
+    </script>
   </body>
 </html>

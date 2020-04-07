@@ -1,6 +1,6 @@
 var x = document.getElementById("demo");
 var latitude=22;
-	var longitude=12;
+var longitude=12;
 function getLocation()
 {
 
