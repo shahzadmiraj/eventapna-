@@ -252,7 +252,7 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row justify-content-center shadow">
 
-        <a href="../../customer/customerEdit.php" class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
+        <a id="btnbackhistory"  class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
         <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 
@@ -263,6 +263,11 @@ include_once ("../../webdesign/footer/footer.php");
 <script>
     $(document).ready(function ()
     {
+
+        $("#btnbackhistory").click(function (e) {
+            e.preventDefault();
+            window.history.back();
+        });
 
         $("#submitform").hide("slow");
 
@@ -276,7 +281,6 @@ include_once ("../../webdesign/footer/footer.php");
                 packageid=$("input[name='defaultExampleRadios']:checked").val();
                 amount=$("#selectpricefix"+packageid).val();
                 $("#totalamount").val(parseInt(amount)*parseInt(guests));
-
             }
         }
         $("#guests").change(function ()

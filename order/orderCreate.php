@@ -134,7 +134,7 @@ include_once ("../webdesign/header/header.php");
 
         <div class="form-group row justify-content-center">
 
-            <a href="../customer/customerEdit.php" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>
+            <a id="btnbackhistory" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>
             <button type="button" id="submit" class="form-control col-5 btn-success"><i class="fas fa-check "></i> Submit</button>
 
         </div>
@@ -148,8 +148,18 @@ include_once ("../webdesign/header/header.php");
 include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
+
+
+
     $(document).ready(function ()
     {
+
+        $("#btnbackhistory").click(function (e) {
+            e.preventDefault();
+            window.history.back();
+        });
+
+
        $("#submit").click(function (e)
        {
 
