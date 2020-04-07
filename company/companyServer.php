@@ -104,46 +104,6 @@ if(isset($_POST['option']))
         }
         $sql='INSERT INTO `catering`(`id`, `name`, `expire`, `image`, `location_id`, `company_id`,`active`) VALUES (NULL,"'.$namecatering.'",NULL,"'.$Cateringimage.'",NULL,'.$companyid.',"'.$timestamp.'")';
         querySend($sql);
-        $cateringid=mysqli_insert_id($connect);
-            if(!isset($_POST['dishtypename']))
-            {
-                exit();
-            }
-        $dishtypename=$_POST['dishtypename'];
-        $dishtypeid='';
-        $dishid=$_POST['dishid'];
-        $dishname=$_POST['dishname'];
-        $image=$_POST['image'];
-        for($i=0;$i<count($dishtypename);$i++)
-        {
-            $sql='SELECT `id` FROM `dish_type` WHERE (name="'.$dishtypename[$i].'") AND (catering_id='.$cateringid.')';
-            $detail=queryReceive($sql);
-            if(count($detail)>0)
-            {
-                $dishtypeid=$detail[0][0];
-            }
-            else
-            {
-                $sql='INSERT INTO `dish_type`(`id`, `name`, `isExpire`, `catering_id`) VALUES (NULL,"'.$dishtypename[$i].'",NULL,'.$cateringid.')';
-                querySend($sql);
-                $dishtypeid=mysqli_insert_id($connect);
-            }
-
-            $sql='INSERT INTO `dish`(`name`, `id`, `image`, `dish_type_id`, `isExpire`, `catering_id`) VALUES ("'.$dishname[$i].'",NULL,"'.$image[$i].'",'.$dishtypeid.',NULL,'.$cateringid.')';
-            querySend($sql);
-            $idDishe=mysqli_insert_id($connect);
-            $sql='SELECT `name` FROM `SystemAttribute` WHERE ISNULL(isExpire) AND (systemDish_id='.$dishid[$i].')';
-            $detailAttributes=queryReceive($sql);
-            for($j=0;$j<count($detailAttributes);$j++)
-            {
-
-
-                $sql='INSERT INTO `attribute`(`name`, `id`, `dish_id`, `isExpire`) VALUES ("'.$detailAttributes[$j][0].'",NULL,'.$idDishe.',NULL)';
-                querySend($sql);
-            }
-
-
-        }
     }
     else if($_POST['option']=="CreateHall")
     {
@@ -591,27 +551,6 @@ WHERE  id='.$order.'';
         }
 
         $sql='UPDATE `hall` SET `name`="'.$hallname.'",`max_guests`='.$capacity.',`noOfPartitions`='.$partition.',`ownParking`='.$parking.',`image`="'.$hallimage.'",`hallType`='.$halltype.',`location_id`='.$previousaddressid.' WHERE id='.$hallid.'';
-        querySend($sql);
-    }
-    else if($_POST['option']=="cateringedit")
-    {
-        $cateringid=$_POST['cateringid'];
-        $cateringname=$_POST['cateringname'];
-        $cateringimage=$_POST['previousimage'];
-        if(!empty($_FILES['image']["name"]))
-        {
-            $cateringimage = "../images/catering/" . $_FILES['image']['name'];
-            $resultimage = ImageUploaded($_FILES, $cateringimage);//$dishimage is destination file location;
-            if ($resultimage != "")
-            {
-                print_r($resultimage);
-                exit();
-            }
-
-            $cateringimage = $_FILES['image']['name'];
-
-        }
-        $sql='UPDATE `catering` SET `name`="'.$cateringname.'",`image`="'.$cateringimage.'" WHERE id='.$cateringid.'';
         querySend($sql);
     }
     else if($_POST['option']=="formDishadd")

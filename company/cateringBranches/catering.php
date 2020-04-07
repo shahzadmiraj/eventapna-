@@ -16,6 +16,7 @@ $CateringBranches=1;
 $sql='SELECT name,id FROM systemDishType WHERE ISNULL(isExpire)';
 $dishType=queryReceive($sql);
 
+$userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -30,26 +31,14 @@ $dishType=queryReceive($sql);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
+    <link rel="stylesheet" href="../../mapRadius/css/gmaps-lat-lng-radius.css" type="text/css">
     <style>
-        form
-        {
-            margin: 5%;
-
-        }
-
-        .jumbotron
-        {
-            background-color: rgba(253, 253, 255, 0.95);
-        }
 
     </style>
 </head>
 <body>
-
-
-
-
-
 <?php
 include_once ("../../webdesign/header/header.php");
 
@@ -60,32 +49,20 @@ include_once ("../../webdesign/header/header.php");
         <h1 class="display-5 text-center"><i class="fas fa-registered"></i> Catering Branches</h1>
     <p class="lead">Free register catering branches and also get free software . Book your order easily</p>
        <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
-
     </div>
-
 </div>
 
 
 
-<?php
+<div class="container card">
+    <h1 ><i class="fas fa-utensils"></i> <i class="fas fa-registered"></i>Catering Registeration</h1>
+    <form id="cateringform">
 
-$H=0;
-for($M=0;$M<$CateringBranches;$M++)
-{
+        <input type="hidden" name="userid" value="<?php echo $userid;?>">
+        <input type="hidden" name="companyid" value="<?php echo $companyid;?>">
 
-    echo '<div  class=" jumbotron container card-body border shadow mb-4" id="removeform'.$M.'">';
-    $M++;
-    echo '<h1 align="center"><i class="fas fa-utensils"></i> <i class="fas fa-registered"></i>Catering Registeration '.$M.'</h1>';
-    $M--;
-    echo '<form id="formsubmit'.$M.'" >';
-
-
-    ?>
     <div class="form-group row ">
         <label class="col-form-label">Catering Branch name:</label>
-<!--        <input name="namecatering" type="text" class="form-control col-8">-->
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-utensils"></i></span>
@@ -95,9 +72,6 @@ for($M=0;$M<$CateringBranches;$M++)
     </div>
     <div class="form-group row">
         <label class="col-form-label ">Catering Branch Image:</label>
-<!--        <input name="image" type="file" class="form-control col-8">-->
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-camera"></i></span>
@@ -106,130 +80,120 @@ for($M=0;$M<$CateringBranches;$M++)
         </div>
     </div>
 
-    <div class="col-5">
-        <p> Map of address</p>
-    </div>
-    <h3 align="center"><i class="far fa-hand-pointer"></i> Select Dishes</h3>
 
-    <div class="form-group row">
-        <?php
+        <div class="form-group row">
+            <label class="col-form-label ">Latitude:</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input readonly id="latitude" name="latitude" class="form-control" type="text" placeholder="Latitude Set Map">
+            </div>
+        </div>
 
-        $display = '';
-        for ($i = 0; $i < count($dishType); $i++)
-        {
-            $display = '<h1 align="center" class="col-12  card">' . $dishType[$i][0] . '</h1>';
-            $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)AND
-systemDishType_id=' . $dishType[$i][1] . '';
-            $dishDetail = queryReceive($sql);
-            for ($j = 0; $j < count($dishDetail); $j++)
-            {
-                $display .= '
-    <div class="col-4 shadow border btn-outline-warning m-2">
-    
-    <input id="dishtypename' .$H. '"  hidden type="text" name="dishtypename[]" value="' . $dishType[$i][0] . '">
-    <input id="dishid' .$H. '"  hidden type="number" name="dishid[]" value="' . $dishDetail[$j][1] . '">
-    <input id="dishname' . $H . '" name="dishname[]" hidden value="' . $dishDetail[$j][0] . '">
-    <input id="image' . $H. '" name="image[]" hidden value="' . $dishDetail[$j][2] . '">
-    <img class="col-12" src="';
+        <div class="form-group row">
+            <label class="col-form-label ">longitude</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input  readonly id="longitude" name="longitude" class="form-control" type="text" placeholder="Longitude Set Map">
+            </div>
+        </div>
 
+        <div class="form-group row">
+            <label class="col-form-label ">Address</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <textarea  readonly id="address" name="address" class="form-control"  placeholder="Address Set Map"></textarea>
+            </div>
+        </div>
 
+        <div class="form-group row">
+            <label class="col-form-label ">City</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input readonly id="city" name="city" class="form-control" type="text" placeholder="City Set Map">
+            </div>
+        </div>
 
-
-                $str2 = substr($dishDetail[$j][2], 3);
-                if (file_exists($str2)&&($str2!=""))
-                {
-                    $display.= $str2;
-                }
-                else
-                {
-                    $display.= '../../gmail.png';
-
-                }
-
-
-
-                $display.='" style="height: 20vh" >
-    <p class="col-12"> ' . $dishDetail[$j][0] . '</p>
-    <input   data-dishshow="' .$H. '" type="button" class="selectdish form-control col-12 btn-danger" value="Remove">
-    </div>';
-                $H++;
-            }
-
-        }
-        echo $display;
-
-
-        ?>
-    </div>
-    <div class="form-group row mt-3">
+        <div class="form-group row">
+            <label class="col-form-label ">Country</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input readonly id="country" name="country" class="form-control" type="text" placeholder="Country Set Map">
+            </div>
+        </div>
 
 
+        <div class="form-group row">
+            <label class="col-form-label ">Target Radius / Online market show dishes with in  KM  </label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                </div>
+                <input value="9000" readonly id="radius" name="radius" class="form-control" type="text" placeholder="Target Radius Set Map ">
+            </div>
+        </div>
 
-        <button data-formid="<?php echo $M; ?>" type="button" class="cancelform  btn btn-outline-danger col-5 form-control " value="cancel" ><span class="fas fa-window-close "></span>  Cancel</button>
-        <button data-formid="<?php echo $M; ?>" type="button" class="submitform btn btn-primary col-5  form-control" value="submit"><i class="fas fa-check "></i>  Submit</button>
+
+
+
+        <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+        <div id="shape-input" class="controls ">
+            <div class="shape-option selected" data-geo-type="circle">Circle</div>
+            <div hidden class="shape-option" data-geo-type="polygon">Polygon</div></div>
+        <div id="output-container" class="controls" hidden>
+            <button class="copybtn" data-clipboard-target="#pos-output"><img class="clippy" src="https://clipboardjs.com/assets/images/clippy.svg" width="12" alt="Copy to clipboard"></button>
+            <div id="pos-output">Start by searching for the city...</div>
+        </div>
+        <div id="map" style="height: 80vh"></div>
+
+
+        <div class="form-group row mt-3">
+        <button  type="button" class="cancelform  btn btn-danger col-6 form-control " ><span class="fas fa-window-close "></span>  Cancel</button>
+        <button  type="button" id="submitform" class="btn btn-primary col-6  form-control" ><i class="fas fa-check "></i>  Submit</button>
     </div>
     </form>
-
-    <?php
-    echo '</div>';
-
-}
-?>
-
-
+</div>
 
 
 
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
+<script src="../../mapRadius/js/gmaps-lat-lng-radius.js"></script>
 <script>
-    $(document).ready(function () {
 
-        var NoCatering="<?php echo $CateringBranches;?>";
-        $(document).on("click",".selectdish",function ()
-        {
-            var id=$(this).data("dishshow");
-            var value=$(this).val();
-            if(value=="Remove")
-            {
-                $("#dishtypename"+id).attr("name","");
-                $("#dishid"+id).attr("name","");
 
-                $("#dishname"+id).attr("name","");
-                $("#image"+id).attr("name","");
-                $(this).val("Select");
-                $(this).removeClass("btn-danger");
-                $(this).addClass("btn-success");
-            }
-            else
-            {
 
-                $("#dishtypename"+id).attr("name","dishtypename[]");
-                $("#dishid"+id).attr("name","dishid[]");
-                $("#dishname"+id).attr("name","dishname[]");
-                $("#image"+id).attr("name","image[]");
-                $(this).val("Remove");
-                $(this).removeClass("btn-success");
-                $(this).addClass("btn-danger");
-            }
-
+    $(document).ready(function() {
+        getLocation();
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
+            dataType: "script",
+            cache: false
         });
+    });
 
-
-
-        $(".submitform").click(function () {
-            var formid=$(this).data("formid");
-            var formdata=new FormData($("#formsubmit"+formid)[0]);
+    $(document).ready(function ()
+    {
+        $("#submitform").click(function ()
+        {
+            var formdata=new FormData($("#cateringform")[0]);
             formdata.append("option","createCatering");
-            formdata.append("companyid",<?php  echo $companyid;?>);
             $.ajax({
-                url:"../companyServer.php",
+                url:"cateringServer/cateringServer.php",
                 method:"POST",
                 data:formdata,
                 contentType: false,
                 processData: false,
-
                 beforeSend: function() {
                     $("#preloader").show();
                 },
@@ -239,7 +203,6 @@ include_once ("../../webdesign/footer/footer.php");
                     if(data!="")
                     {
                         alert(data);
-                        return false;
                     }
                     else
                     {
@@ -250,6 +213,9 @@ include_once ("../../webdesign/footer/footer.php");
 
 
         });
+
+
+
         $(".cancelform").click(function ()
         {
             window.history.back();

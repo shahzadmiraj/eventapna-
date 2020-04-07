@@ -28,27 +28,22 @@ if((!is_numeric($id))||$id=="")
 $cateringid=$id;
 
 
-if(isset($_GET['action']))
-{
-
-    if($_GET['action']=="expire")
-    {
-        $date=date('Y-m-d H:i:s');
-        $sql='UPDATE `catering` SET `expire`="'.$date.'" WHERE id='.$cateringid.'';
-    }
-    else
-    {
-        $sql='UPDATE `catering` SET `expire`=NULL WHERE id='.$cateringid.'';
-
-    }
-    querySend($sql);
-    header("location:cateringEDIT.php?catering=".$encoded."");
-}
-
-$sql='SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id='.$cateringid.'';
+//$sql='SELECT  `name`, `expire`, `image`,id, FROM `catering` WHERE id='.$cateringid.'';
+$sql='SELECT c.name,c.image,cl.id,cl.longitude,cl.latitude,cl.radius,c.expire FROM catering as c INNER join cateringLocation as cl 
+on (c.id=cl.catering_id)
+WHERE
+ISNULL(cl.expire)AND
+(c.id='.$cateringid.')'
+;
 $cateringdetail=queryReceive($sql);
+if($cateringdetail[0][6]!="")
+{
+    header("location:../companyRegister/companyEdit.php");
+}
+//////////////////////////////////////may be double array error check
+//print_r($cateringdetail);
 
-
+$userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -66,23 +61,31 @@ $cateringdetail=queryReceive($sql);
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
 
 
-    <script src="../../mapRadius/js/gmaps-lat-lng-radius.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
     <link rel="stylesheet" href="../../mapRadius/css/gmaps-lat-lng-radius.css" type="text/css">
+    <script>
+
+    </script>
+
+
+
     <style>
 
     </style>
 </head>
 <body>
+
+
+
 <?php
 include_once ("../../webdesign/header/header.php");
 
 ?>
 <div class="jumbotron  shadow text-center" style="background-image: url(<?php
 
-if((file_exists('../../images/catering/'.$cateringdetail[0][2])) &&($cateringdetail[0][2]!=""))
+if((file_exists('../../images/catering/'.$cateringdetail[0][1])) &&($cateringdetail[0][1]!=""))
 {
-    echo "'../../images/catering/".$cateringdetail[0][2]."'";
+    echo "'../../images/catering/".$cateringdetail[0][1]."'";
 }
 else
 {
@@ -104,8 +107,14 @@ else
 <div class="container card">
 
     <form id="formcatering">
+
+        <input type="number" hidden name="userid" value="<?php echo $userid; ?>">
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid; ?>">
-        <input type="text" hidden name="previousimage" value="<?php echo $cateringdetail[0][2]; ?>">
+        <input type="text" hidden name="Previouslongitude" value="<?php echo $cateringdetail[0][3]; ?>">
+        <input type="text" hidden name="Previouslatitude" value="<?php echo $cateringdetail[0][4]; ?>">
+        <input type="text" hidden name="PreviousRadius" value="<?php echo $cateringdetail[0][5]; ?>">
+        <input type="text" hidden name="Previouslocationid" value="<?php echo $cateringdetail[0][2]; ?>">
+
         <div class="form-group row">
             <label class="col-form-label ">Catering Branch Name:</label>
             <div class="input-group mb-3 input-group-lg">
@@ -152,7 +161,7 @@ else
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-camera"></i></span>
                 </div>
-                <input id="address" name="address" class="form-control" type="text">
+                <textarea id="address" name="address" class="form-control"></textarea>
             </div>
         </div>
 
@@ -183,12 +192,9 @@ else
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-camera"></i></span>
                 </div>
-                <input id="radius" name="radius" class="form-control" type="text">
+                <input  value="<?php echo (int)$cateringdetail[0][5]*1000;?>" id="radius" name="radius" class="form-control" type="number">
             </div>
         </div>
-
-
-
         <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
         <div id="shape-input" class="controls ">
             <div class="shape-option selected" data-geo-type="circle">Circle</div>
@@ -198,38 +204,14 @@ else
             <div id="pos-output">Start by searching for the city...</div>
         </div>
         <div id="map" style="height: 80vh"></div>
-
-
-
-
-
-
-
-
-
-
-
-
         <div class="form-group row">
             <h3 align="center">  <i class="fas fa-map-marker-alt"></i>Address(optional)</h3>
         </div>
         <div class="form-group row col-12 mb-5">
 
 
-            <?php
-            if($cateringdetail[0][1]=="")
-            {
-                echo '<a href="?action=expire&catering='.$encoded.'" class="btn btn-danger col-6">Expire</a>';
-
-            }
-            else
-            {
-                echo '<a href="?action=active&catering='.$encoded.'" class="btn btn-warning col-6">Active</a>';
-            }
-
-            ?>
-
-            <button id="submiteditcatering" type="button" class="rounded mx-auto d-block btn btn-primary col-5 " value="Submit"><i class="fas fa-check "></i>Submit</button>
+            <button id="Expire" type="button" class="  btn btn-danger col-6 form-control " ><span class="fas fa-window-close "></span>  Delete</button>
+            <button id="submiteditcatering" type="button" class="btn btn-primary col-6 " value="Submit"><i class="fas fa-check "></i>Submit</button>
 
         </div>
     </form>
@@ -241,52 +223,88 @@ else
 
 
 
+<script src="../../mapRadius/js/gmaps-lat-lng-radius.js"></script>
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
 
-    $(document).ready(function() {
-        getLocation();
+
+    $(document).ready(function()
+    {
+        latitude="<?php echo $cateringdetail[0][4];?>";
+        longitude="<?php echo $cateringdetail[0][3];?>";
         $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
-            dataType: "script",
-            cache: false
-        });
+        url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
+        dataType: "script",
+        cache: false
+    });
+
     });
 
     $(document).ready(function ()
     {
-        $("#submiteditcatering").click(function () {
-            var formdata = new FormData($("#formcatering")[0]);
-            formdata.append("option", "cateringedit");
+
+        $("#Expire").click(function ()
+        {
+            var formdata = new FormData;
+
+            formdata.append("option","DeleteCatering");
+            formdata.append("id","<?php echo $cateringid;?>");
+            formdata.append("userid","<?php echo $userid;?>");
             $.ajax({
-                url: "../companyServer.php",
-                method: "POST",
-                data: formdata,
+                url:"cateringServer/cateringServer.php",
+                method:"POST",
+                data:formdata,
                 contentType: false,
                 processData: false,
-
                 beforeSend: function() {
                     $("#preloader").show();
                 },
                 success:function (data)
                 {
                     $("#preloader").hide();
-                    if (data != '')
+                    if(data!="")
                     {
                         alert(data);
-                        return false;
-                    } else
-                    {
-                       window.history.back();
-
                     }
-
-
+                    else
+                    {
+                        location.href="../companyRegister/companyEdit.php";
+                    }
                 }
             });
         });
+
+
+        $("#submiteditcatering").click(function () {
+            var formdata = new FormData($("#formcatering")[0]);
+
+            formdata.append("option","EditCatering");
+            $.ajax({
+                url:"cateringServer/cateringServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    if(data!="")
+                    {
+                        alert(data);
+                    }
+                    else
+                    {
+                        window.history.back();
+                    }
+                }
+            });
+        });
+
 
 
     });

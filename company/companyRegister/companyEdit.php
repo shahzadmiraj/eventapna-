@@ -177,7 +177,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
     <hr class="border border-white">
     <?php
-    $sql='SELECT `id`, `name`, `expire`, `image` FROM `hall` WHERE company_id='.$companyid.'';
+    $sql='SELECT `id`, `name`, `expire`, `image` FROM `hall` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
     $halldetails=queryReceive($sql);
     $display='';
     for($i=0;$i<count($halldetails);$i++)
@@ -224,7 +224,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
     <hr class="border border-white">
     <?php
-    $sql='SELECT `id`, `name`, `expire`, `image` FROM `catering` WHERE company_id='.$companyid.'';
+    $sql='SELECT `id`, `name`, `expire`, `image` FROM `catering` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
     $cateringdetails=queryReceive($sql);
     $display='';
     for($i=0;$i<count($cateringdetails);$i++)

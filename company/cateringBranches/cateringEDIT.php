@@ -28,7 +28,7 @@ if((!is_numeric($id))||$id=="")
 }
 $cateringid=$id;
 
-$sql='SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id='.$cateringid.'';
+$sql='SELECT  `name`, `expire`, `image` FROM `catering` WHERE id='.$cateringid.'';
 $cateringdetail=queryReceive($sql);
 
 
