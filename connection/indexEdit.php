@@ -8,38 +8,23 @@ include_once ("connect.php");
 include_once ("findDistance.php");
 function hallAll()
 {
-
     $hallIds=SortDistance(33.6844,73.0479,"Pakistan");
-
-
-    $monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-    $currentdate=date("Y/m/d");
-    $maxDate = new DateTime('now');
-    $maxDate->modify('+1 month'); // or you can use '-90 day' for deduct
-
-    $NextMonthNo=$maxDate->format('m');
-    $NextMonthNo=$NextMonthNo-1;
-    $maxDate = $maxDate->format('Y-m-d');
-    $CurrentMonthNo=date('m');
-    $CurrentMonthNo=$CurrentMonthNo-1;
-
+    $currentdate = date("Y-m-d");
+    $maxDate = date('Y-m-d', strtotime($currentdate . ' +1 day'));
     $display='';
     for($i=0;$i<count($hallIds);$i++)
     {
-
-        $sql = 'SELECT h.id,h.image,h.name,h.max_guests,hp.id,hp.month,hp.isFood,hp.price,hp.dayTime,hp.package_name,h.hallType FROM hall as h INNER join hallprice as hp
-ON
-(h.id=hp.hall_id)
-left join orderDetail as od on (h.id=od.hall_id) 
-
-
+  $sql='SELECT  h.id,h.image,h.name,h.max_guests,p.id,pd.selectedDate,p.isFood,p.price,p.dayTime,p.package_name,h.hallType from hall as h INNER join location as l 
+on (h.location_id=l.id)
+inner join packages as p 
+on (h.id=p.hall_id)
+INNER join packageDate as pd 
+on (p.id=pd.package_id)
 WHERE
-(hp.price>0)AND
-  (h.id='.$hallIds[$i][0].')AND
- ((od.hall_id IS NULL) or ((od.status_hall="Cancel")AND
-(od.destination_date between "' . $currentdate . '" AND "' . $maxDate . '" ))) AND (ISNULL(h.expire)) AND
-((ISNULL(hp.expire)) AND ((hp.month="' . $monthsArray[$CurrentMonthNo] . '")or (hp.month="' . $monthsArray[$NextMonthNo] . '"))) limit 20
-';
+(ISNULL(h.expire))AND(ISNULL(p.expire))AND(ISNULL(pd.expire))
+AND (h.id='.$hallIds[$i][0].' )';
+        //echo $sql;
+        //AND (pd.selectedDate BETWEEN "'.$currentdate.'" AND "'.$maxDate.'")
         $display.=showHalls($sql,$hallIds[$i][3]);
     }
     return $display;
@@ -89,13 +74,12 @@ WHERE
 function showHalls($sql,$Distance)
 {
     $halltype=array("Marquee","Hall","Deera /Open area");
-
     $display = '';
     $AllHalls=queryReceive($sql);
     for ($i=0;$i<count($AllHalls);$i++)
     {
 
-        $display.='
+      /*  $display.='
         
        <a href="company/hallBranches/hallclient.php?hallDetail='.base64url_encode($AllHalls[$i][0]).'&package='.base64url_encode($AllHalls[$i][4]).'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'&distance='.$Distance.' " class="card m-2 shadow col-12 col-sm-6 col-md-5 col-xl-3">
 
@@ -115,7 +99,7 @@ function showHalls($sql,$Distance)
         $display.='" alt="Snow" style="width:100%;height: 50vh;">
                     <h5 class="top-right btn-secondary font-weight-bold"> ';
 
-        $display.=$Distance;
+        $display.=;
 
         $display.='   Km</h5>
                 </div>
@@ -148,7 +132,40 @@ function showHalls($sql,$Distance)
 
         $display.='</div>
 
-        </a>';
+        </a>';*/
+
+            $display.='<div class="block ">
+
+    <div class="top">
+        <ul>
+            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>++++</li>
+            <li><span class="converse">'.$AllHalls[$i][2].'</span></li>
+            <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i></a>'.$Distance.'Km</li>
+        </ul>
+    </div>
+
+    <div class="middle">
+        <img src="';
+        if(file_exists('images/hall/'.$AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
+        {
+            $display.="images/hall/".$AllHalls[$i][1];
+        }
+        else
+        {
+            $display.='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
+
+        }
+        $display.='" alt="pic" />
+    </div>
+
+    <div class="bottom">
+        <div class="heading">'.$AllHalls[$i][9].'</div>
+        <div class="info">Max Guests'.$AllHalls[$i][3].'</div>
+        <div class="style">Date:'.$AllHalls[$i][5].' /Time:'.$AllHalls[$i][8].'  /Type:'.$halltype[$AllHalls[$i][10]].'</div>
+        <div class="price">$'.$AllHalls[$i][7].' <span class="old-price">$'.((int)$AllHalls[$i][7]+5000).'</span></div>
+    </div>
+
+</div>';
     }
 
 

@@ -43,37 +43,115 @@ include_once ("connection/indexEdit.php");
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="webdesign/css/complete.css">
+
     <link rel="stylesheet" href="webdesign/css/loader.css">
     <link rel="stylesheet" href="map/style.css">
 
 
     <style>
-
-        .carousel-item img
-        {
+        * {
+            font-family: "Roboto";
+            list-style: none;
             margin: 0;
-            height: 60vh;
+            padding: 0;
+            text-decoration: none;
+            letter-spacing: 1px;
+            box-sizing: border-box;
         }
-        .carousel-caption
-        {
-            background-color: rgba(253, 248, 239, 0.6);
-            font-weight: bold;
-            color: rgba(0, 0, 0, 1);
+        body {
+            background: #f9fafa;
+          /*  padding: 20px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;*/
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
         }
-        .checked {
-            color: orange;
+        .block {
+            margin: 20px;
+            border-radius: 4px;
+            width: 280px;
+            min-height: 430px;
+            background: #fff;
+            padding: 23px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            box-shadow: 0 2px 55px rgba(0,0,0,0.1);
         }
-        .pictures {
-            position: relative;
+        .top {
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 10px;
+        }
+        .top ul {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+        .top a {
+            color: #9e9e9e;
+        }
+        .top a:hover {
+            color: #c7ccdb;
+        }
+        .converse {
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        .middle {
+            margin-bottom: 40px;
+        }
+        .middle img {
+            width: 100%;
+        }
+        .bottom {
             text-align: center;
-            color: white;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
         }
-        .top-right {
-            position: absolute;
-            top: 8px;
-            right: 16px;
+        .heading {
+            font-size: 17px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 0;
         }
+        .info {
+            font-size: 14px;
+            color: #969696;
+            margin-bottom: 10px;
+        }
+        .style {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .old-price {
+            color: #f00;
+            text-decoration: line-through;
+        }
+
 
 
     </style>
@@ -195,9 +273,6 @@ include_once ("webdesign/header/header.php");
             {
                 echo $_GET['address'];
             }
-
-
-
             ?>" name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
         </div>
     </div>
@@ -224,7 +299,7 @@ include_once ("webdesign/header/header.php");
 
 
 
-<div class="container-fluid badge-light row m-auto">
+<div class="container form-inline" id="showHall">
 
 
         <?php
@@ -235,7 +310,7 @@ include_once ("webdesign/header/header.php");
 
         if(isset($_GET["Date"]))
         {
-            echo HallUserDesire($_GET["Date"],$_GET["perhead"],$_GET["daytime"],$_GET['latitude'],$_GET['longitude']);
+         echo HallUserDesire($_GET["Date"],$_GET["perhead"],$_GET["daytime"],$_GET['latitude'],$_GET['longitude']);
         }
         else
         {
@@ -244,29 +319,83 @@ include_once ("webdesign/header/header.php");
         }
 
         ?>
+</div>
 
-
-
-
+<div class="container form-inline ">
 
 
 </div>
 
 
+
+
+<!--
+<div class="block ">
+
+    <div class="top">
+        <ul>
+            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+            <li><span class="converse">Converse</span></li>
+            <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                </a></li>
+        </ul>
+    </div>
+
+    <div class="middle">
+        <img src="https://www.converse.com/on/demandware.static/-/Sites-ConverseMaster/default/dw48f5fc3c/images/hi-res/M9621C_standard.png?sw=580&sh=580&sm=fit" alt="pic" />
+    </div>
+
+    <div class="bottom">
+        <div class="heading">Chuck Taylor All Star Classic Colours</div>
+        <div class="info">Classic red converse edition</div>
+        <div class="style">Color: Red / Style: M9621C</div>
+        <div class="price">$50.00 <span class="old-price">$75.00</span></div>
+    </div>
+
+</div>
+-->
 <?php
 include_once ("webdesign/footer/footer.php");
 ?>
-
-
-
 <script src="map/javascript.js"></script>
-
-
-
 <script>
 
     $(document).ready(function()
     {
+
+
+        function ShowHalls()
+        {
+            var latitudeGET="<?php
+                if(isset($_POST["latitude"]))
+                {
+                    echo $_POST["latitude"];
+                }
+                else
+                {
+                    echo "No";
+                }
+                ?>";
+
+            var longitudeGet="<?php
+                if(isset($_POST["longitude"]))
+                {
+                    echo $_POST["longitude"];
+                }
+                else
+                {
+                    echo "No";
+                }
+                ?>";
+
+
+
+
+
+        }
+
+
+
         <?php
         if(!isset($_GET['latitude']))
         {
@@ -303,6 +432,7 @@ include_once ("webdesign/footer/footer.php");
         $('.carousel').carousel({
             interval: 5000
         });
+
 
 
 
@@ -373,6 +503,9 @@ include_once ("webdesign/footer/footer.php");
                 }
             });
         });
+
+
+
 
     });
 
