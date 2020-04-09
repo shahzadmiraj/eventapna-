@@ -3,32 +3,6 @@
 include_once ('../../connection/connect.php');
 
 
-//$hallid=base64url_decode($_GET['hallDetail']);
-//if(!is_numeric($hallid))
-//{
-//    header("location:../../index.php");
-//}
-//$packageid=base64url_decode($_GET['package']);
-//
-//if(!is_numeric($packageid))
-//{
-//    header("location:../../index.php");
-//}
-//$date=$_GET['date'];
-//$time=$_GET['time'];
-
-//$sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`,`image`, `hallType` FROM `hall` WHERE id='.$hallid.'';
-//$hallinformations=queryReceive($sql);
-//$sql='SELECT u.username,p.name,n.number,p.image from company as c INNER JOIN hall as h
-//on (h.company_id=c.id)
-//LEFT JOIN user as u
-//on (c.user_id=u.id)
-//left join person as p
-//on (u.person_id=p.id)
-//left JOIN number as n
-//on (p.id=n.person_id)
-//WHERE h.id='.$hallid.'';
-//$owndetail=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +28,7 @@ include_once ('../../connection/connect.php');
         }
 
 
-/*hall gallery*/
+        /*hall gallery*/
     </style>
 </head>
 <body>
@@ -175,6 +149,10 @@ include_once ('../../connection/connect.php');
 
 
 
+
+
+
+
             <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
         </div>
         <div class="col-md-4 mb-5">
@@ -198,6 +176,12 @@ include_once ('../../connection/connect.php');
     <!-- /.row -->
 
 
+
+
+
+
+
+
     <h2>What include with this Current package  Menu</h2>
     <hr>
     <div class="row">
@@ -211,6 +195,10 @@ include_once ('../../connection/connect.php');
         </div>
     </div>
     <!-- /.row -->
+
+
+
+
 
     <div class="row">
         <div class="col-md-8 mb-5">
@@ -255,6 +243,10 @@ include_once ('../../connection/connect.php');
                 </div>
             </div>
         </div>
+
+
+
+
         <div class="col-md-4 mb-5">
             <h2>Location </h2>
             <hr>
@@ -266,6 +258,10 @@ include_once ('../../connection/connect.php');
                 <br>
             </address>
         </div>
+
+
+
+
     </div>
 
 
@@ -542,7 +538,6 @@ include_once ('../../connection/connect.php');
      End Video Gallery-->
 
 </div>
-
 
 
 
