@@ -152,7 +152,9 @@ include_once ("connection/indexEdit.php");
             text-decoration: line-through;
         }
 
-
+        .checked {
+            color: orange;
+        }
 
     </style>
 </head>
@@ -504,6 +506,10 @@ include_once ("webdesign/footer/footer.php");
             });
         });
 
+        $(".desireHall").click(function () {
+            var href=$(this).data("href");
+            location.href=href;
+        });
 
 
 

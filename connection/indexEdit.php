@@ -14,7 +14,7 @@ function hallAll()
     $display='';
     for($i=0;$i<count($hallIds);$i++)
     {
-  $sql='SELECT  h.id,h.image,h.name,h.max_guests,p.id,pd.selectedDate,p.isFood,p.price,p.dayTime,p.package_name,h.hallType from hall as h INNER join location as l 
+  $sql='SELECT  h.id,h.image,h.name,h.max_guests,p.id,pd.selectedDate,p.isFood,p.price,p.dayTime,p.package_name,h.hallType,h.noOfPartitions,h.ownParking from hall as h INNER join location as l 
 on (h.location_id=l.id)
 inner join packages as p 
 on (h.id=p.hall_id)
@@ -25,6 +25,7 @@ WHERE
 AND (h.id='.$hallIds[$i][0].' )';
         //echo $sql;
         //AND (pd.selectedDate BETWEEN "'.$currentdate.'" AND "'.$maxDate.'")
+
         $display.=showHalls($sql,$hallIds[$i][3]);
     }
     return $display;
@@ -53,12 +54,10 @@ function HallUserDesire($currentdate,$perHead,$dayTime,$latitude,$longitude)
     for($i=0;$i<count($hallIds);$i++)
     {
 
-        $sql = 'SELECT h.id,h.image,h.name,h.max_guests,hp.id,hp.month,hp.isFood,hp.price,hp.dayTime,hp.package_name,h.hallType FROM hall as h INNER join hallprice as hp
+        $sql = 'SELECT h.id,h.image,h.name,h.max_guests,hp.id,hp.month,hp.isFood,hp.price,hp.dayTime,hp.package_name,h.hallType,h.noOfPartitions,h.ownParking FROM hall as h INNER join hallprice as hp
 ON
 (h.id=hp.hall_id)
 left join orderDetail as od on (h.id=od.hall_id) 
-
-
 WHERE
 (hp.price>0)AND
   (h.id='.$hallIds[$i][0].')AND(hp.isFood='.$perHead.')AND
@@ -71,79 +70,92 @@ WHERE
     return $display;
 }
 
+function hallOrderExist($dayTime,$hallid,$destination_date)
+{
+    $sql='SELECT h.max_guests,h.noOfPartitions FROM hall as h WHERE h.id='.$hallid.'';
+    $halldetal=queryReceive($sql);
+        //hall max gues and max patition
+    $MaxGuestMaxPartition=array();
+    $MaxGuestMaxPartition[0]=$halldetal[0][0];
+    $MaxGuestMaxPartition[1]=$halldetal[0][1];
+
+
+    if($dayTime="Morning")
+        $dayTime=="09:00:00";
+    else  if($dayTime="Afternoon")
+        $dayTime=="12:00:00";
+    else
+        $dayTime="18:00:00";
+//hall max gues and max patition
+    $maxGuest=$MaxGuestMaxPartition[0];
+    $Currentpatition=$MaxGuestMaxPartition[1];
+
+    //Running current  order book total person,count of order
+    $sql='SELECT sum(od.total_person),count(od.id) FROM orderDetail as od WHERE (od.destination_date="'.$destination_date.'")AND(od.status_hall="Running")
+AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
+    $resultRunning=queryReceive($sql);
+    //if booked order
+    if(count($resultRunning)>0)
+    {
+        $maxGuest = $maxGuest -$resultRunning[0][0];
+        $Currentpatition=$Currentpatition-$resultRunning[0][1];
+    }
+    //cancel order
+    $sql='SELECT sum(od.total_person),count(od.id) FROM orderDetail as od WHERE (od.destination_date="'.$destination_date.'")AND(od.status_hall="Cancel")
+AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
+    $CancelOrder=queryReceive($sql);
+
+    if(count($CancelOrder)>0)
+    {
+        $maxGuest = $maxGuest+$resultRunning[0][0];
+        $Currentpatition=$Currentpatition+$resultRunning[0][1];
+    }
+    $MaxGuestMaxPartition[0]=$maxGuest;
+    $MaxGuestMaxPartition[1]=$Currentpatition;
+    return $MaxGuestMaxPartition;
+}
+
 function showHalls($sql,$Distance)
 {
     $halltype=array("Marquee","Hall","Deera /Open area");
     $display = '';
     $AllHalls=queryReceive($sql);
+
+    //star calculate
+    $sql='SELECT AVG(c.rating) FROM comments as c WHERE c.hall_id='.$AllHalls[0][0].' ';
+    $star=queryReceive($sql);
     for ($i=0;$i<count($AllHalls);$i++)
     {
 
+        $MaxGuestMaxPartition=hallOrderExist($AllHalls[$i][8],$AllHalls[$i][0],$AllHalls[$i][5]);
+
+        if($MaxGuestMaxPartition[0]<0)
+        {
+            exit();
+        }
+        if($MaxGuestMaxPartition[1]<0)
+        {
+            exit();
+        }
       /*  $display.='
-        
+
        <a href="company/hallBranches/hallclient.php?hallDetail='.base64url_encode($AllHalls[$i][0]).'&package='.base64url_encode($AllHalls[$i][4]).'&date='.$AllHalls[$i][5].'&time='.$AllHalls[$i][8].'&distance='.$Distance.' " class="card m-2 shadow col-12 col-sm-6 col-md-5 col-xl-3">
-
-            <!-- Card image -->
-            <div class="view overlay card-img">
-                <div class="container pictures">
-                    <img class="img-fluid" src="';
-        if(file_exists('images/hall/'.$AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
-        {
-            $display.="images/hall/".$AllHalls[$i][1];
-        }
-        else
-        {
-            $display.='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
-
-        }
-        $display.='" alt="Snow" style="width:100%;height: 50vh;">
-                    <h5 class="top-right btn-secondary font-weight-bold"> ';
-
-        $display.=;
-
-        $display.='   Km</h5>
-                </div>
-            </div>
-
-            <!-- Card content -->
-            <div class="card-header">
-
-                <!-- Title -->
-                <h4 class="card-title font-weight-bold text-center "> '.$AllHalls[$i][2].'</h4>
-                <!-- Data -->
-
-                
-                <h3 class="text-right text-danger "><i class="far fa-money-bill-alt"></i><span class="font-weight-bold"> RS:'.$AllHalls[$i][7].' </span></h3>
-                <h5><i class="fas fa-clock"></i> Time <span class="text-warning">'.$AllHalls[$i][8].'</span> </h5>
-                <h5><i class="far fa-calendar-alt"></i> Month <span class="text-warning">'.$AllHalls[$i][5].'</span></h5>
-                <h5><i class="fas fa-users"></i> Max Guests  <span class="text-warning">'.$AllHalls[$i][3].'</span></h5>
-                <h5><i class="fab fa-accusoft"></i> Hall Type: <span class="text-warning">'.$halltype[$AllHalls[$i][10]].'</span></h5>';
-        if( $AllHalls[$i][6]==0)
-        {
-            $display.='
-                <h6><i class="material-icons">airline_seat_recline_normal</i> <span class="text-warning">with Seating</span></h6>';
-        }
-        else
-        {
-            $display.='
-                <h6><i class="material-icons">fastfood</i> package name  <span class="text-warning">'.$AllHalls[$i][9].'</span></h6>';
-        }
-
-
-        $display.='</div>
-
         </a>';*/
 
-            $display.='<div class="block ">
+            $display.='<div class="block desireHall" data-href="company/hallBranches/hallclient.php?h='.base64url_encode($AllHalls[$i][0]).'&p='.base64url_encode($AllHalls[$i][4]).'">
 
     <div class="top">
-        <ul>
-            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>++++</li>
+        <ul>';
+
+
+
+
+
+        $display.='
             <li><span class="converse">'.$AllHalls[$i][2].'</span></li>
             <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i></a>'.$Distance.'Km</li>
         </ul>
     </div>
-
     <div class="middle">
         <img src="';
         if(file_exists('images/hall/'.$AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
@@ -159,8 +171,27 @@ function showHalls($sql,$Distance)
     </div>
 
     <div class="bottom">
-        <div class="heading">'.$AllHalls[$i][9].'</div>
-        <div class="info">Max Guests'.$AllHalls[$i][3].'</div>
+        <div class="heading">'.$AllHalls[$i][9].'<span class="float-right">';
+
+        $givestars=5;
+        if(count($star)>0)
+        {
+            $givestars =(int) $star[0][0] ;
+        }
+        for($s=0;$s<5;$s++)
+        {
+            if($givestars>$s)
+            {
+
+                $display.='<span class="fa fa-star checked"></span>';
+            }
+            else
+            {
+                $display.='<span class="fa fa-star"></span>';
+            }
+        }
+       $display.= '</span></div>
+        <div class="info">Max Guests '.$MaxGuestMaxPartition[0].'</div>
         <div class="style">Date:'.$AllHalls[$i][5].' /Time:'.$AllHalls[$i][8].'  /Type:'.$halltype[$AllHalls[$i][10]].'</div>
         <div class="price">$'.$AllHalls[$i][7].' <span class="old-price">$'.((int)$AllHalls[$i][7]+5000).'</span></div>
     </div>
