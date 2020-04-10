@@ -46,7 +46,7 @@ include_once ("../Company/header.php");
 <div class="container">
 
     <div class="row">
-        <div class="col-md-8 col-12 mb-5">
+        <div class="col-md-12 mb-5">
             <h2>What We have this current package </h2>
             <hr>
 
@@ -115,22 +115,12 @@ include_once ("../Company/header.php");
 
             <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
         </div>
-        <div class="col-md-4 mb-5">
-            <h2>Contact Us</h2>
-            <hr>
 
-            <address>
 
-                <img src="http://placehold.it/300x200" class="img-thumbnail" style="width: 40%">
-                <span>Name</span>
-                <br>
-                <span>job title</span>
-                <br>
-                <strong>Email</strong>
-                <br>
-                <strong>P#.</strong>
-            </address>
-        </div>
+
+
+
+
     </div>
     <!-- /.row -->
 
@@ -250,11 +240,40 @@ include_once ("../Company/header.php");
 
 
 
+    <h2>Contact Us</h2>
+    <hr>
+    <div class="row">
+    <div class="col-md-4 mb-5">
+
+        <address>
+
+            <img src="http://placehold.it/300x200" class="img-thumbnail" style="width: 40%">
+            <span>Name</span>
+            <br>
+            <span>job title</span>
+            <br>
+            <strong>Email</strong>
+            <br>
+            <strong>P#.</strong>
+        </address>
+    </div>
+
+    </div>
+
+
+
+
+
 
 
 
 
 </div>
+
+
+
+
+
 
 
 <div class="container">

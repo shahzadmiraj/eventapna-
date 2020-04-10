@@ -1,4 +1,3 @@
-
 <?php
 include_once ('../../../connection/connect.php');
 
@@ -46,8 +45,8 @@ include_once ("../Company/header.php");
 <div class="container">
 
     <div class="row">
-        <div class="col-md-12  mb-5">
-            <h2>Packages  Calender </h2>
+        <div class="col-md-8 col-12 mb-5">
+            <h2>Service Range </h2>
             <hr>
 
 
@@ -55,7 +54,7 @@ include_once ("../Company/header.php");
             <div class="container">
                 <div class="row justify-content-start">
 
-<!--calender here-->
+                    <!--map service-->
 
                 </div>
             </div>
@@ -74,100 +73,41 @@ include_once ("../Company/header.php");
         </div>
 
 
-
-
-
-
-    </div>
-    <!-- /.row -->
-
-
-
-
-
-
-
-
-
-
-
-    <h2>What include with this Current package  Menu</h2>
-    <hr>
-    <div class="row">
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.row -->
-
-
-
-
-
-    <div class="row">
-        <div class="col-md-8 mb-5">
-            <h2>Tell me about Hall description</h2>
-            <hr>
-            <div class="container">
-                <div class="row justify-content-start">
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2 ">
-                        Hall Name
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Name
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Parking
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Parking
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Maximum Guest
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Maximum Guest
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall No of Patition
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall No of Patition
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Type
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Type
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <div class="col-md-4 mb-5">
-            <h2>Location </h2>
+        <div class="col-md-4 mb-5 ">
+            <h2>Service inormation </h2>
             <hr>
             <address>
-                <span>City lahore </span>
-                <br>cuntry  Pakistan
-                <h5>Address:jkfnjkerfjkerjkfernrk</h5>
-                <strong>Distance 20KM </strong>
+                <strong class="p-3">Branch Location</strong><br>
+                <span class="p-3">City  </span>
+                <br>
+                <span class="p-3">cuntry  Pakistan</span><br>
+                <span class="p-3">Address:jkfnjkerfjkerjkfernrk</span><br>
+                <span class="p-3">Target Area Range </span><br>
+                <strong class="p-3">2 Km</strong>
                 <br>
             </address>
+
+
+
+
+
+
+
+
+
         </div>
+
+
     </div>
+    <!-- /.row -->
+
+
+
+
+
+
+
+
 
 
 
@@ -184,7 +124,7 @@ include_once ("../Company/header.php");
 
 
         <div class="col-md-4 mb-5">
-            <div class="card h-100">
+            <div class="card h-80">
                 <img class="card-img-top" src="http://placehold.it/300x200" alt="">
                 <div class="card-body">
                     <h6 class="card-title">Card title <span class="float-right">Rs</span></h6>
@@ -200,18 +140,14 @@ include_once ("../Company/header.php");
 
 
 
-
     <h2>Contact Us</h2>
     <hr>
 
-<div class="row">
+    <div class="row">
 
 
 
-    <div class="col-md-4 mb-5">
-
-        <address>
-
+        <address class="col-md-4">
             <img src="http://placehold.it/300x200" class="img-thumbnail" style="width: 40%">
             <span>Name</span>
             <br>
@@ -223,10 +159,18 @@ include_once ("../Company/header.php");
         </address>
 
 
+
+
+
     </div>
 
 
-</div>
+
+
+    </div>
+
+
+
 
 
 
@@ -238,14 +182,14 @@ include_once ("../Company/header.php");
 <div class="container">
 
     <?php
-    include_once "PictureGallery.php";
+    include_once "../Hall/PictureGallery.php";
     ?>
     <script src="../../../webdesign/JSfile/Gallery.js"></script>
 </div>
 
 <div class="container">
     <?php
-    include_once "VideoGallery.php"
+    include_once "../Hall/VideoGallery.php"
     ?>
     <script src="../../../webdesign/JSfile/video.js"></script>
 </div>
