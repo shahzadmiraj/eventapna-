@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12 mb-5">
-        <h2>Hall Gallery</h2>
+        <h2>Image Gallery</h2>
         <hr>
         <div class="container">
 

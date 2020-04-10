@@ -1,5 +1,3 @@
-<!--
-            Video Gallery-->
 <h2>Video Gallery</h2>
 <hr>
 <!-- Grid row -->
@@ -156,7 +154,7 @@
 <!--
  End Video Gallery-->
 
-</div>
+
 
 
 

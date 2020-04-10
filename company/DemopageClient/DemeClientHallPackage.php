@@ -21,6 +21,8 @@ include_once ('../../connection/connect.php');
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../webdesign/css/CardStyle.css">
     <link rel="stylesheet" href="../../webdesign/css/Gallery.css">
+    <link rel="stylesheet" href="../../webdesign/css/comment.css">
+
     <style>
         .checked {
             color: orange;
@@ -93,50 +95,50 @@ include_once ('../../connection/connect.php');
 
             <div class="container">
                 <div class="row justify-content-start">
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Name
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Name
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Date
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Date
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Time
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Time
                     </div>
 
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Type
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Type
                     </div>
 
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Price
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Prce
                     </div>
 
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Descripe
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2">
                         Package Descripebjkew bjkwebjkbejw kbrewkjerbje
                     </div>
                 </div>
@@ -157,18 +159,17 @@ include_once ('../../connection/connect.php');
         <div class="col-md-4 mb-5">
             <h2>Contact Us</h2>
             <hr>
+
             <address>
-                <strong>Start Bootstrap</strong>
-                <br>3481 Melrose Place
-                <br>Beverly Hills, CA 90210
+
+                <img src="http://placehold.it/300x200" class="rounded-circle" style="width: 40%">
+                <span>Name</span>
                 <br>
-            </address>
-            <address>
-                <abbr title="Phone">P:</abbr>
-                (123) 456-7890
+                <span>Type</span>
                 <br>
-                <abbr title="Email">E:</abbr>
-                <a href="mailto:#">name@example.com</a>
+                <strong>Email</strong>
+                <br>
+                <strong>P#.</strong>
             </address>
         </div>
     </div>
@@ -205,37 +206,37 @@ include_once ('../../connection/connect.php');
             <hr>
             <div class="container">
                 <div class="row justify-content-start">
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2 ">
                         Hall Name
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Name
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Parking
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Parking
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Maximum Guest
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Maximum Guest
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall No of Patition
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall No of Patition
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Type
                     </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Type
                     </div>
 
@@ -302,13 +303,14 @@ include_once ('../../connection/connect.php');
     <?php
     include_once "PictureGallery.php";
     ?>
-
+<script src="../../webdesign/JSfile/Gallery.js"></script>
 </div>
 
 <div class="container">
     <?php
     include_once "VideoGallery.php"
     ?>
+    <script src="../../webdesign/JSfile/video.js"></script>
 </div>
 
 
@@ -401,7 +403,7 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
                                 <span class="text-muted pull-right">
                                     <small class="text-dark">'.$commentresult[$i][5].'</small>
                                 </span>
-                                    <strong class="text-primary">@'.$commentresult[$i][6].' </strong>
+                                    <strong class="text-primary">@'.$commentresult[$i][6].' </strong><br>
                              ';
                             //star out of 5
                             for($s=0;$s<5;$s++)
