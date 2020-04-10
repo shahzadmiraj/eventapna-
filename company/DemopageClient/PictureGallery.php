@@ -105,5 +105,3 @@
 </div>
 
 
-
-<script src="../../webdesign/JSfile/Gallery.js"></script>

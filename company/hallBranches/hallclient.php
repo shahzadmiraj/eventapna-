@@ -53,7 +53,6 @@ include_once ('../../connection/connect.php');
         }
 
 
-/*hall gallery*/
     </style>
 </head>
 <body>

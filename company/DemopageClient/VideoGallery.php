@@ -160,6 +160,3 @@
 
 
 
-
-
-<script src="../../webdesign/JSfile/video.js"></script>
