@@ -2,6 +2,27 @@
 <?php
 include_once ('../../../connection/connect.php');
 
+$PackageDateid=1;
+$sql='SELECT pd.package_id,pd.selectedDate FROM packageDate as pd 
+WHERE pd.id='.$PackageDateid.'';
+$PackageDate=queryReceive($sql);
+
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `hall_id`, `package_name`, `active`,`minimumAmountBooking` FROM `packages` WHERE id='.$PackageDate[0][0].'';
+$PackageDetail=queryReceive($sql);
+
+$sql='SELECT `id`, `dishname`, `image` FROM `menu` WHERE (package_id='.$PackageDetail[0][0].')AND(ISNULL())';
+$Menu=queryReceive($sql);
+
+
+
+$sql='SELECT `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, `active`,l.country,l.city,l.address FROM `hall` INNER join location as l 
+on (hall.location_id=l.id)
+WHERE
+(ISNULL(l.expire))AND (hall.id='.$PackageDetail[0][5].')';
+$hallInformation=queryReceive($sql);
+
+
+$sql='';
 
 
 ?>
