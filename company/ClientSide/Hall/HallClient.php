@@ -47,59 +47,16 @@ include_once ("../Company/header.php");
 
     <div class="row">
         <div class="col-md-8 col-12 mb-5">
-            <h2>What We have this current package </h2>
+            <h2>Packages  Calender </h2>
             <hr>
 
 
 
             <div class="container">
                 <div class="row justify-content-start">
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Name
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Name
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Date
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Date
-                    </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Time
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Time
-                    </div>
+<!--calender here-->
 
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Type
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Type
-                    </div>
-
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Price
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Prce
-                    </div>
-
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Descripe
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2">
-                        Package Descripebjkew bjkwebjkbejw kbrewkjerbje
-                    </div>
                 </div>
             </div>
 
@@ -124,7 +81,7 @@ include_once ("../Company/header.php");
                 <img src="http://placehold.it/300x200" class="img-thumbnail" style="width: 40%">
                 <span>Name</span>
                 <br>
-                <span>job title</span>
+                <span>Job Title</span>
                 <br>
                 <strong>Email</strong>
                 <br>
@@ -262,7 +219,7 @@ include_once ("../Company/header.php");
     <?php
     include_once "PictureGallery.php";
     ?>
-<script src="../../../webdesign/JSfile/Gallery.js"></script>
+    <script src="../../../webdesign/JSfile/Gallery.js"></script>
 </div>
 
 <div class="container">
