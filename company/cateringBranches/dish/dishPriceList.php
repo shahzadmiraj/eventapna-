@@ -68,8 +68,6 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-
-
             $image='';
 
 

@@ -347,6 +347,7 @@ $destinatiosUser="../../../images/users/";
 $destinationComment="../../../images/comment/hallComment/";
 $isPackShow=1;
 $urldata="../../hallBranches/comment/commentHallServer.php";
+$option="CommentOnHall";
 include_once "../All/Comments.php"
 ?>
 

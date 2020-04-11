@@ -440,7 +440,7 @@ $destinatiosUser="../../../images/users/";
 $destinationComment="../../../images/comment/hallComment/";
 $isPackShow=0;
 $urldata="../../hallBranches/comment/commentHallServer.php";
-
+$option="CommentOnHall";
 include_once "../All/Comments.php"
 ?>
 

@@ -511,8 +511,6 @@ include_once ("webdesign/footer/footer.php");
             location.href=href;
         });
 
-
-
     });
 
 

@@ -130,7 +130,7 @@
         $("#btncoment").click(function (e)
         {
             var formdata = new FormData($("#commentform")[0]);
-            formdata.append("option", "CommentOnHall");
+            formdata.append("option", "<?php echo $option;?>");
             formdata.append("stars", scores);
             $.ajax({
                 url: "<?php echo $urldata;?>",
