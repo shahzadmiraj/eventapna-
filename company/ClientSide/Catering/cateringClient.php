@@ -3,13 +3,12 @@ include_once ('../../../connection/connect.php');
 
 $userid=1;
 $cateringid=3;
-$sql='SELECT c.name,c.image,c.company_id,cl.country,cl.city,cl.address,cl.longitude,cl.latitude,cl.radius,cl.radius FROM catering as c INNER join cateringLocation as cl 
+$sql='SELECT c.name,c.image,c.company_id,cl.country,cl.city,cl.address,cl.longitude,cl.latitude,cl.radius FROM catering as c INNER join cateringLocation as cl 
 on (c.id=cl.catering_id)
 WHERE
 (ISNULL(c.expire))AND (ISNULL(cl.expire))AND(c.id='.$cateringid.')';
 $catering=queryReceive($sql);
-
-
+//print_r($catering);
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
 $dishTypeDetail=queryReceive($sql);
 ?>
@@ -31,6 +30,9 @@ $dishTypeDetail=queryReceive($sql);
     <link rel="stylesheet" href="../../../webdesign/css/Gallery.css">
     <link rel="stylesheet" href="../../../webdesign/css/comment.css">
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
+    <link rel="stylesheet" href="../../../mapRadius/css/gmaps-lat-lng-radius.css" type="text/css">
     <style>
         .checked {
             color: orange;
@@ -48,6 +50,9 @@ $dishTypeDetail=queryReceive($sql);
     </style>
 </head>
 <body>
+
+
+
 <?php
 //include_once ("../../webdesign/header/header.php");
 ?>
@@ -70,24 +75,21 @@ include_once ("../Company/Box.php");
 
 
             <div class="container">
-                <div class="row justify-content-start">
+                <input hidden value="<?php echo $catering[0][8];?>"  id="radius" name="radius" class="form-control" type="number" placeholder="Target Radius Set Map ">
+                <input hidden  value="<?php echo $catering[0][7];?>" id="latitude" name="latitude" class="form-control" type="number" placeholder="Latitude Set Map">
+                <input hidden value="<?php echo $catering[0][6];?>"   id="longitude" name="longitude" class="form-control" type="number" placeholder="Longitude Set Map">
 
-                    <!--map service-->
 
+                <input hidden id="pac-input" class="controls" type="text" placeholder="Enter a location">
+                <div hidden id="shape-input" class="controls">
+                    <div class="shape-option selected" data-geo-type="circle">Circle</div>
+                    <div class="shape-option" data-geo-type="polygon">Polygon</div></div>
+                <div hidden id="output-container" class="controls">
+                    <button class="copybtn" data-clipboard-target="#pos-output"><img class="clippy" src="https://clipboardjs.com/assets/images/clippy.svg" width="12" alt="Copy to clipboard"></button>
+                    <div id="pos-output">Start by searching for the city...</div>
                 </div>
+                <div id="map" style="height: 100vh"></div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-            <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
         </div>
 
 
@@ -133,7 +135,7 @@ include_once ("../Company/Box.php");
 
 
 
-    <h2>What Extra Charges (optional)</h2>
+    <h2>How many Dishes Available</h2>
     <hr>
         <?php
 
@@ -323,7 +325,7 @@ include_once "../All/Comments.php"
 
 
 
-
+<script src="../../../mapRadius/js/constantMap.js"></script>
 
 <script>
 
@@ -380,6 +382,15 @@ include_once "../All/Comments.php"
         });
     });
 
+    $(document).ready(function()
+    {
+        /*
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
+            dataType: "script",
+            cache: false
+        });*/
+    });
 </script>
 
 
