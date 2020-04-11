@@ -83,9 +83,6 @@
 
 
 
-<?php
-include_once ("../../webdesign/footer/footer.php");
-?>
 
 <script>
 

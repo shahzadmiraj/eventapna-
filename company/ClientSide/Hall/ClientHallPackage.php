@@ -2,7 +2,8 @@
 <?php
 include_once ('../../../connection/connect.php');
 
-$PackageDateid=1;
+$userid=1;
+$PackageDateid=43;
 $sql='SELECT pd.package_id,pd.selectedDate FROM packageDate as pd 
 WHERE pd.id='.$PackageDateid.'';
 $PackageDate=queryReceive($sql);
@@ -10,19 +11,23 @@ $PackageDate=queryReceive($sql);
 $sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `hall_id`, `package_name`, `active`,`minimumAmountBooking` FROM `packages` WHERE id='.$PackageDate[0][0].'';
 $PackageDetail=queryReceive($sql);
 
-$sql='SELECT `id`, `dishname`, `image` FROM `menu` WHERE (package_id='.$PackageDetail[0][0].')AND(ISNULL())';
+$sql='SELECT `id`, `dishname`, `image` FROM `menu` WHERE (package_id='.$PackageDetail[0][0].')AND(ISNULL(expire))';
 $Menu=queryReceive($sql);
 
 
 
-$sql='SELECT `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, `active`,l.country,l.city,l.address FROM `hall` INNER join location as l 
+$sql='SELECT hall.id,`name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address FROM `hall` INNER join location as l 
 on (hall.location_id=l.id)
 WHERE
 (ISNULL(l.expire))AND (hall.id='.$PackageDetail[0][5].')';
 $hallInformation=queryReceive($sql);
 
 
-$sql='';
+$sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE  ISNULL(expire)AND(hall_id='.$hallInformation[0][0].')';
+$ExtraType=queryReceive($sql);
+
+
+
 
 
 ?>
@@ -44,11 +49,23 @@ $sql='';
     <link rel="stylesheet" href="../../../webdesign/css/Gallery.css">
     <link rel="stylesheet" href="../../../webdesign/css/comment.css">
 
+
+    <link rel="stylesheet" href="../../../Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
+    <link rel="stylesheet" href="../../../Fractional-Star-Rating-jsRapStar/index.css" />
+    <script src="../../../Fractional-Star-Rating-jsRapStar/jsRapStar.js"></script>
+
     <style>
         .checked {
             color: orange;
         }
-
+        .bgImgCenter{
+            background-image: url('https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg');
+            width: 100%;
+            height: auto;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
 
         /*hall gallery*/
     </style>
@@ -59,8 +76,12 @@ $sql='';
 ?>
 
 
+
 <?php
-include_once ("../Company/header.php");
+$HeadingImage=$hallInformation[0][6];
+$HeadingName=$hallInformation[0][1];
+
+include_once ("../Company/Box.php");
 ?>
 
 
@@ -76,23 +97,29 @@ include_once ("../Company/header.php");
             <div class="container">
                 <div class="row justify-content-start">
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Name
+                        Package id#
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        <?php echo $PackageDate[0][0];?>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Name
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Date
+                        <?php echo $PackageDetail[0][6];?>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Date
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        <?php echo $PackageDate[0][1];?>
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Package Time
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Time
+                        <?php echo $PackageDetail[0][4];?>
                     </div>
 
 
@@ -101,7 +128,17 @@ include_once ("../Company/header.php");
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Type
+                        <?php
+
+                        if($PackageDetail[0][1]==0)
+                        {
+                            echo "Seating only";
+                        }
+                        else
+                        {
+                            echo "Food and Seating";
+                        }
+                        ?>
                     </div>
 
 
@@ -110,16 +147,13 @@ include_once ("../Company/header.php");
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Prce
+                        <?php echo $PackageDetail[0][2];?>
                     </div>
 
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Descripe
-                    </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2">
-                        Package Descripebjkew bjkwebjkbejw kbrewkjerbje
+                        <p>Package Descripe  <?php echo $PackageDetail[0][3];?></p>
                     </div>
                 </div>
             </div>
@@ -134,7 +168,7 @@ include_once ("../Company/header.php");
 
 
 
-            <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
+            <a class="btn btn-primary btn-lg" href="#">Booking&raquo;</a>
         </div>
 
 
@@ -154,15 +188,41 @@ include_once ("../Company/header.php");
 
     <h2>What include with this Current package  Menu</h2>
     <hr>
+
+
+
     <div class="row">
-        <div class="col-md-4 mb-5">
+
+        <?php
+        $display='';
+        $image="";
+        for ($i=0;$i<count($Menu);$i++)
+        {
+            $image=$Menu[$i][2];
+            if((file_exists('../../images/dishImages/'.$image))&&($image!=""))
+                $image='../../images/dishImages/'.$image;
+            else
+                $image='https://static1.bigstockphoto.com/3/1/1/large1500/113342513.jpg';
+
+            $display.='
+            
+            <div class="col-md-4 mb-5">
             <div class="card h-100">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+                <img src="'.$image.'" class="card-img-top" src="" alt="Image">
                 <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
+                    <h4 class="card-title">'.$Menu[$i][1].'</h4>
                 </div>
             </div>
         </div>
+            
+            ';
+        }
+
+        echo $display;
+        ?>
+
+
+
     </div>
     <!-- /.row -->
 
@@ -180,34 +240,47 @@ include_once ("../Company/header.php");
                         Hall Name
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Name
+                        <?php echo $hallInformation[0][1];?>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Parking
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Parking
+                        <?php
+                        if($hallInformation[0][5]==0)
+                        {
+                            echo "No Own Parking";
+                        }
+                        else
+                        {
+                            echo "Yes Own Parking";
+                        }
+                            ?>
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Maximum Guest
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Maximum Guest
+                        <?php echo $hallInformation[0][2];?>
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall No of Patition
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall No of Patition
+                        <?php echo $hallInformation[0][5];?>
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         Hall Type
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Hall Type
+                        <?php
+                        $halltype=array("Marquee","Hall","Deera /Open area");
+
+
+                        echo $halltype[$hallInformation[0][7]];?>
                     </div>
 
                 </div>
@@ -221,10 +294,11 @@ include_once ("../Company/header.php");
             <h2>Location </h2>
             <hr>
             <address>
-                <span>City lahore </span>
-                <br>cuntry  Pakistan
-                <h5>Address:jkfnjkerfjkerjkfernrk</h5>
-                <strong>Distance 20KM </strong>
+                <span class="p-2">City   <?php echo $hallInformation[0][11];?> </span>
+                <br>
+                <span class="p-2">cuntry    <?php echo $hallInformation[0][10];?></span>
+                <p class="p-2">Address:  <?php echo $hallInformation[0][12];?></p>
+
                 <br>
             </address>
         </div>
@@ -241,17 +315,45 @@ include_once ("../Company/header.php");
     <div class="row">
 
 
-        <h4 class="col-md-12 text-center">Type </h4>
 
 
-        <div class="col-md-4 mb-5">
+
+
+        <?php
+        $display='';
+        for ($j=0;$j<count($ExtraType);$j++)
+        {
+
+
+            $display = '<h4 class="col-md-12 text-center">'.$ExtraType[$j][1].' </h4>';
+
+            $sql='SELECT `id`,`image`, `price`,`name` FROM `Extra_Item` WHERE (ISNULL(expire))AND(Extra_item_type_id='.$ExtraType[$j][0].')';
+
+            $Extraitem=queryReceive($sql);
+            $image = "";
+            for ($i = 0; $i < count($Extraitem); $i++) {
+                $image = $Extraitem[$i][1];
+                if ((file_exists('../../images/hallExtra/' . $image)) && ($image != ""))
+                    $image = '../../images/hallExtra/' . $image;
+                else
+                    $image = 'https://static1.bigstockphoto.com/3/1/1/large1500/113342513.jpg';
+
+                $display .= '
+            
+            <div class="col-md-4 mb-5">
             <div class="card h-100">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+                <img src="' . $image . '" class="card-img-top" src="" alt="Image">
                 <div class="card-body">
-                    <h6 class="card-title">Card title <span class="float-right">Rs</span></h6>
+                    <h6 class="card-title">' . $Extraitem[$i][3] . '<span class="float-right">Amount ' . $Extraitem[$i][2] . '</span></h6>
                 </div>
             </div>
         </div>
+            
+            ';
+            }
+        }
+        echo $display;
+        ?>
 
 
 
@@ -300,14 +402,22 @@ include_once ("../Company/header.php");
 <div class="container">
 
     <?php
-    include_once "PictureGallery.php";
+    $sql='SELECT  image FROM images WHERE ISNULL(expire)AND (hall_id='.$hallInformation[0][0].')';
+    $Images=queryReceive($sql);
+    $destinatios="../../../images/hall/";
+
+    include_once "../All/PictureGallery.php";
     ?>
 <script src="../../../webdesign/JSfile/Gallery.js"></script>
+
 </div>
 
-<div class="container">
+
+<div class="container" >
     <?php
-    include_once "VideoGallery.php"
+    $video=$Images;
+    $destinatios="../../../images/hall/";
+    include_once "../All/VideoGallery.php"
     ?>
     <script src="../../../webdesign/JSfile/video.js"></script>
 </div>
@@ -317,147 +427,43 @@ include_once ("../Company/header.php");
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="container">
-    <div class="mb-5">
-        <?php
-
-        $hallid=1;
-        $userid=1;
-        ?>
-        <h2>Comments </h2>
-        <hr>
-        <div class="row bootstrap snippets">
-
-            <div class="col-12 col-md-offset-2 col-sm-12 m-auto">
-                <div class="comment-wrapper">
-                    <div class="panel panel-info ">
-                        <form id="commentform">
-                            <?php
-                            echo '<input hidden type="number" name="hallid" value="'.$hallid.'">';
-                            echo '<input hidden type="number" name="userid" value="'.$userid.'">';
-                            ?>
-                            <div class="panel-body">
-                                <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                                <br>
-                                <div id="divMain ">
-                                    <div id="demo1" name="stars" value="3" ></div>
-                                </div>
-                                <input name="image" type="file" class="btn-outline-secondary   btn col-5 ">
-                                <button id="btncoment" type="button" class="btn btn-info pull-right float-right col-5">Post</button>
-                        </form>
-                        <?php
-                        $display='';
-
-                        // $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire` FROM `comments` WHERE (hall_id='.$hallid.')&&(ISNULL(expire))';
-                        $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, (SELECT u.username FROM user as u 
-where u.id=comments.user_id), (SELECT u.image FROM user as u 
-where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM `comments` WHERE (hall_id='.$hallid.')AND(ISNULL(expire))';
-                        $commentresult=queryReceive($sql);
-                        for ($i=0;$i<count($commentresult);$i++)
-                        {
-                            $display.='                   
-                    <div class="clearfix" ></div>
-                        <hr>
-                        <ul class="media-list" >
-                                                        
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="';
-                            //userimage
-                            if((file_exists('../../images/users/'.$commentresult[$i][7])) &&($commentresult[$i][7]!=""))
-                            {
-                                $display.='../../images/users/'.$commentresult[$i][7];
-                            }
-                            else
-                            {
-                                $display.='https://bootdey.com/img/Content/user_1.jpg"';
-                            }
-                            $display.='alt="" class="img-circle"></a>
-                                <div class="media-body">
-                                <span class="text-muted pull-right">
-                                    <small class="text-dark">'.$commentresult[$i][5].'</small>
-                                </span>
-                                    <strong class="text-primary">@'.$commentresult[$i][6].' </strong><br>
-                             ';
-                            //star out of 5
-                            for($s=0;$s<5;$s++)
-                            {
-                                if($commentresult[$i][10]>$s)
-                                {
-
-                                    $display.='<span class="fa fa-star checked"></span>';
-                                }
-                                else
-                                {
-                                    $display.='<span class="fa fa-star"></span>';
-                                }
-                            }
-
-
-                            //paragraph of image uploaded comment packageid
-                            $display.='
-                                   <p>';
-
-
-                            //user uploaded image or video
-                            if((file_exists('../../images/comment/hallComment/'.$commentresult[$i][11])) &&($commentresult[$i][11]!=""))
-                            {
-                                $display.='<img class="col-12"  style="width: 100%;height: 40vh" class="m-2"  src="../../images/comment/hallComment/'.$commentresult[$i][11].'"><br>';
-                            }
-                            //package id
-                            if($commentresult[$i][8]!="")
-                            {
-                                $display.='
-                                                          <span class="alert-light ml-3">Packageid#'.$commentresult[$i][8]. '<br></span>';
-                            }
-                            //comment and delete button
-                            $display.=$commentresult[$i][3].'<button hidden type="button" class="btn btn-danger float-right deletecomment" data-deletecomment="'.$commentresult[$i][2].'"><i class="fas fa-trash-alt"></i>Delete</button>
-                                    
-                                    
-                                    </p>
-                                     
-                                </div>
-                                
-                            </li>
-
-                        </ul>
+<?php
+$formApend= '<input hidden type="number" name="hallid" value="'.$hallInformation[0][0].'">
+<input hidden type="number" name="userid" value="'.$userid.'">
+<input hidden type="number" name="packageid" value="'.$PackageDetail[0][0].'">
 ';
-                        }
-                        echo $display;
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+$sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, (SELECT u.username FROM user as u 
+where u.id=comments.user_id), (SELECT u.image FROM user as u 
+where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM `comments` WHERE (hall_id='.$hallInformation[0][0].')AND(ISNULL(expire))AND(PackOrDishId='.$PackageDetail[0][0].') ';
 
-</div>
-</div>
+$destinatiosUser="../../../images/users/";
+$destinationComment="../../../images/comment/hallComment/";
+$isPackShow=0;
+$urldata="../../hallBranches/comment/commentHallServer.php";
+
+include_once "../All/Comments.php"
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
