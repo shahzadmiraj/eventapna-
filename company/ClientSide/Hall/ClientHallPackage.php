@@ -3,7 +3,7 @@
 include_once ('../../../connection/connect.php');
 
 $userid=1;
-$PackageDateid=43;
+$PackageDateid=base64url_decode($_GET['pack']);
 $sql='SELECT pd.package_id,pd.selectedDate FROM packageDate as pd 
 WHERE pd.id='.$PackageDateid.'';
 $PackageDate=queryReceive($sql);
@@ -16,7 +16,7 @@ $Menu=queryReceive($sql);
 
 
 
-$sql='SELECT hall.id,`name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address FROM `hall` INNER join location as l 
+$sql='SELECT hall.id,`name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address,l.latitude,l.longitude FROM `hall` INNER join location as l 
 on (hall.location_id=l.id)
 WHERE
 (ISNULL(l.expire))AND (hall.id='.$PackageDetail[0][5].')';
@@ -301,6 +301,17 @@ include_once ("../Company/Box.php");
 
                 <br>
             </address>
+
+
+            <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
+            <div hidden>
+                <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude" ></label>
+                <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude" ></label>
+                <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+                <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country" ></label>
+            </div>
+
+
         </div>
     </div>
 
@@ -471,8 +482,20 @@ include_once "../All/Comments.php"
 
 
 
+<script src="../../../map/constantMap.js"></script>
 <script>
 
+    $(document).ready(function()
+    {
+
+        latitude=<?php echo $hallInformation[0][13];?>;
+        longitude=<?php echo $hallInformation[0][14];?>;
+/*        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
+        });*/
+    });
 
 </script>
 

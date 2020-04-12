@@ -160,7 +160,8 @@ include_once ("../../webdesign/footer/footer.php");
 
 <script>
 
-        $(document).ready(function() {
+        $(document).ready(function()
+        {
 
 
             var daytime='All';
