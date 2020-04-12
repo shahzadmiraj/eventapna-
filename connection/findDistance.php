@@ -81,6 +81,35 @@ function SortDistance($lat,$lon,$country)
     return $data;
 
 }
+function SortDistanceCatering($lat,$lon,$country)
+{
+   // $sql="SELECT h.id,l.latitude,l.longitude FROM hall as h INNER join location as l on (h.location_id=l.id) WHERE (ISNULL(h.expire))AND(ISNULL(l.expire))";
+$sql='SELECT c.id,cl.latitude,cl.longitude,cl.radius,c.name FROM catering as c INNER join cateringLocation as cl 
+on (c.id=cl.catering_id)
+WHERE 
+(ISNULL(c.expire))AND(ISNULL(cl.expire))';
+    $data=queryReceive($sql);
+    $placeid=array();
+    $distance=array();
+    for($i=0;$i<count($data);$i++)
+    {
+        $placeid[$i]=$data[$i][0];
+        $distance[$i]= distance($data[$i][1], $data[$i][2], $lat, $lon, "K");
+        $distance[$i]=round($distance[$i], 2);
+        $data[$i][5]=$distance[$i];
+    }
+
+    array_multisort($distance, SORT_ASC, $placeid, SORT_ASC, $data);
+    return $data;
+}
+
+
+
+
+
+
+
+
 
 /*echo distance(31.5204, 74.3587, 33.6844, 73.0479, "M") . " Miles<br>";
 echo distance(31.5204, 74.3587, 33.6844, 73.0479, "K") . " Kilometers<br>";

@@ -2,7 +2,7 @@
 include_once ('../../../connection/connect.php');
 
 $userid=1;
-$cateringid=3;
+$cateringid=$_GET['c'];
 $sql='SELECT c.name,c.image,c.company_id,cl.country,cl.city,cl.address,cl.longitude,cl.latitude,cl.radius FROM catering as c INNER join cateringLocation as cl 
 on (c.id=cl.catering_id)
 WHERE
