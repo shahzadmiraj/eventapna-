@@ -110,10 +110,10 @@ AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
 
 function showCateringsdishesSeperate($hallid,$CurrentDistance,$daytime,$date,$perhead)
 {
-
+/*
     $daytime= "Morning";
     $date="2020-04-30";
-    $perhead=0;
+    $perhead=0;*/
     $maxDate = date('Y-m-d', strtotime($date . ' +1 day'));
     $halltype=array("Marquee","Hall","Deera /Open area");
     $sql='SELECT  h.id,h.image,h.name,h.max_guests,p.id,pd.selectedDate,p.isFood,p.price,p.dayTime,p.package_name,h.hallType,h.noOfPartitions,h.ownParking from hall as h INNER join location as l 
@@ -130,6 +130,7 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
 
     $display = '';
     $AllHalls=queryReceive($sql);
+    //print_r($sql);
 
 
     for ($i=0;$i<count($AllHalls);$i++)

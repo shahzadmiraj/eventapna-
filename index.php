@@ -120,15 +120,28 @@ include_once ("connection/indexEdit.php");
 
 <div class="container table-light  m-auto ">
 <form>
+
+
+
+
+    <div class="text-white  text-center  row" >
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+            </div>
+            <input  name="hallname" type="text" class="form-control py-0" id="hallname" placeholder="Hall Name Specific">
+        </div>
+    </div>
+
     <div class="text-white  text-center  row" >
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-clock"></i></div>
             </div>
             <select id="daytime" name="daytime" class="custom-select "  size="1">
-                <option value="09:00:00">Morning Time </option>
-                <option value="12:00:00">Afternoon Time</option>
-                <option value="18:00:00">Evening Time</option>
+                <option value="Morning">Morning Time </option>
+                <option value="Afternoon">Afternoon Time</option>
+                <option value="Evening">Evening Time</option>
             </select>
         </div>
     </div>
@@ -151,7 +164,7 @@ include_once ("connection/indexEdit.php");
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-utensils"></i></div>
             </div>
-            <select name="perhead" class="custom-select "  size="1">
+            <select id="perhead" name="perhead" class="custom-select "  size="1">
                 <option value="0">Per head Only Seating</option>
                 <option value="1">Per head Seating + Food</option>
             </select>
@@ -235,6 +248,7 @@ include_once ("connection/indexEdit.php");
 
         function ShowHall()
         {
+            var hallname=$("#hallname").val();
             var daytime=$("#daytime").val();
             var date=$("#date").val();
             var perhead=$("#perhead").val();
@@ -247,6 +261,7 @@ include_once ("connection/indexEdit.php");
              }*/
             var formdata=new FormData;
             formdata.append("daytime",daytime);
+            formdata.append("hallname",hallname);
             formdata.append("date",date);
             formdata.append("perhead",perhead);
             formdata.append("latitude",latitude);
@@ -273,13 +288,9 @@ include_once ("connection/indexEdit.php");
         }
         ShowHall();
 
-
-
-        $(".desireHall").click(function () {
-            var href=$(this).data("href");
-            location.href=href;
+        $("#date").change(function () {
+            ShowHall();
         });
-
     });
 
 
