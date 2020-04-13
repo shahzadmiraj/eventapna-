@@ -46,111 +46,8 @@ include_once ("connection/indexEdit.php");
 
     <link rel="stylesheet" href="webdesign/css/loader.css">
     <link rel="stylesheet" href="map/style.css">
-
-
+    <link rel="stylesheet" href="webdesign/css/card.css">
     <style>
-        * {
-            font-family: "Roboto";
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            text-decoration: none;
-            letter-spacing: 1px;
-            box-sizing: border-box;
-        }
-        body {
-            background: #f9fafa;
-          /*  padding: 20px;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;*/
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-        }
-        .block {
-            margin: 20px;
-            border-radius: 4px;
-            width: 280px;
-            min-height: 430px;
-            background: #fff;
-            padding: 23px;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            box-shadow: 0 2px 55px rgba(0,0,0,0.1);
-        }
-        .top {
-            border-bottom: 1px solid #e5e5e5;
-            padding-bottom: 10px;
-        }
-        .top ul {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-pack: justify;
-            -ms-flex-pack: justify;
-            justify-content: space-between;
-        }
-        .top a {
-            color: #9e9e9e;
-        }
-        .top a:hover {
-            color: #c7ccdb;
-        }
-        .converse {
-            padding: 2px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
-        .middle {
-            margin-bottom: 40px;
-        }
-        .middle img {
-            width: 100%;
-        }
-        .bottom {
-            text-align: center;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            -webkit-box-pack: justify;
-            -ms-flex-pack: justify;
-            justify-content: space-between;
-            -webkit-box-flex: 1;
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-        }
-        .heading {
-            font-size: 17px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            letter-spacing: 0;
-        }
-        .info {
-            font-size: 14px;
-            color: #969696;
-            margin-bottom: 10px;
-        }
-        .style {
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        .old-price {
-            color: #f00;
-            text-decoration: line-through;
-        }
 
         .checked {
             color: orange;
@@ -160,10 +57,10 @@ include_once ("connection/indexEdit.php");
 </head>
 <body>
 <?php
-include_once ("webdesign/header/header.php");
+//include_once ("webdesign/header/header.php");
 ?>
 
-<div class="bd-example">
+<!--<div class="bd-example">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -219,19 +116,16 @@ include_once ("webdesign/header/header.php");
             <span class="sr-only">Next</span>
         </a>
     </div>
-</div>
+</div>-->
 
 <div class="container table-light  m-auto ">
-<form method="get" action="" id="formseachHall" >
-
-
-
+<form>
     <div class="text-white  text-center  row" >
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-clock"></i></div>
             </div>
-            <select name="daytime" class="custom-select "  size="1">
+            <select id="daytime" name="daytime" class="custom-select "  size="1">
                 <option value="09:00:00">Morning Time </option>
                 <option value="12:00:00">Afternoon Time</option>
                 <option value="18:00:00">Evening Time</option>
@@ -247,7 +141,7 @@ include_once ("webdesign/header/header.php");
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
             </div>
-            <input  name="Date" type="date" class="form-control py-0" id="inlineFormInputGroupUsername2" placeholder="Booking Date">
+            <input  name="Date" type="date" class="form-control py-0" id="date" placeholder="Booking Date">
         </div>
     </div>
 
@@ -269,19 +163,13 @@ include_once ("webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
             </div>
-            <input  value="<?php
-
-            if(isset($_GET['address']))
-            {
-                echo $_GET['address'];
-            }
-            ?>" name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
+            <input  name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
         </div>
     </div>
 
 
     <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
-    <div hidden>
+    <div  hidden>
         <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude"></label>
         <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude"></label>
         <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
@@ -289,12 +177,6 @@ include_once ("webdesign/header/header.php");
 
     </div>
 
-
-
-    <div class="mt-5 mb-5">
-        <button id="submitBtnfrom" value="submit" type="submit" class="btn btn-danger col-12"><i class="fas fa-check"></i>
-            Find Hall</button>
-    </div>
 
 </form>
 </div>
@@ -304,30 +186,9 @@ include_once ("webdesign/header/header.php");
 <div class="container form-inline" id="showHall">
 
 
-        <?php
-
-        //echo hallAll();
-
-        //echo HallUserDesire("2013-03-15",0,"09:00:00");
-
-        if(isset($_GET["Date"]))
-        {
-         echo HallUserDesire($_GET["Date"],$_GET["perhead"],$_GET["daytime"],$_GET['latitude'],$_GET['longitude']);
-        }
-        else
-        {
-            echo hallAll();
-
-        }
-
-        ?>
-</div>
-
-<div class="container form-inline ">
 
 
 </div>
-
 
 
 
@@ -356,155 +217,63 @@ include_once ("webdesign/header/header.php");
 
 </div>
 -->
-<?php
-include_once ("webdesign/footer/footer.php");
-?>
 <script src="map/javascript.js"></script>
 <script>
-
-    $(document).ready(function()
-    {
-
-
-        function ShowHalls()
-        {
-            var latitudeGET="<?php
-                if(isset($_POST["latitude"]))
-                {
-                    echo $_POST["latitude"];
-                }
-                else
-                {
-                    echo "No";
-                }
-                ?>";
-
-            var longitudeGet="<?php
-                if(isset($_POST["longitude"]))
-                {
-                    echo $_POST["longitude"];
-                }
-                else
-                {
-                    echo "No";
-                }
-                ?>";
-
-
-
-
-
-        }
-
-
-
-        <?php
-        if(!isset($_GET['latitude']))
-        {
-            echo '
-        getLocation();';
-        }
-        else if(isset($_GET['latitude']))
-        {
-            if((is_numeric($_GET['latitude'])AND(is_numeric( $_GET['longitude']))))
-                    {
-                    ?>
-                    latitude =<?php echo $_GET['latitude'];?>;
-                    longitude =<?php echo $_GET['longitude']; ?>;
-                    <?php
-                    }
-            else{
-                echo '
-        getLocation();';
-            }
-
-        }
-
-        ?>
-            /*$.ajax({
-                url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-                dataType: "script",
-                cache: false
-            });*/
-
-    });
 
     $(document).ready(function ()
     {
         $('.carousel').carousel({
             interval: 5000
         });
+    });
 
+    $(document).ready(function()
+    {
+        var date = new Date();
+        var currentDate = date.toISOString().slice(0,10);
+        $("#date").val(currentDate);
 
-
-
-        $("#submitBtnfrom").click(function (e)
+        function ShowHall()
         {
-            e.preventDefault();
-            var date=$("#inlineFormInputGroupUsername2");
-            var destination=$("#map-search");
-            var latitude=$("#latitude");
-            var longitude=$("#longitude");
-            var turn=false;
-
-            if(date.val()=="")
-            {
-                date.addClass("btn-danger");
-                turn=true;
-            }
-            else
-            {
-                if(date.hasClass("btn-danger"))
-                {
-                    date.removeClass("btn-danger");
-                }
-
-            }
-            if((destination.val()=="")||(latitude.val()=="")||(longitude.val()==""))
-            {
-                destination.addClass("btn-danger");
-                turn=true;
-            }
-            else
-            {
-
-                if(destination.hasClass("btn-danger"))
-                {
-                    destination.removeClass("btn-danger");
-                }
-            }
-            if(turn)
-            {
-                alert("Please submit Complete form");
-                return false;
-            }
-
-            var formdata=new FormData($("#formseachHall")[0]);
-            formdata.append("action","home");
+            var daytime=$("#daytime").val();
+            var date=$("#date").val();
+            var perhead=$("#perhead").val();
+            var latitude=$("#latitude").val();
+            var longitude=$("#longitude").val();
+            var city=$("#reg-input-city").val();
+            var country=$("#reg-input-country").val();
+            /* if(latitude=="") {
+                 window.setTimeout(showDishes, 100);
+             }*/
+            var formdata=new FormData;
+            formdata.append("daytime",daytime);
+            formdata.append("date",date);
+            formdata.append("perhead",perhead);
+            formdata.append("latitude",latitude);
+            formdata.append("longitude",longitude);
+            formdata.append("city",city);
+            formdata.append("country",country);
+            formdata.append("option","ShowDishes");
             $.ajax({
-                url:"index.php",
-                method:"get",
+                url:"company/ClientSide/Hall/IndexHallAndCateringServer.php",
+                method:"POST",
                 data:formdata,
                 contentType: false,
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    // $("#preloader").show();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
-                    if(data!='')
-                    {
-                        alert(data);
-                    }
-                    else
-                    {
-                        window.history.back();
-                    }
+                    $("#showHall").html(data);
                 }
             });
-        });
+
+        }
+        ShowHall();
+
+
 
         $(".desireHall").click(function () {
             var href=$(this).data("href");

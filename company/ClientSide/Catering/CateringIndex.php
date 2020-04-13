@@ -45,8 +45,6 @@ include_once ("../../../connection/connect.php");
 <body>
 <div class="container table-light  m-auto ">
     <form method="get" action="" id="formseachHall" >
-
-
         <div class="text-white  text-center  row" >
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
@@ -55,9 +53,6 @@ include_once ("../../../connection/connect.php");
                 <input  name="Dishname" type="text" class="form-control py-0" id="Dishname" placeholder="Dish Name ">
             </div>
         </div>
-
-
-
         <div class="text-white  text-center  row" >
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
@@ -74,13 +69,7 @@ include_once ("../../../connection/connect.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
-                <input  value="<?php
-
-                if(isset($_GET['address']))
-                {
-                    echo $_GET['address'];
-                }
-                ?>" name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
+                <input  name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
             </div>
         </div>
 
@@ -137,6 +126,7 @@ include_once ("../../../connection/connect.php");
 
 </div>-->
 
+
 <script>
 
 
@@ -146,76 +136,6 @@ include_once ("../../../connection/connect.php");
     {
         $('.carousel').carousel({
             interval: 5000
-        });
-
-
-
-        $("#Dishname").click(function (e)
-        {
-            e.preventDefault();
-            var date=$("#inlineFormInputGroupUsername2");
-            var destination=$("#map-search");
-            var latitude=$("#latitude");
-            var longitude=$("#longitude");
-            var turn=false;
-
-            if(date.val()=="")
-            {
-                date.addClass("btn-danger");
-                turn=true;
-            }
-            else
-            {
-                if(date.hasClass("btn-danger"))
-                {
-                    date.removeClass("btn-danger");
-                }
-
-            }
-            if((destination.val()=="")||(latitude.val()=="")||(longitude.val()==""))
-            {
-                destination.addClass("btn-danger");
-                turn=true;
-            }
-            else
-            {
-
-                if(destination.hasClass("btn-danger"))
-                {
-                    destination.removeClass("btn-danger");
-                }
-            }
-            if(turn)
-            {
-                alert("Please submit Complete form");
-                return false;
-            }
-
-            var formdata=new FormData($("#formseachHall")[0]);
-            formdata.append("action","home");
-            $.ajax({
-                url:"index.php",
-                method:"get",
-                data:formdata,
-                contentType: false,
-                processData: false,
-
-                beforeSend: function() {
-                    $("#preloader").show();
-                },
-                success:function (data)
-                {
-                    $("#preloader").hide();
-                    if(data!='')
-                    {
-                        alert(data);
-                    }
-                    else
-                    {
-                        window.history.back();
-                    }
-                }
-            });
         });
         // $.ajax({
         //     url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
@@ -254,15 +174,13 @@ include_once ("../../../connection/connect.php");
                 },
                 success:function (data)
                 {
+                    location.href="#action=1";
                     $("#SHowCatering").html(data);
                 }
             });
 
         }
         showDishes();
-
-
-
 
     });
 
