@@ -53,6 +53,7 @@ include_once ("connection/indexEdit.php");
             color: orange;
         }
 
+
     </style>
 </head>
 <body>
@@ -60,7 +61,7 @@ include_once ("connection/indexEdit.php");
 //include_once ("webdesign/header/header.php");
 ?>
 
-<!--<div class="bd-example">
+<div class="bd-example">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -68,17 +69,17 @@ include_once ("connection/indexEdit.php");
             <li data-target="#carouselExampleCaptions" data-slide-to="2" class="active"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item  active">
+            <div class="carousel-item  active ">
                 <img src="https://blog.bridals.pk/wp-content/uploads/2018/11/soanam-banne-1024x512.jpg" class="d-block w-100" alt="...">
-                <div class="carousel-caption ">
-                    <h5 class="display-4">Hall Booking</h5>
+                <div class="carousel-caption   ">
+                    <h5 class="display-4  ">Hall Booking</h5>
                     <p>book your nearest Hall,Marquee and Dera and get 10% discount</p>
                 </div>
             </div>
             <div class="carousel-item  ">
                 <img src="https://i.ytimg.com/vi/nOPKg6I4Zfs/maxresdefault.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption ">
-                    <h6 >Free Company Register first  40 owner</h6>
+                    <h6 class="display-4" >Free Company Register first  40 owner</h6>
                     <p>Register hall and catering company and get free software</p>
                 </div>
             </div>
@@ -116,10 +117,18 @@ include_once ("connection/indexEdit.php");
             <span class="sr-only">Next</span>
         </a>
     </div>
-</div>-->
+</div>
 
-<div class="container table-light  m-auto ">
-<form>
+
+<nav class="nav nav-pills nav-justified alert-info shadow  mt-2">
+    <a class="nav-item nav-link active " href="#">Hall </a>
+    <a class="nav-item nav-link" href="company/ClientSide/Catering/CateringIndex.php">Catering</a>
+</nav>
+
+<div class="container table-light  mt-2 ">
+
+
+<form class="container alert-info">
 
 
 

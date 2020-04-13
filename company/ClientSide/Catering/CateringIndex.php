@@ -43,28 +43,98 @@ include_once ("../../../connection/connect.php");
     </style>
 </head>
 <body>
-<div class="container table-light  m-auto ">
-    <form method="get" action="" id="formseachHall" >
-        <div class="text-white  text-center  row" >
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+
+<div class="bd-example">
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2" class="active"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item  active ">
+                <img src="https://blog.bridals.pk/wp-content/uploads/2018/11/soanam-banne-1024x512.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption   ">
+                    <h5 class="display-4  ">Hall Booking</h5>
+                    <p>book your nearest Hall,Marquee and Dera and get 10% discount</p>
                 </div>
-                <input  name="Dishname" type="text" class="form-control py-0" id="Dishname" placeholder="Dish Name ">
             </div>
-        </div>
-        <div class="text-white  text-center  row" >
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+            <div class="carousel-item  ">
+                <img src="https://i.ytimg.com/vi/nOPKg6I4Zfs/maxresdefault.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption ">
+                    <h6 class="display-4" >Free Company Register first  40 owner</h6>
+                    <p>Register hall and catering company and get free software</p>
                 </div>
-                <input  name="cateringname" type="text" class="form-control py-0" id="cateringname" placeholder="Catering Name ">
             </div>
+            <div class="carousel-item ">
+                <img src="https://www.brides.com/thmb/8N9PzFuItfby0vjkyjka-hfQhsE=/3615x2033/filters:fill(auto,1)/__opt__aboutcom__coeus__resources__content_migration__brides__proteus__5be5dd5661c7180ad90ce2d7__169-5f4244ae78c040a88344f8a6f6e5436a.jpeg" class="d-block w-100" alt="...">
+                <div class="carousel-caption ">
+                    <div class="col-12 p-0 m-0">
+
+                        <!-- Links -->
+                        <h4 class="text-uppercase font-weight-bold">Software Features</h4>
+                        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                        <p>
+                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Marquee Management software</a>
+                        </p>
+                        <p>
+                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Hall Management software</a>
+                        </p>
+                        <p>
+                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Catering Management software</a>
+                        </p>
+                        <p>
+                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Dera / Open area Management software</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<nav class="nav nav-pills nav-justified alert-info shadow mt-2">
+    <a class="nav-item nav-link  " href="../../../index.php">Hall </a>
+    <a class="nav-item nav-link active" href="#">Catering</a>
+</nav>
+
+
+<div class="container alert-info  mt-2 ">
 
 
 
-        <div class="form-group row">
+
+
+    <div class="text-white  text-center  row" >
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+            </div>
+            <input  name="Dishname" type="text" class="form-control py-0" id="Dishname" placeholder="Dish Name ">
+        </div>
+    </div>
+    <div class="text-white  text-center  row" >
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+            </div>
+            <input  name="cateringname" type="text" class="form-control py-0" id="cateringname" placeholder="Catering Name ">
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group row">
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
@@ -84,7 +154,6 @@ include_once ("../../../connection/connect.php");
         </div>
 
 
-    </form>
 </div>
 
 
@@ -93,10 +162,6 @@ include_once ("../../../connection/connect.php");
 
 </div>
 
-<div class="container form-inline ">
-
-
-</div>
 
 
 
@@ -174,7 +239,6 @@ include_once ("../../../connection/connect.php");
                 },
                 success:function (data)
                 {
-                    location.href="#action=1";
                     $("#SHowCatering").html(data);
                 }
             });
