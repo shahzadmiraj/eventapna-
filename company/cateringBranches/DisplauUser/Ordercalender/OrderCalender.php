@@ -111,46 +111,6 @@ else
 
 
 
-
-    <h4>Package information</h4>
-    <hr>
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active daytime"  data-daytime="All" id="pills-All-tab" data-toggle="pill" href="#pills-All" role="tab" aria-controls="pills-All" aria-selected="true">All</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link daytime" data-daytime="Morning" id="pills-Morning-tab" data-toggle="pill" href="#pills-Morning" role="tab" aria-controls="pills-Morning" aria-selected="false">Morning</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link daytime"  data-daytime="Afternoon" id="pills-Afternoon-tab" data-toggle="pill" href="#pills-Afternoon" role="tab" aria-controls="pills-Afternoon" aria-selected="false">Afternoon</a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link daytime" data-daytime="Evening" id="pills-Evening-tab" data-toggle="pill" href="#pills-Evening" role="tab" aria-controls="pills-Evening" aria-selected="false">Evening</a>
-        </li>
-    </ul>
-    <!--<div class="tab-content" id="pills-tabContent">-->
-    <!--    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">FIRST TABE</div>-->
-    <!--    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">SECOND TABE</div>-->
-    <!--    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">THIRD TABE</div>-->
-    <!--</div>-->
-
-
-    <h5>Package type</h5>
-    <hr>
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active PackageType" data-packagetype="All" id="pills-type-All-tab" data-toggle="pill" href="#pills-type-All" role="tab" aria-controls="pills-type-All" aria-selected="true">All</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link PackageType" data-packagetype="0" id="pills-Only-Seating-tab" data-toggle="pill" href="#pills-Only-Seating" role="tab" aria-controls="pills-Only-Seating" aria-selected="false">Only Seating</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link PackageType" data-packagetype="1" id="pills-FoodAndSeating-tab" data-toggle="pill" href="#pills-FoodAndSeating" role="tab" aria-controls="pills-FoodAndSeating" aria-selected="false">Food+Seating</a>
-        </li>
-    </ul>
-
-
     <h2>Calender </h2>
     <hr>
     <div id="calendar" ></div>
@@ -184,8 +144,6 @@ include_once ("../../../../webdesign/footer/footer.php");
 
 
         var searching="Running";
-        var daytime='All';
-        var PackageType='All';
 
 
         $(".Search").click(function () {
@@ -194,24 +152,12 @@ include_once ("../../../../webdesign/footer/footer.php");
             $('#calendar').fullCalendar('refetchEvents');
         });
 
-        $(".daytime").click(function ()
-        {
-            daytime=$(this).data("daytime");
-            formdata.append("daytime",daytime);
-            $('#calendar').fullCalendar('refetchEvents');
-        });
-        $(".PackageType").click(function () {
-            PackageType=$(this).data("packagetype");
-            formdata.append("packagetype",PackageType);
-            $('#calendar').fullCalendar('refetchEvents');
-        });
 
         var formdata=new FormData;
-        formdata.append("daytime",daytime);
         formdata.append("searching",searching);
-        formdata.append("packagetype",PackageType);
-        formdata.append("option","ViewOrders");
-        formdata.append("hallid",1);
+
+        formdata.append("option","ViewCateringOrder");
+        formdata.append("cateringid",1);
 
 
         var calendar = $('#calendar').fullCalendar({
@@ -224,14 +170,12 @@ include_once ("../../../../webdesign/footer/footer.php");
             height: 800,
             events: function(start, end, timezone, callback) {
                 $.ajax({
-                    url: 'CalenderServer.php',
+                    url: 'orderServer.php',
                     method:"POST",
                     data:formdata,
                     contentType: false,
                     processData: false,
                     success: function(doc) {
-                    //alert(doc);
-
                         var obj = jQuery.parseJSON(doc);
                         var events = [];
                         $.each(obj, function(index, value) {
@@ -258,7 +202,7 @@ include_once ("../../../../webdesign/footer/footer.php");
             {
                 var id = event.id;
                 $.ajax({
-                    url:"CalenderServer.php",
+                    url:"orderServer.php",
                     type:"POST",
                     data:{id:id,option:"orderCustomerGo"},
                     success:function(data)
@@ -272,7 +216,7 @@ include_once ("../../../../webdesign/footer/footer.php");
 
         });
         //
-       // $('#calendar').fullCalendar('refetchEvents');
+        // $('#calendar').fullCalendar('refetchEvents');
 
     });
 
