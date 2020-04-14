@@ -14,7 +14,7 @@ if($_POST['option']=="ViewCateringOrder")
     }
     else
     {
-        $searching='AND(od.catering_id = "'.trim($_POST['searching']).'")';
+        $searching='AND(od.status_catering = "'.trim($_POST['searching']).'")';
     }
 
 
@@ -23,16 +23,20 @@ if($_POST['option']=="ViewCateringOrder")
 
     $data = array();
     $sql = 'SELECT od.id,od.destination_date,od.destination_time FROM orderDetail as od WHERE 
-(od.status_catering='.$cateringid.')  '.$searching.' ';
+(od.catering_id='.$cateringid.')  '.$searching.' ';
     $ViewOrders = queryReceive($sql);
     //echo $sql;
 
 
-    for ($i = 0; $i < count($ViewOrders); $i++) {
+    for ($i = 0; $i < count($ViewOrders); $i++)
+    {
         $date = new DateTime($ViewOrders[$i][1]);
-        $date->add(new DateInterval('PT' . $ViewOrders[$i][2]));
-        $start = date_format($date, "Y-m-d H:i:s");
-        $end = date("Y-m-d H:i:s",strtotime("+15 minutes", strtotime($start)));
+        $time = new DateTime($ViewOrders[$i][2]);
+
+        $merge = new DateTime($date->format('Y-m-d') .' ' .$time->format('H:i:s'));
+        $start= $merge->format('Y-m-d H:i:s'); // Outputs '2017-03-14 13:37:42'
+
+        $end = date("Y-m-d H:i:s",strtotime("+2 minutes", strtotime($merge->format('Y-m-d H:i:s'))));
 
 
         $data[] = array(

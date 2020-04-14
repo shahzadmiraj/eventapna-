@@ -18,6 +18,7 @@ if((!is_numeric($id))||$id=="")
 
 $hallid=1;
 $companyid='';
+$cateringid=$_SESSION['branchtypeid'];
 
 
 //$companyid=$_COOKIE['companyid'];
@@ -157,7 +158,7 @@ include_once ("../../../../webdesign/footer/footer.php");
         formdata.append("searching",searching);
 
         formdata.append("option","ViewCateringOrder");
-        formdata.append("cateringid",1);
+        formdata.append("cateringid","<?php echo $cateringid?>");
 
 
         var calendar = $('#calendar').fullCalendar({
@@ -175,7 +176,9 @@ include_once ("../../../../webdesign/footer/footer.php");
                     data:formdata,
                     contentType: false,
                     processData: false,
-                    success: function(doc) {
+                    success: function(doc)
+                    {
+                        console.log(doc);
                         var obj = jQuery.parseJSON(doc);
                         var events = [];
                         $.each(obj, function(index, value) {
