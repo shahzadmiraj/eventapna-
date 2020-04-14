@@ -141,6 +141,12 @@ echo $display;
         {
             echo ' <a  href="../company/cateringBranches/dish/dishPriceList.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fa fa-list-ol fa-3x" ></i><h6>Catering Price List</h6></a>';
         }
+        else
+        {
+            echo ' <a  href="../company/hallBranches/userDisplay/OrderCalender/OrderCalender.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>';
+
+
+        }
         ?>
 <!--            <a href="/public_html/payment/transferPaymentReceive.php?option=userDisplay" class="h-25 col-5 shadow text-dark m-2 text-center"><i class="fas fa-money-bill-alt fa-5x"></i><h3>Receive payment</h3></a>-->
     <!--        <a href="/public_html/system/dish/dishesDetail.php" class="h-25 col-6"><h1>Guideline Dishes</h1></a>

@@ -19,14 +19,14 @@
 </div>
 
 <div class="fixed-top  shadow">
-<nav class="navbar navbar-expand-lg   font-weight-bold  " style="background-color: #ff328c;">
+<nav class="navbar navbar-expand-lg  navbar-light  font-weight-bold text-white  " style="background-color: #ff328c;" >
     <div class="container">
 
-        <a class="navbar-brand  text-white" href="<?php echo $Root;?>index.php?action=home"><img src="<?php echo $Root;?>gmail.png" style="width: 70px">  <span class="navbar-text font-weight-bold">EVENT APNA</span>
+        <a class="navbar-brand  text-white" href="<?php echo $Root;?>index.php?action=home"><img src="<?php echo $Root;?>gmail.png" style="width: 70px">  <span class="navbar-text font-weight-bold text-white">EVENT APNA</span>
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler  badge-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon "></span>
         </button>
 
 
