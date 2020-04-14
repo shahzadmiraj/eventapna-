@@ -143,7 +143,7 @@ echo $display;
 
         if($_SESSION['branchtype']=="catering")
         {
-            echo ' <a  href="../company/cateringBranches/dish/dishPriceList.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fa fa-list-ol fa-3x" ></i><h6>Catering Price List</h6></a>';
+            echo ' <a  href="../company/cateringBranches/dish/dishPriceList.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fa fa-list-ol fa-3x" ></i><h6>Dishes Price List</h6></a>';
 
 
             echo ' <a  href="../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>';
