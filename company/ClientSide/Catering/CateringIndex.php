@@ -44,6 +44,13 @@ include_once ("../../../connection/connect.php");
 </head>
 <body>
 
+<?php
+include_once ("../../../webdesign/header/header.php");
+
+
+
+?>
+
 <div class="bd-example">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -250,6 +257,10 @@ include_once ("../../../connection/connect.php");
 
 
 </script>
+
+<?php
+include_once ("../../../webdesign/footer/footer.php");
+?>
 
 </body>
 </html>

@@ -54,7 +54,7 @@ $dishTypeDetail=queryReceive($sql);
 
 
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 ?>
 
 
@@ -418,7 +418,7 @@ include_once "../All/Comments.php"
 
 
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../../webdesign/footer/footer.php");
 ?>
 </body>
 </html>

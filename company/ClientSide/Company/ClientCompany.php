@@ -45,9 +45,16 @@ $catering=queryReceive($sql);
 </head>
 <body>
 
+<?php
+include_once ("../../../webdesign/header/header.php");
+
+
+
+?>
+
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
     <div class="container">
         <a class="navbar-brand" href="#"><?php echo $hallInformation[0][13]; ?></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -308,6 +315,10 @@ $catering=queryReceive($sql);
 
 
 
+
+<?php
+include_once ("../../../webdesign/footer/footer.php");
+?>
 </body>
 </html>
 

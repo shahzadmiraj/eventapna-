@@ -58,7 +58,7 @@ include_once ("connection/indexEdit.php");
 </head>
 <body>
 <?php
-//include_once ("webdesign/header/header.php");
+include_once ("webdesign/header/header.php");
 ?>
 
 <div class="bd-example">
@@ -287,10 +287,11 @@ include_once ("connection/indexEdit.php");
                 processData: false,
 
                 beforeSend: function() {
-                    // $("#preloader").show();
+                     $("#preloader").show('slow');
                 },
                 success:function (data)
                 {
+                    $("#preloader").hide('slow');
                     $("#showHall").html(data);
                 }
             });
@@ -305,6 +306,11 @@ include_once ("connection/indexEdit.php");
 
 
 </script>
+
+
+<?php
+include_once ("webdesign/footer/footer.php");
+?>
 </body>
 </html>
 

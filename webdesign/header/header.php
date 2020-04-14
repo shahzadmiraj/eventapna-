@@ -18,14 +18,11 @@
     <div id="loader"></div>
 </div>
 
-<div class="fixed-top">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark " style="background: #ee0979;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-">
+<div class="fixed-top  shadow">
+<nav class="navbar navbar-expand-lg   font-weight-bold  " style="background-color: #ff328c;">
     <div class="container">
 
-        <a class="navbar-brand" href="<?php echo $Root;?>index.php?action=home"><img src="<?php echo $Root;?>gmail.png" style="width: 70px">  <span class="navbar-text font-weight-bold text-white">EVENT APNA</span>
+        <a class="navbar-brand  text-white" href="<?php echo $Root;?>index.php?action=home"><img src="<?php echo $Root;?>gmail.png" style="width: 70px">  <span class="navbar-text font-weight-bold">EVENT APNA</span>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,8 +32,8 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto w-100 justify-content-end">
-                <li class="nav-item ">
-                    <a class="nav-link" href="<?php echo $Root;?>index.php?action=home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item  ">
+                    <a class="nav-link text-white  " href="<?php echo $Root;?>index.php?action=home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
 
 
@@ -45,7 +42,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                 {
                     echo '
                 <li class="nav-item active">
-                    <a class="nav-link" href="'.$Root.'company/companyRegister/companydisplay.php"><i class="fas fa-building"></i> My Company<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="'.$Root.'company/companyRegister/companydisplay.php"><i class="fas fa-building"></i> My Company<span class="sr-only">(current)</span></a>
                 </li>
                
                 
@@ -59,7 +56,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                 {
                     echo '
                 <li class="nav-item ">
-                    <a class="nav-link" href="'.$Root.'company/companyRegister/companyRegister.php"><i class="far fa-registered"></i> Company Register<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="'.$Root.'company/companyRegister/companyRegister.php"><i class="far fa-registered"></i> Company Register<span class="sr-only">(current)</span></a>
                 </li>';
 
                 }
@@ -85,7 +82,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                 {
                     echo '
                 <li class="nav-item">
-                    <a class="nav-link" href="'.$Root.'user/userLogin.php"><i class="fas fa-sign-in-alt"></i> Sign in</a>
+                    <a class="nav-link text-white" href="'.$Root.'user/userLogin.php"><i class="fas fa-sign-in-alt"></i> Sign in</a>
                 </li>';
 
                 }
@@ -97,7 +94,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                 {
                     echo '
                 <li class="nav-item">
-                    <a class="nav-link" href="'.$Root.'order/PreviewOrder.php"><i class="fas fa-shopping-cart"></i> Order Preview</a>
+                    <a class="nav-link text-white" href="'.$Root.'order/PreviewOrder.php"><i class="fas fa-shopping-cart"></i> Order Preview</a>
                 </li>';
 
                 }
@@ -105,7 +102,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
                 if(isset($_SESSION['order']))
                 {
-                    echo '    <a class="nav-link" href="'.$Root.'user/userDisplay.php" ><i class="fas fa-grip-horizontal"></i> User Display</a>';
+                    echo '    <a class="nav-link text-white" href="'.$Root.'user/userDisplay.php" ><i class="fas fa-grip-horizontal"></i> User Display</a>';
                 }
                 ?>
 
@@ -116,7 +113,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                 {
                     echo '
                 <li class="nav-item">
-                    <a class="nav-link" href="'.$Root.'user/logout.php"><i class="fas fa-sign-out-alt"></i> Sign out</a>
+                    <a class="nav-link text-white" href="'.$Root.'user/logout.php"><i class="fas fa-sign-out-alt"></i> Sign out</a>
                 </li>
                 
                 ';
@@ -126,7 +123,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
                         if($_COOKIE['usertype']=="Owner")
                         {
                             echo '<li class="nav-item active">
-                    <a class="nav-link" href="'.$Root.'company/companyRegister/companyEdit.php"><i class="fas fa-globe-europe"></i> Edit Company</a>
+                    <a class="nav-link text-white" href="'.$Root.'company/companyRegister/companyEdit.php"><i class="fas fa-globe-europe"></i> Edit Company</a>
                 </li>';
                         }
                     }
@@ -136,7 +133,7 @@ background: linear-gradient(to right, #ff6a00, #ee0979);/* W3C, IE 10+/ Edge, Fi
 
                 ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $Root;?>user/userLogin.php?action=admin"><i class="fas fa-users-cog"></i>Admin</a>
+                    <a class="nav-link text-white" href="<?php echo $Root;?>user/userLogin.php?action=admin"><i class="fas fa-users-cog"></i>Admin</a>
                 </li>
             </ul>
 

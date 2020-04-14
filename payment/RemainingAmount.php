@@ -68,17 +68,11 @@ else
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
+
     <style>
 
-        .newcolor
-        {
-            background: #77A1D3;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #E684AE, #79CBCA, #77A1D3);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #E684AE, #79CBCA, #77A1D3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
     </style>
 </head>
 <body>
