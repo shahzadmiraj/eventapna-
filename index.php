@@ -133,14 +133,7 @@ include_once ("connection/indexEdit.php");
 
 
 
-    <div class="text-white  text-center  row" >
-        <div class="input-group mb-2 mr-sm-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-            </div>
-            <input  name="hallname" type="text" class="form-control py-0" id="hallname" placeholder="Hall Name Specific">
-        </div>
-    </div>
+
 
     <div class="text-white  text-center  row" >
         <div class="input-group mb-2 mr-sm-2">
@@ -177,6 +170,14 @@ include_once ("connection/indexEdit.php");
                 <option value="0">Per head Only Seating</option>
                 <option value="1">Per head Seating + Food</option>
             </select>
+        </div>
+    </div>
+    <div class="text-white  text-center  row" >
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+            </div>
+            <input  name="hallname" type="text" class="form-control py-0" id="hallname" placeholder="Hall Name (optional)">
         </div>
     </div>
 

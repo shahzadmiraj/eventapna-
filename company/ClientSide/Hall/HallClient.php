@@ -3,7 +3,7 @@
 include_once ('../../../connection/connect.php');
 
 
-$hallid=1;
+$hallid=$_GET['h'];
 $userid=1;
 $sql='SELECT hall.id,`name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address,l.latitude,l.longitude FROM `hall` INNER join location as l 
 on (hall.location_id=l.id)
@@ -65,6 +65,28 @@ $ExtraType=queryReceive($sql);
 //include_once ("../../webdesign/header/header.php");
 ?>
 
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><?php echo $hallInformation[0][1]; ?></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link active" href="#">Hall Packages
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Company/ClientCompany.php?c=<?php echo $hallInformation[0][8]; ?>">Company Service</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 
 
@@ -136,16 +158,6 @@ include_once ("../Company/Box.php");
             </div>
 
 
-
-
-
-
-
-
-
-
-
-            <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
         </div>
 
 

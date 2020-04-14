@@ -73,7 +73,37 @@ $ExtraType=queryReceive($sql);
 <body>
 <?php
 //include_once ("../../webdesign/header/header.php");
+
+
+
 ?>
+
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="HallClient.php?h=<?php echo $hallInformation[0][0]; ?>"><?php echo $hallInformation[0][1]; ?></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Curent Package
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="HallClient.php?h=<?php echo $hallInformation[0][0]; ?>">Hall Packages </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Company/ClientCompany.php?c=<?php echo $hallInformation[0][8]; ?>">Company Service</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
 
 

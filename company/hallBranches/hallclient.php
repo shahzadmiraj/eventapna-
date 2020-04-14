@@ -60,9 +60,6 @@ include_once ('../../connection/connect.php');
 //include_once ("../../webdesign/header/header.php");
 ?>
 
-<?php
-include_once ("../ClientSide/Company/header.php");
-?>
 
 
 <div class="container">

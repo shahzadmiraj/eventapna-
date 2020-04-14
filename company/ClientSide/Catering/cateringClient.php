@@ -58,6 +58,28 @@ $dishTypeDetail=queryReceive($sql);
 ?>
 
 
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><?php echo $catering[0][0]; ?></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link active" href="#">Curent Catering
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Company/ClientCompany.php?c=<?php echo $catering[0][2]; ?>">Company Service</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <?php
 $HeadingImage=$catering[0][1];
 $HeadingName=$catering[0][0];

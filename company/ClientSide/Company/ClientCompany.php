@@ -3,7 +3,7 @@ include_once ('../../../connection/connect.php');
 
 
 
-$companyid=1;
+$companyid=$_GET['c'];
 
 $sql='SELECT hall.id,`name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address,(SELECT c.name FROM company as c WHERE c.id=hall.company_id) FROM `hall` INNER join location as l 
 on (hall.location_id=l.id)
@@ -11,6 +11,12 @@ WHERE
 (ISNULL(l.expire))AND (hall.company_id='.$companyid.')AND(ISNULL(hall.expire))';
 $hallInformation=queryReceive($sql);
 
+
+$sql='SELECT c.name,c.image,c.company_id,cl.country,cl.city,cl.address,cl.longitude,cl.latitude,cl.radius,c.id FROM catering as c INNER join cateringLocation as cl 
+on (c.id=cl.catering_id)
+WHERE
+(ISNULL(c.expire))AND (ISNULL(cl.expire))AND(c.company_id='.$companyid.')';
+$catering=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>
@@ -40,6 +46,23 @@ $hallInformation=queryReceive($sql);
 <body>
 
 
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><?php echo $hallInformation[0][13]; ?></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Company Service
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <div class="container">
 
@@ -70,7 +93,15 @@ $hallInformation=queryReceive($sql);
 
 
             <div class="col-md-8 col-12 mb-5">
-                <h4><?php echo $hallInformation[$i][1];?> </h4>
+                <h4><?php echo $hallInformation[$i][1];?>
+
+
+                    <?php
+                    //star calculate
+                    $sql='SELECT AVG(c.rating) FROM comments as c WHERE (c.hall_id='.$hallInformation[$i][0].') ';
+                    echo starCalculation($sql);
+                    ?>
+                </h4>
                 <hr>
                 <div class="container">
 
@@ -150,7 +181,7 @@ $hallInformation=queryReceive($sql);
 
                     </div>
 
-                    <a class="btn btn-primary btn-lg mt-5 float-right" href="#">Visit Hall &raquo;</a>
+                    <a class="btn btn-primary btn-lg mt-5 float-right" href="../Hall/HallClient.php?h=<?php echo $hallInformation[$i][0];?>">Visit Hall &raquo;</a>
 
                     </div>
                 </div>
@@ -193,46 +224,72 @@ $hallInformation=queryReceive($sql);
 
     <div class="row  mb-5">
 
+        <?php
 
-        <div class="col-md-4 mb-5">
-            <img src="http://placehold.it/300x200" class="img-thumbnail" style="width: 100%;height: 100%">
-        </div>
+        for($i=0;$i<count($catering);$i++) {
 
+            $img = $catering[$i][1];
+            if (file_exists('../../../images/catering/' . $img) && ($img != ""))
+                $img = '../../../images/catering/' . $img;
+            else
+                $img = "https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg"
+            ?>
 
-
-        <div class="col-md-8 col-12 mb-5">
-            <h4>Catering Name </h4>
-            <hr>
-            <div class="container">
-                <div class="row justify-content-start">
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Country
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Country
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        City
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        City
-                    </div>
-
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Address
-                    </div>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Address
-                    </div>
-
-
-
-                </div>
+            <div class="col-md-4 mb-5">
+                <img src="<?php echo $img;?>" class="img-thumbnail" style="width: 100%;height: 100%">
             </div>
-            <a class="btn btn-primary btn-lg" href="#">Visit Catering&raquo;</a>
-        </div>
+
+
+            <div class="col-md-8 col-12 mb-5">
+                <h4><?php echo $catering[$i][0];?>
+
+                    <?php
+                    //star calculate
+                    $sql='SELECT AVG(c.rating) FROM comments as c WHERE (c.catering_id='.$catering[$i][9].')';
+              echo starCalculation($sql);
+                    ?>
+                </h4>
+                <hr>
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                            Country
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                            <?php echo $catering[$i][3];?>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                            City
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                            <?php echo $catering[$i][4];?>
+                        </div>
+
+
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                            Address
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                            <?php echo $catering[$i][5];?>
+                        </div>
+
+
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                            Target Range
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                            <?php echo $catering[$i][8];?> KM
+                        </div>
+
+
+                    </div>
+                </div>
+                <a class="btn btn-primary btn-lg float-right" href="../Catering/cateringClient.php?c=<?php echo $catering[$i][9];?>">Visit Catering&raquo;</a>
+            </div>
+            <?php
+        }
+        ?>
 
 
 

@@ -492,4 +492,28 @@ function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perhead
     return$status;
 }
 
+function starCalculation($sql)
+{
+    $display="";
+    $star=queryReceive($sql);
+    $givestars=5;
+    if(count($star)>3)
+    {
+        $givestars =(int) $star[0][0] ;
+    }
+    for($s=0;$s<5;$s++)
+    {
+        if($givestars>$s)
+        {
+
+            $display.='<span class="fa fa-star checked"></span>';
+        }
+        else
+        {
+            $display.='<span class="fa fa-star"></span>';
+        }
+    }
+
+    return$display;
+}
 ?>

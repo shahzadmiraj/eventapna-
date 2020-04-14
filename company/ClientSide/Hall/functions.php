@@ -206,7 +206,7 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
         <div class="info">Max Guests '.$MaxGuestMaxPartition[0].'</div>
         <div class="style">Date:'.$AllHalls[$i][5].' /Time:'.$AllHalls[$i][8].'  /Type:'.$halltype[$AllHalls[$i][10]].'</div>
         <div class="price">$'.$AllHalls[$i][7].' <span class="old-price">$'.((int)$AllHalls[$i][7]+5000).'</span></div>
-        <div class="style"><a href="company/hallBranches/hallclient.php?h='.base64url_encode($AllHalls[$i][0]).'&p='.base64url_encode($AllHalls[$i][4]).'" class="btn btn-primary">Visit And Booking >></a></div>
+        <div class="style"><a href="company/ClientSide/Hall/ClientHallPackage.php?pack='.base64url_encode($AllHalls[$i][4]).'" class="btn btn-primary">Visit And Booking >></a></div>
     </div>
 
 </div>';
