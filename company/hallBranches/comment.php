@@ -31,8 +31,8 @@ $userid=$_COOKIE['userid'];
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
+    <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../webdesign/css/comment.css">
 
     <link rel="stylesheet" href="../../Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
@@ -65,7 +65,7 @@ else
 }
 ?>);background-repeat: no-repeat ;background-size: 100% 100%">
     <div class="container" style="background-color: white;opacity: 0.7">
-        <h1 class="display-4"><i class="fas fa-comments fa-1x"></i>   Comment In all packages and Hall</h1>
+        <h1 class=""><i class="fas fa-comments fa-1x"></i>   Comment In all packages and Hall</h1>
         <p class="lead">you can see what the user comment on you customer.</p>
         <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>

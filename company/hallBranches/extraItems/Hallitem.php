@@ -79,8 +79,8 @@ include_once ("../../../webdesign/header/header.php");
 
     <h3 align="center"> Catergories information</h3>
     <div class="col-12 form-group row font-weight-bold border">
-        <label class="col-9  col-form-label "><i class="fas fa-sitemap"></i>Catergory</label>
-        <label class="col-3  col-form-label ">Delete</label>
+        <label class="col-8  col-form-label "><i class="fas fa-sitemap"></i>Catergory</label>
+        <label class="col-4  col-form-label ">Delete</label>
     </div>
 
 
@@ -139,7 +139,7 @@ include_once ("../../../webdesign/header/header.php");
         for($j=0;$j<count($Category);$j++)
         {
 
-            $display.='<h4 class="text-center btn-warning"><i class="fas fa-sitemap"></i>'.$Category[$j][1].'</h4>';
+            $display.='<h4 data-dishtype="'.$j.'" data-display="hide"  class="dishtypes text-center btn-warning"><i class="fas fa-sitemap"></i>'.$Category[$j][1].'</h4>';
 
 
 
@@ -150,37 +150,38 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-$display.='<div class="form-inline">';
+$display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
             for ($i = 0; $i < count($kinds); $i++)
             {
 
 
     $display.='
-        <div class="card m-1 col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="col-md-4 col-xl-3 m-2 card">
        
         ';
 
         if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
         {
          $display.='
-            <img class="card-img-top img-fluid" src="../../../images/hallExtra/'.$kinds[$i][3].'" alt="Card image cap"  >';
+            <img class="card-img-top img-fluid" src="../../../images/hallExtra/'.$kinds[$i][3].'" alt="Card image cap"  style="height: 20vh">';
         }
         else
         {
 
             $display.='
-            <img class="card-img-top img-fluid" src="https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg" alt="Card image cap">';
+            <img class="card-img-top img-fluid" src="https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg" alt="Card image cap" style="height: 20vh">';
         }
 
       $display.='   <div class="card-footer ">
    <h5 class="card-title" ><i class="fas fa-drum mr-1"></i>'.$kinds[$i][1].'</h5>   
-              <div class="text-right text-danger">
-              <i class="far fa-money-bill-alt mr-3"></i>'.$kinds[$i][2].' 
-                </div>
-                <div class="text-center">
-              <button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger"><i class="fas fa-minus-circle"></i> Delete</button>
-                </div>
               
+              
+              <p>
+              <span class="float-left text-danger">
+              <i class="far fa-money-bill-alt mr-3"></i>Amount:'.$kinds[$i][2].' 
+                </span>
+               <button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger float-right"><i class="fas fa-minus-circle"></i> Delete</button>
+                </p>
            
             </div>
         </div>';
@@ -198,15 +199,14 @@ $display.='<div class="form-inline">';
 
 
 
-
-
-<!--<div class="container badge-light">
+<!--
+<div class="container ">
     <h1 class="text-center">kkiiji</h1>
-    <div class="form-inline">
+    <div class="row">
 
 
 
-        <div class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+        <div class="col-md-4 m-1">
             <img class="card-img-top" src="..." alt="Card image cap">
             <div class="card-footer">
                 <h5 class="card-title">Card title</h5>
@@ -218,8 +218,12 @@ $display.='<div class="form-inline">';
 
 
 
+
+
+
     </div>
 </div>-->
+
 
 
 <?php
@@ -295,6 +299,22 @@ include_once ("../../../webdesign/footer/footer.php");
 
         });
 
+        $(document).on("click",".dishtypes",function () {
+            var display=$(this).data("display");
+            var IdDisplay=$(this).data("dishtype");
+            if(display=="hide")
+            {
+                $("#dishtype"+IdDisplay).show('slow');
+                $(this).data("display","show");
+            }
+            else
+            {
+
+                $("#dishtype"+IdDisplay).hide('slow');
+                $(this).data("display","hide");
+            }
+
+        });
 
     });
 
