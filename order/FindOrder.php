@@ -216,7 +216,7 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="form-group row">
-            <label class="col-form-label ">order status</label>
+            <label class="col-form-label ">Order status</label>
 
 
 
@@ -227,27 +227,29 @@ include_once ("../webdesign/header/header.php");
                     <span class="input-group-text"><i class="far fa-eye"></i></span>
                 </div>
 
-                <select  name="<?php
+
+                <?php
+                $constantStatus=$_GET['order_status'];
+               if( $constantStatus=="Today_Orders")
+               {
+                   $constantStatus="Running";
+               }
                 if($hallid=="")
                 {
-                    echo "od_status_catering";
+
+                    //catering
+                    echo '<input class="form-control" readonly type="text" name="od_status_catering" value="'.$constantStatus.'">';
                 }
                 else
                 {
-                    echo "od_status_hall";
+                    //hall
+
+                    echo '<input class="form-control" readonly type="text" name="od_status_hall" value="'.$constantStatus.'">';
                 }
-                ?>" class="changeColumn form-control">
-                    <option value="None">None</option>
-                    <?php
-                    $OrderStatus=array("Running","Cancel","Delieved","Clear");
-                    for($i=0;$i<count($OrderStatus);$i++)
-                    {
 
-                        echo '<option value='.$OrderStatus[$i].'>'.$OrderStatus[$i].'</option>';
+                ?>
 
-                    }
-                    ?>
-                </select>
+
             </div>
 
 
