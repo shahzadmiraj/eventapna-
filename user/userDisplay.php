@@ -145,13 +145,16 @@ echo $display;
         {
             echo ' <a  href="../company/cateringBranches/dish/dishPriceList.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="fa fa-list-ol fa-3x" ></i><h6>Dishes Price List</h6></a>';
 
-
             echo ' <a  href="../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>';
+            echo ' <a  href="../company/ClientSide/Catering/cateringClient.php?c='.$cateringid.'" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Catering Website:</h6></a>';
+
         }
         else
         {
-            echo ' <a  href="../company/hallBranches/userDisplay/OrderCalender/OrderCalender.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>';
 
+            echo ' <a  href="../company/hallBranches/userDisplay/OrderCalender/OrderCalender.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>';
+            echo ' <a  href="../company/hallBranches/userDisplay/extraItem/ExtraitemHall.php" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Extra items Price List</h6></a>';
+            echo ' <a  href="../company/ClientSide/Hall/HallClient.php?h='.$hallid.'" class="h-25 col-5 shadow btn-warning m-2 text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Hall Website : Packages/ Extra Items </h6></a>';
 
         }
         ?>

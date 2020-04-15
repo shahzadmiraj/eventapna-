@@ -8,7 +8,11 @@ on (c.id=cl.catering_id)
 WHERE
 (ISNULL(c.expire))AND (ISNULL(cl.expire))AND(c.id='.$cateringid.')';
 $catering=queryReceive($sql);
-//print_r($catering);
+
+if(count($catering)==0)
+{
+    exit();
+}
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
 $dishTypeDetail=queryReceive($sql);
 ?>

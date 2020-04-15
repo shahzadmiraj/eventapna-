@@ -366,7 +366,11 @@ include_once ("../Company/Box.php");
         {
 
 
-            $display = '<h4 class="col-md-12 text-center">'.$ExtraType[$j][1].' </h4>';
+            $display = '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes badge-info">'.$ExtraType[$j][1].' </h4>
+    <div id="dishtype'.$j.'"  class="row   " style="display: none">
+
+
+';
 
             $sql='SELECT `id`,`image`, `price`,`name` FROM `Extra_Item` WHERE (ISNULL(expire))AND(Extra_item_type_id='.$ExtraType[$j][0].')';
 
@@ -381,17 +385,18 @@ include_once ("../Company/Box.php");
 
                 $display .= '
             
-            <div class="col-md-4 mb-5">
+            <div class="col-md-4 mb-5 ">
             <div class="card h-100">
                 <img src="' . $image . '" class="card-img-top" src="" alt="Image">
                 <div class="card-body">
-                    <h6 class="card-title">' . $Extraitem[$i][3] . '<span class="float-right">Amount ' . $Extraitem[$i][2] . '</span></h6>
+                    <h6 class="card-title">' . $Extraitem[$i][3] . '<span class="float-right text-danger">Amount ' . $Extraitem[$i][2] . '</span></h6>
                 </div>
             </div>
-        </div>
+            </div>
             
             ';
             }
+            $display.=' </div>';
         }
         echo $display;
         ?>
@@ -525,6 +530,27 @@ include_once "../All/Comments.php"
             dataType: "script",
             cache: false
         });*/
+
+
+
+
+
+        $(document).on("click",".dishtypes",function () {
+            var display=$(this).data("display");
+            var IdDisplay=$(this).data("dishtype");
+            if(display=="hide")
+            {
+                $("#dishtype"+IdDisplay).show('slow');
+                $(this).data("display","show");
+            }
+            else
+            {
+
+                $("#dishtype"+IdDisplay).hide('slow');
+                $(this).data("display","hide");
+            }
+
+        });
     });
 
 </script>
