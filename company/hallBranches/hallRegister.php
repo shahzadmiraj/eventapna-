@@ -26,10 +26,8 @@ $hallBranches='';
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
     <link rel="stylesheet" href="../../map/style.css">
     <style>
-
         form
         {
             margin: 5%;
@@ -97,8 +95,6 @@ include_once ("../../webdesign/header/header.php");
     </div>
     <div class="form-group row">
         <label class="col-form-label">Hall Branch Image:</label>
-<!--        <input name="image" class="form-control col-8" type="file">-->
-
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -111,7 +107,6 @@ include_once ("../../webdesign/header/header.php");
     </div>
     <div class="form-group row">
         <label class="col-form-label ">Maximum Capacity of guests in hall:</label>
-<!--        <input name="capacity" class="form-control col-4" type="number">-->
 
 
 
@@ -119,7 +114,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
-            <input name="capacity" type="number" class="form-control" placeholder="Maximum Capacity of guests in hall">
+            <input id="capacity" value="200" name="capacity" type="number" class="form-control" placeholder="Maximum Capacity of guests in hall">
         </div>
 
 
@@ -127,9 +122,6 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row">
         <label class="col-form-label">No of Partition in Hall:</label>
-<!--        <input name="partition" class="form-control col-4" type="number">-->
-
-
 
 
 
@@ -138,7 +130,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-columns"></i></span>
             </div>
-            <input name="partition" type="number" class="form-control" placeholder="No of Partition in Hall">
+            <input id="partitions" value="0" name="partition" type="number" class="form-control" placeholder="No of Partition in Hall">
         </div>
 
 
@@ -198,27 +190,64 @@ include_once ("../../webdesign/header/header.php");
 include_once ("../../webdesign/footer/footer.php");
 ?>
 
+
+<script src="../../webdesign/JSfile/JSFunction.js"></script>
 <script>
+    function NumberRange(Element,ShowMessage,Min,Max)
+    {
+        var state=true;
+        Element=$("#"+Element);
+        if((Element.val()>=Min)&&(Element.val()<=Max))
+        {
+            if(Element.hasClass("btn-danger"))
+            {
+                Element.removeClass("btn-danger");
+            }
+            state=false;
+        }
+        else
+        {
+            alert(ShowMessage);
+            if(!(Element.hasClass("btn-danger")))
+            Element.addClass("btn-danger");
+
+        }
+        return state;
+    }
 
 
     $(document).ready(function ()
     {
-        getLocation();
 
 
 
 
-        $('#submit').click(function ()
+        $('#submit').click(function (e)
         {
-            if($.trim($("#hallname").val()).length==0)
+            e.preventDefault();
+            var state=false;
+            if(NumberRange("partitions","Please Enter Valid Patition",1,10))
             {
-                alert("hall name must enter");
+                state=true;
+            }
+            if(NumberRange("capacity","Please Enter Valid capacity up to 50 and maximum 3000",50,3000))
+            {
+                state=true;
+            }
+            if(validationWithString("hallname","Please Enter Name of Hall"))
+            {
+                state=true;
+            }
+            if(validationWithString("map-search","Please Select Location of Hall"))
+            {
+                state=true;
+            }
+            if(state)
                 return false;
 
-            }
             var formdata = new FormData($("form")[0]);
             formdata.append("option", "CreateHall");
-            formdata.append("companyid",<?php echo $companyid;?>);
+            formdata.append("companyid","<?php echo $companyid;?>");
             $.ajax({
                 url: "../companyServer.php",
                 method: "POST",
@@ -264,5 +293,6 @@ include_once ("../../webdesign/footer/footer.php");
     });
 
 </script>
+
 </body>
 </html>

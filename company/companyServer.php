@@ -150,14 +150,7 @@ if(isset($_POST['option']))
 
         $sql='INSERT INTO `hall`(`id`, `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`,`active`) VALUES (NULL,"'.$hallname.'",'.$capacity.',"'.$daytime.'",'.$partition.','.$parking.',NULL,"'.$hallimage.'",'.$halltype.','.$addressid.','.$companyid.',"'.$timestamp.'")';
         querySend($sql);
-        $hallid=mysqli_insert_id($connect);
 
-
-        $daytimearray=array("Morning","Afternoon","Evening");
-        for($i=0;$i<count($daytimearray);$i++)
-        {
-            createOnlyAllSeating($hallid,$daytimearray[$i]);
-        }
 
     }
     else if($_POST['option']=='createOnlyseating')

@@ -1,7 +1,7 @@
 
 var x = document.getElementById("demo");
-var latitude=22;
-var longitude=12;
+var latitude=$("#latitude").val();
+var longitude=$("#longitude").val();
 function initialize()
 {
 

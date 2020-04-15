@@ -118,7 +118,7 @@ else
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-place-of-worship"></i></span>
                 </div>
-                <input name="hallname" type="text" class="form-control" value="<?php echo $halldetail[0][0]; ?>">
+                <input id="hallname"  name="hallname" type="text" class="form-control" value="<?php echo $halldetail[0][0]; ?>">
             </div>
 
 
@@ -182,7 +182,7 @@ else
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-users"></i></span>
                 </div>
-                <input type="number" value="<?php echo $halldetail[0][1]; ?>" class="form-control" name="capacity">
+                <input id="capacity" type="number" value="<?php echo $halldetail[0][1]; ?>" class="form-control" name="capacity">
             </div>
 
 
@@ -198,7 +198,7 @@ else
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-columns"></i></span>
                 </div>
-                <input name="partition" type="number" class="form-control" value="<?php echo $halldetail[0][2]; ?>">
+                <input id="partitions" name="partition" type="number" class="form-control" value="<?php echo $halldetail[0][2]; ?>">
             </div>
 
 
@@ -241,8 +241,8 @@ else
 
         <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
         <div hidden>
-            <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude" value="<?php echo $location[0][5];?>"></label>
-            <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude" value="<?php echo $location[0][1];?>"></label>
+            <label  for="">Lat: <input name="latitude" id="latitude" type="number" class="latitude" value="<?php echo $location[0][5];?>"></label>
+            <label  for="">Long: <input  name="longitude" id="longitude" type="number" class="longitude" value="<?php echo $location[0][1];?>"></label>
             <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City" value="<?php echo $location[0][4];?>"></label>
             <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country" value="<?php echo $location[0][3];?>"></label>
         </div>
@@ -280,13 +280,58 @@ else
 include_once ("../../webdesign/footer/footer.php");
 ?>
 
-<script src="../../map/javascript.js"></script>
+<script src="../../webdesign/JSfile/JSFunction.js"></script>
+<script src="../../map/constantMap.js"></script>
 <script>
 
     $(document).ready(function ()
     {
-        $("#submitedithall").click(function ()
+
+        function NumberRange(Element,ShowMessage,Min,Max)
         {
+            var state=true;
+            Element=$("#"+Element);
+            if((Element.val()>=Min)&&(Element.val()<=Max))
+            {
+                if(Element.hasClass("btn-danger"))
+                {
+                    Element.removeClass("btn-danger");
+                }
+                state=false;
+            }
+            else
+            {
+                alert(ShowMessage);
+                if(!(Element.hasClass("btn-danger")))
+                    Element.addClass("btn-danger");
+
+            }
+            return state;
+        }
+
+        $("#submitedithall").click(function (e)
+        {
+            e.preventDefault();
+            var state=false;
+            if(NumberRange("partitions","Please Enter Valid Patition",1,10))
+            {
+                state=true;
+            }
+            if(NumberRange("capacity","Please Enter Valid capacity up to 50 and maximum 3000",50,3000))
+            {
+                state=true;
+            }
+            if(validationWithString("hallname","Please Enter Name of Hall"))
+            {
+                state=true;
+            }
+            if(validationWithString("map-search","Please Select Location of Hall"))
+            {
+                state=true;
+            }
+            if(state)
+                return false;
+
             var formdata=new FormData($("#formhall")[0]);
             formdata.append("option","halledit");
             $.ajax({
@@ -319,10 +364,11 @@ include_once ("../../webdesign/footer/footer.php");
         });
     });
 
-        latitude=<?php echo $location[0][5];?>;
-        longitude=<?php echo $location[0][1];?>;
+
     $(document).ready(function()
     {
+        latitude=<?php echo $location[0][5];?>;
+        longitude=<?php echo $location[0][1];?>;
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
             dataType: "script",

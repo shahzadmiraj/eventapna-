@@ -20,7 +20,6 @@ function validation(Element,ShowMessage)
 
 
 
-
 function validationWithString(Element,ShowMessage)
 {
     Element=$("#"+Element);
@@ -76,3 +75,28 @@ function  validationClass(Quantity,ShowMessage)
 
     return state;
 }
+
+function NumberRange(Element,ShowMessage,Min,Max)
+{
+    var state=true;
+    Element=$("#"+Element);
+    if((Element.val()>=Min)&&(Element.val()<=Max))
+    {
+        if(Element.hasClass("btn-danger"))
+        {
+            Element.removeClass("btn-danger");
+        }
+        state=false;
+    }
+    else
+    {
+        alert(ShowMessage);
+        if(!(Element.hasClass("btn-danger")))
+            Element.addClass("btn-danger");
+
+    }
+    return state;
+}
+
+
+
