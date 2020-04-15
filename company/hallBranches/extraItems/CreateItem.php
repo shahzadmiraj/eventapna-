@@ -32,7 +32,6 @@ $hall=$id;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
     <link rel="stylesheet" href="../../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -130,13 +129,13 @@ include_once ("../../../webdesign/header/header.php");
 
         <div class="form-group row" id="showType">
 
-            <label for="otherTypeName" class="col-form-label"> other Type name</label>
+            <label for="otherTypeName" class="col-form-label">Other Type name</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
                 </div>
-                <input id="otherTypeName" type="number" name="otherTypeName" class="form-control " placeholder="other  type name">
+                <input id="otherTypeName" type="text" name="otherTypeName" class="form-control " placeholder="other  type name">
             </div>
 
         </div>
