@@ -268,54 +268,6 @@ function MutipleUploadFile($File,$DestinationFile)
 
     }
 
-function dishesOfPakage($sql)
-{
-    $dishdetail = queryReceive($sql);
-    $display='';
-    for ($j = 0; $j < count($dishdetail); $j++)
-    {
-        $display.= '
-        <div id="dishid' . $dishdetail[$j][1] . '" class="col-4 alert-danger border m-1 form-group p-0" style="height: 30vh;" >
-            <img src="';
-            if((file_exists('../images/dishImages/'.$dishdetail[$j][2])||file_exists('../../images/dishImages/'.$dishdetail[$j][2]))&&($dishdetail[$j][2]!=""))
-            {
-                $display.='../../images/dishImages/'.$dishdetail[$j][2];;
-            }
-            else
-            {
-                $display.='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
-
-            }
-
-
-
-            $display.='" class="col-12" style="height: 15vh">
-            <p class="col-form-label" class="form-control col-12">' . $dishdetail[$j][0] . '</p>
-            <input   data-image="';
-
-
-        if((file_exists('../images/dishImages/'.$dishdetail[$j][2])||file_exists('../../images/dishImages/'.$dishdetail[$j][2]))&&($dishdetail[$j][2]!=""))
-        {
-            $display.='../../images/dishImages/'.$dishdetail[$j][2];;
-        }
-        else
-        {
-            $display.='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
-
-        }
-
-
-
-
-
-            $display.='" data-dishname="' . $dishdetail[$j][0] . '"  data-dishid="' . $dishdetail[$j][1] . '" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
-            <input hidden type="text"  name="dishname[]"  value="' . $dishdetail[$j][0] . '">
-             <input hidden type="text"  name="image[]"  value="' . $dishdetail[$j][2] . '">
-        </div>';
-
-    }
-    return $display;
-}
 
 
 

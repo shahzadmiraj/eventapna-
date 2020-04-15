@@ -1,5 +1,7 @@
 <?php
 include_once ("../../connection/connect.php");
+include_once ("packages/packagesServerfunction.php");
+
 if(!isset($_GET['hall']))
 {
 
@@ -35,11 +37,9 @@ $userid=$_COOKIE['userid'];
     <link href="../../calender/customDatepicker/styles.css" rel="stylesheet">
     <script src="../../calender/customDatepicker/multidatespicker.js" type="text/javascript"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
-
-
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <script type="text/javascript" src="../../webdesign/JSfile/JSFunction.js"></script>
 
     <style>
@@ -256,7 +256,10 @@ include_once ("../../webdesign/header/header.php");
 
         <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Your Package</h3>
 
-        <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 40vh">
+        <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 60vh">
+
+
+
 
         </div>
 
@@ -265,8 +268,8 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="col-12 mt-2 row">
-        <button id="btncancel" type="button" value="Cancel" class="btn btn-danger col-5 float-right"><span class="fas fa-window-close "></span>Cancel</button>
-        <button id="btnsubmit" type="button" value="Submit" class="btn btn-primary col-5 float-right"><i class="fas fa-check "></i>Submit</button>
+        <button id="btncancel" type="button" value="Cancel" class="btn btn-danger col-6 "><span class="fas fa-window-close "></span>Cancel</button>
+        <button id="btnsubmit" type="button" value="Submit" class="btn btn-primary col-6 "><i class="fas fa-check "></i>Submit</button>
     </div>
 </form>
 </div>
@@ -289,7 +292,7 @@ include_once ("../../webdesign/header/header.php");
             </div>
             <input id="searchdish" class="form-control" type="text" placeholder="Search dish">
             <button id="modelselect" type="button" class="btn btn-primary float-right col-4" data-toggle="modal" data-target="#exampleModal">
-                ADD dish
+                ADD Items
             </button>
         </div>
     </div>
@@ -314,7 +317,7 @@ include_once ("../../webdesign/header/header.php");
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Item in Company</h5>
                     <button   type="button" class="close closemodel" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -329,7 +332,7 @@ include_once ("../../webdesign/header/header.php");
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
                                 </div>
-                                <input id="dishnameadd" name="dishname" class="form-control" type="text" placeholder="Dish Name Enter">
+                                <input id="dishnameadd" name="dishname" class="form-control" type="text" placeholder="Item Name Type">
                             </div>
 
                         </div>
@@ -362,8 +365,6 @@ include_once ("../../webdesign/header/header.php");
 </div>
 
 
-
-
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
@@ -378,14 +379,13 @@ $(document).ready(function ()
     });
 
 
-    function Addmenu(dishname,image)
+    function Addmenu(dishname,image,id)
     {
        var text="<div id=\"dishtempid"+numbers+"\" class=\"col-4 alert-danger border m-1 form-group p-0\" style=\"height: 30vh;\" >\n" +
             "            <img src=\""+image+"\" class=\"col-12\" style=\"height: 15vh\">\n" +
             "            <p class=\"col-form-label\" class=\"form-control col-12\">"+dishname+"</p>\n" +
             "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"form-control col-12 touchdish btn btn-danger\">\n" +
-            "            <input hidden type=\"text\"  name=\"dishname[]\"  value=\""+dishname+"\">\n" +
-            "             <input hidden type=\"text\"  name=\"image[]\"  value=\""+image+"\">\n" +
+            "            <input hidden type=\"number\"  name=\"dishesid[]\"  value=\""+id+"\">\n" +
             "        </div>";
         numbers++;
         return text;
@@ -395,18 +395,18 @@ $(document).ready(function ()
    {
        var text='';
        var value=$(this).val();
-       var id=$(this).data("dishid");
        var image=$(this).data("image");
        var dishname=$(this).data("dishname");
        if(value=="Remove")
        {
 
-           $("#dishtempid"+id).remove();
+           var number=$(this).data("dishid");
+           $("#dishtempid"+number).remove();
        }
        else
        {
-
-           text=Addmenu(dishname,image);
+           var id=$(this).data("dishid");
+           text=Addmenu(dishname,image,id);
            $("#selectedmenu").append(text);
 
        }
@@ -487,6 +487,7 @@ $(document).ready(function ()
    {
        checkpaktype();
    });
+
     checkpaktype();
 
    $("#btnsubmit").click(function ()
@@ -514,6 +515,12 @@ $(document).ready(function ()
        {
            return false;
        }
+
+
+
+
+
+       change this code with id
 
        var formdata=new FormData($('#submitpackage')[0]);
        formdata.append("option","CreatePackage");
@@ -553,7 +560,7 @@ $(document).ready(function ()
         var formdata = new FormData($("form")[1]);
         formdata.append("option","formDishadd");
         $.ajax({
-            url:"../companyServer.php",
+            url:"packages/PACKServer.php",
             method:"POST",
             data:formdata,
             contentType: false,
@@ -568,7 +575,6 @@ $(document).ready(function ()
                 $("#selectmenu").html(data);
                 $("form")[1].reset();
                 $('#exampleModal').modal('toggle');
-
             }
         });
     });

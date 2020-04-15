@@ -1,4 +1,5 @@
 <?php
+
 function showPrizrListDetail($hallname,$hallid,$daytime,$companyid)
 {
 
@@ -97,5 +98,32 @@ AND (dayTime="'.$daytime.'") AND (month="'.$monthsArray[$i].'") AND (isFood=1)AN
     $display.='
         </tbody>
     </table>';
+    return $display;
+}
+
+function dishesOfPakage($sql)
+{
+    $dishdetail = queryReceive($sql);
+    $display='';
+    for ($j = 0; $j < count($dishdetail); $j++)
+    {
+
+        $image="https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png";
+
+
+        if((file_exists('../../../images/dishImages/'.$dishdetail[$j][2]))&&($dishdetail[$j][2]!=""))
+        {
+            $image='../../images/dishImages/'.$dishdetail[$j][2];;
+        }
+
+
+        $display.= '
+        <div id="dishid' . $dishdetail[$j][1] . '" class="col-4 alert-danger border m-1 form-group p-0" style="height: 30vh;" >
+            <img src="'.$image.'" class="col-12" style="height: 15vh">
+            <p class="col-form-label" class="form-control col-12">' . $dishdetail[$j][0] . '</p>
+            <input   data-image="'.$image.'" data-dishname="' . $dishdetail[$j][0] . '"  data-dishid="' . $dishdetail[$j][1] . '" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
+        </div>';
+
+    }
     return $display;
 }

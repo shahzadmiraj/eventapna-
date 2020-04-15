@@ -546,32 +546,6 @@ WHERE  id='.$order.'';
         $sql='UPDATE `hall` SET `name`="'.$hallname.'",`max_guests`='.$capacity.',`noOfPartitions`='.$partition.',`ownParking`='.$parking.',`image`="'.$hallimage.'",`hallType`='.$halltype.',`location_id`='.$previousaddressid.' WHERE id='.$hallid.'';
         querySend($sql);
     }
-    else if($_POST['option']=="formDishadd")
-    {
-
-        $dishname=chechIsEmpty($_POST['dishname']);
-        $dishimage='';
-        if(!empty($_FILES['image']["name"]))
-        {
-            $dishimage = "../images/dishImages/" . $_FILES['image']['name'];
-            $resultimage = ImageUploaded($_FILES, $dishimage);//$dishimage is destination file location;
-            if ($resultimage != "") {
-                print_r($resultimage);
-                exit();
-            }
-            $dishimage =$_FILES['image']['name'];
-        }
-       /* $sql='INSERT INTO `systemDish`(`name`, `id`, `image`, `isExpire`, `systemDishType_id`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",NULL,NULL)';
-        querySend($sql);*/
-       $userid=$_POST['userid'];
-       $companyid=$_POST['$companyid'];
-       $sql='INSERT INTO `systemItem`(`id`, `image`, `active`, `expire`, `user_id`, `company_id`, `name`) VALUES (NULL,"'.$dishimage.'","'.$timestamp.'",NULL,'.$userid.','.$companyid.',"'.$dishname.'")';
-        querySend($sql);
-       // $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
-        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.')';
-        echo dishesOfPakage($sql);
-
-    }
     else if($_POST['option']=="Showdishessystem")
     {
         $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
