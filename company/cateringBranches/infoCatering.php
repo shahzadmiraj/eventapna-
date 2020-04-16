@@ -231,12 +231,12 @@ include_once ("../../webdesign/footer/footer.php");
     $(document).ready(function()
     {
         latitude="<?php echo $cateringdetail[0][4];?>";
-        longitude="<?php echo $cateringdetail[0][3];?>";/*
+        longitude="<?php echo $cateringdetail[0][3];?>";
         $.ajax({
         url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
         dataType: "script",
-        cache: false*/
-    //});
+        cache: false
+    });
 
     });
 
@@ -287,7 +287,6 @@ include_once ("../../webdesign/footer/footer.php");
             if(state)
                 return false;
 
-            alert("weknnjewnjew");
             var formdata = new FormData($("#formcatering")[0]);
 
             formdata.append("option","EditCatering");

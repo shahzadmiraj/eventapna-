@@ -152,7 +152,7 @@ include_once ("../../../webdesign/header/header.php");
     {
         $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"><i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
 
-        $sql = 'SELECT d.name, d.id,d.image FROM dish as d WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND((ISNULL(d.expire))) ';
+        $sql = 'SELECT d.name, d.id,d.image,(SELECT price FROM `dishWithAttribute` WHERE dish_id=d.id ) FROM dish as d WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND((ISNULL(d.expire))) ';
 
       //  $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(expire)) AND(catering_id='.$cateringid.')';
         $dishDetail=queryReceive($sql);
@@ -161,7 +161,7 @@ include_once ("../../../webdesign/header/header.php");
         for ($j=0;$j<count($dishDetail);$j++)
         {
             $display .= ' 
-         <a    href="EditDish.php?dish='.base64url_encode($dishDetail[$j][1]).'&catering='.$_GET['catering'].'"  class="col-5 m-2 m-sm-auto  shadow-lg p-3 bg-white rounded" >';
+         <a    href="EditDish.php?dish='.base64url_encode($dishDetail[$j][1]).'&catering='.$_GET['catering'].'"  class="col-md-4 card m-1" >';
 
 
 
@@ -181,9 +181,13 @@ include_once ("../../../webdesign/header/header.php");
 
 
             $display.='<img class="card-img-top " src="'.$image.'" alt="Card image" style="height: 100px" >
-        
-            <h4  class="font-weight-bold p-0 card-title col-12
-            "><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</h4>       
+
+<p>
+<span class="float-left"><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</span>
+
+<span class="float-right text-danger"><i class="far fa-money-bill-alt"></i>' . $dishDetail[$j][3] . '</span>
+</p>
+       
         </a>';
         }
         $display.='</div>';
