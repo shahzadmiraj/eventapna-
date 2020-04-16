@@ -121,7 +121,7 @@ function dishesOfPakage($sql)
         <div id="dishid' . $dishdetail[$j][1] . '" class="col-4 alert-danger border m-1 form-group p-0" style="height: 30vh;" >
             <img src="'.$image.'" class="col-12" style="height: 15vh">
             <p class="col-form-label" class="form-control col-12">' . $dishdetail[$j][0] . '</p>
-            <input   data-image="'.$image.'" data-dishname="' . $dishdetail[$j][0] . '"  data-dishid="' . $dishdetail[$j][1] . '" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
+            <input   data-image="'.$image.'" data-dishname="' . $dishdetail[$j][0] . '"  data-basimage="'. $dishdetail[$j][2].'" type="button" value="Select" class="form-control col-12 touchdish btn btn-success">
         </div>';
 
     }

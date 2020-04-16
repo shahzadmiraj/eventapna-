@@ -153,147 +153,12 @@ if(isset($_POST['option']))
 
 
     }
-    else if($_POST['option']=='createOnlyseating')
-    {
-        $hallid=$_POST['hallid'];
-        $daytime=$_POST['daytime'];
-        createOnlyAllSeating($hallid,$daytime);
-
-    }
-    else if($_POST['option']=="CreatePackage")
-    {
-        /*if($_POST['perivious']!="none")
-        {
-            $packid=$_POST['perivious'];
-            $month=$_POST['month'];
-            $daytime=$_POST['daytime'];
-            $hallid=$_POST['hallid'];
-
-            $sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packid.'';
-            $result=queryReceive($sql);
-            $sql='INSERT INTO `hallprice`(`id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`) VALUES (NULL,"'.$month.'",1,'.$result[0][3].',"'.$result[0][4].'","'.$daytime.'",NULL,'.$hallid.',"'.$result[0][8].'")';
-            querySend($sql);
-            $last_id=mysqli_insert_id($connect);
-            $sql='SELECT `id`, `dishname`, `image`, `expire`, `hallprice_id` FROM `menu` WHERE ISNULL(expire) &&(hallprice_id='.$packid.')';
-            $result=queryReceive($sql);
-            for($i=0;$i<count($result);$i++)
-            {
-                $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `hallprice_id`) VALUES (NULL,"'.$result[$i][1].'","'.$result[$i][2].'",NULL,'.$last_id.')';
-                querySend($sql);
-            }
-                exit();
-        }*/
-
-
-        $selectedDatesString=$_POST['selectedDates'];
-        $selectedDates=explode (",", $selectedDatesString);
-     /*   if(!isset($_POST['dishname']))
-        {
-            echo "Please Select Dishes ";
-            exit();
-        }*/
-     $MinimumAmount=$_POST['MinimumAmount'];
-        $PackagesType=$_POST['PackagesType'];
-        $userid=$_POST['userid'];
-        $daytime=$_POST['Daytime'];
-        $hallid=$_POST['hallid'];
-        $packagename=$_POST['packagename'];
-        $rate=chechIsEmpty($_POST['rate']);
-        $describe=$_POST['describe'];
-        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, `minimumAmountBooking`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL,'.$MinimumAmount.')';
-        querySend($sql);
-        $id=mysqli_insert_id($connect);
-        for ($i=0;$i<count($selectedDates);$i++)
-        {
-           $date=date('Y-m-d ',strtotime(trim($selectedDates[$i])));
-            $sql = 'INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`) VALUES (NULL,"' . $timestamp . '",NULL,' . $id . ',' . $userid . ',NULL,"' .$date.'")';
-            querySend($sql);
-        }
-            $dishnames=array();
-            $image=array();
-        if(isset($_POST['dishname']))
-        {
-
-            $dishnames=$_POST['dishname'];
-            $image=$_POST['image'];
-        }
-        for ($i=0;($i<count($dishnames))&&($PackagesType==1);$i++)
-        {
-            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `package_id`) VALUES (NULL,"'.$dishnames[$i].'","'.$image[$i].'",NULL,'.$id.')';
-            querySend($sql);
-        }
-
-    }
-    else if($_POST['option']=="showdaytimelist")
-    {
-
-
-
-    }
-    else if($_POST['option']=="changeSeating")
-    {
-
-        $timestamp = date('Y-m-d H:i:s');
-        $packageid=$_POST['packageid'];
-        $value=chechIsEmpty($_POST['value']);
-        $sql='UPDATE `hallprice` SET expire="'.$timestamp.'" WHERE id='.$packageid.'';
-        querySend($sql);
-        $sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
-        $detailPack=queryReceive($sql);
-        $sql='INSERT INTO `hallprice`(`id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`) VALUES (NULL,"'.$detailPack[0][1].'",0,'.$value.',"'.$detailPack[0][4].'","'.$detailPack[0][5].'",NULL,'.$detailPack[0][7].',"'.$detailPack[0][8].'")';
-        querySend($sql);
-       
-    }
-    else if($_POST['option']=="ExpireBtn")
-    {
-
-        $packageid=$_POST['packageid'];
-        $expirevalue=$_POST['expirevalue'];
-
-        if($expirevalue=="Click Expire")
-        {
-            $dayAndTime=date('Y-m-d H:i:s');
-            $sql='UPDATE `hallprice` SET expire="'.$dayAndTime.'" WHERE id='.$packageid.'';
-        }
-        else
-        {
-            $sql='UPDATE `hallprice` SET expire=NULL WHERE id='.$packageid.'';
-        }
-        querySend($sql);
-
-    }
-    else if($_POST['option']=="packagechange")
-    {
-        $packageid=$_POST['packageid'];
-        $columnname=$_POST['columnname'];
-        $value=$_POST['value'];
-        $sql='UPDATE hallprice as hp SET hp.'.$columnname.' ="'.$value.'" WHERE hp.id='.$packageid.'';
-        querySend($sql);
-
-    }
     else if($_POST['option']=="alreadydishremove")
     {
         $id=$_POST['id'];
         $dayAndTime=date('Y-m-d H:i:s');
         $sql='UPDATE `menu` SET expire="'.$dayAndTime.'" WHERE id='.$id.'';
         querySend($sql);
-    }
-    else if($_POST['option']=="Extendmenu")
-    {
-        $packageid=$_POST['packageid'];
-        if(!isset($_POST['dishname']))
-        {
-            exit();
-        }
-        $dishnames=$_POST['dishname'];
-        $image=$_POST['image'];
-
-        for($i=0;$i<count($dishnames);$i++)
-        {
-            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `hallprice_id`) VALUES (NULL,"'.$dishnames[$i].'","'.$image[$i].'",NULL,'.$packageid.')';
-            querySend($sql);
-        }
-
     }
     else if($_POST['option']=="checkpackages1")
     {
@@ -551,14 +416,6 @@ WHERE  id='.$order.'';
         $sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) ';
         echo dishesOfPakage($sql);
 
-    }
-    else if($_POST['option']=="dishpredict")
-    {
-        $companyid=$_POST['companyid'];
-        $dishname=$_POST['dishname'];
-        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.') AND(name LIKE "%'.$dishname.'%")';
-        //$sql='SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire) AND name LIKE "%'.$dishname.'%"';
-        echo dishesOfPakage($sql);
     }
 
 

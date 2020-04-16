@@ -379,13 +379,14 @@ $(document).ready(function ()
     });
 
 
-    function Addmenu(dishname,image,id)
+    function Addmenu(dishname,image,basimage)
     {
        var text="<div id=\"dishtempid"+numbers+"\" class=\"col-4 alert-danger border m-1 form-group p-0\" style=\"height: 30vh;\" >\n" +
             "            <img src=\""+image+"\" class=\"col-12\" style=\"height: 15vh\">\n" +
             "            <p class=\"col-form-label\" class=\"form-control col-12\">"+dishname+"</p>\n" +
             "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"form-control col-12 touchdish btn btn-danger\">\n" +
-            "            <input hidden type=\"number\"  name=\"dishesid[]\"  value=\""+id+"\">\n" +
+            "            <input hidden type=\"number\"  name=\"dishesname[]\"  value=\""+dishname+"\">\n" +
+           "            <input hidden type=\"number\"  name=\"dishimages[]\"  value=\""+basimage+"\">\n" +
             "        </div>";
         numbers++;
         return text;
@@ -405,8 +406,8 @@ $(document).ready(function ()
        }
        else
        {
-           var id=$(this).data("dishid");
-           text=Addmenu(dishname,image,id);
+           var basimage=$(this).data("basimage");
+           text=Addmenu(dishname,image,basimage);
            $("#selectedmenu").append(text);
 
        }
@@ -515,18 +516,11 @@ $(document).ready(function ()
        {
            return false;
        }
-
-
-
-
-
-       change this code with id
-
        var formdata=new FormData($('#submitpackage')[0]);
        formdata.append("option","CreatePackage");
        formdata.append("selectedDates",selectedDates);
        $.ajax({
-           url:"../companyServer.php",
+           url:"packages/PACKServer.php",
            method:"POST",
            data:formdata,
            contentType: false,
@@ -578,10 +572,6 @@ $(document).ready(function ()
             }
         });
     });
-
-
-
-
     $("#searchdish").keyup(function ()
     {
         var companyid="<?php echo $companyid;?>";
@@ -591,12 +581,11 @@ $(document).ready(function ()
         formdata.append("companyid",companyid);
         formdata.append("dishname",dishname);
         $.ajax({
-            url:"../companyServer.php",
+            url:"packages/PACKServer.php",
             method:"POST",
             data:formdata,
             contentType: false,
             processData: false,
-
             beforeSend: function() {
                 $("#preloader").show();
             },

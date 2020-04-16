@@ -63,6 +63,51 @@ if(isset($_POST['option']))
         echo dishesOfPakage($sql);
 
     }
+    else if($_POST['option']=="CreatePackage")
+    {
+
+
+        $selectedDatesString=$_POST['selectedDates'];
+        $selectedDates=explode (",", $selectedDatesString);
+        $MinimumAmount=$_POST['MinimumAmount'];
+        $PackagesType=$_POST['PackagesType'];
+        $userid=$_POST['userid'];
+        $daytime=$_POST['Daytime'];
+        $hallid=$_POST['hallid'];
+        $packagename=$_POST['packagename'];
+        $rate=chechIsEmpty($_POST['rate']);
+        $describe=$_POST['describe'];
+        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, `minimumAmountBooking`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL,'.$MinimumAmount.')';
+        querySend($sql);
+        $id=mysqli_insert_id($connect);
+        for ($i=0;$i<count($selectedDates);$i++)
+        {
+            $date=date('Y-m-d ',strtotime(trim($selectedDates[$i])));
+            $sql = 'INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`) VALUES (NULL,"' . $timestamp . '",NULL,' . $id . ',' . $userid . ',NULL,"' .$date.'")';
+            querySend($sql);
+        }
+        $dishnames=array();
+        $image=array();
+        if(isset($_POST['dishesname']))
+        {
+
+            $dishnames=$_POST['dishesname'];
+            $image=$_POST['dishimages'];
+        }
+        for ($i=0;($i<count($dishnames))&&($PackagesType==1);$i++)
+        {
+            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `package_id`) VALUES (NULL,"'.trim($dishnames[$i]).'","'.trim($image[$i]).'",NULL,'.$id.')';
+            querySend($sql);
+        }
+
+    }
+    else if($_POST['option']=="dishpredict")
+    {
+        $companyid=$_POST['companyid'];
+        $dishname=$_POST['dishname'];
+        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.') AND(name LIKE "%'.$dishname.'%")';
+        echo dishesOfPakage($sql);
+    }
 
 
 
