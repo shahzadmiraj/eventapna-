@@ -193,27 +193,6 @@ include_once ("../../webdesign/footer/footer.php");
 
 <script src="../../webdesign/JSfile/JSFunction.js"></script>
 <script>
-    function NumberRange(Element,ShowMessage,Min,Max)
-    {
-        var state=true;
-        Element=$("#"+Element);
-        if((Element.val()>=Min)&&(Element.val()<=Max))
-        {
-            if(Element.hasClass("btn-danger"))
-            {
-                Element.removeClass("btn-danger");
-            }
-            state=false;
-        }
-        else
-        {
-            alert(ShowMessage);
-            if(!(Element.hasClass("btn-danger")))
-            Element.addClass("btn-danger");
-
-        }
-        return state;
-    }
 
 
     $(document).ready(function ()

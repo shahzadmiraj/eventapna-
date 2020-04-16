@@ -1,28 +1,30 @@
 
-function validation(Element,ShowMessage)
+window.NumberRange=function (Element,ShowMessage,Min,Max)
 {
-    if($.trim(Element.val())=="")
-    {
-        alert(ShowMessage);
-        Element.addClass("btn-danger");
-        return true;
-    }
-    else
-    {
-        if(Element.hasClass("btn-danger"))
-        {
-            Element.removeClass("btn-danger");
-        }
-
-    }
-    return false;
-}
-
-
-
-function validationWithString(Element,ShowMessage)
-{
+    var state=true;
     Element=$("#"+Element);
+    if((Element.val()>=Min)&&(Element.val()<=Max))
+    {
+        if(Element.hasClass("btn-danger"))
+        {
+            Element.removeClass("btn-danger");
+        }
+        state=false;
+    }
+    else
+    {
+        alert(ShowMessage);
+        if(!(Element.hasClass("btn-danger")))
+            Element.addClass("btn-danger");
+
+    }
+    return state;
+}
+
+
+
+window.validation= function (Element,ShowMessage)
+{
     if($.trim(Element.val())=="")
     {
         alert(ShowMessage);
@@ -40,7 +42,29 @@ function validationWithString(Element,ShowMessage)
     return false;
 }
 
-function validationWithoutAlert(Element)
+
+    window.validationWithString=function (Element,ShowMessage)
+    {
+        Element=$("#"+Element);
+        if($.trim(Element.val())=="")
+        {
+            alert(ShowMessage);
+            Element.addClass("btn-danger");
+            return true;
+        }
+        else
+        {
+            if(Element.hasClass("btn-danger"))
+            {
+                Element.removeClass("btn-danger");
+            }
+
+        }
+        return false;
+    }
+
+
+  window.validationWithoutAlert= function(Element)
 {
     if($.trim(Element.val())=="")
     {
@@ -59,7 +83,7 @@ function validationWithoutAlert(Element)
 }
 
 
-function  validationClass(Quantity,ShowMessage)
+window.validationClass=function (Quantity,ShowMessage)
 {
     var state=false;
     $( "."+Quantity ).each(function( index )
@@ -76,7 +100,7 @@ function  validationClass(Quantity,ShowMessage)
     return state;
 }
 
-function NumberRange(Element,ShowMessage,Min,Max)
+window.NumberRange= function (Element,ShowMessage,Min,Max)
 {
     var state=true;
     Element=$("#"+Element);

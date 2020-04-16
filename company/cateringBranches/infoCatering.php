@@ -52,21 +52,15 @@ $userid=$_COOKIE['userid'];
     <script src="../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
     <link rel="stylesheet" href="../../mapRadius/css/gmaps-lat-lng-radius.css" type="text/css">
-    <script>
 
-    </script>
 
 
 
@@ -122,7 +116,7 @@ else
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-utensils"></i></span>
                 </div>
-                <input name="cateringname" class="form-control" type="text" value="<?php echo $cateringdetail[0][0]; ?>">
+                <input id="cateringname" name="cateringname" class="form-control" type="text" value="<?php echo $cateringdetail[0][0]; ?>">
             </div>
         </div>
         <div class="form-group row">
@@ -228,18 +222,21 @@ else
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
+
+
+<script type="text/javascript" src="../../webdesign/JSfile/JSFunction.js"></script>
 <script>
 
 
     $(document).ready(function()
     {
         latitude="<?php echo $cateringdetail[0][4];?>";
-        longitude="<?php echo $cateringdetail[0][3];?>";
+        longitude="<?php echo $cateringdetail[0][3];?>";/*
         $.ajax({
         url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
         dataType: "script",
-        cache: false
-    });
+        cache: false*/
+    //});
 
     });
 
@@ -278,7 +275,19 @@ include_once ("../../webdesign/footer/footer.php");
         });
 
 
-        $("#submiteditcatering").click(function () {
+        $("#submiteditcatering").click(function ()
+        {
+
+            state=false;
+            if(validationWithString("cateringname","Please Enter Branch Name"))
+                state=true;
+            if(validationWithString("address","Please select Address"))
+                state=true;
+
+            if(state)
+                return false;
+
+            alert("weknnjewnjew");
             var formdata = new FormData($("#formcatering")[0]);
 
             formdata.append("option","EditCatering");

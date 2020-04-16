@@ -280,7 +280,7 @@ else
 include_once ("../../webdesign/footer/footer.php");
 ?>
 
-<script src="../../webdesign/JSfile/JSFunction.js"></script>
+<script src="../../webdesign/JSfile/JSFunction.js" type="text/javascript"></script>
 <script src="../../map/constantMap.js"></script>
 <script>
 
@@ -375,9 +375,6 @@ include_once ("../../webdesign/footer/footer.php");
             cache: false
         });
     });
-
-
-
 </script>
 </body>
 </html>

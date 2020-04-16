@@ -68,7 +68,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-utensils"></i></span>
             </div>
-            <input placeholder="Catering Branch name" name="namecatering" type="text" class="form-control">
+            <input id="namecatering" placeholder="Catering Branch name" name="namecatering" type="text" class="form-control">
         </div>
     </div>
     <div class="form-group row">
@@ -174,7 +174,8 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 
-    $(document).ready(function() {
+    $(document).ready(function()
+    {
         getLocation();
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
@@ -187,6 +188,16 @@ include_once ("../../webdesign/footer/footer.php");
     {
         $("#submitform").click(function ()
         {
+            state=false;
+            if(validationWithString("namecatering","Please Enter Branch Name"))
+                state=true;
+            if(validationWithString("address","Please select Address"))
+                state=true;
+
+            if(state)
+                return false;
+
+
             var formdata=new FormData($("#cateringform")[0]);
             formdata.append("option","createCatering");
             $.ajax({
