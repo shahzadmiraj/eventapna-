@@ -183,7 +183,7 @@ include_once ("../../webdesign/footer/footer.php");
             formdata.append("daytime",daytime);
             formdata.append("packagetype",PackageType);
             formdata.append("option","ViewPackages");
-            formdata.append("hallid",1);
+            formdata.append("hallid","<?php echo $hallid;?>");
 
 
             var calendar = $('#calendar').fullCalendar({
