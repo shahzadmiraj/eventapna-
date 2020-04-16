@@ -8,7 +8,7 @@ if($_POST['option']=="hallmutiplesimages")
 
     $hallid=$_POST['hallid'];
     $userid=$_POST["userid"];
-    $Distination="../../../images/hall/";
+    $Distination="../../../images/Gallery/Hall/";
     if(isset($_FILES['userfile']))
     {
 

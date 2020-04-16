@@ -100,7 +100,7 @@ else
 
 
 
-        $destination="../../images/hall/";
+        $destination="../../images/Gallery/Catering/";
         //include_once ("gallery/galleryPage.php");
 
 

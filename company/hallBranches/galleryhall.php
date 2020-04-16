@@ -95,7 +95,7 @@ else
 
 
 
-        $destination="../../images/hall/";
+        $destination="../../images/Gallery/Hall/";
         //include_once ("gallery/galleryPage.php");
 
 

@@ -42,14 +42,7 @@ $dishTypeDetail=queryReceive($sql);
             color: orange;
         }
 
-        .bgImgCenter{
-            background-image: url('https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg');
-            width: 100%;
-            height: auto;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
+
 
     </style>
 </head>
@@ -63,7 +56,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
     <div class="container">
         <a class="navbar-brand" href="#"><?php echo $catering[0][0]; ?></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +80,15 @@ include_once ("../../../webdesign/header/header.php");
 <?php
 $HeadingImage=$catering[0][1];
 $HeadingName=$catering[0][0];
+if(file_exists('../../../images/catering/'.$HeadingImage)&&($HeadingImage!=""))
+{
+    $HeadingImage='../../../images/catering/'.$HeadingImage;
 
+}
+else
+    {
+   $HeadingImage = 'https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg';
+}
 include_once ("../Company/Box.php");
 ?>
 
@@ -291,7 +292,7 @@ container-->
     <?php
     $sql='SELECT  image FROM images WHERE ISNULL(expire)AND (catering_id='.$cateringid.')';
     $Images=queryReceive($sql);
-    $destinatios="../../../images/catering/";
+    $destinatios="../../../images/Gallery/Catering/";
 
     include_once "../All/PictureGallery.php";
     ?>
@@ -304,7 +305,7 @@ container-->
 <div class="container" >
     <?php
     $video=$Images;
-    $destinatios="../../../images/catering/";
+    $destinatios="../../../images/Gallery/Hall/";
     include_once "../All/VideoGallery.php"
     ?>
     <script src="../../../webdesign/JSfile/video.js"></script>

@@ -282,7 +282,7 @@ p.id='.$customerId.'';
                 echo '
 
             <a  id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Back</a> 
-            <a   id="formcustomer"  data-href="saveAndBack" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-check "></i> Save and Back</a>';
+            <a   id="formcustomer"  data-href="saveAndBack" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Save and Back</a>';
 
             }
             else if($_SESSION['branchtype']=="hall")

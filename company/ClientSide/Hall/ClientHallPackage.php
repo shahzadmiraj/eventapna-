@@ -450,7 +450,7 @@ include_once ("../Company/Box.php");
     <?php
     $sql='SELECT  image FROM images WHERE ISNULL(expire)AND (hall_id='.$hallInformation[0][0].')';
     $Images=queryReceive($sql);
-    $destinatios="../../../images/hall/";
+    $destinatios="../../../images/Gallery/Hall/";
 
     include_once "../All/PictureGallery.php";
     ?>
@@ -462,7 +462,7 @@ include_once ("../Company/Box.php");
 <div class="container" >
     <?php
     $video=$Images;
-    $destinatios="../../../images/hall/";
+    $destinatios="../../../images/Gallery/Hall/";
     include_once "../All/VideoGallery.php"
     ?>
     <script src="../../../webdesign/JSfile/video.js"></script>

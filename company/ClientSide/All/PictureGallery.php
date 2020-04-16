@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="row">
                     <?php
-
+                    $extensions= array("jpeg","jpg","png");
                     $display='';
                     for($i=0;$i<count($Images);$i++)
                     {
@@ -17,9 +17,9 @@
 
                         $passbyreference=explode('.',$img);
                         $file_ext=strtolower(end($passbyreference));
-                        $extensions= array("jpeg","jpg","png");
 
-                        if((in_array($file_ext,$extensions)===true )&&(file_exists($destinatios.$img))&&($img!="")) {
+
+                        if((in_array($file_ext,$extensions)==true )&&(file_exists($destinatios.$img))&&($img!="")) {
                             $img = $destinatios . $img;
 
                             $display .= '    
