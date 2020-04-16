@@ -170,7 +170,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
-            <input name="guests" type="number" class="form-control" value="<?php echo $detailorder[0][12]; ?>">
+            <input id="guests" name="guests" type="number" class="checkpackage form-control" value="<?php echo $detailorder[0][12]; ?>">
         </div>
 
 
@@ -548,10 +548,6 @@ include_once ("../../webdesign/footer/footer.php");
           //  AutoTotalAmount+=parseInt(extraAmount);
             $("#totalamount").val(AutoTotalAmount);
         }
-        $("#guests").change(function ()
-        {
-            valueChangeAuto();
-        });
         function RemainingAmount()
         {
             var totalamount= Number($("#totalamount").val());
@@ -585,7 +581,6 @@ include_once ("../../webdesign/footer/footer.php");
         $("#perheadwith").change(function ()
         {
             barnches();
-
         });
         barnches();
         $("#cancel").click(function ()
@@ -598,13 +593,11 @@ include_once ("../../webdesign/footer/footer.php");
                 return 1;
             }
             return 0;
-
         }
-
-        $(".checkpackage").change(function ()
+        function PackageAvailableCheckLimit()
         {
+            var guests=$("#guests").val();
             var date = $("#date").val();
-            var month = new Date(date).getMonth();
             var time = $("#time").val();
             var perheadwith = $("#perheadwith").val();
             $("#selectmenu").html("");
@@ -612,16 +605,16 @@ include_once ("../../webdesign/footer/footer.php");
             {
                 return false;
             }
-
             var formdata = new FormData;
             formdata.append("date",date);
-            formdata.append("month", month);
+            formdata.append("guests",guests);
             formdata.append("time", time);
             formdata.append("perheadwith", perheadwith);
             formdata.append("option", "checkpackages1");
+            formdata.append("orderid", "<?php echo $orderid;?>");
             formdata.append("hallid",<?php echo $detailorder[0][1];?>);
             $.ajax({
-                url: "../companyServer.php",
+                url: "HallOrder/OrderServer.php",
                 method: "POST",
                 data: formdata,
                 contentType: false,
@@ -634,23 +627,27 @@ include_once ("../../webdesign/footer/footer.php");
                 {
                     $("#preloader").hide();
                     $("#groupofpackages").html(data);
-                    valueChangeAuto();
                     $("#selectmenu").html("");
                     if($("#packageAvalable").val()=="Yes")
                     {
                         $("#submitform").show("slow");
+                        valueChangeAuto();
                     }
                     else
                     {
 
                         $("#submitform").hide("slow");
+
                     }
 
                 }
-
-
             });
+        }
 
+        $(".checkpackage").change(function ()
+        {
+
+            PackageAvailableCheckLimit();
 
         });
 

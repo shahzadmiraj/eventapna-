@@ -91,17 +91,19 @@ AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
     {
         $maxGuest = $maxGuest -$resultRunning[0][0];
         $Currentpatition=$Currentpatition-$resultRunning[0][1];
-    }
-    //cancel order
-    $sql='SELECT sum(od.total_person),count(od.id) FROM orderDetail as od WHERE (od.destination_date="'.$destination_date.'")AND(od.status_hall="Cancel")
-AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
-    $CancelOrder=queryReceive($sql);
 
-    if(count($CancelOrder)>0)
-    {
-        $maxGuest = $maxGuest+$resultRunning[0][0];
-        $Currentpatition=$Currentpatition+$resultRunning[0][1];
+        //cancel order
+   /*     $sql='SELECT sum(od.total_person),count(od.id) FROM orderDetail as od WHERE (od.destination_date="'.$destination_date.'")AND(od.status_hall="Cancel")
+AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
+        $CancelOrder=queryReceive($sql);
+
+        if(count($CancelOrder)>0)
+        {
+            $maxGuest = $maxGuest+$resultRunning[0][0];
+            $Currentpatition=$Currentpatition+$resultRunning[0][1];
+        }*/
     }
+
     $MaxGuestMaxPartition[0]=$maxGuest;
     $MaxGuestMaxPartition[1]=$Currentpatition;
     return $MaxGuestMaxPartition;

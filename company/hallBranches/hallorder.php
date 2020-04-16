@@ -77,7 +77,7 @@ include_once ("../../webdesign/header/header.php");
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-users"></i></span>
         </div>
-        <input id="guests" name="guests" type="number" class="form-control" placeholder="etc 250,300,....persons">
+        <input id="guests" name="guests" type="number" class="form-control checkpackage" placeholder="etc 250,300,....persons">
     </div>
 
 
@@ -284,10 +284,6 @@ include_once ("../../webdesign/footer/footer.php");
                 $("#totalamount").val(parseInt(amount)*parseInt(guests));
             }
         }
-        $("#guests").change(function ()
-        {
-            valueChangeAuto();
-        });
         function RemainingAmount()
         {
             var totalamount= $("#totalamount").val();
@@ -295,7 +291,6 @@ include_once ("../../webdesign/footer/footer.php");
             var newcharges=$("#Charges").val();
             $("#remaining").val(totalamount+newcharges-newDiscount);
         }
-
         $("#Discount").change(function ()
         {
             RemainingAmount();
@@ -335,26 +330,26 @@ include_once ("../../webdesign/footer/footer.php");
 
         }
 
-        $(".checkpackage").change(function ()
+        function PackageAvailableCheckLimit()
         {
+            var guests=$("#guests").val();
             var date = $("#date").val();
-            var month = new Date(date).getMonth();
             var time = $("#time").val();
             var perheadwith = $("#perheadwith").val();
+            $("#selectmenu").html("");
             if (!checkpackage(date, time, perheadwith))
             {
                 return false;
             }
-
             var formdata = new FormData;
             formdata.append("date",date);
-            formdata.append("month", month);
+            formdata.append("guests",guests);
             formdata.append("time", time);
             formdata.append("perheadwith", perheadwith);
-            formdata.append("option", "checkpackages1");
-            formdata.append("hallid",<?php echo $hallid;?>);
+            formdata.append("option", "CheckOrderCreate");
+            formdata.append("hallid",<?php echo $detailorder[0][1];?>);
             $.ajax({
-                url: "../companyServer.php",
+                url: "HallOrder/OrderServer.php",
                 method: "POST",
                 data: formdata,
                 contentType: false,
@@ -367,23 +362,27 @@ include_once ("../../webdesign/footer/footer.php");
                 {
                     $("#preloader").hide();
                     $("#groupofpackages").html(data);
-                    valueChangeAuto();
                     $("#selectmenu").html("");
                     if($("#packageAvalable").val()=="Yes")
-                        {
-                                $("#submitform").show("slow");
-                         }
+                    {
+                        $("#submitform").show("slow");
+                        valueChangeAuto();
+                    }
                     else
                     {
 
                         $("#submitform").hide("slow");
+
                     }
 
                 }
-
-
             });
+        }
 
+
+        $(".checkpackage").change(function ()
+        {
+            PackageAvailableCheckLimit();
 
         });
 
@@ -394,16 +393,11 @@ include_once ("../../webdesign/footer/footer.php");
         {
 
             var packageid=$("input[name='defaultExampleRadios']:checked").val();
-            // if($("#perheadwith").val()!="1")
-            //     return false;
-            //multiples packages
             valueChangeAuto();
-
             var describe=$("#describe"+packageid).val();
             var formdata = new FormData;
             formdata.append("packageid", packageid);
             formdata.append("option", "viewmenu");
-
             $.ajax({
                 url: "../companyServer.php",
                 method: "POST",
@@ -422,7 +416,6 @@ include_once ("../../webdesign/footer/footer.php");
                     {
                         $("#selectmenu").append("<h3 align='center' class='col-12'>package Description</h3><p class='col-12'>" + describe + "</p>");
                     }
-
                 }
             });
         });
@@ -488,13 +481,6 @@ include_once ("../../webdesign/footer/footer.php");
 
 
         });
-
-
-
-
-
-
-
 
     });
 

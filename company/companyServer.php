@@ -160,71 +160,7 @@ if(isset($_POST['option']))
         $sql='UPDATE `menu` SET expire="'.$dayAndTime.'" WHERE id='.$id.'';
         querySend($sql);
     }
-    else if($_POST['option']=="checkpackages1")
-    {
-        $date=$_POST['date'];
-        $time=$_POST['time'];
-        $perheadwith=$_POST['perheadwith'];
-        $hallid=$_POST['hallid'];
-        $sql='SELECT distinct p.id,p.package_name,p.price,p.describe,p.isFood,p.minimumAmountBooking,pd.id,pd.selectedDate FROM packages as p INNER join 	packageDate as pd
-on (p.id=pd.package_id)
-WHERE 
-(p.hall_id='.$hallid.')AND (ISNULL(p.expire))AND(ISNULL(pd.expire))
-AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perheadwith.')
-';
-        $detailpackage=queryReceive($sql);
 
-        $display='<h3 align="center">Packages Detail </h3>';
-for ($i=0;$i<count($detailpackage);$i++)
-            {
-                        $display.=' <div class="checkclasshas custom-control custom-radio form-group  ">
-                <input type="radio" data-describe="'.$detailpackage[$i][0].'" value="'.$detailpackage[$i][6].'" class="changeradio custom-control-input" id="defaultUnchecked'.$i.'" name="defaultExampleRadios">
-                <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with price='.$detailpackage[$i][2].'and minimum amount must be '.$detailpackage[$i][5].'</label>
-                    </div> 
-                <input hidden id="selectpricefix'.$detailpackage[$i][6].'" type="number" value="'.$detailpackage[$i][2].'">
-                <input hidden id="describe'.$detailpackage[$i][6].'" type="text" value="'.$detailpackage[$i][3].'">';
-            }
-        if($time=="Morning")
-        {
-            $time="09:00:00";
-        }
-        else if($time=="Afternoon")
-        {
-
-            $time="12:00:00";
-        }
-        else
-            {
-            $time="18:00:00";
-        }
-        $sql='SELECT od.id,od.total_person FROM orderDetail as od WHERE (od.destination_date= "'.$date.'") AND (od.destination_time="'.$time.'") AND (od.status_hall="Running") AND (od.hall_id='.$hallid.')';
-        $detailhalls=queryReceive($sql);
-       // echo $sql;
-        if(count($detailhalls)>0)
-        {
-            $display.='<h4 class="btn btn-danger">Already '.count($detailhalls).' function has booked</h4>';
-            for ($i=0;$i<count($detailhalls);$i++)
-            {
-                $display.='<p>'.($i+1).' function booked with '.$detailhalls[$i][1].' Guests</p>';
-            }
-        }
-        $display.='<input hidden type="text" id="packageAvalable" value="';
-
-            if(count($detailpackage)>0)
-            {
-                //no of packess is or not
-                $display.="Yes";
-            }
-            else
-            {
-                $display.="No";
-            }
-
-           $display.= '">';
-        echo $display;
-
-
-    }
     else if($_POST['option']=="viewmenu")
     {
         $packageDateid=$_POST['packageid'];
