@@ -105,7 +105,7 @@ if(isset($_POST['option']))
     {
         $companyid=$_POST['companyid'];
         $dishname=$_POST['dishname'];
-        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.') AND(name LIKE "%'.$dishname.'%")';
+        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.') AND(name LIKE "%'.(trim($dishname)).'%")';
         echo dishesOfPakage($sql);
     }
 

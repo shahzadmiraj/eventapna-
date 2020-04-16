@@ -152,7 +152,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
 
-<div class="container card">
+<div class="container">
 
 
 
@@ -252,16 +252,14 @@ include_once ("../../webdesign/header/header.php");
         </div>
 
 
+    </div>
+
+    <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Your Package</h3>
+
+    <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 60vh">
 
 
-        <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Your Package</h3>
 
-        <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 60vh">
-
-
-
-
-        </div>
 
     </div>
 
@@ -300,10 +298,6 @@ include_once ("../../webdesign/header/header.php");
     <div id="selectmenu" class="border m-2 p-0  row"  style="overflow:auto;width: 100% ;height: 50vh" >
 
         <?php
-
-
-        //$sql = 'SELECT `name`, `id`, `image` FROM `systemDish` WHERE ISNULL(isExpire)';
-
         $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.')';
        echo dishesOfPakage($sql);
 
@@ -381,10 +375,10 @@ $(document).ready(function ()
 
     function Addmenu(dishname,image,basimage)
     {
-       var text="<div id=\"dishtempid"+numbers+"\" class=\"col-4 alert-danger border m-1 form-group p-0\" style=\"height: 30vh;\" >\n" +
-            "            <img src=\""+image+"\" class=\"col-12\" style=\"height: 15vh\">\n" +
-            "            <p class=\"col-form-label\" class=\"form-control col-12\">"+dishname+"</p>\n" +
-            "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"form-control col-12 touchdish btn btn-danger\">\n" +
+       var text="<div id=\"dishtempid"+numbers+"\" class=\"col-md-4 card border\" style=\"height: 30vh;\" >\n" +
+            "            <img src=\""+image+"\" class=\"card-img-top\" style=\"height: 15vh\">\n" +
+            "            <p class=\"col-form-label\">"+dishname+"</p>\n" +
+            "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"touchdish btn btn-danger\">\n" +
             "            <input hidden type=\"number\"  name=\"dishesname[]\"  value=\""+dishname+"\">\n" +
            "            <input hidden type=\"number\"  name=\"dishimages[]\"  value=\""+basimage+"\">\n" +
             "        </div>";
@@ -569,9 +563,11 @@ $(document).ready(function ()
                 $("#selectmenu").html(data);
                 $("form")[1].reset();
                 $('#exampleModal').modal('toggle');
+                $("#searchdish").val("");
             }
         });
     });
+
     $("#searchdish").keyup(function ()
     {
         var companyid="<?php echo $companyid;?>";
@@ -644,8 +640,6 @@ $(document).ready(function () {
     });
     $("#previous").click(function ()
     {
-
-
         checkmonthyear();
     });
 
