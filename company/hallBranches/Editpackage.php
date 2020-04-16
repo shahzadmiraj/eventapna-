@@ -11,14 +11,9 @@ $encodedPack=$_GET['pack'];
 $packageid=base64url_decode($encodedPack);
 $hallid=$id;
 $companyid=$_COOKIE['companyid'];
-
-//$sql='SELECT `id`, `month`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name` FROM `hallprice` WHERE id='.$packageid.'';
-
-
 $sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')';
 $packageDetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
-
 ?>
 
 <!DOCTYPE html>

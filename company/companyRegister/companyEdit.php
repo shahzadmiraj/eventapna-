@@ -120,12 +120,13 @@ include_once ("../../webdesign/header/header.php");
 
 
                     <!--USERS-->
-<div class="form-group row shadow m-auto  card" id="userbranches">
+<div class="form-group row shadow m-auto  " id="userbranches">
 
-    <div class="col-12 row  ">
-        <h2 align="center" class="col-7 "> <i class="fas fa-user  mr-1"></i> Users</h2>
-        <a href="../../system/user/usercreate.php" class="btn btn-success col-5"><i class="fas fa-user-plus"></i> Add User</a>
+    <div class="container mt-2 mb-2 alert-primary" >
+        <h3  class="float-left"> <i class="fas fa-user  mr-1"></i> Users</h3>
+        <a href="../../system/user/usercreate.php" class="btn btn-success float-right"><i class="fas fa-user-plus"></i> Add User</a>
     </div>
+
     <hr class="border border-white">
     <?php
     $sql='SELECT u.id, u.username, u.isExpire,(SELECT p.image FROM person as p WHERE p.id=u.person_id) FROM user as u WHERE u.company_id='.$companyid.'';
@@ -134,7 +135,7 @@ include_once ("../../webdesign/header/header.php");
     for($i=0;$i<count($users);$i++)
     {
       $display.='
-    <a href="?action=user&id='.$users[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2 ">
+    <a href="?action=user&id='.$users[$i][0].'" class="col-md-4">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
@@ -169,14 +170,14 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-<div class="form-group row shadow card mt-2" id="hallbranches">
 
-    <!--Hall Branches-->
-    <div class="col-12 row">
-        <h2 align="center" class=" col-6"> <i class="fas fa-place-of-worship mr-2"></i> Halls</h2>
-        <a href="../hallBranches/hallRegister.php" class="btn btn-success col-6"><i class="fas fa-plus"></i><i class="fas fa-place-of-worship mr-2"></i>Add Hall</a>
+<div class="row shadow  mt-2" id="hallbranches">
+
+    <div class="container mt-2 mb-2 alert-primary" >
+        <h3  class="float-left"> <i class="fas fa-place-of-worship "></i> Halls</h3>
+        <a href="../hallBranches/hallRegister.php" class="btn btn-success float-right"><i class="fas fa-plus"></i><i class="fas fa-place-of-worship "></i> Add Hall</a>
     </div>
-    <hr class="border border-white">
+
     <?php
     $sql='SELECT `id`, `name`, `expire`, `image` FROM `hall` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
     $halldetails=queryReceive($sql);
@@ -184,8 +185,8 @@ include_once ("../../webdesign/header/header.php");
     for($i=0;$i<count($halldetails);$i++)
     {
         $display.='
-    <a href="?action=hall&id='.$halldetails[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
-        <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
+    <a href="?action=hall&id='.$halldetails[$i][0].'" class=" col-md-4">
+        <div class="card    rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
         if((file_exists('../../images/hall/'.$halldetails[$i][3]))&&($halldetails[$i][3]!=""))
@@ -216,14 +217,12 @@ include_once ("../../webdesign/header/header.php");
 </div>
 
 
-<div class="form-group row shadow card mt-2" id="cateringbranches">
+<div class="row shadow mt-2" id="cateringbranches">
 
-    <!--Catering Branches-->
-    <div class="col-12   row">
-        <h2 align="center" class="col-7"> <i class="fas fa-utensils"></i> Caterings</h2>
-        <a href="../cateringBranches/catering.php" class="btn btn-success col-5"><i class="fas fa-plus"></i> <i class="fas fa-utensils"></i> Add Catering</a>
+    <div class="container mt-2 mb-2 alert-primary" >
+        <h4  class="float-left">  <i class="fas fa-utensils"></i> Caterings</h4>
+        <a href="../cateringBranches/catering.php" class="btn btn-success float-right"><i class="fas fa-plus"></i> <i class="fas fa-utensils"></i> Add Catering</a>
     </div>
-    <hr class="border border-white">
     <?php
     $sql='SELECT `id`, `name`, `expire`, `image` FROM `catering` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
     $cateringdetails=queryReceive($sql);
@@ -231,7 +230,7 @@ include_once ("../../webdesign/header/header.php");
     for($i=0;$i<count($cateringdetails);$i++)
     {
         $display.='
-    <a href="?action=catering&id='.$cateringdetails[$i][0].'" class="col-sm-12 col-md-4 col-xl-3 m-2">
+    <a href="?action=catering&id='.$cateringdetails[$i][0].'" class="col-md-4">
         <div class="card  col-12  rounded-circle shadow" style="height: 25vh"  >
             <img class="card-img-top  col-12 rounded-circle" src="';
 
