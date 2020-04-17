@@ -184,7 +184,7 @@ include_once ("../Company/Box.php");
                         Package Price per head
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2 alert-danger">
                         <?php echo $PackageDetail[0][2];?>
                     </div>
 
@@ -195,7 +195,7 @@ include_once ("../Company/Box.php");
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        <?php echo  $MaxGuestMaxPartition[1];?>
+                        <?php echo  $MaxGuestMaxPartition[1];?> / <?php echo $MaxGuestMaxPartition[3];?>
                     </div>
 
 
@@ -205,7 +205,7 @@ include_once ("../Company/Box.php");
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        <?php echo $MaxGuestMaxPartition[0];?>
+                        <?php echo $MaxGuestMaxPartition[0];?>/<?php echo $MaxGuestMaxPartition[2];?>
                     </div>
 
 

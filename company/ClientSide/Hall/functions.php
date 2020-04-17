@@ -70,6 +70,8 @@ function hallOrderExist($dayTime,$hallid,$destination_date)
 
     $MaxGuestMaxPartition[0]=$halldetal[0][0];
     $MaxGuestMaxPartition[1]=$halldetal[0][1];
+    $MaxGuestMaxPartition[2]=$halldetal[0][0];
+    $MaxGuestMaxPartition[3]=$halldetal[0][1];
     if($dayTime="Morning")
         $dayTime="09:00:00";
     else  if($dayTime="Afternoon")
