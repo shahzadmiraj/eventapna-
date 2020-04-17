@@ -31,7 +31,7 @@ if(isset($_GET['action']))
 $hallid="";
 $cateringid="";
 $hallorcater="";
-$order_info=$_GET['order_status']="Running";
+$order_info=$_GET['order_status'];
 
 
 
@@ -136,7 +136,7 @@ include_once ("../webdesign/header/header.php");
                 </div>
                 <input
                         value="<?php
-                       if($_GET['p_name'])
+                       if(isset($_GET['p_name']))
                            echo $_GET['p_name'];
 
                         ?>"
@@ -160,7 +160,7 @@ include_once ("../webdesign/header/header.php");
                 </div>
                 <input
                         value="<?php
-                        if($_GET['p_cnic'])
+                        if(isset($_GET['p_cnic']))
                             echo $_GET['p_cnic'];
 
                         ?>" name="p_cnic" type="number" class="changeColumn form-control" placeholder="or cnic 23212xxxxx">
@@ -178,7 +178,7 @@ include_once ("../webdesign/header/header.php");
                     </div>
                     <input
                             value="<?php
-                            if($_GET['p_id'])
+                            if(isset($_GET['p_id']))
                                 echo $_GET['p_id'];
 
                             ?>"  name="p_id" type="number" class="changeColumn form-control" placeholder="customer ID 1,2,3,4,.....">
@@ -196,7 +196,7 @@ include_once ("../webdesign/header/header.php");
                 </div>
                 <input
                         value="<?php
-                        if($_GET['n_number'])
+                        if(isset($_GET['n_number']))
                             echo $_GET['n_number'];
 
                         ?>" name="n_number" type="text" class="changeColumn form-control" placeholder="number 03231xxxxxx">
@@ -215,7 +215,7 @@ include_once ("../webdesign/header/header.php");
                 </div>
                 <input
                         value="<?php
-                        if($_GET['od_booking_date'])
+                        if(isset($_GET['od_booking_date']))
                             echo $_GET['od_booking_date'];
 
                         ?>" name="od_booking_date" type="date" class="changeColumn form-control">
@@ -235,7 +235,7 @@ include_once ("../webdesign/header/header.php");
                 </div>
                 <input
                         value="<?php
-                        if($_GET['od_destination_date'])
+                        if(isset($_GET['od_destination_date']))
                             echo $_GET['od_destination_date'];
 
                         ?>" name="od_destination_date" type="date" class="changeColumn form-control">
@@ -480,30 +480,9 @@ include_once ("../webdesign/footer/footer.php");
 
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
 
-        $(document).on("change",'.changeColumn',function (e)
-        {
-                e.preventDefault();
-                var formdata=new FormData($('#formId1')[0]);
-                formdata.append("hallorcater","<?php echo $description;?>");
-                $.ajax({
-                    url:"FindOrderServer.php",
-                    method:"POST",
-                    data:formdata,
-                    contentType: false,
-                    processData: false,
-
-                    beforeSend: function() {
-                        $("#preloader").show();
-                    },
-                    success:function (data)
-                    {
-                        $("#preloader").hide();
-                        $("#recordsAll").html(data);
-                    }
-                });
-        });
 
 
         $("#searchBtn").click(function () {
