@@ -31,8 +31,7 @@ if(isset($_GET['action']))
 $hallid="";
 $cateringid="";
 $hallorcater="";
-$order_info=$_GET['order_status'];
-$order_status=$order_info;
+$order_info=$_GET['order_status']="Running";
 
 
 
@@ -47,41 +46,44 @@ if(isset($_SESSION['branchtype']))
         $cateringid=$_SESSION['branchtypeid'];
     }
 }
-$date=date('Y-m-d');
-$description='';
+
+$midOfHallOrCater="";
+if(isset($_GET['order_status']))
+{
+    if ($_GET['order_status'] == "Today_Orders")
+    {
+        $date=date('Y-m-d');
+        $CurrentDateTime = date('Y-m-d H:i:s');
+        $CurrentDate = date('Y-m-d', strtotime($CurrentDateTime)); // d.m.YYYY
+        $CurrentTime = date('H:i:s', strtotime($CurrentDateTime));
+
+        $NextDateTime = date('Y-m-d H:i:s', strtotime($CurrentDateTime . ' +1 day'));
+        $NextDate = date('Y-m-d', strtotime($NextDateTime)); // d.m.YYYY
+        $NextTime = date('H:i:s', strtotime($NextDateTime));
+
+
+        $midOfHallOrCater .= "AND (od.destination_date   BETWEEN '" . $CurrentDate . "' AND '" . $NextDate . "' )";
+
+        $order_info = "Running";
+    }
+
+}
+
 if(!empty($hallid))
 {
     //hall order
     $hallorcater="(od.hall_id=".$hallid.")";
-    $description=$hallorcater;
-    if($_GET['order_status']=="Today_Orders")
-    {
-        $hallorcater.="AND (od.destination_date='".$date."')";
-        $order_status="Running";
-    }
-    $hallorcater.="AND (od.status_hall='".$order_status."') ";
+    $hallorcater.=$midOfHallOrCater;
+if(isset($_GET['order_status']))
+    $hallorcater .= "AND (od.status_hall='" . $order_info . "') ";
 }
 else
 {
         //catering order
     $hallorcater="(od.catering_id=".$cateringid.")";
-    $description=$hallorcater;
-    if($_GET['order_status']=="Today_Orders")
-    {
-        $CurrentDateTime=date('Y-m-d H:i:s');
-        $CurrentDate = date('Y-m-d', strtotime($CurrentDateTime)); // d.m.YYYY
-        $CurrentTime = date('H:i:s', strtotime($CurrentDateTime));
-
-        $NextDateTime=date('Y-m-d H:i:s', strtotime($CurrentDateTime . ' +1 day'));
-        $NextDate = date('Y-m-d', strtotime($NextDateTime)); // d.m.YYYY
-        $NextTime = date('H:i:s', strtotime($NextDateTime));
-
-
-        $hallorcater.="AND (od.destination_date   BETWEEN '".$CurrentDate."' AND '".$NextDate."' )";
-
-        $order_status="Running";
-    }
-    $hallorcater.="AND (od.status_catering='".$order_status."')";
+    $hallorcater.=$midOfHallOrCater;
+    if(isset($_GET['order_status']))
+    $hallorcater .= "AND (od.status_catering='" . $order_info . "')";
 }
 ?>
 <!DOCTYPE html>
@@ -99,13 +101,6 @@ else
     <link rel="stylesheet" href="../webdesign/css/complete.css">
 
     <style>
-        .newcolor
-        {
-            background: #E0EAFC;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #CFDEF3, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
     </style>
 </head>
 <body>
@@ -127,7 +122,7 @@ include_once ("../webdesign/header/header.php");
 
 <div class="container card">
 
-        <form class="col-12 shadow mb-4 newcolor  " id="formId1" style="display: none">
+        <form class="col-12 shadow mb-4   " id="formId1" >
 
         <div class="form-group row">
             <label class="col-form-label"> Customer name</label>
@@ -139,7 +134,16 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
-                <input  name="p_name" type="text" class="changeColumn form-control" placeholder="or customer name etc ali,....">
+                <input
+                        value="<?php
+                       if($_GET['p_name'])
+                           echo $_GET['p_name'];
+
+                        ?>"
+
+
+
+                        name="p_name" type="text" class="changeColumn form-control" placeholder="or customer name etc ali,....">
             </div>
 
 
@@ -154,12 +158,17 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-id-card"></i></span>
                 </div>
-                <input  name="p_cnic" type="number" class="changeColumn form-control" placeholder="or cnic 23212xxxxx">
+                <input
+                        value="<?php
+                        if($_GET['p_cnic'])
+                            echo $_GET['p_cnic'];
+
+                        ?>" name="p_cnic" type="number" class="changeColumn form-control" placeholder="or cnic 23212xxxxx">
             </div>
 
         </div>
             <div class="form-group row">
-                <label class="col-form-label"> Customer ID</label>
+                <label  class="col-form-label"> Customer ID</label>
 
 
 
@@ -167,7 +176,12 @@ include_once ("../webdesign/header/header.php");
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                     </div>
-                    <input  name="p_id" type="number" class="changeColumn form-control" placeholder="customer ID 1,2,3,4,.....">
+                    <input
+                            value="<?php
+                            if($_GET['p_id'])
+                                echo $_GET['p_id'];
+
+                            ?>"  name="p_id" type="number" class="changeColumn form-control" placeholder="customer ID 1,2,3,4,.....">
                 </div>
 
 
@@ -180,7 +194,12 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                 </div>
-                <input  name="n_number" type="text" class="changeColumn form-control" placeholder="number 03231xxxxxx">
+                <input
+                        value="<?php
+                        if($_GET['n_number'])
+                            echo $_GET['n_number'];
+
+                        ?>" name="n_number" type="text" class="changeColumn form-control" placeholder="number 03231xxxxxx">
             </div>
 
 
@@ -194,7 +213,12 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                <input  name="od_booking_date" type="date" class="changeColumn form-control">
+                <input
+                        value="<?php
+                        if($_GET['od_booking_date'])
+                            echo $_GET['od_booking_date'];
+
+                        ?>" name="od_booking_date" type="date" class="changeColumn form-control">
             </div>
 
 
@@ -209,7 +233,12 @@ include_once ("../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-business-time"></i></span>
                 </div>
-                <input  name="od_destination_date" type="date" class="changeColumn form-control">
+                <input
+                        value="<?php
+                        if($_GET['od_destination_date'])
+                            echo $_GET['od_destination_date'];
+
+                        ?>" name="od_destination_date" type="date" class="changeColumn form-control">
             </div>
 
 
@@ -229,22 +258,16 @@ include_once ("../webdesign/header/header.php");
 
 
                 <?php
-                $constantStatus=$_GET['order_status'];
-               if( $constantStatus=="Today_Orders")
-               {
-                   $constantStatus="Running";
-               }
                 if($hallid=="")
                 {
 
                     //catering
-                    echo '<input class="form-control" readonly type="text" name="od_status_catering" value="'.$constantStatus.'">';
+                    echo '<input class="form-control" readonly type="text" name="od_status_catering" value="Running">';
                 }
                 else
                 {
                     //hall
-
-                    echo '<input class="form-control" readonly type="text" name="od_status_hall" value="'.$constantStatus.'">';
+                    echo '<input class="form-control" readonly type="text" name="od_status_hall" value="Running">';
                 }
 
                 ?>
@@ -256,7 +279,7 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="form-group row justify-content-center">
-            <button type="button" class="form-control btn-success col-6"><i class="fas fa-search"></i>Find</button>
+            <button type="submit" class="form-control btn-success col-6"><i class="fas fa-search"></i>Find</button>
         </div>
 
         </form>
@@ -265,24 +288,80 @@ include_once ("../webdesign/header/header.php");
 
 
 
+
+
             <?php
-            $sql='SELECT od.id,(SELECT p.name FROM person as p WHERE p.id=od.person_id),(SELECT p.name FROM person as p WHERE p.id=od.person_id),od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,(SELECT p.package_name FROM orderDetail as od INNER join packageDate as pd
+
+
+            $sql='SELECT     
+DISTINCT
+od.id,p.name,p.image,od.destination_date,od.destination_time,od.status_hall,od.status_catering,od.hall_id,od.catering_id,hp.package_name,p.id FROM orderDetail as od INNER JOIN person as p 
+on (p.id=od.person_id)
+left JOIN number as n
+on (p.id=n.person_id)
+left JOIN packageDate as pd
 on (od.packageDate_id=pd.id)
-INNER join packages as p
-on (p.id=pd.package_id)
+left JOIN packages as hp
+on (pd.package_id=hp.id)
 WHERE
-(od.id=od.id) limit 1),od.person_id FROM orderDetail as od WHERE '.$hallorcater.' ';
-         //  echo $sql;
+
+ ';
+
+
+            if(isset($_GET['p_name']))
+            {
+                if(trim($_GET['p_name'])!='')
+                    $sql.=' (p.name LIKE "%'.trim($_GET["p_name"]).'%") AND ';
+            }
+
+            if(isset($_GET['p_cnic']))
+            {
+                if(trim($_GET['p_cnic'])!='')
+                    $sql.=' (p.cnic LIKE "%'.trim($_GET["p_cnic"]).'%") AND ';
+            }
+            if(isset($_GET['p_id']))
+            {
+                if(trim($_GET['p_id'])!='')
+                    $sql.=' (p.id ='.$_GET["p_id"].') AND ';
+            }
+            if(isset($_GET['n_number']))
+            {
+                if(trim($_GET['n_number'])!='')
+                    $sql.=' (n.number LIKE "%'.trim($_GET["n_number"]).'%") AND ';
+            }
+            if(isset($_GET['od_booking_date']))
+            {
+                if(trim($_GET['od_booking_date'])!='')
+                    $sql.=' (od.booking_date = "'.trim($_GET["od_booking_date"]).'") AND ';
+            }
+            if(isset($_GET['od_destination_date']))
+            {
+                if(trim($_GET['od_destination_date'])!='')
+                    $sql.=' (od.destination_date ="'.trim($_GET["od_destination_date"]).'") AND ';
+            }
+            if(isset($_GET['od_status_catering']))
+            {
+                if(trim($_GET['od_status_catering'])!='None')
+                    $sql.=' (od.status_catering = "'.trim($_GET["od_status_catering"]).'" ) AND ';
+            }
+
+            if(isset($_GET['od_status_hall']))
+            {
+                if(trim($_GET['od_status_hall'])!='None')
+                    $sql.=' (od.status_hall = "'.trim($_GET["od_status_hall"]).'") AND ';
+            }
+
+
+            $sql.=''.$hallorcater.' 
+order by 
+od.destination_date ASC,od.destination_time ASC';
+
             $orderdetail=queryReceive($sql);
             $display='';
             for ($i=0;$i<count($orderdetail);$i++)
             {
                 $display.='
-        <a   href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'';
-
-
-
-                $display.='" class="col-12   row  shadow m-3 newcolor">
+        <a href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'" class="col-12   row  shadow m-3 newcolor">
         <img style="height:8vh" src="';
 
                 if(file_exists('../images/customerimage/'.$orderdetail[$i][2])&&($orderdetail[$i][2]!=""))
@@ -294,6 +373,7 @@ WHERE
                 {
                     $display.='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
                 }
+
 
 
 
@@ -315,7 +395,7 @@ WHERE
                     } else if ($orderdetail[$i][4] == "12:00:00") {
                         $display .= "Afternoon";
                     } else
-                     {
+                    {
                         $display .= "18:00:00";
                     }
                 }
@@ -347,22 +427,27 @@ WHERE
 
 
                 if(($orderdetail[$i][6]!="")&&($orderdetail[$i][8]!=""))
-                    {
-                        //catering status
-                        $display.='
+                {
+                    //catering status
+                    $display.='
         <label class="col-12">Catering Status:<i class="text-secondary">'.$orderdetail[$i][6].'</i> </label>';
-                    }
+                }
                 if(($orderdetail[$i][5]!="")&&($orderdetail[$i][7]!=""))
-                    {
-                        //hall status
-                        $display.='
+                {
+                    //hall status
+                    $display.='
         <label class="col-12">Hall Status:<i class="text-secondary">'.$orderdetail[$i][5].'</i> </label>';
-                    }
+                }
                 $display.='</a>';
 
             }
             echo $display;
+
+
             ?>
+
+
+
 
 
 
