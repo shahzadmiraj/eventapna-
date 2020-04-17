@@ -231,10 +231,10 @@ function HallSearching($latitude,$longitude,$country,$hallname,$daytime,$date,$p
     //$daytime=$_POST['daytime'];
     //$date=$_POST['date'];
    // $perhead=$_POST['perhead'];
-    $latitude=$_POST['latitude']=23.23;
-    $longitude=$_POST['longitude']=23.4;
+    $latitude=$_POST['latitude'];
+    $longitude=$_POST['longitude'];
     //$city=$_POST['city'];
-    $country=$_POST['country']='Pakistan';
+    $country=$_POST['country'];
     $result=ShowAllHallPackages($latitude,$longitude,$country,$hallname,$daytime,$date,$perhead);
     if($result=="")
     {
