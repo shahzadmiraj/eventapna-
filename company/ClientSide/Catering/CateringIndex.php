@@ -6,7 +6,7 @@
  * Time: 11:41
  */
 include_once ("../../../connection/connect.php");
-
+include_once ("CCServer/clientCateringServer.php");
 
 ?>
 
@@ -82,16 +82,16 @@ include_once ("../../../webdesign/header/header.php");
                         <h4 class="text-uppercase font-weight-bold">Software Features</h4>
                         <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                         <p>
-                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Marquee Management software</a>
+                            <a href="../../../company/companyRegister/companyRegister.php" class="text-dark">Marquee Management software</a>
                         </p>
                         <p>
-                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Hall Management software</a>
+                            <a href="../../../company/companyRegister/companyRegister.php" class="text-dark">Hall Management software</a>
                         </p>
                         <p>
-                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Catering Management software</a>
+                            <a href="../../../company/companyRegister/companyRegister.php" class="text-dark">Catering Management software</a>
                         </p>
                         <p>
-                            <a href="company/companyRegister/companyRegister.php" class="text-dark">Dera / Open area Management software</a>
+                            <a href="../../../company/companyRegister/companyRegister.php" class="text-dark">Dera / Open area Management software</a>
                         </p>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ include_once ("../../../webdesign/header/header.php");
 
 <div class="container alert-info  mt-2 ">
 
-
+<form method="get" action="">
 
 
 
@@ -126,7 +126,17 @@ include_once ("../../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
             </div>
-            <input  name="Dishname" type="text" class="form-control py-0" id="Dishname" placeholder="Dish Name ">
+            <input
+
+                    value="<?php
+                    if(isset($_GET['Dishname']))
+                    {
+                        echo $_GET['Dishname'];
+                    }
+
+                    ?>"
+
+                    name="Dishname" type="text" class="form-control py-0" id="Dishname" placeholder="Dish Name ">
         </div>
     </div>
     <div class="text-white  text-center  row" >
@@ -134,7 +144,18 @@ include_once ("../../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
             </div>
-            <input  name="cateringname" type="text" class="form-control py-0" id="cateringname" placeholder="Catering Name ">
+            <input
+
+
+                    value="<?php
+                    if(isset($_GET['cateringname']))
+                    {
+                        echo $_GET['cateringname'];
+                    }
+
+                    ?>"
+
+                    name="cateringname" type="text" class="form-control py-0" id="cateringname" placeholder="Catering Name ">
         </div>
     </div>
 
@@ -146,26 +167,80 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
-                <input  name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
+                <input   id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
             </div>
         </div>
 
+    <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
+    <div  hidden >
+        <label  for="">Lat: <input
+                    value="<?php
 
-        <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
-        <div  hidden>
-            <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude"></label>
-            <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude"></label>
-            <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
-            <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country"></label>
+                    if(isset($_GET['latitude']))
+                    {
+                        echo $_GET['latitude'];
+                    }
+                    ?>
+"
 
-        </div>
+                    name="latitude"    id="latitude" type="number" step="any" class="latitude"></label>
+        <label  for="">Long: <input
+
+                    value="<?php
+
+                    if(isset($_GET['longitude']))
+                    {
+                        echo $_GET['longitude'];
+                    }
+                    ?>
+"
+
+                    name="longitude"                         id="longitude" type="number"  step="any" class="longitude"></label>
+        <label  for="">City <input
 
 
+                    value="<?php
+
+                    if(isset($_GET['city']))
+                    {
+                        echo $_GET['city'];
+                    }
+                    ?>
+"
+
+                    name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+        <label  for="">country
+
+
+
+            <input
+
+                    value="<?php
+
+                    if(isset($_GET['country']))
+                    {
+                        echo $_GET['country'];
+                    }
+                    ?>"  name="country" type="text" id="reg-input-country" placeholder="country"></label>
+    </div>
+
+    <button id="submit" class="btn btn-success col-12 form-control" type="submit">Find</button>
+
+</form>
 </div>
 
 
 
 <div class="container form-inline" id="SHowCatering">
+
+
+    <?php
+
+    if(isset($_GET['longitude']))
+    {
+        echo ShowAllCateringDishes(trim($_GET['latitude']),trim($_GET['longitude']),trim($_GET['country']),trim($_GET['Dishname']),trim($_GET['cateringname']));
+    }
+    ?>
 
 </div>
 
@@ -199,6 +274,15 @@ include_once ("../../../webdesign/header/header.php");
 </div>-->
 
 
+<?php
+
+if(isset($_GET['daytime']))
+    echo '<script src="../../../map/constantMap.js"></script>';
+else
+    echo '<script src="../../../map/javascript.js"></script>';
+?>
+
+
 <script>
 
 
@@ -206,14 +290,15 @@ include_once ("../../../webdesign/header/header.php");
 
     $(document).ready(function ()
     {
+
         $('.carousel').carousel({
             interval: 5000
         });
-        // $.ajax({
-        //     url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-        //     dataType: "script",
-        //     cache: false
-        // });
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
+        });
 
         function showDishes()
         {
@@ -223,9 +308,10 @@ include_once ("../../../webdesign/header/header.php");
             var longitude=$("#longitude").val();
             var city=$("#reg-input-city").val();
             var country=$("#reg-input-country").val();
-           /* if(latitude=="") {
+            if(latitude=="")
+            {
                 window.setTimeout(showDishes, 100);
-            }*/
+            }
             var formdata=new FormData;
             formdata.append("Dishname",Dishname);
             formdata.append("cateringname",cateringname);
@@ -242,16 +328,25 @@ include_once ("../../../webdesign/header/header.php");
                 processData: false,
 
                 beforeSend: function() {
-                   // $("#preloader").show();
+                   $("#preloader").show();
                 },
                 success:function (data)
                 {
+                     $("#preloader").hide();
                     $("#SHowCatering").html(data);
                 }
             });
 
         }
-        showDishes();
+    //    showDishes();
+
+
+        <?php
+        if(! (isset($_GET['latitude'])))
+
+            echo '
+            showDishes();';
+        ?>
 
     });
 
