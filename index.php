@@ -1,11 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: shahzadmiraj
- * Date: 2019-09-15
- * Time: 11:41
- */
 include_once ("connection/connect.php");
+include_once ("company/ClientSide/Hall/functions.php");
 if((isset($_COOKIE['companyid']))&&(!isset($_GET['action'])))
 {
     header("location:company/companyRegister/companydisplay.php");
@@ -23,9 +18,6 @@ if(isset($_SESSION['branchtype']))
     unset($_SESSION['branchtype']);
     unset($_SESSION['branchtypeid']);
 }
-
-include_once ("connection/indexEdit.php");
-
 ?>
 
 <!DOCTYPE html>
@@ -128,86 +120,215 @@ include_once ("webdesign/header/header.php");
 <div class="container table-light  mt-2 ">
 
 
-<form class="container alert-info">
+    <form class="container alert-info" id="formHallSeaching" method="get" action="">
 
 
 
 
 
 
-    <div class="text-white  text-center  row" >
-        <div class="input-group mb-2 mr-sm-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-clock"></i></div>
-            </div>
-            <select id="daytime" name="daytime" class="custom-select "  size="1">
+        <div class="text-white  text-center  row" >
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-clock"></i></div>
+                </div>
+                <select id="daytime" name="daytime" class="custom-select "  size="1">
+
+
+                    <?
+
+                    if(isset($_GET['daytime']))
+                    {
+                        if($_GET['daytime']=="Morning")
+                        {
+                            echo '
                 <option value="Morning">Morning Time </option>
                 <option value="Afternoon">Afternoon Time</option>
-                <option value="Evening">Evening Time</option>
-            </select>
-        </div>
-    </div>
+                <option value="Evening">Evening Time</option>';
+                        }
+                        else if($_GET['daytime']=="Afternoon")
+                        {
 
+                            echo '
+                  <option value="Afternoon">Afternoon Time</option>
+                <option value="Morning">Morning Time </option>    
+                <option value="Evening">Evening Time</option>';
+                        }
+                        else
+                        {
 
-
-
-    <div class="text-white  text-center  row" >
-        <div class="input-group mb-2 mr-sm-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                            echo '
+              <option value="Evening">Evening Time</option>
+                <option value="Morning">Morning Time </option>
+                <option value="Afternoon">Afternoon Time</option>
+  ';
+                        }
+                    }
+                    else
+                    {
+                        echo ' 
+                <option value="Morning">Morning Time </option>
+                <option value="Afternoon">Afternoon Time</option>
+                <option value="Evening">Evening Time</option>';
+                    }
+                    ?>
+                </select>
             </div>
-            <input  name="Date" type="date" class="form-control py-0" id="date" placeholder="Booking Date">
         </div>
-    </div>
 
 
-    <div class="text-white  text-center  row" >
-        <div class="input-group mb-2 mr-sm-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-utensils"></i></div>
+
+
+        <div class="text-white  text-center  row" >
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                </div>
+                <input  value="<?php
+
+                if(isset($_GET['Date']))
+                {
+                    echo $_GET['DATE'];
+                }
+                ?>
+" name="Date" type="date" class="form-control py-0" id="date" placeholder="Booking Date">
             </div>
-            <select id="perhead" name="perhead" class="custom-select "  size="1">
-                <option value="0">Per head Only Seating</option>
-                <option value="1">Per head Seating + Food</option>
-            </select>
         </div>
-    </div>
-    <div class="text-white  text-center  row" >
-        <div class="input-group mb-2 mr-sm-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+
+
+        <div class="text-white  text-center  row" >
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-utensils"></i></div>
+                </div>
+                <select id="perhead" name="perhead" class="custom-select "  size="1">
+
+
+                    <?
+
+                    if(isset($_GET['perhead']))
+                    {
+                        if($_GET['perhead']==0)
+                        {
+                            echo '
+                            <option value="0">Per head Only Seating</option>
+                            <option value="1">Per head Seating + Food</option>';
+                        }
+                        else
+                        {
+
+                            echo '
+                            <option value="1">Per head Seating + Food</option>
+                            <option value="0">Per head Only Seating</option>';
+                        }
+                    }
+                    else
+                    {
+                        echo ' 
+                            <option value="0">Per head Only Seating</option>
+                            <option value="1">Per head Seating + Food</option>';
+                    }
+                    ?>
+
+
+                </select>
             </div>
-            <input  name="hallname" type="text" class="form-control py-0" id="hallname" placeholder="Hall Name (optional)">
         </div>
-    </div>
+        <div class="text-white  text-center  row" >
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                </div>
+                <input
+                        value="<?php
 
-    <div class="form-group row">
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        if(isset($_GET['hallname']))
+                        {
+                            echo $_GET['hallname'];
+                        }
+                        ?>
+" name="hallname" type="text" class="form-control py-0" id="hallname" placeholder="Hall Name (optional)">
             </div>
-            <input  name="address" id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
         </div>
-    </div>
+
+        <div class="form-group row">
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+                <input    id="map-search" class="controls form-control" type="text" placeholder="Search Destination" size="104">
+            </div>
+        </div>
 
 
-    <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
-    <div  hidden>
-        <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude"></label>
-        <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude"></label>
-        <label  for="">City <input name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
-        <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country"></label>
+        <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
+        <div  hidden >
+            <label  for="">Lat: <input
+                        value="<?php
 
-    </div>
+                        if(isset($_GET['latitude']))
+                        {
+                            echo $_GET['latitude'];
+                        }
+                        ?>
+"
+
+                     name="latitude"    id="latitude" type="number" step="any" class="latitude"></label>
+            <label  for="">Long: <input
+
+                        value="<?php
+
+                        if(isset($_GET['longitude']))
+                        {
+                            echo $_GET['longitude'];
+                        }
+                        ?>
+"
+
+                name="longitude"                         id="longitude" type="number"  step="any" class="longitude"></label>
+            <label  for="">City <input
 
 
-</form>
+                        value="<?php
+
+                        if(isset($_GET['city']))
+                        {
+                            echo $_GET['city'];
+                        }
+                        ?>
+"
+
+                         name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+            <label  for="">country
+
+
+
+                <input
+
+                        value="<?php
+
+                        if(isset($_GET['country']))
+                        {
+                            echo $_GET['country'];
+                        }
+                        ?>"  name="country" type="text" id="reg-input-country" placeholder="country"></label>
+        </div>
+
+        <button id="submit" class="btn btn-success col-12 form-control" type="submit">Find</button>
+    </form>
 </div>
 
 
 
 <div class="container form-inline" id="showHall">
 
+
+    <?php
+    if(isset($_GET['daytime']))
+    {
+        echo HallSearching($_GET['latitude'],$_GET['longitude'],$_GET['country'],$_GET['hallname'],$_GET['daytime'],$_GET['Date'],$_GET['perhead']);
+    }
+    ?>
 
 
 
@@ -240,7 +361,15 @@ include_once ("webdesign/header/header.php");
 
 </div>
 -->
-<script src="map/javascript.js"></script>
+
+<?php
+
+if(isset($_GET['daytime']))
+    echo '<script src="map/constantMap.js"></script>';
+else
+    echo '<script src="map/javascript.js"></script>';
+?>
+
 <script>
 
     $(document).ready(function ()
@@ -254,7 +383,9 @@ include_once ("webdesign/header/header.php");
     {
         var date = new Date();
         var currentDate = date.toISOString().slice(0,10);
-        $("#date").val(currentDate);
+
+
+
 
         function ShowHall()
         {
@@ -266,9 +397,9 @@ include_once ("webdesign/header/header.php");
             var longitude=$("#longitude").val();
             var city=$("#reg-input-city").val();
             var country=$("#reg-input-country").val();
-            /* if(latitude=="") {
-                 window.setTimeout(showDishes, 100);
-             }*/
+            if(latitude=="") {
+                window.setTimeout(ShowHall, 100);
+            }
             var formdata=new FormData;
             formdata.append("daytime",daytime);
             formdata.append("hallname",hallname);
@@ -287,7 +418,7 @@ include_once ("webdesign/header/header.php");
                 processData: false,
 
                 beforeSend: function() {
-                     $("#preloader").show('slow');
+                    $("#preloader").show('slow');
                 },
                 success:function (data)
                 {
@@ -297,13 +428,24 @@ include_once ("webdesign/header/header.php");
             });
 
         }
-        ShowHall();
 
-        $("#date").change(function () {
-            ShowHall();
-        });
+
+
+        <?php
+        if(! (isset($_GET['daytime'])))
+
+            echo '
+              $("#date").val(currentDate);
+            ShowHall();';
+        ?>
+
+
     });
-
+    $.ajax({
+        url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+        dataType: "script",
+        cache: false
+    });
 
 </script>
 

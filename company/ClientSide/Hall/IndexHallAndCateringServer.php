@@ -2,14 +2,6 @@
 include_once ("../../../connection/connect.php");
 include_once ("functions.php");
 
-function checKExist($post)
-{
-    if(isset($post))
-    {
-        return $post;
-    }
-    return "";
-}
 if($_POST['option']=="ShowDishes")
 {
     $hallname=$_POST['hallname'];

@@ -70,50 +70,7 @@ WHERE
     return $display;
 }
 
-function hallOrderExist($dayTime,$hallid,$destination_date)
-{
-    $sql='SELECT h.max_guests,h.noOfPartitions FROM hall as h WHERE h.id='.$hallid.'';
-    $halldetal=queryReceive($sql);
-        //hall max gues and max patition
-    $MaxGuestMaxPartition=array();
-    $MaxGuestMaxPartition[0]=$halldetal[0][0];
-    $MaxGuestMaxPartition[1]=$halldetal[0][1];
 
-
-    if($dayTime="Morning")
-        $dayTime=="09:00:00";
-    else  if($dayTime="Afternoon")
-        $dayTime=="12:00:00";
-    else
-        $dayTime="18:00:00";
-//hall max gues and max patition
-    $maxGuest=$MaxGuestMaxPartition[0];
-    $Currentpatition=$MaxGuestMaxPartition[1];
-
-    //Running current  order book total person,count of order
-    $sql='SELECT sum(od.total_person),count(od.id) FROM orderDetail as od WHERE (od.destination_date="'.$destination_date.'")AND(od.status_hall="Running")
-AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
-    $resultRunning=queryReceive($sql);
-    //if booked order
-    if(count($resultRunning)>0)
-    {
-        $maxGuest = $maxGuest -$resultRunning[0][0];
-        $Currentpatition=$Currentpatition-$resultRunning[0][1];
-    }
-    //cancel order
-    $sql='SELECT sum(od.total_person),count(od.id) FROM orderDetail as od WHERE (od.destination_date="'.$destination_date.'")AND(od.status_hall="Cancel")
-AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
-    $CancelOrder=queryReceive($sql);
-
-    if(count($CancelOrder)>0)
-    {
-        $maxGuest = $maxGuest+$resultRunning[0][0];
-        $Currentpatition=$Currentpatition+$resultRunning[0][1];
-    }
-    $MaxGuestMaxPartition[0]=$maxGuest;
-    $MaxGuestMaxPartition[1]=$Currentpatition;
-    return $MaxGuestMaxPartition;
-}
 
 function showHalls($sql,$Distance)
 {
