@@ -84,7 +84,7 @@ function showHalls($sql,$Distance)
     for ($i=0;$i<count($AllHalls);$i++)
     {
 
-        $MaxGuestMaxPartition=hallOrderExist($AllHalls[$i][8],$AllHalls[$i][0],$AllHalls[$i][5]);
+        $MaxGuestMaxPartition=hallOrderExist($AllHalls[$i][0], $AllHalls[$i][5], $AllHalls[$i][8],);
 
         if($MaxGuestMaxPartition[0]<0)
         {

@@ -6,9 +6,9 @@ if($_POST['option']=="ShowDishes")
 {
     $Dishname=$_POST['Dishname'];
     $cateringname=$_POST['cateringname'];
-    $latitude=$_POST['latitude'];
-    $longitude=$_POST['longitude'];
+    $latitude=$_POST['latitude']=31.478216052060176;
+    $longitude=$_POST['longitude']=74.35737400898438;
     $city=$_POST['city'];
-    $country=$_POST['country'];
+    $country=$_POST['country']="Pakistan";
   echo ShowAllCateringDishes(trim($latitude),trim($longitude),trim($country),trim($Dishname),trim($cateringname));
 }

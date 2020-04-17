@@ -78,20 +78,21 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-    <div class="row  mb-5">
-
 
         <?php
+        $img='';
 
         for($i=0;$i<count($hallInformation);$i++)
         {
 
-            $img=$hallInformation[$i][0];
+            $img=$hallInformation[$i][6];
             if(file_exists('../../../images/hall/'.$img)&&($img!=""))
                 $img='../../../images/hall/'.$img;
             else
                 $img="https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg"
             ?>
+            <div class="row  mb-5 container">
+
 
 
             <div class="col-md-4 mb-5">
@@ -99,7 +100,7 @@ include_once ("../../../webdesign/header/header.php");
             </div>
 
 
-            <div class="col-md-8 col-12 mb-5">
+            <div class="col-md-8  mb-5">
                 <h4><?php echo $hallInformation[$i][1];?>
 
 
@@ -110,7 +111,6 @@ include_once ("../../../webdesign/header/header.php");
                     ?>
                 </h4>
                 <hr>
-                <div class="container">
 
                     <div class="row justify-content-start">
 
@@ -190,12 +190,12 @@ include_once ("../../../webdesign/header/header.php");
 
                     <a class="btn btn-primary btn-lg mt-5 float-right" href="../Hall/HallClient.php?h=<?php echo $hallInformation[$i][0];?>">Visit Hall &raquo;</a>
 
-                    </div>
                 </div>
 
 
             </div>
 
+</div>
             <?php
         }
         ?>
@@ -206,7 +206,6 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-    </div>
 
 
 

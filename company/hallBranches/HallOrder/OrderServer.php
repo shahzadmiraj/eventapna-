@@ -12,7 +12,7 @@ function ShowSubmitButton($isShowButton)
 }
 
 
-function hallOrderExist($dayTime,$hallid,$destination_date,$orderid)
+function hallOrderExist($hallid, $destination_date, $dayTime, $orderid)
 {
     $sql='SELECT h.max_guests,h.noOfPartitions FROM hall as h WHERE h.id='.$hallid.'';
     $halldetal=queryReceive($sql);
@@ -102,7 +102,7 @@ AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perhea
     }
 
 
-    $MaxGuestMaxPartition=hallOrderExist($time,$hallid,$date,$orderid);
+    $MaxGuestMaxPartition=hallOrderExist($hallid, $date, $time, $orderid);
 
 
     if($time=="Morning")
@@ -180,7 +180,7 @@ AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perhea
      }
 
 
-     $MaxGuestMaxPartition=hallOrderExist($time,$hallid,$date);
+     $MaxGuestMaxPartition=hallOrderExist($hallid, $date, $time,);
 
 
      if($time=="Morning")

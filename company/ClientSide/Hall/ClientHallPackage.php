@@ -1,7 +1,7 @@
 
 <?php
 include_once ('../../../connection/connect.php');
-
+include_once ("functions.php");
 $userid=1;
 $PackageDateid=base64url_decode($_GET['pack']);
 $sql='SELECT pd.package_id,pd.selectedDate FROM packageDate as pd 
@@ -27,7 +27,7 @@ $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE  ISNULL(expire)AND(hall_i
 $ExtraType=queryReceive($sql);
 
 
-
+$MaxGuestMaxPartition=hallOrderExist($PackageDetail[0][4], $hallInformation[0][0], $PackageDate[0][1]);
 
 
 ?>
@@ -110,7 +110,15 @@ include_once ("../../../webdesign/header/header.php");
 <?php
 $HeadingImage=$hallInformation[0][6];
 $HeadingName=$hallInformation[0][1];
+if(file_exists('../../../images/hall/'.$HeadingImage)&&($HeadingImage!=""))
+{
+    $HeadingImage='../../../images/hall/'.$HeadingImage;
 
+}
+else
+{
+    $HeadingImage = 'https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg';
+}
 include_once ("../Company/Box.php");
 ?>
 
@@ -173,7 +181,7 @@ include_once ("../Company/Box.php");
 
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Package Price
+                        Package Price per head
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
@@ -182,8 +190,29 @@ include_once ("../Company/Box.php");
 
 
 
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        Remaining Patition
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        <?php echo  $MaxGuestMaxPartition[1];?>
+                    </div>
+
+
+
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        Arrangement Available
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        <?php echo $MaxGuestMaxPartition[0];?>
+                    </div>
+
+
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2">
-                        <p>Package Descripe  <?php echo $PackageDetail[0][3];?></p>
+                        <p>Package Descripe :  <?php echo $PackageDetail[0][3];
+
+                        ?></p>
                     </div>
                 </div>
             </div>
@@ -193,12 +222,27 @@ include_once ("../Company/Box.php");
 
 
 
+<?php
+$isbook=false;
+if($MaxGuestMaxPartition[0]<=0)
+    $isbook=true;
+if($MaxGuestMaxPartition[0]<=0)
+    $isbook=true;
+
+if($isbook)
+{
+    echo '  <a class="btn btn-danger btn-lg float-right" href="#">Booking Not Available </a>';
+}
+else
+{
+
+    echo '  <a class="btn btn-success btn-lg float-right" href="#">Booking Available >> </a>';
+}
+?>
 
 
 
 
-
-            <a class="btn btn-primary btn-lg" href="#">Booking&raquo;</a>
         </div>
 
 

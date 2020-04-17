@@ -1,5 +1,4 @@
 <?php
-
 function distance($lat1, $lon1, $lat2, $lon2, $unit)
 {
     if (($lat1 == $lat2) && ($lon1 == $lon2)) {
@@ -64,48 +63,39 @@ function ShowAllHallPackages($latitude,$longitude,$country,$hallname,$daytime,$d
 
 function hallOrderExist($dayTime,$hallid,$destination_date)
 {
-    $sql='SELECT h.max_guests,h.noOfPartitions FROM hall as h WHERE h.id='.$hallid.'';
-    $halldetal=queryReceive($sql);
     //hall max gues and max patition
     $MaxGuestMaxPartition=array();
+    $sql='SELECT h.max_guests,h.noOfPartitions FROM hall as h WHERE h.id='.$hallid.'';
+    $halldetal=queryReceive($sql);
+
     $MaxGuestMaxPartition[0]=$halldetal[0][0];
     $MaxGuestMaxPartition[1]=$halldetal[0][1];
-
-
     if($dayTime="Morning")
-        $dayTime=="09:00:00";
+        $dayTime="09:00:00";
     else  if($dayTime="Afternoon")
-        $dayTime=="12:00:00";
-    else
+        $dayTime="12:00:00";
+    else if($dayTime="Evening")
         $dayTime="18:00:00";
 //hall max gues and max patition
-    $maxGuest=$MaxGuestMaxPartition[0];
-    $Currentpatition=$MaxGuestMaxPartition[1];
+    $maxGuest=(int)$MaxGuestMaxPartition[0];
+    $Currentpatition=(int)$MaxGuestMaxPartition[1];
 
     //Running current  order book total person,count of order
     $sql='SELECT sum(od.total_person),count(od.id) FROM orderDetail as od WHERE (od.destination_date="'.$destination_date.'")AND(od.status_hall="Running")
 AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
     $resultRunning=queryReceive($sql);
+
+
     //if booked order
     if(count($resultRunning)>0)
     {
         $maxGuest = $maxGuest -$resultRunning[0][0];
         $Currentpatition=$Currentpatition-$resultRunning[0][1];
 
-        //cancel order
-   /*     $sql='SELECT sum(od.total_person),count(od.id) FROM orderDetail as od WHERE (od.destination_date="'.$destination_date.'")AND(od.status_hall="Cancel")
-AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")';
-        $CancelOrder=queryReceive($sql);
-
-        if(count($CancelOrder)>0)
-        {
-            $maxGuest = $maxGuest+$resultRunning[0][0];
-            $Currentpatition=$Currentpatition+$resultRunning[0][1];
-        }*/
     }
 
     $MaxGuestMaxPartition[0]=$maxGuest;
-    $MaxGuestMaxPartition[1]=$Currentpatition;
+   $MaxGuestMaxPartition[1]=$Currentpatition;
     return $MaxGuestMaxPartition;
 }
 
@@ -141,13 +131,13 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
         $sql='SELECT AVG(c.rating) FROM comments as c WHERE (c.hall_id='.$AllHalls[$i][0].')AND(c.PackOrDishId='.$AllHalls[$i][6].') ';
         $star=queryReceive($sql);
 
-        $MaxGuestMaxPartition=hallOrderExist($AllHalls[$i][8],$AllHalls[$i][0],$AllHalls[$i][5]);
+        $MaxGuestMaxPartition=hallOrderExist($AllHalls[$i][0], $AllHalls[$i][5], $AllHalls[$i][8]);
 
-        if($MaxGuestMaxPartition[0]<0)
+        if($MaxGuestMaxPartition[0]<=0)
         {
             exit();
         }
-        if($MaxGuestMaxPartition[1]<0)
+        if($MaxGuestMaxPartition[1]<=0)
         {
             exit();
         }
@@ -167,12 +157,12 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
 
         $display.='
             <li><span class="converse">'.$AllHalls[$i][2].'</span></li>
-            <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i></a>'.$CurrentDistance.'Km</li>
+            <li><a href="#"><i class="fas fa-street-view"></i></a>'.$CurrentDistance.'Km</li>
         </ul>
     </div>
     <div class="middle">
         <img src="';
-        if(file_exists('images/hall/'.$AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
+        if(file_exists('../../../images/hall/'.$AllHalls[$i][1]) &&($AllHalls[$i][1]!=""))
         {
             $display.="images/hall/".$AllHalls[$i][1];
         }
@@ -207,7 +197,7 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
         $display.= '</span></div>
         <div class="info">Max Guests '.$MaxGuestMaxPartition[0].'</div>
         <div class="style">Date:'.$AllHalls[$i][5].' /Time:'.$AllHalls[$i][8].'  /Type:'.$halltype[$AllHalls[$i][10]].'</div>
-        <div class="price">$'.$AllHalls[$i][7].' <span class="old-price">$'.((int)$AllHalls[$i][7]+5000).'</span></div>
+        <div class="price font-weight-bold"> <i class="far fa-money-bill-alt"></i> :'.$AllHalls[$i][7].' <span class="old-price">'.((int)$AllHalls[$i][7]+5000).'</span></div>
         <div class="style"><a href="company/ClientSide/Hall/ClientHallPackage.php?pack='.base64url_encode($AllHalls[$i][4]).'" class="btn btn-primary">Visit And Booking >></a></div>
     </div>
 

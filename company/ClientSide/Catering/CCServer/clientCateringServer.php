@@ -101,7 +101,7 @@ WHERE (a.dishWithAttribute_id='.$AllDishes[$i][3].')AND
     <div class="top">
         <ul>
             <li><span class="converse">'.$cateringname.'</span></li>
-            <li><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i>'.$CurrentDistance.'<span class="text-danger  m-1">/</span>'.$radius.'Km</a></li>
+            <li><a href="#"><i class="fas fa-street-view"></i>'.$CurrentDistance.'<span class="text-danger  m-1">/</span>'.$radius.'Km</a></li>
         </ul>
     </div>
 
@@ -110,7 +110,7 @@ WHERE (a.dishWithAttribute_id='.$AllDishes[$i][3].')AND
     </div>
 
     <div class="bottom">
-        <div class="heading">'.$AllDishes[$i][0].' <span class="m-1"> id#'.$AllDishes[$i][3].'</span></div>
+        <div class="heading"><i class="fas fa-concierge-bell"></i>'.$AllDishes[$i][0].' /<span class="m-1"> id#'.$AllDishes[$i][3].'</span></div>
         <div class="info"><p>';
 
 for($j=0;$j<count($Attributes);$j++)
@@ -119,7 +119,7 @@ for($j=0;$j<count($Attributes);$j++)
 }
 
         $display.= '</p></div>
-        <div class="price">'.$AllDishes[$i][2].'<span class="old-price ml-3"><i class="far fa-money-bill-alt"></i>'.($AllDishes[$i][2]+200).'</span></div>
+        <div class="price"><i class="far fa-money-bill-alt"></i>'.$AllDishes[$i][2].' <span class="old-price ml-3">'.($AllDishes[$i][2]+200).'</span></div>
         <div class="style"><a href="cateringClient.php?c='.$cateringid.'" class="btn btn-primary">Visit Branch>></a></div>
     </div>
 
