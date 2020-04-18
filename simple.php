@@ -30,6 +30,7 @@
 <i class="fas fa-chair"></i> chiar seating package
 
 
+                $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'; image not found
 */
 //include  ("../connection/connect.php");
 //date_default_timezone_set("asia/karachi");

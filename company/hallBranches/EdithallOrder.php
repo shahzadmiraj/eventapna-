@@ -110,29 +110,25 @@ include_once ("../../webdesign/header/header.php");
             for ($i = 0; $i < count($kinds); $i++)
             {
 
+
+                $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
                 if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
                 {
-                    $orignalImage='../../../images/hallExtra/'.$kinds[$i][3];
-                    $imagespath='
-            <img class="card-img-top img-fluid" src="'.$orignalImage.'" alt="Card image cap"  style="height: 30vh">';
-                }
-                else
-                {
-                    $orignalImage='https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg';
-                    $imagespath='
-            <img  class="card-img-top img-fluid" src="'.$orignalImage.'" alt="Card image cap" style="height: 30vh">';
+                    $img='../../../images/hallExtra/'.$kinds[$i][3];
                 }
 
 
                 $display.='
-        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder badge-light border m-1 col-11 col-md-5 col-lg-3 col-xl-2  ">';
+        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder card col-md-4  ">';
 
 
                 $display.=$imagespath;
-                $display.='   <div class=" ">
-                <h4 class="card-title">'.$kinds[$i][1].'</h4>
-              <h6 class=" float-right "><i class="far fa-money-bill-alt"></i>'.$kinds[$i][2].'
-</h6>
+                $display.='   <div class="card-body">
+              <img  class="card-img-top img-fluid" src="'.$img.'" alt="Card image cap" style="height: 30vh"
+                 <h2>
+                <span class="float-left">'.$kinds[$i][1].'</span>
+              <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i> '.$kinds[$i][2].'</span>
+              </h2>
             </div>
         </div>
         <div class="w-100 d-none d-sm-block d-md-none"></div>';
