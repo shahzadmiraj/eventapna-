@@ -346,8 +346,8 @@ include_once ("../../webdesign/footer/footer.php");
             formdata.append("guests",guests);
             formdata.append("time", time);
             formdata.append("perheadwith", perheadwith);
-            formdata.append("option", "CheckOrderCreate");
-            formdata.append("hallid",<?php echo $detailorder[0][1];?>);
+            formdata.append("option", "checkpackages1");
+            formdata.append("hallid","<?php echo $hallid;?>");
             $.ajax({
                 url: "HallOrder/OrderServer.php",
                 method: "POST",

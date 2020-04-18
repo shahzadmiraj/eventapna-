@@ -120,31 +120,25 @@ else
             for ($i = 0; $i < count($kinds); $i++)
             {
 
+
+                $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
                 if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
                 {
-                    $orignalImage='../../../images/hallExtra/'.$kinds[$i][3];
-                    $imagespath='
-            <img class="card-img-top img-fluid" src="'.$orignalImage.'" alt="Card image cap"  style="height: 30vh">';
-                }
-                else
-                {
-                    $orignalImage='https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg';
-                    $imagespath='
-            <img  class="card-img-top img-fluid" src="'.$orignalImage.'" alt="Card image cap" style="height: 30vh">';
+                    $img='../../../images/hallExtra/'.$kinds[$i][3];
                 }
 
 
                 $display.='
-        <div  id="Selected'.$kinds[$i][0].'"   class="card col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary">';
-
-
-                $display.=$imagespath;
-                $display.='   <div class="card-body ">
-                <h4 class="card-title">'.$kinds[$i][1].'</h4>
-              <h6 class="float-right "><i class="far fa-money-bill-alt"></i>'.$kinds[$i][2].'
-</h6>
-<button data-itemsid="'.$kinds[$i][0].'" data-amount="'.$kinds[$i][2].'"   class="deleteSelected btn btn-danger">Delete</button>
+        <div  id="Selected'.$kinds[$i][0].'"   class="card col-md-4 ">
+         <div class="card-body ">
+              <img  class="card-img-top img-fluid" src="'.$img.'" alt="Card image cap" style="height: 30vh"
+                 <h2>
+                <span class="float-left">'.$kinds[$i][1].'</span>
+              <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i> '.$kinds[$i][2].'</span>
+              </h2>
             </div>
+          
+<button data-itemsid="'.$kinds[$i][0].'" data-amount="'.$kinds[$i][2].'"   class="deleteSelected btn btn-danger">Delete</button>
         </div>
         <div class="w-100 d-none d-sm-block d-md-none"></div>';
             }
@@ -185,7 +179,7 @@ else
 
 <h1 class="text-center mt-3">Select Item</h1>
 <hr>
-    <div class="container card">
+    <div class="container">
 
         <?php
 
@@ -194,11 +188,11 @@ else
 
         $Category=queryReceive($sql);
         $Display='';
-        $display='<div class="form-group row ">';
+        $display='<div class="row ">';
         for($j=0;$j<count($Category);$j++)
         {
 
-            $display.='<h4 class="col-12 newcolor" align="center">'.$Category[$j][1].'</h4>';
+            $display.='<h4 class="col-12 " align="center">'.$Category[$j][1].'</h4>';
 
 
 
@@ -210,38 +204,38 @@ else
 
             $orignalImage='';
             $imagespath='';
-            $display.='<div class="container-fluid"><div class="card-deck">';
+            $display.='<div class="row">';
             for ($i = 0; $i < count($kinds); $i++)
             {
 
+                $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
                 if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
                 {
-                    $orignalImage='../../../images/hallExtra/'.$kinds[$i][3];
-                    $imagespath='
-            <img class="card-img-top img-fluid" src="'.$orignalImage.'" alt="Card image cap"  style="height: 30vh">';
-                }
-                else
-                {
-                    $orignalImage='https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg';
-                    $imagespath='
-            <img  class="card-img-top img-fluid" src="'.$orignalImage.'" alt="Card image cap" style="height: 30vh">';
+                    $img='../../../images/hallExtra/'.$kinds[$i][3];
                 }
 
 
                 $display.='
-        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder card  mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary ">';
+        <div   class="card col-md-4 btn">';
 
 
 $display.=$imagespath;
                 $display.='   <div class="card-body ">
-                <h4 class="card-title">'.$kinds[$i][1].'</h4>
-              <h6 class="float-right "><i class="far fa-money-bill-alt"></i> '.$kinds[$i][2].'
-</h6>
+   
+              <img  class="card-img-top img-fluid" src="'.$img.'" alt="Card image cap" style="height: 30vh"
+              <h2>
+                <span class="float-left">'.$kinds[$i][1].'</span>
+              <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i> '.$kinds[$i][2].'</span>
+              
+              </h2>
+          
             </div>
+            
+              <button data-name="'.$kinds[$i][1].'" data-image="'.$img.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'"   class="AddItemOrder btn btn-primary">Select</button>
         </div>
         <div class="w-100 d-none d-sm-block d-md-none"></div>';
             }
-            $display.='</div></div>';
+            $display.='</div>';
 
         }
 
@@ -257,6 +251,11 @@ $display.=$imagespath;
 
 
 
+        <h2>
+            <span class="float-left"></span>
+            <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i></span>
+
+        </h2>
 
 
 
@@ -292,14 +291,18 @@ include_once ("../../../webdesign/footer/footer.php");
                 var id=$(this).data("itemsid");
                 var name=$(this).data("name");
                 var image=$(this).data("image");
-            var text='<div id="jsid'+javaid+'" class="card mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary">\n' +
+            var text='<div id="jsid'+javaid+'" class="card col-md-4">\n' +
             '                <img class="card-img-top img-fluid" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
             '                <div class="card-body ">\n' +
-            '                    <h4 class="card-title">'+name+'</h4>\n' +
-            '                    <h6 class="float-right ">'+amount+'</h6>\n' +
-            '                    <button  data-amount="'+amount+'" data-jsid="'+javaid+'" class="btn btn-danger deleteitems">Delete</button>\n' +
+
+            '                <h4>\n' +
+                '            <span class="float-left">'+name+'</span>\n' +
+                '            <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i>'+amount+'</span>\n' +
+                '\n' +
+                '        </h4>\n' +
             '                    <input type="hidden" name="selecteditem[]" value="'+id+'">\n' +
             '                </div>\n' +
+                '                    <button  data-amount="'+amount+'" data-jsid="'+javaid+'" class="btn btn-danger deleteitems">Delete</button>\n' +
             '            </div>';
 
             $("#additems").append(text);

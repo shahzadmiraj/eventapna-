@@ -178,10 +178,17 @@ WHERE
         $display='<h4 align="center" class="col-12">Menu</h4>';
         for ($i=0;$i<count($menu);$i++)
         {
+            $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
+
+            if((file_exists('../images/dishImages/'.$menu[$i][1]))&&($menu[$i][1]!=""))
+                $img='../../images/dishImages/'.$menu[$i][1];
+
             $display.='
-            <div  class="col-3 alert-danger shadow border m-2 form-group rounded" style="height: 30vh;" >
-                <img src="'.$menu[$i][1].'" class="col-12 " style="height: 15vh">
-                <p class="col-form-label" class="form-control col-12">'.$menu[$i][0].'</p>
+            <div  class="col-md-4 card" >
+                <img src="'.$img.'" class="card-img-top" style="height: 15vh">
+                <div class="card-header">
+                Item Name:'.$menu[$i][0].'
+                    </div>
             </div>';
         }
         echo $display;
