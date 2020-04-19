@@ -7,31 +7,12 @@
  */
 include_once ("../connection/connect.php");
 
-if((isset($_GET['username']))&&(isset($_GET['password'])))
-{
-    $username=$_GET['username'];
-    $password=$_GET['password'];
-    if(($username="shahzad123")&&($password=="shahzad123"))
-    {
-        header("location:../admin/adminpage.php");
-    }
-}
 
 if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
 {
 
     header('location:../company/companyRegister/companydisplay.php');
    exit();
-}
-$adminlogin='NoAdmin';
-if(isset($_GET['action']))
-{
-    //admin buton
-    if($_GET['action']=="admin")
-    {
-        $adminlogin="YesAdmin";
-    }
-
 }
 
 
@@ -49,20 +30,33 @@ if(isset($_GET['action']))
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <style>
 
+    <style>
+        body{
+            background-image: url('https://i.pinimg.com/originals/cc/48/3b/cc483b945cf746255339655b2a5f25b3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: 'Numans', sans-serif;
+            width: 100%;
+            height: 100%;
+        }
+        .input-group-prepend span{
+            width: 50px;
+            background-color: #FFC312;
+            color: black;
+            border:0 !important;
+        }
 
     </style>
 </head>
-<body style="background-image: url(https://www.saracarboni.com/wp-content/uploads/2017/02/4-wedding-reception-1.jpg);background-size:100% 100%;">
+<body>
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container">
+<div class="container text-white font-weight-bold">
 
-    <div class="card-header"></div>
-<div class="col-sm-12 col-xl-6 col-md-8 col-12 m-auto  card badge-dark" style="background-color: rgba(0,0,0,0.7) !important;">
-    <h1 CLASS="mb-5 mt-5"><i class="fas fa-sign-in-alt"></i> Sign in</h1>
+<div class="col-sm-12 col-xl-6 col-md-8 col-12 m-auto  card " style="background-color: rgba(219,188,219,0.58)  !important;">
+    <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign in</h1>
     <form class="col-12" id="formLogin">
     <div class="form-group row">
         <label class="col-form-label">User Name</label>
@@ -91,15 +85,21 @@ include_once ("../webdesign/header/header.php");
             </div>
         </div>
 
-        <div class="form-group row">
-            <button id="login" type="button" class="form-control btn btn-success"  value="Sign in"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+        <div class="row">
+            <button id="login" type="button" class="btn btn-warning form-control "  value="Sign in"><i class="fas fa-sign-in-alt"></i> Sign in</button>
         </div>
     </form>
+    <div class="card-footer">
+        <div class="d-flex justify-content-center links">
+            Don't have an account?<a href="#">Sign Up</a>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="#">Forgot your password?</a>
+        </div>
     </div>
-</div>
-<div class="card-header"></div>
+    </div>
 
-<div class="card-header"></div>
+</div>
 
 
 
@@ -116,17 +116,7 @@ include_once ("../webdesign/footer/footer.php");
        $('#login').click(function ()
        {
 
-           var admin="<?php echo $adminlogin;?>";
 
-           if(admin=="YesAdmin")
-           {
-               var username=$("#username").val();
-               var password=$("#password").val();
-               window.location.href="?username="+username+"&password="+password;
-
-           }
-           else
-           {
                var formdata = new FormData($("#formLogin")[0]);
                formdata.append("option", "login");
                $.ajax({
@@ -150,7 +140,7 @@ include_once ("../webdesign/footer/footer.php");
 
                    }
                });
-           }
+
 
        });
     });
