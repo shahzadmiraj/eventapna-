@@ -8,12 +8,6 @@
 include_once ("../connection/connect.php");
 
 
-if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
-{
-
-    header('location:../company/companyRegister/companydisplay.php');
-   exit();
-}
 
 
 ?>
@@ -32,6 +26,8 @@ if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
+
+
         body{
             background-image: url('https://i.pinimg.com/originals/cc/48/3b/cc483b945cf746255339655b2a5f25b3.jpg');
             background-size: cover;
@@ -53,51 +49,60 @@ if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container text-white font-weight-bold">
+<div class="container">
 
-<div class="col-sm-12 col-xl-6 col-md-8 col-12 m-auto  card " style="background-color: rgba(219,188,219,0.58)  !important;">
-    <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign in</h1>
-    <form class="col-12" id="formLogin">
-    <div class="form-group row">
-        <label class="col-form-label">User Name</label>
-
-
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-            </div>
-            <input id="username" type="text" class="form-control" name="username" placeholder="Username">
+    <div class="row ">
+        <div class="col-md-4">
         </div>
 
+        <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
+            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-out-alt"></i> Sign In</h1>
+            <h4 class="alert-danger">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <form class="col-12" id="formLogin">
 
 
 
-    </div>
-        <div class="form-group row">
-            <label class="col-form-label">Password</label>
 
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                <div class="form-group row">
+                    <label class="col-form-label">UserName / Email</label>
+
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input id="UserName" type="text" class="form-control" name="UserName" placeholder="Username or Email">
+                    </div>
                 </div>
-                <input id="password" type="password" class="form-control" name="password" placeholder="Password">
 
-            </div>
-        </div>
+                <div class="form-group row">
+                    <label class="col-form-label">Password</label>
 
-        <div class="row">
-            <button id="login" type="button" class="btn btn-warning form-control "  value="Sign in"><i class="fas fa-sign-in-alt"></i> Sign in</button>
-        </div>
-    </form>
-    <div class="card-footer">
-        <div class="d-flex justify-content-center links">
-            Don't have an account?<a href="#">Sign Up</a>
-        </div>
-        <div class="d-flex justify-content-center">
-            <a href="#">Forgot your password?</a>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input id="password1" type="password" class="form-control" name="password1" placeholder="Password">
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <button id="login" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i>  Sign In</button>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        Forgot your password?  <a href="#"> Send Password</a>
+                    </div>
+                    <div class="d-flex justify-content-center links">
+                       Dont have account?  <a href="RegisterLogin.php"><i class="fas fa-sign-out-alt"></i> Sign UP</a>
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
-    </div>
+
 
 </div>
 
@@ -113,36 +118,36 @@ include_once ("../webdesign/footer/footer.php");
     {
 
 
-       $('#login').click(function ()
-       {
+        $('#login').click(function ()
+        {
 
 
-               var formdata = new FormData($("#formLogin")[0]);
-               formdata.append("option", "login");
-               $.ajax({
-                   url: "userServer.php",
-                   method: "POST",
-                   data: formdata,
-                   contentType: false,
-                   processData: false,
+            var formdata = new FormData($("#formLogin")[0]);
+            formdata.append("option", "login");
+            $.ajax({
+                url: "userServer.php",
+                method: "POST",
+                data: formdata,
+                contentType: false,
+                processData: false,
 
-                   beforeSend: function () {
-                       $("#preloader").show();
-                   },
-                   success: function (data) {
-                       $("#preloader").hide();
+                beforeSend: function () {
+                    $("#preloader").show();
+                },
+                success: function (data) {
+                    $("#preloader").hide();
 
-                       if (data != '') {
-                           alert(data);
-                       } else {
-                           location.reload();
-                       }
+                    if (data != '') {
+                        alert(data);
+                    } else {
+                        location.reload();
+                    }
 
-                   }
-               });
+                }
+            });
 
 
-       });
+        });
     });
 
 

@@ -9,7 +9,7 @@
 
 /*
  *
- *
+ *<i class="fas fa-sign-out-alt"></i> sign out
  *
  * <i class="fas fa-trash-alt"></i> delete
  *<i class="fas fa-user"></i> user
@@ -28,7 +28,9 @@
 <i class="fas fa-clock"></i> clock
 <i class="fas fa-user-clock"></i> clock +user
 <i class="fas fa-chair"></i> chiar seating package
-
+<i class="fas fa-envelope-square"></i> email icon
+<i class="fas fa-phone"></i>      //number call phone
+<i class="fas fa-city mr-2"></i> //company sign
 
                 $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'; image not found
 */

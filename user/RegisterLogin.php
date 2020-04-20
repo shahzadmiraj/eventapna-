@@ -8,12 +8,6 @@
 include_once ("../connection/connect.php");
 
 
-if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
-{
-
-    header('location:../company/companyRegister/companydisplay.php');
-    exit();
-}
 
 
 ?>
@@ -55,11 +49,28 @@ if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container text-white font-weight-bold">
+<div class="container">
 
-    <div class="col-sm-12 col-xl-6 col-md-8 col-12 m-auto  card " style="background-color: rgba(219,188,219,0.58) !important;">
+    <div class="row ">
+    <div class="col-md-4">
+    </div>
+
+    <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
         <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign Up</h1>
+        <h4 class="alert-danger">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
         <form class="col-12" id="formLogin">
+
+            <div class="form-group row">
+                <label class="col-form-label">Company Name</label>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-city mr-2"></i></span>
+                    </div>
+                    <input id="CompanyName" type="text" class="form-control" name="CompanyName" placeholder="name of your company">
+                </div>
+            </div>
+
+
             <div class="form-group row">
                 <label class="col-form-label">User Name</label>
                 <div class="input-group mb-3 input-group-lg">
@@ -75,30 +86,30 @@ include_once ("../webdesign/header/header.php");
                 <label class="col-form-label">Email</label>
                 <div class="input-group mb-3 input-group-lg ">
                     <div class="input-group-prepend ">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
                     </div>
-                    <input id="username" type="text" class="form-control" name="username" placeholder="Username">
+                    <input id="Email" type="text" class="form-control" name="Email" placeholder="Email ">
                 </div>
             </div>
 
 
-            <div class="form-group row" hidden>
+            <div class="form-group row" >
                 <label class="col-form-label">Phone No</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
                     </div>
-                    <input id="username" type="text" class="form-control" name="username" placeholder="Username">
+                    <input id="PhoneNo" type="text" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
                 </div>
             </div>
 
-            <div class="form-group row" hidden>
+            <div class="form-group row"  >
                 <label class="col-form-label">Image (Optional)</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <span class="input-group-text"><i class="fas fa-camera-retro"></i></span>
                     </div>
-                    <input id="username" type="text" class="form-control" name="username" placeholder="Username">
+                    <input id="Image" type="file" class="form-control" name="Image" >
                 </div>
             </div>
 
@@ -110,7 +121,7 @@ include_once ("../webdesign/header/header.php");
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                    <input id="password1" type="password" class="form-control" name="password1" placeholder="Password">
 
                 </div>
             </div>
@@ -122,28 +133,31 @@ include_once ("../webdesign/header/header.php");
                     <div class="input-group-prepend ">
                         <span class="input-group-text "><i class="fas fa-key"></i></span>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                    <input id="password2" type="password" class="form-control" name="password2" placeholder="Confirm Password">
 
                 </div>
             </div>
 
             <p class="form-group">
-                <input type="checkbox" name="checkbox" value="check" id="agree" class="form-check-inline" /> I have read and agree to the Terms and Conditions and Privacy Policy
+                <input type="checkbox" name="checkbox" value="check" id="agree" class="form-check-inline" /> I have read and agree to the <a href="#">Terms and Conditions and Privacy Policy</a>
             </p>
 
 
 
 
             <div class="row">
-                <button id="login" type="submit" class="btn btn-warning form-control "  value="Sign in"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+                <button id="login" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
             </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center links">
+                    Already have a account<a href="userLogin.php">Sign In</a>
+                </div>
+            </div>
+
         </form>
-        <div class="card-footer">
-            <div class="d-flex justify-content-center links">
-                Already have a account<a href="#">Sign In</a>
-            </div>
-        </div>
     </div>
+    </div>
+
 
 </div>
 

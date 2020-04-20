@@ -8,12 +8,6 @@
 include_once ("../connection/connect.php");
 
 
-if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
-{
-
-    header('location:../company/companyRegister/companydisplay.php');
-    exit();
-}
 
 
 ?>
@@ -32,6 +26,8 @@ if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
+
+
         body{
             background-image: url('https://i.pinimg.com/originals/cc/48/3b/cc483b945cf746255339655b2a5f25b3.jpg');
             background-size: cover;
@@ -53,93 +49,112 @@ if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container text-white font-weight-bold">
+<div class="container">
 
-    <div class="col-sm-12 col-xl-6 col-md-8 col-12 m-auto  card " style="background-color: rgba(219,188,219,0.58)  !important;">
-        <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> User Profile</h1>
-        <form class="col-12" id="formLogin">
-            <div class="form-group row">
-                <label class="col-form-label">User Name</label>
+    <div class="row ">
+        <div class="col-md-4">
+        </div>
 
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+        <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
+            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-user"></i> User Profile</h1>
+            <h4 class="alert-danger">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <form class="col-12" id="formLogin">
+                <center>
+                <img  src="../gmail.png" class="card-img-top " style="width: 50%;height: 20vh">
+                </center>
+                <div class="form-group row">
+                    <label class="col-form-label">Company Name</label>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-city mr-2"></i></span>
+                        </div>
+                        <input id="CompanyName" type="text" class="form-control" name="CompanyName" placeholder="name of your company">
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
                 </div>
-            </div>
-
-
-            <div class="form-group row">
-                <label class="col-form-label">Email</label>
-
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                    </div>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-form-label">Image chane</label>
-
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                    </div>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
-                </div>
-            </div>
 
 
                 <div class="form-group row">
-                    <label class="col-form-label">Phone No</label>
-
+                    <label class="col-form-label">User Name</label>
                     <div class="input-group mb-3 input-group-lg">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
+                        <input id="username" type="text" class="form-control" name="username" placeholder="Username">
                     </div>
                 </div>
 
 
-                    <div class="form-group row">
-                        <label class="col-form-label">Job Status</label>
-
-                        <div class="input-group mb-3 input-group-lg">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
+                <div class="form-group row ">
+                    <label class="col-form-label">Email</label>
+                    <div class="input-group mb-3 input-group-lg ">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
                         </div>
+                        <input id="Email" type="text" class="form-control" name="Email" placeholder="Email ">
+                    </div>
+                </div>
 
+
+                <div class="form-group row" >
+                    <label class="col-form-label">Phone No</label>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        </div>
+                        <input id="PhoneNo" type="text" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
+                    </div>
+                </div>
+
+                <div class="form-group row"  >
+                    <label class="col-form-label">Image (Optional)</label>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-camera-retro"></i></span>
+                        </div>
+                        <input id="Image" type="file" class="form-control" name="Image" >
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label class="col-form-label">Job Status</label>
+                    <div class="input-group mb-3 input-group-lg ">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+                        </div>
+                        <select class="form-control">
+                            <option value="Owner">Owner of company</option>
+                            <option value="Employee">Working Employee At company</option>
+                            <option value="Viewer">Viewer (Only View Orders of Company)</option>
+                            <option value="Expire">left / Resign (Not acces Software of the company)</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="card-footer">
+
+                    <div class="row">
+                        <button id="back" type="button" class="btn btn-secondary  col-6"  ><< Back </button>
+                        <button id="Save" type="button" class="btn btn-success  col-6"  ><i class="fas fa-sign-in-alt"></i> Save </button>
                     </div>
 
+                    <div class="d-flex justify-content-center links">
+                        Change your password? <a href="#" class="ml-2"> Reset Password</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="#">Sign Out</a>
+                    </div>
 
+                </div>
 
-
-            <div class="form-group row">
-
-                <button id="login" type="button" class="btn btn-danger col-6 "  value="Sign in"><i class="fas fa-sign-in-alt"></i>Delete</button>
-                <button id="login" type="button" class="btn btn-success col-6 "  value="Sign in"><i class="fas fa-sign-in-alt"></i> Save </button>
-            </div>
-        </form>
-        <div class="card-footer">
-            <div class="d-flex justify-content-center links">
-                Change your password? <a href="#" class="ml-2"> Reset Password</a>
-            </div>
-            <div class="d-flex justify-content-center">
-                <a href="#">Sign Out</a>
-            </div>
+            </form>
         </div>
     </div>
+
 
 </div>
 
@@ -191,3 +206,8 @@ include_once ("../webdesign/footer/footer.php");
 </script>
 </body>
 </html>
+
+
+
+
+

@@ -8,12 +8,6 @@
 include_once ("../connection/connect.php");
 
 
-if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
-{
-
-    header('location:../company/companyRegister/companydisplay.php');
-    exit();
-}
 
 
 ?>
@@ -32,6 +26,8 @@ if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
+
+
         body{
             background-image: url('https://i.pinimg.com/originals/cc/48/3b/cc483b945cf746255339655b2a5f25b3.jpg');
             background-size: cover;
@@ -53,61 +49,71 @@ if(isset($_COOKIE["companyid"])&(!isset($_GET['action'])))
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-<div class="container text-white font-weight-bold">
+<div class="container">
 
-    <div class="col-sm-12 col-xl-6 col-md-8 col-12 m-auto  card " style="background-color: rgba(219,188,219,0.58)  !important;">
-        <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign in</h1>
-        <form class="col-12" id="formLogin">
-            <div class="form-group row">
-                <label class="col-form-label">Old Password</label>
+    <div class="row ">
+        <div class="col-md-4">
+        </div>
 
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+        <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
+            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-key"></i> Reset Password</h1>
+            <h4 class="alert-danger">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <form class="col-12" id="formLogin">
+
+
+
+
+                <div class="form-group row">
+                    <label class="col-form-label">Old Password</label>
+
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input id="Oldpassword" type="password" class="form-control" name="Oldpassword" placeholder="Previous Password">
+
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
                 </div>
-            </div>
 
+                <div class="form-group row">
+                    <label class="col-form-label">New Password</label>
 
-            <div class="form-group row">
-                <label class="col-form-label">New Password</label>
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input id="password1" type="password" class="form-control" name="password1" placeholder="New Password">
 
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
                 </div>
-            </div>
+                <div class="form-group row">
+                    <label class="col-form-label">Confirm Passowrd</label>
 
-            <div class="form-group row">
-                <label class="col-form-label">Confirm Password</label>
+                    <div class="input-group mb-3 input-group-lg ">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text "><i class="fas fa-key"></i></span>
+                        </div>
+                        <input id="password2" type="password" class="form-control" name="password2" placeholder="Confirm Password">
 
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-
                 </div>
-            </div>
 
-            <div class="row">
-                <button id="login" type="button" class="btn btn-warning form-control "  value="Sign in"><i class="fas fa-sign-in-alt"></i> Sign in</button>
-            </div>
-        </form>
-        <div class="card-footer">
-            <div class="d-flex justify-content-center links">
-                Don't have an account?<a href="#">Sign Up</a>
-            </div>
-            <div class="d-flex justify-content-center">
-                <a href="#">Forgot your password?</a>
-            </div>
+                <div class="row">
+                    <button id="ResetPassword" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-check "></i>  Reset Password</button>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        Forgot your password?  <a href="#"> Send Password</a>
+                    </div>
+                    <div class="d-flex justify-content-center links">
+                         <a href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
+
 
 </div>
 
