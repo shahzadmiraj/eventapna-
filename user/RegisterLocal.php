@@ -57,7 +57,7 @@ include_once ("../webdesign/header/header.php");
 
         <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
             <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign Up</h1>
-            <h4 class="alert-danger" id="error">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <h4  id="error">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
             <form class="col-12" id="formLogin">
                 <input type="hidden" name="option" value="localUser">
                 <div class="form-group row">
@@ -81,16 +81,14 @@ include_once ("../webdesign/header/header.php");
                     </div>
                 </div>
 
-
-
-                <div class="form-group row">
+                <div class="form-group row ">
                     <label class="col-form-label">Password</label>
 
                     <div class="input-group mb-3 input-group-lg">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input id="password1" type="password" class="form-control" name="password1" placeholder="Password">
+                        <input id="password1" type="password" class="form-control" name="password" placeholder="Password">
 
                     </div>
                 </div>
@@ -100,7 +98,7 @@ include_once ("../webdesign/header/header.php");
                 </p>
 
                 <div class="row">
-                    <button id="login" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
+                    <button id="login" type="button" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
                 </div>
 
                 <div class="card-footer">
@@ -132,6 +130,7 @@ include_once ("../webdesign/footer/footer.php");
         {
 
             var formdata = new FormData($("#formLogin")[0]);
+            formdata.append("option","LocatUserRegisters");
             $.ajax({
                 url: "userServer.php",
                 method: "POST",
@@ -144,8 +143,16 @@ include_once ("../webdesign/footer/footer.php");
                 },
                 success: function (data)
                 {
-                    $("#error").html(data);
-                    $("#preloader").hide();
+
+                    if(data!="")
+                    {
+                        $("#error").html(data);
+                    }
+                    else
+                    {
+                        $("#error").html('<span class="alert-success">We have sent an email with a confirmation link to your email address.</span>');
+                        $("#formLogin")[0].reset();
+                    }
 
                 }
             });

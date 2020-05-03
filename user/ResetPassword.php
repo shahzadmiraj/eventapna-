@@ -57,7 +57,7 @@ include_once ("../webdesign/header/header.php");
 
         <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
             <h1 class="mb-5 mt-5 text-white"><i class="fas fa-key"></i> Reset Password</h1>
-            <h4 class="alert-danger">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <h4 id="error"> </h4>
             <form class="col-12" id="formLogin">
 
 
@@ -84,6 +84,18 @@ include_once ("../webdesign/header/header.php");
                         </div>
                         <input id="password1" type="password" class="form-control" name="password1" placeholder="New Password">
 
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-form-label">Confirm Password</label>
+
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input id="password2" type="password" class="form-control" name="password2" placeholder="confirm Password">
                     </div>
                 </div>
 
@@ -137,13 +149,7 @@ include_once ("../webdesign/footer/footer.php");
                 },
                 success: function (data) {
                     $("#preloader").hide();
-
-                    if (data != '') {
-                        alert(data);
-                    } else {
-                        location.reload();
-                    }
-
+                    $("#error").html(data);
                 }
             });
 

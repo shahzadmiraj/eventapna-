@@ -60,7 +60,7 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
-            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign Up</h1>
+            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Company Sign up</h1>
             <h4 class="alert-danger" id="error">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
             <form class="col-12" id="formLogin">
                 <div class="form-group row">
@@ -164,7 +164,7 @@ include_once ("../webdesign/footer/footer.php");
         {
 
             var formdata = new FormData($("#formLogin")[0]);
-            formdata.append("option","RegisterCompanyWithUserAlso")
+            formdata.append("option","RegisterCompanyWithUserAlso");
             $.ajax({
                 url: "userServer.php",
                 method: "POST",
@@ -178,7 +178,6 @@ include_once ("../webdesign/footer/footer.php");
                 },
                 success: function (data)
                 {
-
                     $("#preloader").hide();
                     if(data!="")
                     {

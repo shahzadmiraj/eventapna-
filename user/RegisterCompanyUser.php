@@ -7,9 +7,6 @@
  */
 include_once ("../connection/connect.php");
 
-
-
-
 ?>
 <!DOCTYPE html>
 <head>
@@ -24,11 +21,9 @@ include_once ("../connection/connect.php");
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
     <style>
-
-
-        body{
+        body
+        {
             background-image: url('https://i.pinimg.com/originals/cc/48/3b/cc483b945cf746255339655b2a5f25b3.jpg');
             background-size: cover;
             background-repeat: no-repeat;
@@ -57,9 +52,9 @@ include_once ("../webdesign/header/header.php");
 
         <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
             <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign Up</h1>
-            <h4 class="alert-danger" id="error">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <h4 id="error"></h4>
             <form class="col-12" id="formLogin">
-                <input type="hidden" name="option" value="localUser">
+                <input type="hidden" name="Companyid" value="1">
 
                 <div class="form-group row">
                     <label class="col-form-label">User Name</label>
@@ -109,11 +104,10 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend ">
                             <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
                         </div>
-                        <select class="form-control">
+                        <select  name="jobtitle" class="form-control">
                             <option value="Owner">Owner of company</option>
                             <option value="Employee">Working Employee At company</option>
                             <option value="Viewer">Viewer (Only View Orders of Company)</option>
-                            <option value="Expire">left / Resign (Not acces Software of the company)</option>
                         </select>
                     </div>
                 </div>
@@ -125,7 +119,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input id="password1" type="password" class="form-control" name="password1" placeholder="Password">
+                        <input id="password1" type="password" class="form-control" name="password" placeholder="Password">
                     </div>
                 </div>
 
@@ -135,7 +129,7 @@ include_once ("../webdesign/header/header.php");
                 </p>
 
                 <div class="row">
-                    <button id="login" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
+                    <button id="login" type="button" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
@@ -166,6 +160,7 @@ include_once ("../webdesign/footer/footer.php");
         {
 
             var formdata = new FormData($("#formLogin")[0]);
+            formdata.append("option","RegisterUserofCompany");
             $.ajax({
                 url: "userServer.php",
                 method: "POST",
@@ -178,8 +173,17 @@ include_once ("../webdesign/footer/footer.php");
                 },
                 success: function (data)
                 {
-                    $("#error").html(data);
                     $("#preloader").hide();
+                    if(data!="")
+                    {
+                        $("#error").html(data);
+                    }
+                    else
+                    {
+                        $("#error").html('<span class="alert-success">We have sent an email with a confirmation link to your email address.</span>');
+                        $("#formLogin")[0].reset();
+
+                    }
 
                 }
             });
