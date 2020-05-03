@@ -57,9 +57,9 @@ include_once ("../webdesign/header/header.php");
 
     <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
         <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign Up</h1>
-        <h4 class="alert-danger">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+        <h4 class="alert-danger" id="error">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
         <form class="col-12" id="formLogin">
-
+            <input type="hidden" name="option" value="localUser">
             <div class="form-group row">
                 <label class="col-form-label">Company Name</label>
                 <div class="input-group mb-3 input-group-lg">
@@ -69,8 +69,6 @@ include_once ("../webdesign/header/header.php");
                     <input id="CompanyName" type="text" class="form-control" name="CompanyName" placeholder="name of your company">
                 </div>
             </div>
-
-
             <div class="form-group row">
                 <label class="col-form-label">User Name</label>
                 <div class="input-group mb-3 input-group-lg">
@@ -142,9 +140,6 @@ include_once ("../webdesign/header/header.php");
                 <input type="checkbox" name="checkbox" value="check" id="agree" class="form-check-inline" /> I have read and agree to the <a href="#">Terms and Conditions and Privacy Policy</a>
             </p>
 
-
-
-
             <div class="row">
                 <button id="login" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
             </div>
@@ -176,9 +171,7 @@ include_once ("../webdesign/footer/footer.php");
         $('#login').click(function ()
         {
 
-
             var formdata = new FormData($("#formLogin")[0]);
-            formdata.append("option", "login");
             $.ajax({
                 url: "userServer.php",
                 method: "POST",
@@ -189,14 +182,10 @@ include_once ("../webdesign/footer/footer.php");
                 beforeSend: function () {
                     $("#preloader").show();
                 },
-                success: function (data) {
+                success: function (data)
+                {
+                    $("#error").html(data);
                     $("#preloader").hide();
-
-                    if (data != '') {
-                        alert(data);
-                    } else {
-                        location.reload();
-                    }
 
                 }
             });

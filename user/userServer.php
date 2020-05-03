@@ -8,34 +8,31 @@
 
 include_once ("../connection/connect.php");
 
-
-if(isset($_POST["option"]))
+function CheckUserExist($username,$Email)
 {
-    if($_POST['option']=="login")
-    {
-        $userName=$_POST['username'];
-        $password=$_POST['password'];
-        $sql='SELECT u.id,u.usertype,u.company_id,(SELECT p.image FROM person as p WHERE p.id=u.person_id) FROM user as u WHERE (u.username="'.$userName.'")AND(u.password="'.$password.'")';
-        $userDetail=queryReceive($sql);
-        if(count($userDetail)==0)
-        {
-            echo "please user is not registerd";
-        }
-        else
-        {
-
-
-            setcookie('userid',$userDetail[0][0] , time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
-            setcookie("usertype",$userDetail[0][1],time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
-            setcookie("username",$userName,time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
-            setcookie("companyid",$userDetail[0][2],time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
-            setcookie("userimage",$userDetail[0][3],time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
-
-        }
-    }
+    $sql='';
+    $Count=queryReceive($sql);
 }
 
 
+if($_POST['option']=="RegisterCompanyWithUserAlse")
+{
+$CompanyName=$_POST['CompanyName'];
+$username=$_POST['username'];
+$Email=$_POST['Email'];
+$PhoneNo=$_POST['PhoneNo'];
+$Image=$_POST['Image'];
+$password1=$_POST['password1'];
+
+}
+else if($_POST['option']=="companyWithUser")
+{
+
+}
+else if($_POST['option']=="CompanyUserRegister")
+{
+
+}
 
 
 
