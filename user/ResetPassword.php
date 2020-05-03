@@ -86,17 +86,7 @@ include_once ("../webdesign/header/header.php");
 
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-form-label">Confirm Passowrd</label>
 
-                    <div class="input-group mb-3 input-group-lg ">
-                        <div class="input-group-prepend ">
-                            <span class="input-group-text "><i class="fas fa-key"></i></span>
-                        </div>
-                        <input id="password2" type="password" class="form-control" name="password2" placeholder="Confirm Password">
-
-                    </div>
-                </div>
 
                 <div class="row">
                     <button id="ResetPassword" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-check "></i>  Reset Password</button>

@@ -1,4 +1,14 @@
 
+window.validateEmail =  function (sEmail)
+{
+    var numericExpression = /^w.+@[a-zA-Z_-]+?.[a-zA-Z]{2,3}$/;
+    if (sEmail.match(numericExpression))
+        return true;
+    else
+        return false;
+}
+
+
 window.NumberRange=function (Element,ShowMessage,Min,Max)
 {
     var state=true;

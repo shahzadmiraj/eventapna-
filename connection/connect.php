@@ -42,7 +42,16 @@ function base64url_decode( $data )
     $data=substr($data,0,-6);
     return base64_decode( strtr( $data, '-_', '+/') . str_repeat('=', 3 - ( 3 + strlen( $data )) % 4 ));
 }
+function base64url_encodeLength()
+{
 
+    $dammy=substr(md5(time()), 0, 30);
+    return rtrim( strtr( base64_encode( $dammy), '+/', '-_'), '=');
+}
+function base64url_decodeLength($dammy)
+{
+    return base64_decode( strtr( $dammy, '-_', '+/') . str_repeat('=', 3 - ( 3 + strlen( $dammy )) % 4 ));
+}
 
 
 
