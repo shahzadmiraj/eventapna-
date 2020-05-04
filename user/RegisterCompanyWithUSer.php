@@ -55,13 +55,13 @@ include_once ("../webdesign/header/header.php");
 ?>
 <div class="container">
 
-    <div class="row ">
+    <div class="row " >
         <div class="col-md-4">
         </div>
 
-        <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
+        <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;>
             <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Company Sign up</h1>
-            <h4 class="alert-danger" id="error">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <h4  id="error"> </h4>
             <form class="col-12" id="formLogin">
                 <div class="form-group row">
                     <label class="col-form-label">Company Name</label>
@@ -100,7 +100,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         </div>
-                        <input id="PhoneNo" type="text" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
+                        <input id="PhoneNo" type="number" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
                     </div>
                 </div>
 
@@ -133,7 +133,7 @@ include_once ("../webdesign/header/header.php");
                 </p>
 
                 <div class="row">
-                    <button id="login" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
+                    <button id="login" type="button" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
@@ -162,6 +162,26 @@ include_once ("../webdesign/footer/footer.php");
 
         $('#login').click(function ()
         {
+            state=false;
+            if(validateEmailByString("Email","Please enter valid Email"))
+                state=true;
+            if(password("password1","please enter 4 to 8 digits password",4,8))
+                state=true;
+            if(validationWithString("PhoneNo","please enter phone no "))
+                state=true;
+
+        if(validationWithString("username","please enter username "))
+            state=true;
+
+        if(validationWithString("CompanyName","please enter any name of you company "))
+            state=true;
+        if($("#agree").prop("checked")==false)
+        {
+            alert("please checkbox fill ");
+            state=true;
+        }
+
+
 
             var formdata = new FormData($("#formLogin")[0]);
             formdata.append("option","RegisterCompanyWithUserAlso");
