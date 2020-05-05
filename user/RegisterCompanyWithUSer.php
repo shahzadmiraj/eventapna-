@@ -162,7 +162,7 @@ include_once ("../webdesign/footer/footer.php");
 
         $('#login').click(function ()
         {
-            state=false;
+             var state=false;
             if(validateEmailByString("Email","Please enter valid Email"))
                 state=true;
             if(password("password1","please enter 4 to 8 digits password",4,8))

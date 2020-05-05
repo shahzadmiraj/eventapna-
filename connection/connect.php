@@ -5,6 +5,7 @@
  * Date: 2019-09-01
  * Time: 21:25
  */
+//Owner,User(localUser)
 //dish  ../../images/dishImages/" . $_FILES['image']['name'];   https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png
 //customer    /images/customerimage/     echo "https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png";
 //user     ../../images/users/                      echo "https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png";

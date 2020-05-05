@@ -23,6 +23,17 @@ function CheckUserExist($username,$Email)
     return  false;
 }
 
+function UserLogin($username,$password)
+{
+    $sql='SELECT  `username`,`password` FROM `user` WHERE (username="'.$username.'")||(password="'.$password.'")';
+    $user=queryReceive($sql);
+    if(count($user)>0)
+    {
+        return  true;
+    }
+    return  false;
+}
+
 
 if($_POST['option']=="RegisterCompanyWithUserAlso")
 {
@@ -50,7 +61,7 @@ if($UserExist)
     exit();
 }
 $string=base64url_encodeLength();
-$sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyIdentificaton`, `image`, `jobTitle`, `email`, `number`) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'","'.$CompanyName.'","'.$image.'","Owner","'.$Email.'","'.$PhoneNo.'")';
+$sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid` ) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'","'.$CompanyName.'","'.$image.'","Owner","'.$Email.'","'.$PhoneNo.'",1,NULL)';
 querySend($sql);
 $last=  mysqli_insert_id($connect);
 
@@ -64,7 +75,7 @@ company name:'.$CompanyName.'
 phone no:'.$PhoneNo.'
 </pre>';
     $display="";
-   $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+  // $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
     if($display=="")
     {
         echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email</a></p>';
@@ -117,6 +128,30 @@ else if($_POST['option']=="LocatUserRegisters")
     querySend($sql);
 
 
+
+}
+else if($_POST['option']=="login")
+{
+    $UserName=$_POST['UserName'];
+    $password=$_POST['password'];
+    $sql='SELECT  `company_id`,`jobTitle`,`id` FROM `user` WHERE (username="'.$UserName.'")||(password="'.$password.'")';
+    $user=queryReceive($sql);
+    if(count($user)==1)
+    {
+        if($user[0][1]=="User")
+        {
+            echo "back";
+        }
+        else
+        {
+            echo 'companyUser';
+        }
+        setcookie('userid',$user[0][2] , time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
+    }
+    else
+    {
+        echo "<span class='alert-danger'>Please enter valid Username and Password </span>";
+    }
 
 }
 

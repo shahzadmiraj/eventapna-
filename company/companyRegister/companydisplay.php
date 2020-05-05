@@ -7,6 +7,11 @@
  */
 
 include  ("../../connection/connect.php");
+
+
+$sql='SELECT `company_id` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$companyid=queryReceive($sql);
+
 if(!isset($_COOKIE['companyid']))
 {
     header("location:../../user/userLogin.php");
