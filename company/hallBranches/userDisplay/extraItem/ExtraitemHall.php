@@ -2,7 +2,7 @@
 include_once ('../../../../connection/connect.php');
 
 
-$hallid=$_SESSION['branchtypeid'];
+$hallid=$_GET['h'];
 
 $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE  ISNULL(expire)AND(hall_id='.$hallid.')';
 $ExtraType=queryReceive($sql);

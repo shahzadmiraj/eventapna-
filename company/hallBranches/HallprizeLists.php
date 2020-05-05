@@ -2,18 +2,12 @@
 include_once ('../../connection/connect.php');
 include_once('packages/packagesServerfunction.php');
 
-if(!isset($_GET['hall']))
-{
 
-    header("location:../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['hall'];
-$id=base64url_decode($encoded);
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['h'];
 
-if((!is_numeric($id))||$id=="")
-{
-    header("location:../companyRegister/companyEdit.php");
-}
+$encoded=$id;
 
 if(isset($_GET['editpackage']))
 {
@@ -26,7 +20,7 @@ if(isset($_GET['editpackage']))
 $hallid='';
 $companyid='';
 $hallid=$id;
-$companyid=$_COOKIE['companyid'];
+$companyid=$userdetail[0][0];
 $sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
 $halldetail=queryReceive($sql);
 

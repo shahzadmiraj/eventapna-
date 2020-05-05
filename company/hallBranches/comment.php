@@ -2,22 +2,14 @@
 include_once ('../../connection/connect.php');
 
 
-if(!isset($_GET['hall']))
-{
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['h'];
 
-    header("location:../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['hall'];
-$id=base64url_decode($encoded);
-
-if((!is_numeric($id))||$id=="")
-{
-    header("location:../companyRegister/companyEdit.php");
-}
+$encoded=$id;
 $hallid='';
-$companyid='';
 $hallid=$id;
-$companyid=$_COOKIE['companyid'];
+$companyid=$userdetail[0][0];
 $userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>

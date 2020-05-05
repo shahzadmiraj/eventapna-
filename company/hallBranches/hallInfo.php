@@ -3,19 +3,11 @@ include_once ('../../connection/connect.php');
 
 
 
-if(!isset($_GET['hall']))
-{
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['h'];
 
-  header("location:../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['hall'];
-$id=base64url_decode($encoded);
-
-if((!is_numeric($id))||($id==""))
-{
-  header("location:../companyRegister/companyEdit.php");
-}
-
+$encoded=$id;
 if(isset($_GET['action']))
 {
 
@@ -37,7 +29,7 @@ if(isset($_GET['action']))
 $hallid='';
 $companyid='';
 $hallid=$id;
-$companyid=$_COOKIE['companyid'];
+$companyid=$userdetail[0][0];
 $sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
 $halldetail=queryReceive($sql);
 $sql='SELECT `id`, `longitude`, `expire`, `country`, `city`, `latitude`, `active`, `address` FROM `location` WHERE id='.$halldetail[0][7].'';
