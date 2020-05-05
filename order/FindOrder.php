@@ -7,7 +7,7 @@
  */
 include_once ("../connection/connect.php");
 
-if(!isset($_SESSION['branchtype']))
+/*if(!isset($_SESSION['branchtype']))
 {
     header("location:../company/companyRegister/companydisplay.php");
 }
@@ -26,26 +26,43 @@ if(isset($_GET['action']))
     $_SESSION['order']=$_GET['order'];
     $_SESSION['customer']=$_GET['customer'];
     header("location:PreviewOrder.php");
-}
+}*/
 
 $hallid="";
 $cateringid="";
 $hallorcater="";
-$order_info=$_GET['order_status'];
-
-
-
-if(isset($_SESSION['branchtype']))
+$name="";
+$id=1;
+if(isset($_GET['c']))
 {
-    if($_SESSION['branchtype']=="hall")
-    {
-        $hallid=$_SESSION['branchtypeid'];
-    }
-    else
-    {
-        $cateringid=$_SESSION['branchtypeid'];
-    }
+    $cateringid= $_GET['c'];
+    $name="c";
+    $id=$_GET['c'];
 }
+else if(isset($_GET['h']))
+{
+    $hallid=$_GET['h'];
+    $name="h";
+    $id=$_GET['h'];
+}
+
+$order_info="";
+if (isset($_GET['order_status']))
+{
+    $order_info= $_GET['order_status'];
+}
+
+//if(isset($_SESSION['branchtype']))
+//{
+//    if($_SESSION['branchtype']=="hall")
+//    {
+//        $hallid=$_SESSION['branchtypeid'];
+//    }
+//    else
+//    {
+//        $cateringid=$_SESSION['branchtypeid'];
+//    }
+//}
 
 $midOfHallOrCater="";
 if(isset($_GET['order_status']))
@@ -106,7 +123,7 @@ else
 <body>
 
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
 ?>
 
 <div class="jumbotron  shadow" style="background-image: url(https://university.daraz.pk/pluginfile.php/26/course/section/10/Order%20Fulfilment-01.png);background-size:100% 100%;background-repeat: no-repeat">
@@ -124,10 +141,14 @@ include_once ("../webdesign/header/header.php");
 
         <form class="col-12 shadow mb-4   " id="formId1" >
 
+            <?php
+            echo '<input type="number" name="'.$name.'" value='.$id.' hidden>';
+            ?>
+
+
+
         <div class="form-group row">
-            <label class="col-form-label"> Customer name</label>
-
-
+            <label class="col-form-label">Customer name</label>
 
 
             <div class="input-group mb-3 input-group-lg">
@@ -260,14 +281,13 @@ include_once ("../webdesign/header/header.php");
                 <?php
                 if($hallid=="")
                 {
-
                     //catering
-                    echo '<input class="form-control" readonly type="text" name="od_status_catering" value="Running">';
+                    echo '<input class="form-control" readonly type="text" name="od_status_catering" value="'.$order_info.'">';
                 }
                 else
                 {
                     //hall
-                    echo '<input class="form-control" readonly type="text" name="od_status_hall" value="Running">';
+                    echo '<input class="form-control" readonly type="text" name="od_status_hall" value="'.$order_info.'">';
                 }
 
                 ?>

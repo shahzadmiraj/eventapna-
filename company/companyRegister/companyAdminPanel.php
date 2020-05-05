@@ -85,7 +85,7 @@ include_once ("../../webdesign/header/header.php");
         <?php
 
 
-        for($i=-3;$i<count($halls);$i++)
+        for($i=-1;$i<count($halls);$i++)
         {
 
             $img= "";
@@ -101,6 +101,8 @@ include_once ("../../webdesign/header/header.php");
 
             $img='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
 
+           // $hallEncorded=base64url_encode($halls[$i][0]);
+            $hallEncorded=1;
             ?>
 
             <div class="col-md-4 mb-5">
@@ -116,20 +118,22 @@ include_once ("../../webdesign/header/header.php");
                 <div class="container">
                     <div class="row justify-content-start">
                         <a href="../../customer/CustomerCreate.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Today_Orders" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Running" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Delieved" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Clear" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Cancel" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
-                        <a  href="../../company/cateringBranches/dish/dishPriceList.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fa fa-list-ol fa-3x" ></i><h6>Dishes Price List</h6></a>
-                        <a  href="../../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>
-                        <a  href="../../company/ClientSide/Catering/cateringClient.php?c='.$cateringid.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fab fa-chrome fa-3x"></i><h6>Website</h6></a>
-                        <a  href="../../payment/RemainingAmount.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>
-                        <a href="../hallBranches/hallInfo.php?hall=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cogs fa-3x"></i><h6> Hall Setting</h6></a>
-                        <a href="../hallBranches/galleryhall.php?hall=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-images fa-3x"></i> <h6> Gallery</h6></a>
-                        <a href="../hallBranches/HallprizeLists.php?hall=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-clipboard-list fa-3x"></i> <h6> Prize list</h6></a>
-                        <a href="../hallBranches/extraItems/Hallitem.php?hall=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-comments fa-3x"></i> <h6> Extra items</h6></a>
-                        <a href="../hallBranches/comment.php?hall=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-comments fa-3x"></i> <h6> Comments</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Today_Orders&h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Running&h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Delieved&h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Clear&h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Cancel&h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
+
+                         <a  href="../hallBranches/userDisplay/OrderCalender/OrderCalender.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>
+                         <a  href="../hallBranches/userDisplay/extraItem/ExtraitemHall.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-calendar-alt fa-3x"></i><h6>Extra items Price List</h6></a>
+                         <a  href="../ClientSide/Hall/HallClient.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fab fa-chrome fa-3x"></i> <h6>Hall Website</h6></a>
+
+                        <a  href="../../payment/RemainingAmount.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>
+                        <a href="../hallBranches/hallInfo.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cogs fa-3x"></i><h6> Hall Setting</h6></a>
+                        <a href="../hallBranches/galleryhall.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-images fa-3x"></i> <h6> Gallery</h6></a>
+                        <a href="../hallBranches/HallprizeLists.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-clipboard-list fa-3x"></i> <h6> Prize list</h6></a>
+                        <a href="../hallBranches/extraItems/Hallitem.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-comments fa-3x"></i> <h6> Extra items</h6></a>
+                        <a href="../hallBranches/comment.php?h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-comments fa-3x"></i> <h6> Comments</h6></a>
                     </div>
                 </div>
             </div>
@@ -168,7 +172,7 @@ include_once ("../../webdesign/header/header.php");
         <?php
 
 
-        for($i=-3;$i<count($caterings);$i++)
+        for($i=-1;$i<count($caterings);$i++)
         {
 
             $img= "";
@@ -184,7 +188,8 @@ include_once ("../../webdesign/header/header.php");
 
             $img='https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg';
 
-
+            // $hallEncorded=base64url_encode($halls[$i][0]);
+            $hallEncorded=1;
             ?>
 
             <div class="col-md-4 mb-5">
@@ -199,20 +204,20 @@ include_once ("../../webdesign/header/header.php");
                 <hr>
                 <div class="container">
                     <div class="row justify-content-start">
-                        <a href="../cateringBranches/infoCatering.php?catering=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cogs fa-3x"></i><h6>Branch Setting</h6></a>
-                        <a href="../cateringBranches/gallerycatering.php?catering=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-images fa-3x"></i> <h6>Gallery</h6></a>
-                        <a href="../cateringBranches/dish/dishesInfo.php?catering=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-hamburger fa-3x"></i><h6>Dishes Mangement system</h6></a>
-                        <a href="../cateringBranches/cateringComment/cateringComment.php?catering=<?php echo $encoded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-comments fa-3x"></i><h6>Comments</h6></a>
                         <a href="../../customer/CustomerCreate.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Today_Orders" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Running" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Delieved" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Clear" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Cancel" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
-                         <a  href="../../company/cateringBranches/dish/dishPriceList.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fa fa-list-ol fa-3x" ></i><h6>Dishes Price List</h6></a>
-                        <a  href="../../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>
-                        <a  href="../../company/ClientSide/Catering/cateringClient.php?c='.$cateringid.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fab fa-chrome fa-3x"></i><h6>Website</h6></a>
-                        <a  href="../../payment/RemainingAmount.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Today_Orders&c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Running&c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Delieved&c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Clear&c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Cancel&c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
+                        <a href="../cateringBranches/infoCatering.php?c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cogs fa-3x"></i><h6>Branch Setting</h6></a>
+                        <a href="../cateringBranches/gallerycatering.php?c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-images fa-3x"></i> <h6>Gallery</h6></a>
+                        <a href="../cateringBranches/dish/dishesInfo.php?c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-hamburger fa-3x"></i><h6>Dishes Mangement system</h6></a>
+                        <a href="../cateringBranches/cateringComment/cateringComment.php?c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-comments fa-3x"></i><h6>Comments</h6></a>
+                         <a  href="../../company/cateringBranches/dish/dishPriceList.php?c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fa fa-list-ol fa-3x" ></i><h6>Dishes Price List</h6></a>
+                        <a  href="../../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php?c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>
+                        <a  href="../../company/ClientSide/Catering/cateringClient.php?c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fab fa-chrome fa-3x"></i> <h6>Website</h6></a>
+                        <a  href="../../payment/RemainingAmount.php?c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>
                     </div>
                 </div>
             </div>
@@ -256,7 +261,7 @@ include_once ("../../webdesign/header/header.php");
         <?php
 
 
-        for($i=-3;$i<count($users);$i++)
+        for($i=-1;$i<count($users);$i++)
         {
 
             $img= "";
@@ -276,7 +281,7 @@ include_once ("../../webdesign/header/header.php");
             ?>
 
             <div class="col-md-4 mb-5">
-                <img src="<?php echo $img;?>" class="img-thumbnail" style="width: 100%;height: 100%">
+                <img src="<?php echo $img;?>" class="img-thumbnail" style="width: 100%;height: 20vh">
             </div>
 
 
