@@ -7,24 +7,15 @@
  */
 include_once ("../../../connection/connect.php");
 
-    if (!isset($_COOKIE['companyid']))
-    {
-       header("location:../../user/userLogin.php");
-    }
-        if(!isset($_GET['catering']))
-        {
-            header("location:./../companyRegister/companyEdit.php");
-        }
-        $encoded=$_GET['catering'];
-        $id=base64url_decode($encoded);
 
-        if((!is_numeric($id))||$id=="")
-        {
-           header("location:../../companyRegister/companyEdit.php");
-        }
-        $cateringid=$id;
-    $sql = 'SELECT  `name`, `expire`, `image` FROM `catering` WHERE id=' . $cateringid . '';
-    $cateringdetail = queryReceive($sql);
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['c'];
+
+
+$cateringid=$id;
+$sql = 'SELECT  `name`, `expire`, `image` FROM `catering` WHERE id=' . $cateringid . '';
+$cateringdetail = queryReceive($sql);
 ?>
 <!DOCTYPE html>
 <head>
@@ -47,7 +38,7 @@ include_once ("../../../connection/connect.php");
 </head>
 <body>
 <?php
-include_once ("../../../webdesign/header/header.php");
+//include_once ("../../../webdesign/header/header.php");
 
 ?>
 
@@ -72,9 +63,6 @@ include_once ("../../../webdesign/header/header.php");
         <div class="card-body " style="opacity: 0.7 ;background: white;">
             <h1 class="display-5 text-center"><i class="fas fa-hamburger fa-3x"></i><?php echo $cateringdetail[0][0];?> Dishes info</h1>
             <p class="lead">Edit dishes information,dishes type,images and others </p>
-
-            <h1 class="text-center"> <a href="../../companyRegister/companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
-
         </div>
     </div>
 <div class="container">
@@ -85,7 +73,7 @@ include_once ("../../../webdesign/header/header.php");
 
     <div  class="col-12 badge-light ">
 
-        <h3 class="font-weight-bold">System Dish info <a  href="addDish.php?catering=<?php echo $encoded;?>" class="float-right btn btn-success col-4 form-control">Add dish +</a></h3>
+        <h3 class="font-weight-bold">System Dish info <a  href="addDish.php?c=<?php echo $id;?>" class="float-right btn btn-success col-4 form-control">Add dish +</a></h3>
 
         <br>
 
@@ -161,7 +149,7 @@ include_once ("../../../webdesign/header/header.php");
         for ($j=0;$j<count($dishDetail);$j++)
         {
             $display .= ' 
-         <a    href="EditDish.php?dish='.base64url_encode($dishDetail[$j][1]).'&catering='.$_GET['catering'].'"  class="col-md-4 card m-1" >';
+         <a    href="EditDish.php?dish='.base64url_encode($dishDetail[$j][1]).'&c='.$id.'"  class="col-md-4 card m-1" >';
 
 
 

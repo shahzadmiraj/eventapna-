@@ -9,22 +9,11 @@ include_once ("../../connection/connect.php");
 
 
 
-if(!isset($_COOKIE['companyid']))
-{
-    header("location:../../user/userLogin.php");
-}
-if(!isset($_GET['catering']))
-{
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['c'];
 
-    header("location:../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['catering'];
-$id=base64url_decode($encoded);
 
-if((!is_numeric($id))||$id=="")
-{
-    header("location:../companyRegister/companyEdit.php");
-}
 $cateringid=$id;
 $sql='SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id='.$cateringid.'';
 $cateringdetail=queryReceive($sql);

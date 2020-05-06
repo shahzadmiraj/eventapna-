@@ -6,21 +6,12 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
-if (!isset($_COOKIE['companyid']))
-{
-    header("location:../../user/userLogin.php");
-}
-if(!isset($_GET['catering']))
-{
-    header("location:./../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['catering'];
-$id=base64url_decode($encoded);
 
-if((!is_numeric($id))||$id=="")
-{
-    header("location:../../companyRegister/companyEdit.php");
-}
+
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['c'];
+
 $cateringid=$id;
 
 $userid=$_COOKIE['userid'];

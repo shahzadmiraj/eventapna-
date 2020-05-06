@@ -8,19 +8,14 @@
 include_once ("../../../connection/connect.php");
 
 
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['c'];
 
-if((!isset($_GET['catering']))||(!isset($_GET['dish'])))
-{
-    header("location:../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['catering'];
-$id=base64url_decode($encoded);
+
 $encodedPack=$_GET['dish'];
 $packageid=base64url_decode($encodedPack);
-if(((!is_numeric($id))||$id=="")||((!is_numeric($packageid))||$packageid==""))
-{
-    header("location:../companyRegister/companyEdit.php");
-}
+
 
 $cateringid=$id;
 $dishID=$packageid;
@@ -58,7 +53,7 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-include_once ("../../../webdesign/header/header.php");
+//include_once ("../../../webdesign/header/header.php");
 
 ?>
 <div class="jumbotron  shadow text-center" style="background-image: url(https://shaadishopblog.files.wordpress.com/2015/10/indian-wedding-punjabi-jain-kunal-shveta-bride-groom-hotel-irvine-global-photography-lehenga-sherwani-sera-manohar-delhi-palace-indian-food.jpg?w=720&h=480);background-size:100% 100%;background-repeat: no-repeat">
