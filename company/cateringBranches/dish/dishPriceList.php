@@ -6,11 +6,7 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../../companyRegister/companydisplay.php");
-}
-$cateringid=$_SESSION['branchtypeid'];
+$cateringid=$_GET['c'];
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
 $dishTypeDetail=queryReceive($sql);
 ?>
@@ -185,7 +181,6 @@ include_once ("../../../webdesign/footer/footer.php");
             }
             else
             {
-
                 $("#dishtype"+IdDisplay).hide('slow');
                 $(this).data("display","hide");
             }
