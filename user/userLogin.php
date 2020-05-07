@@ -32,8 +32,8 @@ function validationOfUserInSession($id,$confirm)
             if(ISnullvalidationofuser($UserDetails[0][9]))
             {
                 $state=true;
-                $companyid=$UserDetails[0][11];
-                if(($UserDetails[0][10]==1)||($UserDetails[0][8]=="User"))
+                $companyid=$UserDetails[0][12];
+                if(($UserDetails[0][11]==1)||($UserDetails[0][8]=="User"))
                 {
                     $companyid='"NULL"';
 
@@ -67,7 +67,7 @@ if((isset($_GET['id']))AND(isset($_GET['confirm'])))
 {
     if(validationOfUserInSession($_GET['id'],$_GET['confirm']))
     {
-        $display='<span class="alert-success">you have successfully register</span>';
+        $display='<span class="alert-success">you have successfully registered</span>';
     }
 
 }
@@ -86,9 +86,11 @@ if((isset($_GET['id']))AND(isset($_GET['confirm'])))
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
     <script type="text/javascript" src="../webdesign/JSfile/JSFunction.js"></script>
+
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
 
 
     <style>
@@ -101,12 +103,6 @@ if((isset($_GET['id']))AND(isset($_GET['confirm'])))
             font-family: 'Numans', sans-serif;
             width: 100%;
             height: 100%;
-        }
-        .input-group-prepend span{
-            width: 50px;
-            background-color: #FFC312;
-            color: black;
-            border:0 !important;
         }
 
     </style>

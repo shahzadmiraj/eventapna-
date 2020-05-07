@@ -7,14 +7,9 @@
  */
 include_once ("../../connection/connect.php");
 
-if(!isset($_COOKIE['companyid']))
-{
-    header("location:../../user/userLogin.php");
-}
-$companyid=$_COOKIE['companyid'];
-$CateringBranches=1;
-$sql='SELECT name,id FROM systemDishType WHERE ISNULL(isExpire)';
-$dishType=queryReceive($sql);
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$companyid=$userdetail[0][0];
 
 $userid=$_COOKIE['userid'];
 ?>
@@ -31,6 +26,7 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
 
+    <script type="text/javascript" src="../../webdesign/JSfile/JSFunction.js"></script>
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
@@ -41,7 +37,7 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
 
 ?>
 <div class="jumbotron  shadow" style="background-image: url(https://www.hnfc.com.my/data1/images/slide2.jpg);background-size:100% 100%;background-repeat: no-repeat">

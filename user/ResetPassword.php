@@ -24,6 +24,7 @@ include_once ("../connection/connect.php");
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <script type="text/javascript" src="../webdesign/JSfile/JSFunction.js"></script>
 
     <style>
 
@@ -35,12 +36,6 @@ include_once ("../connection/connect.php");
             font-family: 'Numans', sans-serif;
             width: 100%;
             height: 100%;
-        }
-        .input-group-prepend span{
-            width: 50px;
-            background-color: #FFC312;
-            color: black;
-            border:0 !important;
         }
 
     </style>

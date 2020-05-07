@@ -1,29 +1,14 @@
 <?php
 include_once ('../../../../connection/connect.php');
-//include_once('../../packages/packagesServerfunction.php');
-
-/*if(!isset($_GET['hall']))
-{
-
-    header("location:../../../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['hall'];
-$id=base64url_decode($encoded);
-
-if((!is_numeric($id))||$id=="")
-{
-    header("location:../../../companyRegister/companyEdit.php");
-}*/
 
 
-$hallid=1;
-$companyid='';
-$cateringid=$_SESSION['branchtypeid'];
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['c'];
+$companyid=$userdetail[0][0];
+$cateringid=$id;
 
 
-//$companyid=$_COOKIE['companyid'];
-//$sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
-//$halldetail=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>

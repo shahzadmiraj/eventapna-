@@ -6,8 +6,9 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$companyid=$_COOKIE['companyid'];
-$hallBranches='';
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$companyid=$userdetail[0][0];
 
 ?>
 <!DOCTYPE html>
@@ -27,6 +28,8 @@ $hallBranches='';
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../map/style.css">
+
+    <script src="../../webdesign/JSfile/JSFunction.js"></script>
     <style>
         form
         {
@@ -130,7 +133,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-columns"></i></span>
             </div>
-            <input id="partitions" value="0" name="partition" type="number" class="form-control" placeholder="No of Partition in Hall">
+            <input id="partitions" value="1" name="partition" type="number" class="form-control" placeholder="No of Partition in Hall">
         </div>
 
 

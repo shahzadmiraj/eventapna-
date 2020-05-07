@@ -48,7 +48,6 @@ include_once ("../../../webdesign/header/header.php");
     <h4>Catering Dishes Price list</h4>
     <hr>
     <?php
-
     $display='';
     for($i=0;$i<count($dishTypeDetail);$i++)
     {
@@ -56,7 +55,6 @@ include_once ("../../../webdesign/header/header.php");
 
         $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(expire)) AND(catering_id='.$cateringid.')';
         $dishDetail=queryReceive($sql);
-        //print_r($dishDetail);
         $display.='<div id="dishtype'.$i.'"  class="row" style="display: none">';
         for ($j=0;$j<count($dishDetail);$j++)
         {

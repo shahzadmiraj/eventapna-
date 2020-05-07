@@ -71,6 +71,41 @@ window.NumberRange=function (Element,ShowMessage,Min,Max)
 }
 
 
+window.PhoneNumberCheck=function (Element)
+{
+    var state=true;
+    Element=$("#"+Element);
+
+    var RegexPhone = /^[\+0][0-9]?()[0-9](\s|\S)(\d[0-9]{9})$/;
+    if(RegexPhone.test(Element.val()))
+    {
+        if (Element.hasClass("btn-danger"))
+        {
+            Element.removeClass("btn-danger");
+        }
+        state = false;
+    }
+    else
+    {
+        alert("number must be format" +
+            "\n+92 1213315000\n" +
+            " +9231213315000\n" +
+            "+1 2323214316\n" +
+            "+9223432432432\n" +
+            "0923213315000 ");
+        if(!(Element.hasClass("btn-danger")))
+            Element.addClass("btn-danger");
+
+    }
+    return state;
+/*
+    +92 1213315000
++9231213315000
++1 2323214316
++2923432432432
+    0923213315000*/
+}
+
 
 window.validation= function (Element,ShowMessage)
 {

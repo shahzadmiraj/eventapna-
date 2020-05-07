@@ -11,8 +11,6 @@ include  ("../../connection/connect.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
-
-
 $companyid=$userdetail[0][0];
 
 
@@ -28,7 +26,7 @@ $halls=queryReceive($sql);
 $sql='SELECT `id`, `name`,`image` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
 $caterings=queryReceive($sql);
 
-$sql='SELECT u.id FROM user as u WHERE u.company_id='.$companyid.'';
+$sql='SELECT `id`, `username`,`image`, `jobTitle` FROM `user` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
 $users=queryReceive($sql);
 
 $encoded=1;
@@ -85,24 +83,23 @@ $encoded=1;
         <?php
 
 
-        for($i=-1;$i<count($halls);$i++)
+        for($i=0;$i<count($halls);$i++)
         {
 
             $img= "";
 
-            /*if((file_exists('../../images/hall/'.$halls[$i][2]))&&($halls[$i][2]!=""))
+            if((file_exists('../../images/hall/'.$halls[$i][2]))&&($halls[$i][2]!=""))
         {
             $img= "../../images/hall/".$halls[$i][2];
         }
         else
         {
             $img='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
-        }*/
+        }
 
-            $img='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
 
            // $hallEncorded=base64url_encode($halls[$i][0]);
-            $hallEncorded=1;
+            $hallEncorded=$halls[$i][0];
             ?>
 
             <div class="col-md-4 mb-5">
@@ -112,7 +109,7 @@ $encoded=1;
 
             <div class="col-md-8 col-12 mb-5">
                 <h4>
-                    Name of branch <i class="fas fa-place-of-worship "></i>
+                    <?php echo $halls[$i][1]; ?> <i class="fas fa-place-of-worship "></i>
                 </h4>
                 <hr>
                 <div class="container">
@@ -170,24 +167,23 @@ $encoded=1;
         <?php
 
 
-        for($i=-1;$i<count($caterings);$i++)
+        for($i=0;$i<count($caterings);$i++)
         {
 
             $img= "";
 
-            /*if((file_exists('../../images/catering/'.$caterings[$i][2]))&&($caterings[$i][2]!=""))
+            if((file_exists('../../images/catering/'.$caterings[$i][2]))&&($caterings[$i][2]!=""))
             {
                 $img= "../../images/catering/".$caterings[$i][2];
             }
             else
             {
                 $img='https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg';
-            }*/
+            }
 
-            $img='https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg';
 
             // $hallEncorded=base64url_encode($halls[$i][0]);
-            $hallEncorded=1;
+            $hallEncorded=$caterings[$i][0];
             ?>
 
             <div class="col-md-4 mb-5">
@@ -197,7 +193,7 @@ $encoded=1;
 
             <div class="col-md-8 col-12 mb-5">
                 <h4>
-                    Name of branch <i class="fas fa-utensils"></i>
+                    <?php echo $caterings[$i][1]; ?><i class="fas fa-utensils"></i>
                 </h4>
                 <hr>
                 <div class="container">
@@ -248,7 +244,7 @@ $encoded=1;
 
     <div class="container mt-2 mb-2  ">
         <h3  class="float-left"> <i class="fas fa-user  mr-1"></i> Users</h3>
-        <a href="../../system/user/usercreate.php" class="btn btn-success float-right"><i class="fas fa-user-plus"></i> Add User</a>
+        <a href="../../user/RegisterCompanyUser.php" class="btn btn-success float-right"><i class="fas fa-user-plus "></i> Add User</a>
     </div>
 
 
@@ -258,22 +254,21 @@ $encoded=1;
         <?php
 
 
-        for($i=-1;$i<count($users);$i++)
+        for($i=0;$i<count($users);$i++)
         {
 
             $img= "";
 
-            /*if(file_exists('../../images/users/'.$users[$i][3])&&($users[$i][3]!=""))
+            if(file_exists('../../images/users/'.$users[$i][2])&&($users[$i][2]!=""))
             {
-                $img='../../images/users/'.$users[$i][3];
+                $img='../../images/users/'.$users[$i][2];
 
             }
             else
             {
                 $img='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
-            }*/
+            }
 
-            $img='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
 
             ?>
 
@@ -284,13 +279,13 @@ $encoded=1;
 
             <div class="col-md-8 col-12 mb-5">
                 <h4>
-                    User name <i class="fas fa-user  mr-1"></i>
+                    <?php echo $users[$i][1]?> <i class="fas fa-user  mr-1"></i>
+                    <span class="float-right"><?php echo $users[$i][3]?></span>
                 </h4>
                 <hr>
                 <div class="container">
                     <div class="row justify-content-start">
-
-
+                        <a  href="../../user/UserProfile.php?uid=<?php echo $users[$i][0]?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-id-card fa-3x"></i><h6>User Profile</h6></a>
 
                     </div>
                 </div>

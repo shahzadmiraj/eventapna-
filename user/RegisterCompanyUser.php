@@ -7,6 +7,10 @@
  */
 include_once ("../connection/connect.php");
 
+
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$companyid=$userdetail[0][0];
 ?>
 <!DOCTYPE html>
 <head>
@@ -19,26 +23,15 @@ include_once ("../connection/connect.php");
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <style>
-        body
-        {
-            background-image: url('https://i.pinimg.com/originals/cc/48/3b/cc483b945cf746255339655b2a5f25b3.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            font-family: 'Numans', sans-serif;
-            width: 100%;
-            height: 100%;
-        }
-        .input-group-prepend span{
-            width: 50px;
-            background-color: #FFC312;
-            color: black;
-            border:0 !important;
-        }
+    <script type="text/javascript" src="../webdesign/JSfile/JSFunction.js"></script>
 
-    </style>
+    <link rel="stylesheet" type="text/css" href="../webdesign/css/complete.css">
+
+<style>
+
+</style>
+
 </head>
 <body>
 <?php
@@ -51,10 +44,10 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
-            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign Up</h1>
+            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i>Sign Up in company</h1>
             <h4 id="error"></h4>
             <form class="col-12" id="formLogin">
-                <input type="hidden" name="Companyid" value="1">
+                <input type="hidden" name="Companyid" value="<?php echo $companyid;?>">
 
                 <div class="form-group row">
                     <label class="col-form-label">User Name</label>
@@ -119,7 +112,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input id="password1" type="password" class="form-control" name="password" placeholder="Password">
+                        <input id="password" type="password" class="form-control" name="password" placeholder="Password">
                     </div>
                 </div>
 
@@ -133,7 +126,7 @@ include_once ("../webdesign/header/header.php");
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        Already have a account<a href="userLogin.php">Sign In</a>
+<!--                        Already have a account<a href="userLogin.php">Sign In</a>-->
                     </div>
                 </div>
 
@@ -159,6 +152,27 @@ include_once ("../webdesign/footer/footer.php");
         $('#login').click(function ()
         {
 
+
+            var state=false;
+            if(validateEmailByString("Email","Please enter valid Email"))
+                state=true;
+            if(password("password","please enter 4 to 8 digits password",4,8))
+                state=true;
+            if(validationWithString("PhoneNo","please enter phone no "))
+                state=true;
+
+            if(validationWithString("username","please enter username "))
+                state=true;
+
+            if($("#agree").prop("checked")==false)
+            {
+                alert("please checkbox fill ");
+                state=true;
+            }
+
+            if(state)
+                return false;
+
             var formdata = new FormData($("#formLogin")[0]);
             formdata.append("option","RegisterUserofCompany");
             $.ajax({
@@ -176,13 +190,8 @@ include_once ("../webdesign/footer/footer.php");
                     $("#preloader").hide();
                     if(data!="")
                     {
-                        $("#error").html(data);
-                    }
-                    else
-                    {
-                        $("#error").html('<span class="alert-success">We have sent an email with a confirmation link to your email address.</span>');
                         $("#formLogin")[0].reset();
-
+                        $("#error").html(data);
                     }
 
                 }

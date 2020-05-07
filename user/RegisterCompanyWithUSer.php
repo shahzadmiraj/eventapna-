@@ -181,6 +181,9 @@ include_once ("../webdesign/footer/footer.php");
             state=true;
         }
 
+        if(state)
+            return false;
+
 
 
             var formdata = new FormData($("#formLogin")[0]);

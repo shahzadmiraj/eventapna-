@@ -7,8 +7,10 @@
  */
 include_once ("../connection/connect.php");
 
-
-
+$UserProfileId=$_GET['uid'];
+$sql='SELECT `id`, `username`, (SELECT company.name FROM company WHERE company.id=user.`company_id`), `image`, `jobTitle`, `email`, `number`, `token` FROM `user` WHERE (id='.$UserProfileId.')AND(ISNULL(expire))';
+$userdetail=queryReceive($sql);
+$userid=$_COOKIE['userid'];
 
 ?>
 <!DOCTYPE html>
@@ -25,6 +27,8 @@ include_once ("../connection/connect.php");
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
+    <script type="text/javascript" src="../webdesign/JSfile/JSFunction.js"></script>
+
     <style>
 
 
@@ -35,12 +39,6 @@ include_once ("../connection/connect.php");
             font-family: 'Numans', sans-serif;
             width: 100%;
             height: 100%;
-        }
-        .input-group-prepend span{
-            width: 50px;
-            background-color: #FFC312;
-            color: black;
-            border:0 !important;
         }
 
     </style>
@@ -57,10 +55,28 @@ include_once ("../webdesign/header/header.php");
 
         <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
             <h1 class="mb-5 mt-5 text-white"><i class="fas fa-user"></i> User Profile</h1>
-            <h4 class="alert-danger">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <h4 id="error"> </h4>
             <form class="col-12" id="formLogin">
+                <input type="hidden" name="profileUserid" value="<?php echo $userdetail[0][0];?>">
+
+                <input type="hidden" name="CurrentUserid" value="<?php echo $userid;?>">
+
                 <center>
-                <img  src="../gmail.png" class="card-img-top " style="width: 50%;height: 20vh">
+                <img  src="
+                <?php
+                if(file_exists('../images/users/'.$userdetail[0][3])&&($userdetail[0][3]!=""))
+                {
+                    echo '../images/users/'.$userdetail[0][3];
+
+                }
+                else
+                {
+                    echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+                }
+
+                ?>
+
+                       " class="card-img-top " style="width: 50%;height: 20vh">
                 </center>
                 <div class="form-group row">
                     <label class="col-form-label">Company Name</label>
@@ -68,7 +84,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-city mr-2"></i></span>
                         </div>
-                        <input id="CompanyName" type="text" class="form-control" name="CompanyName" placeholder="name of your company">
+                        <input readonly id="CompanyName" type="text" class="form-control" name="CompanyName" placeholder="name of your company" value="<?php echo $userdetail[0][2]; ?>">
                     </div>
                 </div>
 
@@ -79,7 +95,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input id="username" type="text" class="form-control" name="username" placeholder="Username">
+                        <input id="username" type="text" class="form-control" name="username" placeholder="Username"  value="<?php echo $userdetail[0][1]; ?>">
                     </div>
                 </div>
 
@@ -90,18 +106,18 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend ">
                             <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
                         </div>
-                        <input id="Email" type="text" class="form-control" name="Email" placeholder="Email ">
+                        <input readonly id="Email" type="text" class="form-control" name="Email" placeholder="Email "  value="<?php echo $userdetail[0][5]; ?>">
                     </div>
                 </div>
 
 
                 <div class="form-group row" >
-                    <label class="col-form-label">Phone No</label>
+                    <label class="col-form-label">Phone No;0923213315000,+92 1213315000,+9223432432432</label>
                     <div class="input-group mb-3 input-group-lg">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         </div>
-                        <input id="PhoneNo" type="text" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
+                        <input  id="PhoneNo" type="text" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX"  value="<?php echo $userdetail[0][6]; ?>">
                     </div>
                 </div>
 
@@ -111,7 +127,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-camera-retro"></i></span>
                         </div>
-                        <input id="Image" type="file" class="form-control" name="Image" >
+                        <input id="Image" type="file" class="form-control" name="image" >
                     </div>
                 </div>
 
@@ -121,11 +137,33 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend ">
                             <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
                         </div>
-                        <select class="form-control">
-                            <option value="Owner">Owner of company</option>
+                        <select name="jobtitle" class="form-control">
+
+                            <?php
+                            if($userdetail[0][4]=="Owner")
+                            {
+                                echo '    <option value="Owner">Owner of company</option>
+                            <option value="Employee">Working Employee At company</option>
+                            <option value="Viewer">Viewer (Only View Orders of Company)</option>';
+                            }
+                            else if($userdetail[0][4]=="Employee")
+                            {
+
+                                echo '  
                             <option value="Employee">Working Employee At company</option>
                             <option value="Viewer">Viewer (Only View Orders of Company)</option>
-                            <option value="Expire">left / Resign (Not acces Software of the company)</option>
+                              <option value="Owner">Owner of company</option>';
+                            }
+                            else if($userdetail[0][4]=="Viewer")
+                            {
+
+                                echo '  
+                              <option value="Viewer">Viewer (Only View Orders of Company)</option>  
+                              <option value="Owner">Owner of company</option>
+                            <option value="Employee">Working Employee At company</option>
+                            ';
+                            }
+                                ?>"
                         </select>
                     </div>
                 </div>
@@ -143,7 +181,7 @@ include_once ("../webdesign/header/header.php");
                     </div>
 
                     <div class="d-flex justify-content-center links">
-                        Change your password? <a href="#" class="ml-2"> Reset Password</a>
+                        Change your password? <a href="ResetPassword.php" class="ml-2"> Reset Password</a>
                     </div>
                     <div class="d-flex justify-content-center">
                         <a href="#">Sign Out</a>
@@ -169,13 +207,29 @@ include_once ("../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
+        $("#back").click(function () {
+            window.history.back();
+        });
 
-        $('#login').click(function ()
+        $('#Save').click(function ()
         {
 
 
+            var state=false;
+
+            if(validationWithString("PhoneNo","please enter phone no "))
+                state=true;
+
+            if(validationWithString("username","please enter username "))
+                state=true;
+
+            if(PhoneNumberCheck("PhoneNo"))
+                state=true;
+
+            if(state)
+                return false;
             var formdata = new FormData($("#formLogin")[0]);
-            formdata.append("option", "login");
+            formdata.append("option", "saveandChangeLogin");
             $.ajax({
                 url: "userServer.php",
                 method: "POST",
@@ -190,9 +244,10 @@ include_once ("../webdesign/footer/footer.php");
                     $("#preloader").hide();
 
                     if (data != '') {
-                        alert(data);
-                    } else {
-                        location.reload();
+                        $("#error").html(data);
+                    } else
+                    {
+                       location.reload();
                     }
 
                 }
