@@ -273,6 +273,33 @@ Position in Company: '.$jobtitle.'
 
 
 }
+else if($_POST['option']=="resentPAssword")
+{
+    $userid=$_POST['userid'];
+    $sql='SELECT  `username`, `jobTitle`,`email` , `number`,`password` FROM `user` WHERE id='.$userid.'';
+    $userdetail=queryReceive($sql);
+    $htmlBody='<pre>
+Dear '.$userdetail[0][0].',
+new detail 
+username : '.$userdetail[0][0].'
+password: '.$userdetail[0][4].'
+email : '.$userdetail[0][2].'
+phone no: '.$userdetail[0][3].'
+Position in Company: '.$userdetail[0][1].'
+</pre>';
 
+    $display="";
+    // $display=serverSendMessage($Email,$username,"Detail  of password",$htmlBody);
+    echo "<span class='alert-success'>Your pasword and other detail has been sent to your email :".$userdetail[0][2]."</span>";
+}
+else if($_POST['option']=="ResetPassword")
+{
+   $password1=$_POST['password1'];
+    $userid=$_POST['userid'];
+    $sql='UPDATE `user` SET user.password="'.$password1.'" WHERE id='.$userid.'';
 
+    querySend($sql);
+
+    echo "<span class='alert-success'>Your password has succesfully updated</span>";
+}
 ?>

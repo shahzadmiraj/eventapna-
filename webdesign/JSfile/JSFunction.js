@@ -47,7 +47,33 @@ window.password=function (Element,ShowMessage,Min,Max)
     }
     return state;
 }
-
+window.matchesTwoIdBySting=function (Element1,Element2,ShowMessage)
+{
+    var state=true;
+    Element1=$("#"+Element1);
+    Element2=$("#"+Element2);
+    if(Element1.val()==Element2.val())
+    {
+        if(Element1.hasClass("btn-danger"))
+        {
+            Element1.removeClass("btn-danger");
+        }
+        if(Element2.hasClass("btn-danger"))
+        {
+            Element2.removeClass("btn-danger");
+        }
+        state=false;
+    }
+    else
+    {
+        if(!(Element1.hasClass("btn-danger")))
+            Element1.addClass("btn-danger");
+        if(!(Element2.hasClass("btn-danger")))
+            Element2.addClass("btn-danger");
+        alert(ShowMessage);
+    }
+    return state;
+}
 window.NumberRange=function (Element,ShowMessage,Min,Max)
 {
     var state=true;

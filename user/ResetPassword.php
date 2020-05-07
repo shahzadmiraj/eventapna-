@@ -7,7 +7,7 @@
  */
 include_once ("../connection/connect.php");
 
-
+$userid=$_COOKIE['userid'];
 
 
 ?>
@@ -85,7 +85,6 @@ include_once ("../webdesign/header/header.php");
 
                 <div class="form-group row">
                     <label class="col-form-label">Confirm Password</label>
-
                     <div class="input-group mb-3 input-group-lg">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
@@ -96,14 +95,14 @@ include_once ("../webdesign/header/header.php");
 
 
                 <div class="row">
-                    <button id="ResetPassword" type="submit" class="btn btn-warning form-control "  ><i class="fas fa-check "></i>  Reset Password</button>
+                    <button id="ResetPassword" type="button" class="btn btn-warning form-control "  ><i class="fas fa-check "></i>  Reset Password</button>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        Forgot your password?  <a href="#"> Send Password</a>
+                        Forgot your password?  <button id="passwordresend"  type="button" class="btn-light"> Send Password</button>
                     </div>
                     <div class="d-flex justify-content-center links">
-                         <a href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                         <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
                     </div>
                 </div>
 
@@ -124,14 +123,13 @@ include_once ("../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
-
-
-        $('#login').click(function ()
+        $("#passwordresend").click(function ()
         {
 
 
-            var formdata = new FormData($("#formLogin")[0]);
-            formdata.append("option", "login");
+            var formdata = new FormData;
+            formdata.append("option", "resentPAssword");
+            formdata.append("userid", "<?php echo $userid;?>");
             $.ajax({
                 url: "userServer.php",
                 method: "POST",
@@ -144,6 +142,45 @@ include_once ("../webdesign/footer/footer.php");
                 },
                 success: function (data) {
                     $("#preloader").hide();
+                    $("#error").html(data);
+                }
+            });
+
+        });
+
+
+        $('#ResetPassword').click(function ()
+        {
+
+            var state=false;
+            if(password("Oldpassword","please enter 4 to 8 digits password",4,8))
+                state=true;
+            if(password("password1","please enter 4 to 8 digits password",4,8))
+                state=true;
+
+            if(password("password2","please enter 4 to 8 digits password",4,8))
+                state=true;
+            if(matchesTwoIdBySting("password1","password2","Please new password not match"))
+                state=true;
+
+            if(state)
+                return false;
+            var formdata = new FormData($("#formLogin")[0]);
+            formdata.append("option", "ResetPassword");
+            formdata.append("userid", "<?php echo $userid;?>");
+            $.ajax({
+                url: "userServer.php",
+                method: "POST",
+                data: formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function () {
+                    $("#preloader").show();
+                },
+                success: function (data) {
+                    $("#preloader").hide();
+                    $("#formLogin")[0].reset();
                     $("#error").html(data);
                 }
             });

@@ -26,7 +26,7 @@ $halls=queryReceive($sql);
 $sql='SELECT `id`, `name`,`image` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
 $caterings=queryReceive($sql);
 
-$sql='SELECT `id`, `username`,`image`, `jobTitle` FROM `user` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
+$sql='SELECT `id`, `username`,`image`, `jobTitle`,`token` FROM `user` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
 $users=queryReceive($sql);
 
 $encoded=1;
@@ -285,7 +285,7 @@ $encoded=1;
                 <hr>
                 <div class="container">
                     <div class="row justify-content-start">
-                        <a  href="../../user/UserProfile.php?uid=<?php echo $users[$i][0]?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-id-card fa-3x"></i><h6>User Profile</h6></a>
+                        <a  href="../../user/UserProfile.php?uid=<?php echo $users[$i][0]."&token=".$users[$i][4]?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-id-card fa-3x"></i><h6>User Profile</h6></a>
 
                     </div>
                 </div>
