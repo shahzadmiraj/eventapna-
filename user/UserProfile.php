@@ -184,7 +184,7 @@ include_once ("../webdesign/header/header.php");
                         Change your password? <a href="ResetPassword.php" class="ml-2"> Reset Password</a>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="#">Sign Out</a>
+                        <a href="logout.php">Sign Out</a>
                     </div>
 
                 </div>

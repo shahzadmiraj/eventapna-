@@ -184,14 +184,14 @@ include_once ("../webdesign/footer/footer.php");
         {
 
             var state=false;
-            //
-            // if(validationWithString("UserName","please enter username "))
-            //     state=true;
-            //
-            // if(password("password","please enter 4 to 8 digits password",4,8))
-            //     state=true;
-            // if(state)
-            //     return false;
+
+            if(validationWithString("UserName","please enter username "))
+                state=true;
+
+            if(password("password","please enter 4 to 8 digits password",4,8))
+                state=true;
+            if(state)
+                return false;
 
             var formdata = new FormData($("#formLogin")[0]);
             formdata.append("option", "login");
@@ -214,7 +214,7 @@ include_once ("../webdesign/footer/footer.php");
                  }
                  else if(data=="companyUser")
                  {
-                     location.replace("../company/companyRegister/companydisplay.php");
+                     location.replace("../company/companyRegister/companyAdminPanel.php");
                  }
                  else
                  {

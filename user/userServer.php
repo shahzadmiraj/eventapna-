@@ -205,7 +205,7 @@ else if($_POST['option']=="login")
 {
     $UserName=$_POST['UserName'];
     $password=$_POST['password'];
-    $sql='SELECT  `company_id`,`jobTitle`,`id` FROM `user` WHERE (username="'.$UserName.'")||(password="'.$password.'")';
+    $sql='SELECT  `company_id`,`jobTitle`,`id` FROM `user` WHERE (username="'.$UserName.'")AND(password="'.$password.'")';
     $user=queryReceive($sql);
     if(count($user)==1)
     {
