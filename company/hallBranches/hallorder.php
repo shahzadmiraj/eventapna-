@@ -257,8 +257,8 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row justify-content-center shadow">
 
-        <a id="btnbackhistory"  href="../../customer/customerEdit.php?<?php echo 'pid='.$pid.'&token='.$token ?>"  class=" col-5  btn btn-danger"> << Back </a>
-        <a id="submitform" href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" type="button" class=" col-4 btn btn-success">  Next >> </a>
+        <a id="btnbackhistory"  data-href="../../customer/customerEdit.php?<?php echo 'pid='.$pid.'&token='.$token ?>"  class=" col-5  btn btn-danger"> << Back </a>
+        <a id="submitform" data-href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" class=" col-4 btn btn-primary">  Next >> </a>
     </div>
 
 </form>
@@ -294,7 +294,7 @@ include_once ("../../webdesign/footer/footer.php");
             var totalamount= $("#totalamount").val();
             var newDiscount=$("#Discount").val();
             var newcharges=$("#Charges").val();
-            $("#remaining").val(totalamount+newcharges-newDiscount);
+            $("#remaining").val(Number(totalamount)+Number(newcharges)-Number(newDiscount));
         }
         $("#Discount").change(function ()
         {
@@ -425,6 +425,7 @@ include_once ("../../webdesign/footer/footer.php");
         $("#submitform").click(function ()
         {
             var direction=$(this).data("href");
+            alert(direction);
 
             var packageid='';
             if($(".checkclasshas")[0])

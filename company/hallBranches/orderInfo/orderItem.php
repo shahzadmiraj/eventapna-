@@ -6,14 +6,7 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
-if(!isset($_SESSION['order']))
-{
-    header("location:../../../user/userDisplay.php");
-}
-if($_SESSION['branchtype']!="hall")
-{
-    header("location:../../../user/userDisplay.php");
-}
+
 $userid=$_COOKIE['userid'];
 $id=$_SESSION['branchtypeid'];
 $hall=$id;
