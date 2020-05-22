@@ -257,6 +257,8 @@ include_once ("../webdesign/footer/footer.php");
 
        $(document).on("click",".rightNumber",function (e)
        {
+
+           location.replace("customerEdit.php");
            e.preventDefault();
            var id=$(this).data("number");
            $.ajax({
@@ -271,6 +273,7 @@ include_once ("../webdesign/footer/footer.php");
                success:function (data)
                {
                    $("#preloader").hide();
+                   alert(data);
                    location.replace(data);
                }
            });
@@ -370,7 +373,7 @@ include_once ("../webdesign/footer/footer.php");
                {
 
                    $("#preloader").hide();
-                   alert(data);
+                  // alert(data);
                    location.replace(data);
                }
            });

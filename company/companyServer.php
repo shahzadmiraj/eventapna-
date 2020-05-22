@@ -231,13 +231,18 @@ WHERE
                 $catering="'Running'";
                 $cateringid=$_POST['cateringid'];
             }
+
             $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `packageDate_id`, `user_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
         `status_catering`,`describe`, `address`, `location_id`, `discount`, `extracharges`) 
         VALUES (NULL,'.$hallid.','.$cateringid.','.$packageid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
         "'.$time.'",'.$catering.',"'.$describe.'",NULL,NULL,'.$Discount.','.$Charges.')';
             querySend($sql);
-            $_SESSION['order']=mysqli_insert_id($connect);
+            $pid=$_POST['pid'];
+            $token=$_POST['token'];
+            $last=mysqli_insert_id($connect);
+$sql='UPDATE BookingProcess as bp SET bp.orderDetail_id='.$last.'  WHERE (bp.id='.$pid.')AND(bp.token="'.$token.'")';
+querySend($sql);
 
     }
     else if($_POST['option']=="Edithallorder")

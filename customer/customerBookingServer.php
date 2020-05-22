@@ -47,28 +47,29 @@ $sql='INSERT INTO `person`(`name`, `cnic`, `id`, `image`, `active`, `expire`, `a
         }
         $customerId = $last_id;
 
-       $token= uniqueToken('BookingProcess');
-       $cateringid=$_POST['cateringid'];
+     //  $token= uniqueToken('BookingProcess');
+        $token=base64url_encodeLength();
+        $cateringid=$_POST['cateringid'];
        $hallid=$_POST['hallid'];
         $sql="";
         $redirectPage='';
        if($cateringid!='No')
        {
 
-           $sql='INSERT INTO `BookingProcess`(`id`, `TokenString`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",'.$cateringid.',NULL,1,NULL,"'.$timestamp.'",'.$customerId.')';
+           $sql='INSERT INTO `BookingProcess`(`id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",'.$cateringid.',NULL,0,NULL,"'.$timestamp.'",'.$customerId.')';
 
-           $redirectPage='"../order/orderCreate.php';
+           $redirectPage='../order/orderCreate.php';
        }
        else if($hallid!="No")
        {
 
-           $sql='INSERT INTO `BookingProcess`(`id`, `TokenString`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",NULL,'.$hallid.',1,NULL,"'.$timestamp.'",'.$customerId.')';
-           $redirectPage='"../company/hallBranches/hallorder.php';
+           $sql='INSERT INTO `BookingProcess`(`id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",NULL,'.$hallid.',0,NULL,"'.$timestamp.'",'.$customerId.')';
+           $redirectPage='../company/hallBranches/hallorder.php';
        }
        querySend($sql);
         $last_id = mysqli_insert_id($connect);
 
-        $redirectPage.='?pid='.$last_id.'&tokenid='.$token.'"';
+        $redirectPage.='?pid='.$last_id.'&token='.$token.'';
         echo $redirectPage;
 
     }
@@ -113,7 +114,8 @@ WHERE
     else if($_POST['option']=="RightPerson")
     {
         $customerId = $_POST['id'];
-        $token= uniqueToken('BookingProcess');
+       // $token= uniqueToken('BookingProcess');
+        $token=base64url_encodeLength();
         $cateringid=$_POST['cateringid'];
         $hallid=$_POST['hallid'];
         $sql="";
@@ -121,18 +123,18 @@ WHERE
         if($cateringid!='No')
         {
 
-            $sql='INSERT INTO `BookingProcess`(`id`, `TokenString`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",'.$cateringid.',NULL,1,NULL,"'.$timestamp.'",'.$customerId.')';
+            $sql='INSERT INTO `BookingProcess`(`id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",'.$cateringid.',NULL,0,NULL,"'.$timestamp.'",'.$customerId.')';
 
         }
         else if($hallid!="No")
         {
 
-            $sql='INSERT INTO `BookingProcess`(`id`, `TokenString`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",NULL,'.$hallid.',1,NULL,"'.$timestamp.'",'.$customerId.')';
+            $sql='INSERT INTO `BookingProcess`(`id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",NULL,'.$hallid.',0,NULL,"'.$timestamp.'",'.$customerId.')';
         }
         querySend($sql);
         $last_id = mysqli_insert_id($connect);
-        $redirectPage='"customerEdit.php';
-        $redirectPage.='?pid='.$last_id.'&tokenid='.$token.'"';
+        $redirectPage='customerEdit.php';
+        $redirectPage.='?pid='.$last_id.'&token='.$token;
         echo $redirectPage;
 
     }

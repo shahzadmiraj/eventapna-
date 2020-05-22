@@ -1,22 +1,12 @@
 <?php
 include_once ("../../connection/connect.php");
 include_once ("packages/packagesServerfunction.php");
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$companyid=$userdetail[0][0];
+$encoded=$_GET['h'];
 
-if(!isset($_GET['hall']))
-{
-
-    header("location:../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['hall'];
-$id=base64url_decode($encoded);
-
-if((!is_numeric($id))||$id=="")
-{
-    header("location:../companyRegister/companyEdit.php");
-}
-
-$hallid=$id;
-$companyid=$_COOKIE['companyid'];
+$hallid=$encoded;
 $userid=$_COOKIE['userid'];
 
 ?>
@@ -166,8 +156,8 @@ include_once ("../../webdesign/header/header.php");
     <?php
     echo
         '
-                    <input hidden type="text" name="hallid"  value="'.$hallid.'">
-                    <input hidden type="number" name="userid"  value="'.$userid.'">
+                    <input hidden  name="hallid"  value="'.$hallid.'">
+                    <input hidden  name="userid"  value="'.$userid.'">
                     ';
     ?>
 

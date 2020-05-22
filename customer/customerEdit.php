@@ -6,31 +6,31 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+$customerId=$processInformation[0][7];
+$hallid="No";
+$cateringid='No';
+$order="No";
 
-}
-if(!isset($_SESSION['customer']))
+if($processInformation[0][2]!="")
 {
-    header("location:../user/userDisplay.php");
+    $cateringid=$processInformation[0][2];
 }
-$customerId="";
-$customerId=$_SESSION['customer'];
-$hallid="";
-$cateringid='';
+else if($processInformation[0][3]!="")
+{
+    $hallid=$processInformation[0][3];
+}
 
-if(isset($_SESSION['typebranch']))
+if($processInformation[0][4]!="")
 {
-    if($_SESSION['typebranch']=="hall")
-    {
-        $hallid=$_SESSION['branchtypeid'];
-    }
-    else
-    {
-        $cateringid=$_SESSION['branchtypeid'];
-    }
+    $order=$processInformation[0][4];
 }
+$Isprocessing=$processInformation[0][4];
 
 $sql = "SELECT `name`, `cnic`, `id`, 1, `image`, `address` FROM `person` WHERE id=".$customerId."";
 $person=queryReceive($sql);
@@ -40,7 +40,7 @@ WHERE (p.id=$customerId)AND(ISNULL(n.expire))
 order BY n.id";
 $numbers=queryReceive($sql);
 $userid=$_COOKIE['userid'];
-$companyid=$_COOKIE['companyid'];
+$companyid=$userdetail[0][0];
 ?>
 <!DOCTYPE html>
 <head>
@@ -235,110 +235,72 @@ p.id='.$customerId.'';
         <div class="form-group row mb-3 p-4">
 
             <?php
-        /*    if(isset($_GET['option']))
+            $NextButton='';
+
+
+            if($Isprocessing==0)
             {
-                if($_GET['option']=="orderCreate")
-                {
-                    echo '
-        <a href="CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
-        <a href="../order/orderCreate.php?customer='.$customerId.'" class="col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i>Next</a>';
-                }
-                else if(($_GET['option']=="orderCreate") || ($_GET['option']=="CustomerCreate"))
-                {
-
-                    echo '
-        <a href="CustomerCreate.php?option=customerEdit" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
-        <a href="../order/orderCreate.php?customer='.$customerId.'&option=customerEdit" class="col-6 form-control btn btn-outline-primary" id="submit">Order Create</a>';
-                }
-                else if($_GET['option']=="customerAndOrderalreadyHave")
-                {
-
-                    echo '
-        <a href="CustomerCreate.php" class="col-6 form-control btn btn-danger" id="cancel">Not this customer</a>
-        <a href="../order/orderEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerEdit" class="m-auto col-6 form-control btn btn-primary" id="submit">Edit order</a>';
-                }
-                else if($_GET['option']=="PreviewOrder")
-                {
-                    echo '<input type="button" id="btnbackhistory" class="m-auto col-6 form-control btn btn-primary" value="Done">';
-                }
-                else if($_GET['option']=="hallorder")
-                {
-                    echo '
-
-                    <a href="../company/hallBranches/hallorder.php?customer='.$customerId.'&hallid='.$_GET['hallid'].'" class="btn btn-warning m-auto col-6"><i class="fas fa-check "></i>Done</a>';
-                }
-                else if($_GET['option']=="hallCustomer")
-                {
-                    echo '
-                    <input type="button" id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger" value="Not this Customer">
-                    <a href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Done</a>';
-                }
-            }*/
+                //order is in processing phase
 
 
+                if($order=="No")
+                {
+                    //order is process and not book yet
 
-            if(isset($_GET['action']))
-            {
+                    if($hallid!="No")
+                    {
+                        //hall order is procesing  phase but not book yet
+
+                        $NextButton='../company/hallBranches/hallorder.php?pid='.$pid.'&token='.$token;
+
+                    }
+                    if($cateringid!="No")
+                    {
+                        //catering order is procesing  phase but not book yet
+
+                        $NextButton='../order/orderCreate.php?pid='.$pid.'&token='.$token;
+                    }
+                }
+                else
+                {
+                    //order is process and order is already  booked
+
+
+                    if($hallid!="No")
+                    {
+                        //hall order is procesing  phase but order is booked
+                        $NextButton='../company/hallBranches/EdithallOrder.php?pid='.$pid.'&token='.$token;
+                    }
+                    if($cateringid!="No")
+                    {
+                        //catering order is procesing  phase but order is booked
+
+                        $NextButton='../order/orderEdit.php?pid='.$pid.'&token='.$token;
+                    }
+
+                }
+
+
+
+                //  not this is customer back and reprocess
                 echo '
-
-            <a  id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Back</a> 
-            <a   id="formcustomer"  data-href="saveAndBack" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Save and Back</a>';
-
+            <a id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not This customer</a>';
+                echo '<a  id="formcustomer"  data-href="'.$NextButton.'" class=" col-6 form-control btn btn-primary">  Next >></a>   ';
             }
-            else if($_SESSION['branchtype']=="hall")
+            else  if($Isprocessing==1)
             {
-                //hall
-
-                if(!isset($_SESSION['order']))
-                {
-                    //16 new order of hall
+                // order hase been completed in order preview
                     echo '
+            <a id="btnbackhistory"  class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Close</a>';
 
-                    <a  id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a> 
-                    <a id="formcustomer" data-href="../company/hallBranches/hallorder.php" class="btn btn-success m-auto col-6"><i class="fas fa-check "></i>Create hall order</a>
-                    
-                    ';
-
-
-                }
-                else
-                {
-
-
-                }
-
-            }
-            else
-            {
-                //catering
-
-
-
-                if(!isset($_SESSION['order']))
-                {
-                    //not order create
-                    //7 go to create order of catering
-                    echo '
-
-            <a id="btnbackhistory"  class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
-             <a  id="formcustomer"  data-href="../order/orderCreate.php" class=" col-6 form-control btn btn-outline-primary" id="submit"><i class="fas fa-check "></i> Order Create</a>   
-                    
-                     ';
-
-
-                }
-                else
-                {
-                    //order of catering is created
-
-                    //15 oder of catering edit
-                    echo '
-            <a href="../user/userDisplay.php" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not this Customer</a>
-        <a id="formcustomer" data-href="../order/orderEdit.php" class="m-auto col-6 form-control btn btn-primary"><i class="fas fa-check "></i> Edit order</a>';
-                }
+                $NextButton="saveAndBack";
+                echo '<a  id="formcustomer"  data-href="'.$NextButton.'" class=" col-6 form-control btn btn-primary"><i class="fas fa-check "></i>  Save </a>   ';
             }
 
-            //6 not this customer
+
+
+
+
 
             ?>
 
@@ -489,7 +451,7 @@ p.id='.$customerId.'';
                      }
                      else
                      {
-                         location.href=direction;
+                         location.replace(direction);
                      }
 
                  }

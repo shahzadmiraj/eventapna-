@@ -7,10 +7,16 @@
  */
 include  ("../../connection/connect.php");
 
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
 
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
 
-$hallid=$_SESSION['branchtypeid'];
-$personid=$_SESSION['customer'];
+$hallid=$processInformation[0][3];
+$personid=$processInformation[0][7];
 $userid=$_COOKIE['userid'];
 
 
@@ -58,6 +64,10 @@ include_once ("../../webdesign/header/header.php");
 
 </div>
 <form class="form container card">
+
+    <input  hidden name="pid" value="<?php echo $pid;?>">
+    <input  hidden name="token" value="<?php echo $token;?>">
+
     <input type="number" hidden name="hallid" value="<?php echo $hallid;?>">
     <input type="number" hidden name="personid" value="<?php echo $personid;?>">
     <input type="number" hidden name="userid" value="<?php echo $userid;?>">
@@ -247,8 +257,8 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row justify-content-center shadow">
 
-        <a id="btnbackhistory"  class=" col-5  btn btn-danger"  ><i class="fas fa-arrow-circle-left"></i>Edit customer</a>
-        <button id="submitform" type="button" class=" col-4 btn btn-success" value="Submit"><i class="fas fa-check "></i>Submit</button>
+        <a id="btnbackhistory"  href="../../customer/customerEdit.php?<?php echo 'pid='.$pid.'&token='.$token ?>"  class=" col-5  btn btn-danger"> << Back </a>
+        <a id="submitform" href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" type="button" class=" col-4 btn btn-success">  Next >> </a>
     </div>
 
 </form>
@@ -261,7 +271,8 @@ include_once ("../../webdesign/footer/footer.php");
 
         $("#btnbackhistory").click(function (e) {
             e.preventDefault();
-            window.history.back();
+            var direction=$(this).data("href");
+            location.replace(direction);
         });
 
         $("#submitform").hide("slow");
@@ -364,9 +375,7 @@ include_once ("../../webdesign/footer/footer.php");
                     }
                     else
                     {
-
                         $("#submitform").hide("slow");
-
                     }
 
                 }
@@ -415,6 +424,8 @@ include_once ("../../webdesign/footer/footer.php");
         });
         $("#submitform").click(function ()
         {
+            var direction=$(this).data("href");
+
             var packageid='';
             if($(".checkclasshas")[0])
             {
@@ -461,8 +472,7 @@ include_once ("../../webdesign/footer/footer.php");
                     }
                     else
                     {
-
-                        window.location.href="../../order/PreviewOrder.php";
+                        location.replace(direction);
                     }
 
 

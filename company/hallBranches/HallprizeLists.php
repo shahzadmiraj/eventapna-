@@ -102,7 +102,7 @@ else
     </li>
 
     <li class="nav-item">
-        <a class="nav-link"    href="addnewpackage.php?hall=<?php echo $_GET['hall']; ?>" >Add Package</a>
+        <a class="nav-link"    href="addnewpackage.php?h=<?php echo $_GET['h']; ?>" >Add Package</a>
     </li>
 </ul>
 <!--<div class="tab-content" id="pills-tabContent">-->
@@ -227,7 +227,7 @@ include_once ("../../webdesign/footer/footer.php");
                         data:{id:id,option:"encordpackage"},
                         success:function(data)
                         {
-                            location.href='Editpackage.php?hall='+'<?php echo $_GET['hall']; ?>'+'&pack='+data;
+                            location.href='Editpackage.php?hall='+'<?php echo $_GET['h']; ?>'+'&pack='+data;
                         }
                     });
 
