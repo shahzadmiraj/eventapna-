@@ -6,14 +6,8 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-if(isset($_SESSION['order']))
-{
-    header("location:EdithallOrder.php");
-}
-if(!isset($_SESSION['customer']))
-{
-    header("location:../../user/userDisplay.php");
-}
+
+
 
 $hallid=$_SESSION['branchtypeid'];
 $personid=$_SESSION['customer'];

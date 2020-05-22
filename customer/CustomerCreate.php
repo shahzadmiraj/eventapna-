@@ -6,30 +6,21 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$companyid=$userdetail[0][0];
 
-}
-$hallid="";
-$cateringid='';
-if(isset($_SESSION['branchtype']))
+$hallid="No";
+$cateringid='No';
+if(isset($_GET['h']))
 {
-    if($_SESSION['branchtype']=="hall")
-    {
-        $hallid=$_SESSION['branchtypeid'];
-    }
-    else
-    {
-        $cateringid=$_SESSION['branchtypeid'];
-    }
+    $hallid=$_GET['h'];
 }
-if(isset($_SESSION['customer']))
+if(isset($_GET['c']))
 {
-    header("location:customerEdit.php");
+    $cateringid=$_GET['c'];
 }
 $userid=$_COOKIE['userid'];
-$companyid=$_COOKIE['companyid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -97,6 +88,10 @@ include_once ("../webdesign/header/header.php");
 <form id="form">
     <input hidden name="userid" value="<?php echo $userid;?>">
     <input hidden name="companyid" value="<?php echo $companyid;?>">
+
+    <input hidden name="cateringid" value="<?php echo $cateringid;?>">
+
+    <input hidden name="hallid" value="<?php echo $hallid;?>">
 
         <input id="customer" hidden value="">
     <div class="form-group row">
@@ -186,7 +181,7 @@ include_once ("../webdesign/header/header.php");
 
 
         <div class="form-group row m-auto">
-            <a href="../user/userDisplay.php" type="button" class="col-5 form-control btn btn-danger"><i class="fas fa-window-close"></i>Cancel</a>
+            <button id="cancelCustomer" type="button" class="col-5 form-control btn btn-danger"><i class="fas fa-window-close"></i>Cancel</button>
             <button type="button" class="col-5 form-control btn btn-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
         </div>
     </form>
@@ -266,7 +261,7 @@ include_once ("../webdesign/footer/footer.php");
            var id=$(this).data("number");
            $.ajax({
                url:"customerBookingServer.php",
-               data:{option:"RightPerson",id:id},
+               data:{option:"RightPerson",id:id,"cateringid":"<?php echo $cateringid;?>","hallid":"<?php echo $hallid;?>"},
                dataType:"text",
                method: "POST",
 
@@ -276,7 +271,7 @@ include_once ("../webdesign/footer/footer.php");
                success:function (data)
                {
                    $("#preloader").hide();
-                   window.location.href="customerEdit.php";
+                   location.replace(data);
                }
            });
 
@@ -300,7 +295,7 @@ include_once ("../webdesign/footer/footer.php");
                alert("no of numbers not more then 3");
                return false;
            }
-           if(validationWithString("number","Please enter number"))
+           if(PhoneNumberCheck("number"))
            {
                return  false;
            }
@@ -338,9 +333,10 @@ include_once ("../webdesign/footer/footer.php");
            var formdata=new FormData($('form')[0]);
            if(number==0)
            {
-               if(validationWithString("number","please Enter number"))
+
+               if(PhoneNumberCheck("number"))
                {
-                   state=false;
+                   return  false;
                }
               else
                {
@@ -355,8 +351,6 @@ include_once ("../webdesign/footer/footer.php");
            if(validationWithString("name","Please Enter Customer Name"))
                state=true;
 
-            if(validationClass("allnumber","Please Enter Mobile no"))
-                state=true;
 
             if(state)
                 return false;
@@ -376,25 +370,8 @@ include_once ("../webdesign/footer/footer.php");
                {
 
                    $("#preloader").hide();
-
-                    if(data!="")
-                    {
-                        alert(data);
-                        return false;
-                    }
-                    else
-                    {
-                        if("<?php echo $hallid;?>"=="")
-                        {
-                            //this is the oder of catering
-                            window.location.href="../order/orderCreate.php";
-                        }
-                        else
-                        {
-                            //this is the order of hall
-                            window.location.href="../company/hallBranches/hallorder.php";
-                        }
-                    }
+                   alert(data);
+                   location.replace(data);
                }
            });
 

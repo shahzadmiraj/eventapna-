@@ -20,10 +20,10 @@ $sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
 $companydetail=queryReceive($sql);
 
 
-$sql='SELECT `id`, `name`,`image` FROM `hall` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
+$sql='SELECT `id`, `name`,`image`,`token` FROM `hall` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
 $halls=queryReceive($sql);
 
-$sql='SELECT `id`, `name`,`image` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
+$sql='SELECT `id`, `name`,`image`,`token` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
 $caterings=queryReceive($sql);
 
 $sql='SELECT `id`, `username`,`image`, `jobTitle`,`token` FROM `user` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
@@ -99,6 +99,7 @@ $encoded=1;
 
 
            // $hallEncorded=base64url_encode($halls[$i][0]);
+            $token=$halls[$i][3];
             $hallEncorded=$halls[$i][0];
             ?>
 
@@ -114,7 +115,7 @@ $encoded=1;
                 <hr>
                 <div class="container">
                     <div class="row justify-content-start">
-                        <a href="../../customer/CustomerCreate.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
+                        <a href="../../customer/CustomerCreate.php?h=<?php echo $hallEncorded;?>&token=<?php echo $token;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Delieved&h=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
@@ -183,6 +184,7 @@ $encoded=1;
 
 
             // $hallEncorded=base64url_encode($halls[$i][0]);
+            $token=$caterings[$i][3];
             $hallEncorded=$caterings[$i][0];
             ?>
 
@@ -198,7 +200,7 @@ $encoded=1;
                 <hr>
                 <div class="container">
                     <div class="row justify-content-start">
-                        <a href="../../customer/CustomerCreate.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
+                        <a href="../../customer/CustomerCreate.php?c=<?php echo $hallEncorded;?>&token=<?php echo $token;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Delieved&c=<?php echo $hallEncorded;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
@@ -286,7 +288,6 @@ $encoded=1;
                 <div class="container">
                     <div class="row justify-content-start">
                         <a  href="../../user/UserProfile.php?uid=<?php echo $users[$i][0]."&token=".$users[$i][4]?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="fas fa-id-card fa-3x"></i><h6>User Profile</h6></a>
-
                     </div>
                 </div>
             </div>

@@ -102,7 +102,9 @@ window.PhoneNumberCheck=function (Element)
     var state=true;
     Element=$("#"+Element);
 
-    var RegexPhone = /^[\+0][0-9]?()[0-9](\s|\S)(\d[0-9]{9})$/;
+    //var RegexPhone = /^[\+0][0-9]?()[0-9](\s|\S)(\d[0-9]{9})$/;
+
+    var RegexPhone = /^[0-9]+$/;
     if(RegexPhone.test(Element.val()))
     {
         if (Element.hasClass("btn-danger"))
