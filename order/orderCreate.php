@@ -6,17 +6,19 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
-}
-if(isset($_SESSION['order']))
-{
-    header("location:orderEdit.php");
-}
 
-$cateringid=$_SESSION['branchtypeid'];
-$customer=$_SESSION['customer'];
+
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$userid=$_COOKIE['userid'];
+
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
+$cateringid=$processInformation[0][2];
+$customer=$processInformation[0][7];
 
 ?>
 <!DOCTYPE html>
@@ -57,6 +59,10 @@ include_once ("../webdesign/header/header.php");
     <h1> Create New Order</h1>
     <hr>
     <form >
+
+        <input  hidden name="pid" value="<?php echo $pid;?>">
+        <input  hidden name="token" value="<?php echo $token;?>">
+
         <input type="number" hidden name="customer" value=<?php echo $customer;?>   >
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
         <div class="form-group row">
@@ -135,8 +141,12 @@ include_once ("../webdesign/header/header.php");
 
         <div class="form-group row justify-content-center">
 
-            <a id="btnbackhistory" class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i>Edit Customer</a>
-            <button type="button" id="submit" class="form-control col-5 btn-success"><i class="fas fa-check "></i> Submit</button>
+            <a id="btnbackhistory" class="form-control col-5 btn btn-danger"><< Back</a>
+            <button type="button" id="submit" class="form-control col-5 btn-primary">Next >></button>
+
+
+
+
 
         </div>
     </form>
@@ -157,7 +167,14 @@ include_once ("../webdesign/footer/footer.php");
 
         $("#btnbackhistory").click(function (e) {
             e.preventDefault();
-            window.history.back();
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //process is running
+                echo 'location.replace("../EdithallOrder.php?pid=' . $pid . '&token='.$token.'");';
+
+            }
+            ?>
         });
 
 
@@ -204,7 +221,17 @@ include_once ("../webdesign/footer/footer.php");
                   }
                   else
                   {
-                      window.location.href="../dish/dishDisplay.php";
+
+                      <?php
+                      if($processInformation[0][4]==0)
+                      {
+
+                          //catering order also book and select dishes
+                          echo 'location.replace(".../../../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+
+                      }
+                      ?>
+
                   }
                }
            });

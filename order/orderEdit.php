@@ -6,17 +6,17 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
-$companyid=$_COOKIE['companyid'];
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
+$companyid=$userdetail[0][0];
 $userid=$_COOKIE['userid'];
-$orderId=$_SESSION['order'];
+$orderId=$processInformation[0][5];
 $sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`,1, `person_id`,`catering_id` ,`user_id`, `discount`, `extracharges`, `address` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
 
@@ -292,48 +292,29 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="form-group row justify-content-center">
+
             <?php
-               /* if(isset($_GET['option']))
-                {
-                    if($_GET['option']=="dishDisplay")
-                    {
-                        echo '
-            <a href="/public_html/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
-            <a href="/public_html/dish/dishDisplay.php?order='.$_GET['order'].'"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
-                    }
-                    else if($_GET['option']=="customerEdit")
-                    {
-
-                        echo '
-            <a href="/public_html/customer/customerEdit.php?order='.$_GET['order'].'&customer='.$_GET['customer'].'&option=customerAndOrderalreadyHave"   id="cancel" class="form-control col-6 btn btn-danger"><i class="fas fa-arrow-left"></i> Customer Edit</a>
-            <a href="/public_html/dish/dishDisplay.php?order='.$_GET['order'].'&option=orderEdit"  id="submit" class="form-control col-6 btn-success"><i class="fas fa-check "></i> Display Dish</a>';
-
-                    }
-                    else if($_GET['option']=="PreviewOrder")
-                    {
-                        echo '<input type="button" id="btnbackhistory" class="col-6  form-control btn btn-outline-primary" value="Done">';
-                    }
-                }*/
-
-
-//14,11
-
-            if(isset($_GET['action']))
+            if($processInformation[0][4]==0)
             {
-                echo '
-                 <button id="backBtn" class="form-control col-6 btn btn-danger">Cancel</button>
-            <button id="submit" class="form-control col-6 btn btn-primary" data-href="back"><i class="fas fa-check "></i>  Save</button>';
+                //processing
 
+
+                echo '
+                 <button id="backBtn" class="form-control col-6 btn btn-danger"><< Back</button>
+            <button id="submit" class="form-control col-6 btn btn-primary" > Next >> </button>';
 
             }
             else
             {
-                echo '
-            <a href="../customer/customerEdit.php"   id="cancel" class="form-control col-6 btn btn-danger"> <i class="fas fa-arrow-left"></i>Customer Edit</a>
-             <button type="submit" id="submit" class="form-control col-6 btn btn-primary" data-href="../dish/dishDisplay.php"><i class="fas fa-check "></i>  Save</button>';
 
+                echo '
+                 <button id="backBtn" class="form-control col-6 btn btn-danger">Close</button>
+            <button id="submit" class="form-control col-6 btn btn-primary" > Save  </button>';
             }
             ?>
+
+
+
 
 
         </div>
@@ -390,15 +371,21 @@ include_once ("../webdesign/footer/footer.php");
                         //console.log(data);
                     } else
                     {
-                        if(href.localeCompare("back")!=1)
+
+
+                        <?php
+                        if($processInformation[0][4]==0)
                         {
-                            window.history.back();
+                            //catering order also book and select dishes
+                            echo 'location.replace("../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
                         }
                         else
                         {
-
-                           window.location.href = href;
+                            echo "window.history.back();";
                         }
+                        ?>
+
+
                     }
                 }
             });
@@ -407,7 +394,19 @@ include_once ("../webdesign/footer/footer.php");
         $('#backBtn').click(function (e)
         {
             e.preventDefault();
-            window.history.back();
+
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //process is running
+                echo 'location.replace("../customer/customerEdit.php?pid=' . $pid . '&token='.$token.'");';
+
+            }
+            else
+            {
+                echo "window.history.back();";
+            }
+            ?>
         });
     });
 

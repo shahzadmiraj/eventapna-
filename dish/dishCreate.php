@@ -6,22 +6,21 @@
  * Time: 16:48
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
 
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
 
 if(!isset($_POST['dishesid']))
 {
     header("location:AllSelectedDishes.php");
     exit();
 }
-$orderId=$_SESSION['order'];
+$orderId=$processInformation[0][5];
 $dishesName=$_POST['dishesName'];
 $dishesid=$_POST['dishesid'];
 $prices=$_POST['prices'];
@@ -205,7 +204,17 @@ include_once ("../webdesign/footer/footer.php");
            totalitems--;
             if(totalitems==0)
             {
-                window.location.href="../order/PreviewOrder.php";
+                <?php
+                if($processInformation[0][4]==0)
+                {
+                    //catering order also book and select dishes
+                    echo 'location.replace("../payment/getPayment.php?pid=' . $pid . '&token='.$token.'");';
+                }
+                else
+                {
+                    echo "window.history.back();";
+                }
+                ?>
             }
          $("#totalRemaing").val(totalitems);
        }

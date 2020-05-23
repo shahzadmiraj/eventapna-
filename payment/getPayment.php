@@ -181,8 +181,35 @@ include_once ("../webdesign/header/header.php");
 
 
         <div class="form-group row ">
-            <button id="backbtn" class="form-control col-6 btn-danger btn"><i class="fas fa-times-circle"></i>Cancel</button>
-            <button id="submitBtnfrom" type="submit" class="form-control col-6 btn-primary btn"><i class="fas fa-check "></i>Submit</button>
+
+
+
+
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //processing
+
+
+                echo '
+    
+              <button id="backbtn" class="form-control col-6 btn-danger btn"><< Back</button>
+            <button id="submitBtnfrom" type="submit" class="form-control col-6 btn-primary btn">Next >></button>
+            
+            ';
+
+            }
+            else
+            {
+
+                echo '
+              <button id="backbtn" class="form-control col-6 btn-danger btn">Close</button>
+               <button id="submitBtnfrom" type="submit" class="form-control col-6 btn-primary btn">Save</button>
+            
+            
+            ';
+            }
+            ?>
 
         </div>
 
@@ -202,7 +229,18 @@ include_once ("../webdesign/footer/footer.php");
         $("#backbtn").click(function (e)
         {
             e.preventDefault();
-            window.history.back();
+
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //catering order also book and select dishes
+                echo 'location.replace("../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+            }
+            else
+            {
+                echo "window.history.back();";
+            }
+            ?>
 
         });
 
@@ -245,7 +283,18 @@ include_once ("../webdesign/footer/footer.php");
                   }
                   else
                   {
-                      window.history.back();
+
+                      <?php
+                      if($processInformation[0][4]==0)
+                      {
+                          //catering order also book and select dishes
+                          echo 'location.replace("../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+                      }
+                      else
+                      {
+                          echo "window.history.back();";
+                      }
+                      ?>
                   }
               }
           });
