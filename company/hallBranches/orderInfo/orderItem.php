@@ -7,14 +7,29 @@
  */
 include_once ("../../../connection/connect.php");
 
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
-$id=$_SESSION['branchtypeid'];
+
+
+
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
+$id=$processInformation[0][3];
 $hall=$id;
-$order=$_SESSION['order'];
+$order=$processInformation[0][5];
 $sql='SELECT sum(ei.price) FROM hall_extra_items as hei  INNER JOIN Extra_Item as ei
 on(hei.Extra_Item_id=ei.id)
 WHERE (hei.orderDetail_id='.$order.') AND(ISNULL(hei.expire)) ';
 $priceDetailOfExtraItem=queryReceive($sql);
+
+
+
+$sql='SELECT catering_id,status_catering FROM orderDetail WHERE id='.$order.'';
+$StatusOrder=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>
@@ -153,8 +168,33 @@ else
 
 
         <div class="form-group row">
-            <button id="cancel" class="btn btn-danger col-6">Cancel</button>
-            <button id="btnsubmit" class="btn btn-primary col-6">Save</button>
+
+
+
+
+
+
+
+
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //processing
+                echo '
+        <button id="cancel"    class="btn btn-danger col-6"><< Back</button>
+            <button id="btnsubmit"  class="btn btn-primary col-6">Next >></button>';
+
+            }
+            else
+            {
+
+                echo '
+        <button id="cancel"    class="btn btn-danger col-6"> Cancel</button>
+            <button id="btnsubmit"  class="btn btn-primary col-6"><i class="fas fa-check "></i> Save</button>';
+            }
+            ?>
+
+
         </div>
     </div>
 
@@ -313,7 +353,19 @@ include_once ("../../../webdesign/footer/footer.php");
         $("#cancel").click(function (e)
         {
             e.preventDefault();
-            window.history.back();
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //process is running
+                echo 'location.replace("../EdithallOrder.php?pid=' . $pid . '&token='.$token.'");';
+
+            }
+            else
+            {
+                echo "window.history.back();";
+            }
+            ?>
+
         });
 
         $(document).on("click",".deleteSelected",function (e)
@@ -382,7 +434,29 @@ include_once ("../../../webdesign/footer/footer.php");
                     }
                     else
                     {
-                        window.history.back();
+                        <?php
+                        if($processInformation[0][4]==0)
+                        {
+                            //process is running
+                                    if(($StatusOrder[0][0]!="")&&(($StatusOrder[0][1]=="Running")))
+                                    {
+                                        //catering order also book and select dishes
+                                        echo 'location.replace(".../../../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+                                    }
+                                    else
+                                    {
+
+                                        //not catering Order so payment collect
+                                        echo 'location.replace("../../../payment/getPayment.php?pid=' . $pid . '&token='.$token.'");';
+                                    }
+
+                        }
+                        else
+                        {
+                            echo "window.history.back();";
+                        }
+                        ?>
+
                     }
                 }
             });

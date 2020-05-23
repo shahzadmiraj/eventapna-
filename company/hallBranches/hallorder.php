@@ -425,7 +425,6 @@ include_once ("../../webdesign/footer/footer.php");
         $("#submitform").click(function ()
         {
             var direction=$(this).data("href");
-            alert(direction);
 
             var packageid='';
             if($(".checkclasshas")[0])

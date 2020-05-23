@@ -6,24 +6,21 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-if(!isset($_SESSION['order']))
-{
-    header("location:../../user/userDisplay.php");
-}
-if(!isset($_SESSION['customer']))
-{
-    header("location:../../customer/CustomerCreate.php");
-}
-$companyid=$_COOKIE['companyid'];
+
+
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
-$hallid=$_SESSION['branchtypeid'];
-$orderid=$_SESSION['order'];
-/*$sql='SELECT `id`, `hall_id`, `catering_id`, (SELECT hp.isFood from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),
- `user_id`, 1, 1, 1, 
- 1, 1, `person_id`, `total_amount`, 
- `total_person`, `status_hall`, `destination_date`, 
- `booking_date`, `destination_time`, `status_catering`, 
- 1,`describe`,(SELECT hp.describe from hallprice as hp WHERE hp.id=orderDetail.hallprice_id),hallprice_id,(SELECT hp.price from hallprice as hp WHERE hp.id=orderDetail.hallprice_id), `discount`, `extracharges` FROM `orderDetail` WHERE id='.$orderid.'';*/
+
+
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
+$companyid=$userdetail[0][0];
+$hallid=$processInformation[0][3];
+$orderid=$processInformation[0][6];
 
 $sql='select od.id,od.hall_id,od.catering_id,p.isFood,od.user_id,1,1,1,1,1,od.person_id,od.total_amount,od.total_person,od.status_hall,od.destination_date,od.booking_date,od.destination_time,od.status_catering,1,od.describe,p.describe,p.id,p.price,od.discount,od.extracharges FROM orderDetail as od  INNER join packageDate as pd
 on (od.packageDate_id=pd.id)
@@ -515,10 +512,26 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
 
-
     <div class="form-group row justify-content-center">
-        <button id="cancel" type="button" class=" col-4 btn btn-danger" value="Cancel"><i class="fas fa-arrow-circle-left"></i>back</button>
-        <button id="submitform" type="button" class=" col-4 btn btn-success" value="Save"><i class="fas fa-check "></i>Save</button>
+
+
+        <?php
+        if($processInformation[0][4]==0)
+        {
+            //processing
+            echo '
+        <button id="cancel" type="button" class=" col-4 btn btn-danger" > << back</button>
+        <button id="submitform" type="button" class=" col-4 btn btn-success" >Next >> </button>';
+
+        }
+        else
+        {
+
+            echo '
+        <button id="cancel" type="button" class=" col-4 btn btn-danger" ><i class="fas fa-arrow-circle-left"></i>back</button>
+        <button id="submitform" type="button" class=" col-4 btn btn-success" ><i class="fas fa-check "></i>Save</button>';
+        }
+        ?>
     </div>
 
 </form>
@@ -581,7 +594,20 @@ include_once ("../../webdesign/footer/footer.php");
         barnches();
         $("#cancel").click(function ()
         {
-            window.history.back();
+
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //process is running
+                echo 'location.replace("../../customer/customerEdit.php?pid=' . $pid . '&token='.$token.'");';
+
+            }
+            else
+            {
+                echo "window.history.back();";
+            }
+            ?>
+
         });
         function checkpackage(date, time, perheadwith)
         {
@@ -737,7 +763,26 @@ include_once ("../../webdesign/footer/footer.php");
                     }
                     else
                     {
-                        window.history.back();
+
+                        <?php
+                        if($processInformation[0][4]==0)
+                        {
+
+
+                                //not catering Order so payment collect
+                                echo 'location.replace("orderInfo/orderItem.php?pid=' . $pid . '&token='.$token.'");';
+
+
+                        }
+                        else
+                        {
+                            echo "window.history.back();";
+                        }
+                        ?>
+
+
+
+
                     }
 
 

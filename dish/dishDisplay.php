@@ -6,16 +6,19 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
 
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
-$order=$_SESSION['order'];
+
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$userid=$_COOKIE['userid'];
+
+
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
+$order=$processInformation[0][6];
 /*
  $sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
 WHERE od.id='.$order.'';
@@ -102,9 +105,30 @@ include_once ("../webdesign/header/header.php");
 
         <div class="form-group row col-12 justify-content-center mt-5 ">
 
-            <a href="../order/orderEdit.php" type="button" class="col-6 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
 
-            <button id="submit" type="submit" class="btn-success form-control btn col-6"><i class="fas fa-check "></i>Submit</button>
+
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //processing
+                echo '
+        
+            <a href="../order/orderEdit.php" type="button" class="col-6 btn btn-danger form-control"><< Back </a>
+            <button id="submit" type="submit" class="btn-success form-control btn col-6"> Next >></button>';
+
+            }
+            else
+            {
+
+                echo '
+        
+            <a href="../order/orderEdit.php" type="button" class="col-6 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
+            <button id="submit" type="submit" class="btn-success form-control btn col-6"><i class="fas fa-check "></i>Submit</button>';
+            }
+            ?>
+
+
+
         </div>
 
     </form>
@@ -282,8 +306,33 @@ include_once ("../webdesign/footer/footer.php");
 
 
         $("#cancelDish").click(function () {
-            window.history.back();
-            return false;
+
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //process is running
+
+                if($processInformation[0][2]!="")
+                {
+                    // came from catering order
+
+                    echo 'location.replace("../order/orderEdit.php?pid=' . $pid . '&token='.$token.'");';
+                }
+                else
+                {
+                    //came from hall order
+                    echo 'location.replace("../company/hallBranches/EdithallOrder.php?pid=' . $pid . '&token='.$token.'");';
+                }
+
+            }
+            else
+            {
+                echo "window.history.back();";
+            }
+            ?>
+
+
+
         });
 
 
