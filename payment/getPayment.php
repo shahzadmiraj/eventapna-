@@ -30,6 +30,11 @@ $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_
 $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
 
+
+
+$sql='SELECT catering_id,status_catering FROM orderDetail WHERE id='.$order.'';
+$StatusOrder=queryReceive($sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -233,8 +238,17 @@ include_once ("../webdesign/footer/footer.php");
             <?php
             if($processInformation[0][4]==0)
             {
-                //catering order also book and select dishes
-                echo 'location.replace("../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+                //processing order
+                if(($processInformation[0][3]!="") &&($StatusOrder[0][1]!="Running"))
+                {
+                    //came from hall book also catering doesnot  running
+                    echo 'location.replace("../company/hallBranches/orderInfo/orderItem.php?pid=' . $pid . '&token='.$token.'");';
+                }
+                else
+                {
+                    //
+                    echo 'location.replace("../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+                }
             }
             else
             {
@@ -288,7 +302,7 @@ include_once ("../webdesign/footer/footer.php");
                       if($processInformation[0][4]==0)
                       {
                           //catering order also book and select dishes
-                          echo 'location.replace("../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+                          echo 'location.replace("../order/PreviewOrder.php?pid=' . $pid . '&token='.$token.'");';
                       }
                       else
                       {

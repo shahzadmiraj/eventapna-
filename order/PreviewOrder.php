@@ -6,30 +6,36 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
-}
+
 include_once ("../connection/printOrderDetail.php");
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
+
+
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+
+
+
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
+
 if(isset($_GET['action']))
 {
-    $orderId=$_SESSION['order'];
+    $orderId=$processInformation[0][5];
 
     $currentdate = (string) date_create()->format('Y-m-d:H:i:s');
    //$currentdate=date('now');
     //$currentdate="";
     if($_GET['action']=="see")
     {
-        action($_COOKIE['username'],$currentdate,$orderId,"I");
+        action($userdetail[0][1],$currentdate,$orderId,"I");
         exit();
     }
     else
     {
-        action($_COOKIE['username'],$currentdate,$orderId,"D");
+        action($userdetail[0][1],$currentdate,$orderId,"D");
         exit();
     }
 
@@ -37,22 +43,19 @@ if(isset($_GET['action']))
 $hallid="";
 $cateringid='';
 $orderId="";
-if(isset($_SESSION['order']))
-{
-    $orderId=$_SESSION['order'];
+
+    $orderId=$processInformation[0][5];
     $sql='SELECT od.hall_id,od.catering_id FROM orderDetail as  od WHERE od.id='.$orderId.'';
     $result=queryReceive($sql);
     if($result[0][0]!="")
     {
         $hallid=$result[0][0];
-       // $_SESSION['branchtypeid']=$hallid;
     }
     else
     {
         $cateringid=$result[0][1];
-       // $_SESSION['branchtypeid']=$hallid;
     }
-}
+
 
 $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_id,(SELECT p.image FROM person as p WHERE p.id=od.person_id) FROM orderDetail as od WHERE od.id='.$orderId.'';
 $orderDetailPerson= queryReceive($sql);
@@ -117,40 +120,47 @@ include_once ("../webdesign/header/header.php");
 </div>
 
 
+<?php
+
+$Query='pid=' . $pid . '&token='.$token;
+?>
 
 <div class="container row m-auto  alert-light">
 <h3 class="col-12 h-25">Order Detail</h3>
 
 
 
-    <a href="?action=see " class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"   resource=""><i class="fa fa-print" aria-hidden="true"></i>  <h6>See PDF Bill</h6></a>
-    <a href="?action=Download" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x" download><i class="fas fa-cloud-download-alt"></i><h6>Download PDF Bill</h6></a>
+    <a href="?action=see&<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"   resource=""><i class="fa fa-print" aria-hidden="true"></i>  <h6>See PDF Bill</h6></a>
+    <a href="?action=Download&<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x" download><i class="fas fa-cloud-download-alt"></i><h6>Download PDF Bill</h6></a>
 
 
 
-        <a href="../customer/customerEdit.php?action=preview" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-user-edit fa-3x"></i><h6>Customer Preview</h6></a>
+        <a href="../customer/customerEdit.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-user-edit fa-3x"></i><h6>Customer Preview</h6></a>
         <?php
             if($hallid!="")
             {
                 //1 hall order edit                //2 make hall order to user displaye
-                echo '<a href="../company/hallBranches/EdithallOrder.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Hall Order</h6></a>';
+                echo '<a href="../company/hallBranches/EdithallOrder.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Hall Order</h6></a>';
 
             }
             else
             {
                 //catering order editor                  //2 make catering order to user displaye
-                echo '<a href="orderEdit.php?action=preview" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Catering  Order</h6></a>';
+                echo '<a href="orderEdit.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Catering  Order</h6></a>';
             }
         ?>
-    <a href="../dish/AllSelectedDishes.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-concierge-bell fa-3x"></i><h6>Dishes Booking </h6></a>
-            <a href="../payment/paymentHistory.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-history fa-3x"></i><h6>Payment History</h6></a>
 
-    <a href="HistoryOrder.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-eraser fa-3x"></i><h6>Order Changing history </h6></a>
 
-            <a href="../payment/getPayment.php" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="far fa-money-bill-alt fa-3x"></i><h6>Get payment from customer</h6></a>
-            <a href="../payment/paymentDisplaySend.php" class="h-25 col-5 shadow btn-info m-2 text-center"> <i class="fas fa-share-alt fa-3x"></i><h6>Transfer payment <p>(user to user)</p> </h6></a>
 
-    <a href="../payment/transferPaymentReceive.php" class="h-25 col-5 shadow btn-info  m-2 text-center"><i class="fas fa-clipboard-check fa-3x"></i><h6>Payment Receiving Request <p>(user to user)</p> </h6></a>
+    <a href='../dish/AllSelectedDishes.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-concierge-bell fa-3x"></i><h6>Dishes Booking </h6></a>
+            <a href='../payment/paymentHistory.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-history fa-3x"></i><h6>Payment History</h6></a>
+
+    <a href='HistoryOrder.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-eraser fa-3x"></i><h6>Order Changing history </h6></a>
+
+            <a href='../payment/getPayment.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"><i class="far fa-money-bill-alt fa-3x"></i><h6>Get payment from customer</h6></a>
+            <a href='../payment/paymentDisplaySend.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"> <i class="fas fa-share-alt fa-3x"></i><h6>Transfer payment <p>(user to user)</p> </h6></a>
+
+    <a href='../payment/transferPaymentReceive.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info  m-2 text-center"><i class="fas fa-clipboard-check fa-3x"></i><h6>Payment Receiving Request <p>(user to user)</p> </h6></a>
 
 
 </div>

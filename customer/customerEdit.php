@@ -284,7 +284,7 @@ p.id='.$customerId.'';
 
                 //  not this is customer back and reprocess
                 echo '
-            <a id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Not This customer</a>';
+                <a id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger">Close</a>';
                 echo '<a  id="formcustomer"  data-href="'.$NextButton.'" class=" col-6 form-control btn btn-primary">  Next >></a>   ';
             }
             else  if($Isprocessing==1)
