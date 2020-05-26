@@ -25,14 +25,14 @@ $sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orde
 $processInformation=queryReceive($sql);
 
 $userId=$_COOKIE['userid'];
-$orderDetail_id=$processInformation[0][4];
+$orderDetail_id=$processInformation[0][5];
 $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_id,(SELECT p.image FROM person as p WHERE p.id=od.person_id) FROM orderDetail as od WHERE od.id='.$orderDetail_id.'';
 $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
 
 
 
-$sql='SELECT catering_id,status_catering FROM orderDetail WHERE id='.$order.'';
+$sql='SELECT catering_id,status_catering FROM orderDetail WHERE id='.$orderDetail_id.'';
 $StatusOrder=queryReceive($sql);
 
 ?>

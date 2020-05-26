@@ -20,7 +20,7 @@ $processInformation=queryReceive($sql);
 
 $companyid=$userdetail[0][0];
 $hallid=$processInformation[0][3];
-$orderid=$processInformation[0][6];
+$orderid=$processInformation[0][5];
 
 $sql='select od.id,od.hall_id,od.catering_id,p.isFood,od.user_id,1,1,1,1,1,od.person_id,od.total_amount,od.total_person,od.status_hall,od.destination_date,od.booking_date,od.destination_time,od.status_catering,1,od.describe,p.describe,p.id,p.price,od.discount,od.extracharges FROM orderDetail as od  INNER join packageDate as pd
 on (od.packageDate_id=pd.id)
@@ -521,7 +521,7 @@ include_once ("../../webdesign/header/header.php");
             //processing
             echo '
         <button id="cancel" type="button" class=" col-4 btn btn-danger" > << back</button>
-        <button id="submitform" type="button" class=" col-4 btn btn-success" >Next >> </button>';
+        <button id="submitform" type="button" class=" col-4 btn btn-primary" >Next >> </button>';
 
         }
         else

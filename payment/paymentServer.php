@@ -6,10 +6,6 @@
  * Time: 14:52
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
 if(isset($_POST['option']))
 {
     if($_POST['option']=='GetPayment')

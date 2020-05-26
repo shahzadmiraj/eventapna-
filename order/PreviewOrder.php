@@ -72,9 +72,9 @@ $customerID=$orderDetailPerson[0][1];
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
+    <link rel="stylesheet" href="../webdesign/css/complete.css">
     <style>
 
     </style>
@@ -135,32 +135,32 @@ $Query='pid=' . $pid . '&token='.$token;
 
 
 
-        <a href="../customer/customerEdit.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-user-edit fa-3x"></i><h6>Customer Preview</h6></a>
+        <a href="../customer/customerEdit.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-user-edit "></i><h6>Customer Preview</h6></a>
         <?php
             if($hallid!="")
             {
                 //1 hall order edit                //2 make hall order to user displaye
-                echo '<a href="../company/hallBranches/EdithallOrder.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Hall Order</h6></a>';
+                echo '<a href="../company/hallBranches/EdithallOrder.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Hall Order</h6></a>';
 
             }
             else
             {
                 //catering order editor                  //2 make catering order to user displaye
-                echo '<a href="orderEdit.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Catering  Order</h6></a>';
+                echo '<a href="orderEdit.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Catering  Order</h6></a>';
             }
         ?>
 
 
 
-    <a href='../dish/AllSelectedDishes.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-concierge-bell fa-3x"></i><h6>Dishes Booking </h6></a>
-            <a href='../payment/paymentHistory.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-history fa-3x"></i><h6>Payment History</h6></a>
+    <a href="../dish/AllSelectedDishes.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>
+            <a href="../payment/paymentHistory.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-history "></i><h6>Payment History</h6></a>
 
-    <a href='HistoryOrder.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"><i class="fas fa-eraser fa-3x"></i><h6>Order Changing history </h6></a>
+    <a href="HistoryOrder.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-eraser"></i><h6>Order Changing history </h6></a>
 
-            <a href='../payment/getPayment.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"><i class="far fa-money-bill-alt fa-3x"></i><h6>Get payment from customer</h6></a>
-            <a href='../payment/paymentDisplaySend.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center"> <i class="fas fa-share-alt fa-3x"></i><h6>Transfer payment <p>(user to user)</p> </h6></a>
+            <a href="../payment/getPayment.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="far fa-money-bill-alt"></i><h6>Get payment from customer</h6></a>
+            <a href='../payment/paymentDisplaySend.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"> <i class="fas fa-share-alt "></i><h6>Transfer payment <p>(user to user)</p> </h6></a>
 
-    <a href='../payment/transferPaymentReceive.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info  m-2 text-center"><i class="fas fa-clipboard-check fa-3x"></i><h6>Payment Receiving Request <p>(user to user)</p> </h6></a>
+    <a href='../payment/transferPaymentReceive.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info  m-2 text-center fa-3x"><i class="fas fa-clipboard-check "></i><h6>Payment Receiving Request <p>(user to user)</p> </h6></a>
 
 
 </div>

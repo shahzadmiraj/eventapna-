@@ -182,7 +182,7 @@ include_once ("../webdesign/header/header.php");
 
         <div class="form-group row m-auto">
             <button id="cancelCustomer" type="button" class="col-5 form-control btn btn-danger"><i class="fas fa-window-close"></i>Cancel</button>
-            <button type="button" class="col-5 form-control btn btn-primary" id="submit"><i class="fas fa-check "></i>Submit</button>
+            <button type="button" class="col-5 form-control btn btn-primary" id="submit">Next >> </button>
         </div>
     </form>
 </div>

@@ -441,7 +441,7 @@ include_once ("../../../webdesign/footer/footer.php");
                                     if(($StatusOrder[0][0]!="")&&(($StatusOrder[0][1]=="Running")))
                                     {
                                         //catering order also book and select dishes
-                                        echo 'location.replace(".../../../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+                                        echo 'location.replace("../../../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
                                     }
                                     else
                                     {
