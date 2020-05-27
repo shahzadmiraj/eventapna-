@@ -52,28 +52,13 @@ $StatusOrder=queryReceive($sql);
 </head>
 <body>
 <?php
-include_once ("../../../webdesign/header/header.php");
-
+//include_once ("../../../webdesign/header/header.php");
+$whichActive = 3;
+$imageCustomer = "../../../images/customerimage/";
+$PageName="Hall Extra Item";
+include_once("../../../webdesign/orderWizard/wizardOrder.php");
 ?>
-<div class="jumbotron  shadow text-center " style="background-image: url(<?php
-if((file_exists('../../../images/catering/'.$cateringdetail[0][2])) &&($cateringdetail[0][2]!=""))
-{
-    echo "'../../../images/catering/".$cateringdetail[0][2]."'";
-}
-else
-{
-    echo "https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg";
-}
 
-
-
-?>
-    );background-size:100% 100%;background-repeat: no-repeat">
-    <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h5 class="display-5 text-center"><i class="fas fa-hamburger fa-3x"></i> Extra items Detail</h5>
-        <p class="lead">Extra items information such as Sound system ,Dancing floor ,Fog light ,Snow system Price manager others </p>
-    </div>
-</div>
 
 
 
@@ -296,7 +281,7 @@ $display.=$imagespath;
 
 </div>
 <?php
-include_once ("../../../webdesign/footer/footer.php");
+//include_once ("../../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

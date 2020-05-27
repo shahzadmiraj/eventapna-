@@ -44,17 +44,24 @@ $orderDetail=queryReceive($sql);
 <body>
 
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+
+
+//include_once ("../webdesign/header/header.php");
+
+
+$whichActive = 2;
+$imageCustomer = "../images/customerimage/";
+$PageName="Catering Order";
+include_once("../webdesign/orderWizard/wizardOrder.php");
+
+
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
 
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-cart-plus fa-2x"></i>Order Edit </h3>
-    </div>
-</div>
+<div class="container">
 
-<div class="">
+
     <form class="card container" id="editorder">
         <?php
             echo '<input name="orderid" type="number" hidden value="'.$orderDetail[0][0].'">

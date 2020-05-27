@@ -58,44 +58,17 @@ $StatusOrder=queryReceive($sql);
 </head>
 <body >
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+$whichActive = 5;
+$imageCustomer = "../images/customerimage/";
+$PageName="Payment";
+
+include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://insidesmallbusiness.com.au/wp-content/uploads/2018/12/bigstock-204968347.jpg);background-size:100% 100%;background-repeat: no-repeat">
 
-    <div class="card-body text-center" style="opacity: 0.7 ;background: #fdfdff;">
-        <h3 ><i class="far fa-money-bill-alt fa-1x mr-3"></i>Get payment from customer </h3>
-    </div>
-
-</div>
-<div class="row justify-content-center col-12" style="margin-top: -60px">
-
-    <div class="card text-center card-header">
-        <img src="<?php
-
-        if(file_exists('../images/customerimage/'.$orderDetailPerson[0][2])&&($orderDetailPerson[0][2]!=""))
-        {
-            echo '../images/customerimage/'.$orderDetailPerson[0][2];
-
-        }
-        else
-        {
-            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
-        }
-
-        ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
-        <h5 ><?php
-            echo  $orderDetailPerson[0][0];
-            ?></h5>
-        <label >Order ID:<?php
-            echo  $orderDetail_id;
-            ?></label>
-    </div>
-</div>
 
     <form class="card container" id="from2">
-        <h3>Payment method</h3>
-        <hr>
         <input hidden name="user_id" value="<?php
         echo $userId;
         ?>">
@@ -223,7 +196,7 @@ include_once ("../webdesign/header/header.php");
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 
 

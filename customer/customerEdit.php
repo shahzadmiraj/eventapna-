@@ -63,16 +63,13 @@ $companyid=$userdetail[0][0];
 </head>
 <body>
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+$whichActive=1;
+$imageCustomer="../images/customerimage/";
+
+$PageName="Customer infomation";
+include_once ("../webdesign/orderWizard/wizardOrder.php");
 ?>
-
-<div class="jumbotron  shadow" style="background-image: url(https://www.livechatinc.com/wp-content/uploads/2017/01/customer-centric@2x.png);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-user-edit"></i>Edit Customer info </h3>
-    </div>
-
-</div>
 
     <?php
     echo '<input name="customerid" hidden value="'.$customerId.'">';
@@ -83,31 +80,6 @@ include_once ("../webdesign/header/header.php");
 <form id="formEditCustomer">
 <div class="container card" >
     <input hidden type="number" value="<?php echo $userid;?>" name="userid">
-    <div class="form-group row col-12 justify-content-center ">
-        <img src="<?php
-
-        if(file_exists('../images/customerimage/'.$person[0][4])&&($person[0][4]!=""))
-        {
-            echo '../images/customerimage/'.$person[0][4];
-
-        }
-        else
-        {
-            echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
-        }
-
-
-        ?> " style="height: 20vh;" class="img-thumbnail figure-img rounded-circle" alt="image is not set">
-
-
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-camera"></i></span>
-            </div>
-            <input name="image"  type="file"  class="form-control">
-        </div>
-
-    </div>
 
     <?php
 

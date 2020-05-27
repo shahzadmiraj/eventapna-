@@ -60,6 +60,14 @@ $orderId="";
 $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_id,(SELECT p.image FROM person as p WHERE p.id=od.person_id) FROM orderDetail as od WHERE od.id='.$orderId.'';
 $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
+
+
+if($processInformation[0][4]==0)
+{
+    $sql='UPDATE `BookingProcess` SET `IsProcessComplete`=1 WHERE id='.$processInformation[0][0].'';
+    querySend($sql);
+}
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -81,47 +89,17 @@ $customerID=$orderDetailPerson[0][1];
 </head>
 <body>
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+$whichActive = 6;
+$processInformation[0][4]=1; //complete
+$imageCustomer = "../images/customerimage/";
+$PageName="Order Preview";
+include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://www.myofficeapps.com/wp-content/uploads/2017/10/streamline-process.jpg);background-size:100% 130%;background-repeat: no-repeat">
-
-    <div class="card-body text-center" style="opacity: 0.7 ;background: #fdfdff;">
-        <h3 ><i class="fas fa-book fa-2x mr-2"></i>Order informations </h3>
-    </div>
-
-</div>
-<div class="row justify-content-center col-12" style="margin-top: -60px">
-
-    <div class="card text-center">
-    <img src="<?php
-
-
-
-
-    if(file_exists('../images/customerimage/'.$orderDetailPerson[0][2])&&($orderDetailPerson[0][2]!=""))
-    {
-        echo '../images/customerimage/'.$orderDetailPerson[0][2];
-    }
-    else
-    {
-        echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
-    }
-
-
-    ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
-        <h5 ><?php
-            echo  $orderDetailPerson[0][0];
-            ?></h5>
-        <label >Order ID:<?php
-            echo  $orderId;
-            ?></label>
-    </div>
-</div>
 
 
 <?php
-
 $Query='pid=' . $pid . '&token='.$token;
 ?>
 
@@ -168,7 +146,7 @@ $Query='pid=' . $pid . '&token='.$token;
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 
 <script>

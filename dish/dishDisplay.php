@@ -61,15 +61,15 @@ $dishTypeDetail=queryReceive($sql);
 
 
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+
+
+$whichActive = 4;
+$imageCustomer = "../images/customerimage/";
+$PageName="Catering Dishes Select";
+include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://maunewsonline.uitvconnect.com/wp-content/uploads/2017/10/indian-food.jpg);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-concierge-bell fa-3x"></i>Select Dishes </h3>
-    </div>
-</div>
 
 
 <div id="selectmenu" class="form-inline badge-light "  >
@@ -215,7 +215,7 @@ include_once ("../webdesign/header/header.php");
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 

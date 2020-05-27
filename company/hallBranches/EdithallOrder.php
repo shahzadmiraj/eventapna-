@@ -65,16 +65,13 @@ $priceDetailOfExtraItem=queryReceive($sql);
 
 
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
+$whichActive = 2;
+$imageCustomer = "../../images/customerimage/";
+$PageName="Hall Order info";
+include_once("../../webdesign/orderWizard/wizardOrder.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-cart-arrow-down fa-3x mr-2"></i>Edit order</h3>
-    </div>
-
-</div>
 
 
 
@@ -85,7 +82,6 @@ include_once ("../../webdesign/header/header.php");
 
 
 <div class="container card form-group form-inline">
-
     <h4 class="m-auto">Extra Items detail   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i><?php echo $priceDetailOfExtraItem[0][0];?></span></h4>
     <a href="orderInfo/orderItem.php" class="btn btn-primary" >manage items</a>
 </div>

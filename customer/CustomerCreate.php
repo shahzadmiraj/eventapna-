@@ -29,13 +29,17 @@ $userid=$_COOKIE['userid'];
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <script src="../webdesign/JSfile/JSFunction.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
 
     <style>
 
@@ -68,20 +72,73 @@ $userid=$_COOKIE['userid'];
 
 
 
+<div class="container">
+<div class="row" >
 
-<?php
-include_once ("../webdesign/header/header.php");
-?>
-<div class="jumbotron  shadow" style="background-image: url(https://www.livechatinc.com/wp-content/uploads/2017/01/customer-centric@2x.png);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-registered"></i>Register Customer </h3>
+    <div class="container">
+        <ul class="pagination float-right">
+            <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+        </ul>
     </div>
 </div>
 
 
+    <div class="row">
+        <div class="container">
 
-<div class="container card">
+            <div class="card " >
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRcYhl53h5jYneDJZBHrAJkQin91O6DYR2Gj-Ijaxt6mY39V2NN&usqp=CAU" class="card-img rounded" alt="..." style="height: 15vh">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h6 class="card-text"><?php
+                                if($cateringid!="No")
+                                {
+                                    $sql='SELECT name FROM catering WHERE id='.$cateringid.'';
+                                    $cateringName=queryReceive($sql);
+
+                                    echo "catering Name : ".$cateringName[0][0]."";
+                                }
+                                else if ($hallid!="No")
+                                {
+                                    $sql='SELECT name FROM hall WHERE id='.$hallid.'';
+                                    $hallName=queryReceive($sql);
+                                    echo "hall Name : ".$hallName[0][0]."";
+                                }
+
+                                ?></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+<?php
+//include_once ("../webdesign/header/header.php");
+
+
+
+$whichActive=1;
+$imageCustomer="../images/customerimage/";
+
+$PageName="Customer infomation";
+include_once ("../webdesign/orderWizard/wizardOrder.php");
+
+?>
+
+
+
+
+<div class="container "  >
 
 
 
@@ -189,7 +246,7 @@ include_once ("../webdesign/header/header.php");
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 

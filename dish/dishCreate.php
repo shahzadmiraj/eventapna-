@@ -56,7 +56,13 @@ $userid=$_COOKIE['userid'];
 <body>
 
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+
+$whichActive = 4;
+$imageCustomer = "../images/customerimage/";
+
+$PageName="Catering Dishes Create";
+include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
 <div class="jumbotron  shadow" style="background-image: url(http://tongil.com.au/wp-content/uploads/2018/02/ingredients.jpg);background-size:100% 115%;background-repeat: no-repeat">
 
@@ -192,7 +198,7 @@ include_once ("../webdesign/header/header.php");
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 
 <script>

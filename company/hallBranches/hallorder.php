@@ -52,18 +52,18 @@ $cateringids=queryReceive($sql);
 <body>
 
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
+$whichActive = 2;
+$imageCustomer = "../../images/customerimage/";
+
+$PageName="Hall Order info";
+include_once("../../webdesign/orderWizard/wizardOrder.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
 
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-cart-plus fa-2x"></i>Order Booking </h3>
 
-    </div>
-
-</div>
 <form class="form container card">
+
 
     <input  hidden name="pid" value="<?php echo $pid;?>">
     <input  hidden name="token" value="<?php echo $token;?>">
@@ -263,7 +263,7 @@ include_once ("../../webdesign/header/header.php");
 
 </form>
 <?php
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()
