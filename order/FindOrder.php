@@ -7,26 +7,6 @@
  */
 include_once ("../connection/connect.php");
 
-/*if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
-}
-if(isset($_SESSION['order']))
-{
-    unset($_SESSION['order']);
-}
-if(isset($_SESSION['customer']))
-{
-    unset($_SESSION['customer']);
-}
-
-
-if(isset($_GET['action']))
-{
-    $_SESSION['order']=$_GET['order'];
-    $_SESSION['customer']=$_GET['customer'];
-    header("location:PreviewOrder.php");
-}*/
 
 $hallid="";
 $cateringid="";
@@ -380,8 +360,10 @@ od.destination_date ASC,od.destination_time ASC';
             $display='';
             for ($i=0;$i<count($orderdetail);$i++)
             {
+                $sql='SELECT `id`, `token` FROM `BookingProcess`  WHERE `orderDetail_id`='.$orderdetail[$i][0].'';
+                $OrderProcess=queryReceive($sql);
                 $display.='
-        <a href="?action=preview&order='.$orderdetail[$i][0].'&customer='.$orderdetail[$i][10].'" class="col-12   row  shadow m-3 newcolor">
+        <a href="PreviewOrder.php?pid='.$OrderProcess[0][0].'&token='.$OrderProcess[0][1].'" class="col-12   row  shadow m-3 newcolor">
         <img style="height:8vh" src="';
 
                 if(file_exists('../images/customerimage/'.$orderdetail[$i][2])&&($orderdetail[$i][2]!=""))
@@ -495,7 +477,7 @@ od.destination_date ASC,od.destination_time ASC';
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 
 <script>
