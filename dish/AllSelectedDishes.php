@@ -7,22 +7,26 @@
  */
 
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
 
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
 if(isset($_GET['action']))
 {
     header("location:dishPreview.php?dish=".base64url_encode($_GET['action']));
 }
-$orderId=$_SESSION['order'];
+
+
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
+$orderId=$processInformation[0][5];
 $sql='SELECT SUM(dd.price*dd.quantity) FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND(dd.orderDetail_id='.$orderId.')';
 $ActiveTotalAmount=queryReceive($sql);
+
+
+$Query='pid=' . $pid . '&token='.$token;
 ?>
 <!DOCTYPE html>
 <head>
@@ -45,15 +49,14 @@ $ActiveTotalAmount=queryReceive($sql);
 <body>
 
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+
+$whichActive = 6;
+$imageCustomer = "../images/customerimage/";
+$PageName="Catering Dishes Detail";
+include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
-<div class="jumbotron  shadow" style="background-image: url(https://qph.fs.quoracdn.net/main-qimg-b1822af85b86aabaa253ad7948880cb7);background-size:100% 115%;background-repeat: no-repeat">
 
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-concierge-bell fa-3x"></i>Catering Order Detail</h3>
-    </div>
-
-</div>
 
 
 
@@ -65,12 +68,9 @@ include_once ("../webdesign/header/header.php");
 
 
     <div class="container alert-light">
-        <h3>Catering Dishes Detail</h3>
-        <hr>
-
         <span class="input-group-text">
         Active Total Amount:<?php echo $ActiveTotalAmount[0][0];?>
-        <a href="dishDisplay.php" class="form-control btn-success btn float-right  "><i class="fas fa-concierge-bell"></i>dish Add +</a>
+        <a href="dishDisplay.php?<?php echo $Query;?>" class="form-control btn-success btn float-right  "><i class="fas fa-concierge-bell"></i>dish Add +</a>
         </span>
         <hr>
     </div>
@@ -228,7 +228,7 @@ include_once ("../webdesign/header/header.php");
 </div>
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 

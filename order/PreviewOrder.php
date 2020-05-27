@@ -10,8 +10,6 @@ include_once ("../connection/connect.php");
 include_once ("../connection/printOrderDetail.php");
 
 
-$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
-$userdetail=queryReceive($sql);
 
 
 
@@ -104,7 +102,6 @@ $Query='pid=' . $pid . '&token='.$token;
 ?>
 
 <div class="container row m-auto  alert-light">
-<h3 class="col-12 h-25">Order Detail</h3>
 
 
 
@@ -126,11 +123,17 @@ $Query='pid=' . $pid . '&token='.$token;
                 //catering order editor                  //2 make catering order to user displaye
                 echo '<a href="orderEdit.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Catering  Order</h6></a>';
             }
+
+
+            if($result[0][1]!="")
+            {
+                echo '
+             <a href="../dish/AllSelectedDishes.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>';
+            }
         ?>
 
 
 
-    <a href="../dish/AllSelectedDishes.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>
             <a href="../payment/paymentHistory.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-history "></i><h6>Payment History</h6></a>
 
     <a href="HistoryOrder.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-eraser"></i><h6>Order Changing history </h6></a>

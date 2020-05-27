@@ -2,19 +2,16 @@
 <?php
 
 include_once ("../connection/connect.php");
-//2//2
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
 
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
 $userId=$_COOKIE['userid'];
-$orderid=$_SESSION['order'];
-$companyid=$_COOKIE['companyid'];
+$orderid=$processInformation[0][5];
+$companyid=$userdetail[0][0];
 $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_id,(SELECT p.image FROM person as p WHERE p.id=od.person_id) FROM orderDetail as od WHERE od.id='.$orderid.'';
 $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
@@ -43,41 +40,18 @@ $customerID=$orderDetailPerson[0][1];
 
 <body>
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+
+$whichActive = 5;
+$imageCustomer = "../images/customerimage/";
+$PageName="Payment Confirmation ";
+
+include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
-<div class="jumbotron  shadow" style="background-image: url(https://instabug.com/blog/wp-content/uploads/2018/05/SurveysRequests_2-02.jpg);background-size:100% 100%;background-repeat: no-repeat">
 
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 class="text-dark">  <i class="fas fa-clipboard-check fa-3x"></i> Payment Receiving Request</h3>
-        <p >Other user is requesting to you to confirm their payments</p>
-    </div>
 
-</div>
+
 <div class="container">
-    <div class="row justify-content-center col-12" style="margin-top: -60px">
-
-        <div class="card text-center card-header">
-            <img src="<?php
-
-            if(file_exists('../images/customerimage/'.$orderDetailPerson[0][2])&&($orderDetailPerson[0][2]!=""))
-            {
-                echo '../images/customerimage/'.$orderDetailPerson[0][2];
-
-            }
-            else
-            {
-                echo 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
-            }
-
-            ?> " style="height: 20vh;" class="figure-img rounded-circle" alt="image is not set">
-            <h5 ><?php
-                echo  $orderDetailPerson[0][0];
-                ?></h5>
-            <label >Order ID:<?php
-                echo  $orderid;
-                ?></label>
-        </div>
-    </div>
 
     <?php
 
@@ -279,7 +253,7 @@ include_once ("../webdesign/header/header.php");
 
 </div>
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 
 

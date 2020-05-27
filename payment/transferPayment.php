@@ -7,17 +7,12 @@
  */
 
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
-
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
 $userId=$_COOKIE['userid'];
-$orderDetail_id=$_SESSION['order'];
+$orderDetail_id=$processInformation[0][5];
 
 ?>
 

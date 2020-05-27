@@ -6,15 +6,12 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
-$orderid=$_SESSION['order'];
+
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+$orderid=$processInformation[0][5];
 
 $sql='SELECT `hall_id` FROM `orderDetail` WHERE id='.$orderid.'';
 $isHall=queryReceive($sql);
@@ -64,15 +61,14 @@ function timingConvert($Time)
 <body>
 
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+$whichActive = 5;
+$imageCustomer = "../images/customerimage/";
+$PageName="Order History ";
+
+include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-cart-plus fa-2x"></i>Order  Changing History </h3>
-    </div>
-</div>
 
 <div class="container">
 
@@ -305,7 +301,7 @@ include_once ("../webdesign/header/header.php");
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function () {

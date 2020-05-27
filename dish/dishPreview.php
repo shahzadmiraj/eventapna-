@@ -7,15 +7,12 @@
  */
 include_once ("../connection/connect.php");
 
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
 
-}
-if(!isset($_SESSION['order']))
-{
-    header("location:../user/userDisplay.php");
-}
+$pid=$_GET['pid'];
+$token=$_GET['token'];
+$sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
+$processInformation=queryReceive($sql);
+
 $dishDetailId='';
 if(isset($_GET['dish']))
 {
@@ -30,7 +27,7 @@ else
     exit();
 }
 
-$orderid=$_SESSION['order'];
+$orderid=$processInformation[0][5];
 //$sql='SELECT `describe`, `price`, `quantity`, `dish_id` FROM `dish_detail` WHERE id='.$dishDetailId.'';
 $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT (SELECT d.image FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT u.username FROM user as u WHERE u.id=dd.user_id),(SELECT u.username FROM user as u WHERE u.id=dd.expireUser)  FROM dish_detail as dd WHERE  (dd.id='.$dishDetailId.')';
 $dishDetailOfDetai=queryReceive($sql);
@@ -62,22 +59,16 @@ $userid=$_COOKIE['userid'];
 <body>
 
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
+$whichActive = 6;
+$imageCustomer = "../images/customerimage/";
+$PageName="Catering Dish Preview";
+include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
 
 
-<div class="jumbotron  shadow" style="background-image: url(http://tongil.com.au/wp-content/uploads/2018/02/ingredients.jpg);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 class="text-dark"><i class="fas fa-concierge-bell fa-3x"></i> Dish Detail</h3>
-    </div>
-
-</div>
 
 <div class="container card">
-    <h1>Dish Detail</h1>
-    <hr>
-
 <?php
 
 $image='';
@@ -227,7 +218,7 @@ else
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 
