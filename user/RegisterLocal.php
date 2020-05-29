@@ -57,7 +57,7 @@ include_once ("../webdesign/header/header.php");
 
         <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
             <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Sign Up</h1>
-            <h4  id="error">We have sent an email with a confirmation link to your email address. <a href="#">resend email</a> </h4>
+            <h4  id="error"></h4>
             <form class="col-12" id="formLogin">
                 <input type="hidden" name="option" value="localUser">
                 <div class="form-group row">

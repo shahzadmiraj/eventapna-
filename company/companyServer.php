@@ -145,10 +145,19 @@ if(isset($_POST['option']))
         querySend($sql);
         $addressid=mysqli_insert_id($connect);
 
+        $hallManager=$_POST['hallManager'];
+        $AdvanceAmount=$_POST['AdvanceAmount'];
+        $token=uniqueToken("hall");
+        $userid=$_POST['userid'];
 
 
 
-        $sql='INSERT INTO `hall`(`id`, `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`,`active`) VALUES (NULL,"'.$hallname.'",'.$capacity.',"'.$daytime.'",'.$partition.','.$parking.',NULL,"'.$hallimage.'",'.$halltype.','.$addressid.','.$companyid.',"'.$timestamp.'")';
+        $sql='INSERT INTO `hall`(`id`, `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`,`active`, `token`, `AdvancePercentage`) VALUES (NULL,"'.$hallname.'",'.$capacity.',"'.$daytime.'",'.$partition.','.$parking.',NULL,"'.$hallimage.'",'.$halltype.','.$addressid.','.$companyid.',"'.$timestamp.'","'.$token.'",'.$AdvanceAmount.')';
+        querySend($sql);
+
+       $hallid=mysqli_insert_id($connect);
+
+        $sql='INSERT INTO `BranchesJobStatus`(`id`, `hall_id`, `catering_id`, `ActiveUserId`, `ExpireUserId`, `ActiveDate`, `ExpireDate`, `WorkingStatus`, `user_id`) VALUES (NULL,'.$hallid.',NULL,'.$userid.',NULL,"'.$timestamp.'",NULL,"Manager",'.$hallManager.')';
         querySend($sql);
 
 

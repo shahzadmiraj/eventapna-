@@ -154,10 +154,10 @@ if((isset($_GET['id']))AND(isset($_GET['confirm'])))
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        Forgot your password?  <a href="#"> Send Password</a>
+                        Forgot your password?  <a href="ForgetPassword.php"> Send Password</a>
                     </div>
                     <div class="d-flex justify-content-center links">
-                       Dont have account?  <a href="RegisterLogin.php"><i class="fas fa-sign-out-alt"></i> Sign UP</a>
+                       Dont have account?  <a href="RegisterLocal.php"><i class="fas fa-sign-out-alt"></i> Sign UP</a>
                     </div>
                 </div>
 

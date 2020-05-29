@@ -58,9 +58,10 @@ function uniqueToken($tableName)
         $token=base64url_encodeLength();
         $sql='SELECT id FROM '.$tableName.' WHERE token="'.$token.'"';
         $result=queryReceive($sql);
-        if(count($result))
+        if(count($result)==0)
         {
             return $token;
+            break;
         }
     }
 }

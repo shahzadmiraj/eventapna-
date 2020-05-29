@@ -6,9 +6,10 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
-$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$sql='SELECT `company_id`,`username`, `jobTitle`,`id` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
+
 
 ?>
 <!DOCTYPE html>
@@ -31,31 +32,25 @@ $companyid=$userdetail[0][0];
 
     <script src="../../webdesign/JSfile/JSFunction.js"></script>
     <style>
-        form
-        {
-            margin: 5%;
-
-        }
     </style>
 </head>
 <body>
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
 
 ?>
 <div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg);background-size:100% 115%;background-repeat: no-repeat">
-
     <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 "><i class="fas fa-registered"></i> Hall Branch Register</h1>
         <p class="lead">Free register Hall branches and also get free software . Book your order easily</p>
-
-        <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info"> <i class="fas fa-city mr-2"></i>Edit Company</a>
-
     </div>
 </div>
 
 <form class="card container">
+    <h2>Hall Registeration Form</h2>
+    <hr>
     <div class="form-group row">
+        <input hidden type="number" name="userid" value="<?php echo $userdetail[0][3];?>">
     <label class="col-form-label">Hall Branch Name:</label>
 <!--    <input name="hallname" class="form-control col-8" type="text">-->
 
@@ -74,14 +69,6 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="form-group row">
         <label class="col-form-label">Hall Type:</label>
-        <!--<select name="halltype" class="form-control col-8">
-            <option value="1">Marquee</option>
-            <option value="2">Hall</option>
-            <option value="3">Deera /Open area</option>
-        </select>-->
-
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fab fa-accusoft"></i></span>
@@ -93,9 +80,45 @@ include_once ("../../webdesign/header/header.php");
                 <option value="2">Deera /Open area</option>
             </select>
         </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="col-form-label ">Advance  Online booking %</label>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input id="AdvanceAmount" value="0" name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance">
+        </div>
+    </div>
+
+
+
+    <div class="form-group row">
+        <label class="col-form-label">Hall Manager :</label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+
+            <select name="hallManager" class="form-control">
+                <?php
+                $sql='SELECT `id`,`username` FROM `user` WHERE ISNULL(expire)AND (company_id='.$userdetail[0][0].')AND ((jobTitle="Owner")OR (jobTitle="Employee"))';
+                $users=queryReceive($sql);
+                for($i=0;$i<count($users);$i++)
+                {
+                    echo '<option value="'.$users[$i][0].'">'.$users[$i][1].'</option>';
+                }
+                ?>
+            </select>
+        </div>
 
 
     </div>
+
+
     <div class="form-group row">
         <label class="col-form-label">Hall Branch Image:</label>
 
@@ -126,9 +149,6 @@ include_once ("../../webdesign/header/header.php");
     <div class="form-group row">
         <label class="col-form-label">No of Partition in Hall:</label>
 
-
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-columns"></i></span>
@@ -136,13 +156,24 @@ include_once ("../../webdesign/header/header.php");
             <input id="partitions" value="1" name="partition" type="number" class="form-control" placeholder="No of Partition in Hall">
         </div>
 
-
     </div>
 
-    <div class="form-inline form-group">
-        <input name="parking" class="form-check-input  " type="checkbox">
-        <label class="form-check-label "><i class="fas fa-parking"></i> Have Your own parking</label>
+
+
+    <div class="form-group row">
+        <label class="col-form-label">Own Parking :</label>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-parking"></i></span>
+            </div>
+            <select name="parking" class="form-control">
+                <option value="0">No,we have not Own parking</option>
+                <option value="1">Yes,we have  Own parking</option>
+            </select>
+        </div>
     </div>
+
+
 
 
 
@@ -190,7 +221,7 @@ include_once ("../../webdesign/header/header.php");
 <script src="../../map/javascript.js"></script>
 
 <?php
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 
 
@@ -264,15 +295,14 @@ include_once ("../../webdesign/footer/footer.php");
     });
 
 
-
-    $(document).ready(function()
-    {
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-            dataType: "script",
-            cache: false
-        });
-    });
+    // $(document).ready(function()
+    // {
+    //     $.ajax({
+    //         url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+    //         dataType: "script",
+    //         cache: false
+    //     });
+    // });
 
 </script>
 

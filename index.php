@@ -1,23 +1,11 @@
 <?php
 include_once ("connection/connect.php");
 include_once ("company/ClientSide/Hall/functions.php");
-if((isset($_COOKIE['companyid']))&&(!isset($_GET['action'])))
+if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
 {
     header("location:company/companyRegister/companydisplay.php");
 }
-if(isset($_SESSION['order']))
-{
-    unset($_SESSION['order']);
-}
-if(isset($_SESSION['customer']))
-{
-    unset($_SESSION['customer']);
-}
-if(isset($_SESSION['branchtype']))
-{
-    unset($_SESSION['branchtype']);
-    unset($_SESSION['branchtypeid']);
-}
+
 ?>
 
 <!DOCTYPE html>

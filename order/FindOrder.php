@@ -113,7 +113,6 @@ else
         <p> Check <?php echo $order_info." order and "?> all orders</p>
         <button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>
     </div>
-
 </div>
 
 
