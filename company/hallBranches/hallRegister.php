@@ -290,7 +290,6 @@ $companyid=$userdetail[0][0];
         $("#cancel").click(function ()
         {
             window.history.back();
-
         });
     });
 
