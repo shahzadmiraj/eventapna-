@@ -1,9 +1,15 @@
 <?php
 include_once ("connection/connect.php");
 include_once ("company/ClientSide/Hall/functions.php");
+
+
 if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
 {
-    header("location:company/companyRegister/companydisplay.php");
+    $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+    $userdetail=queryReceive($sql);
+    $companyid=$userdetail[0][0];
+    if($companyid!="")
+    header("location:company/companyRegister/companyAdminPanel.php");
 }
 
 ?>

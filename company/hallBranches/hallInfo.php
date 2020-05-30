@@ -3,14 +3,16 @@ include_once ('../../connection/connect.php');
 
 
 
-$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$sql='SELECT `company_id`,`username`, `jobTitle` ,`id`  FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $id=$_GET['h'];
+$token=$_GET['token'];
+$hallid=$id;
+$sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`,`AdvancePercentage`  FROM `hall` WHERE (id='.$hallid.')AND( token="'.$token.'")AND(ISNULL(expire))';
+$halldetail=queryReceive($sql);
 
-$encoded=$id;
 if(isset($_GET['action']))
 {
-
     if($_GET['action']=="expire")
     {
         $date=date('Y-m-d H:i:s');
@@ -22,16 +24,10 @@ if(isset($_GET['action']))
 
     }
     querySend($sql);
-   header("location:daytimeAll.php?hall=".$encoded."");
+   header("location:../companyRegister/companyAdminPanel.php");
 }
-
-
-$hallid='';
 $companyid='';
-$hallid=$id;
 $companyid=$userdetail[0][0];
-$sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
-$halldetail=queryReceive($sql);
 $sql='SELECT `id`, `longitude`, `expire`, `country`, `city`, `latitude`, `active`, `address` FROM `location` WHERE id='.$halldetail[0][7].'';
 $location=queryReceive($sql);
 ?>
@@ -52,18 +48,12 @@ $location=queryReceive($sql);
     <link rel="stylesheet" href="../../map/style.css">
     <style>
 
-        #formhall
-        {
-            margin: 5%;;
-
-        }
-
     </style>
 </head>
 <body>
 
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
 
 ?>
 
@@ -84,7 +74,6 @@ else
     <div class="container" style="background-color: white;opacity: 0.7">
         <h1 class="display-4"><i class="fas fa-cogs fa-1x"></i> <?php echo $halldetail[0][0]; ?></h1>
         <p class="lead">Edit Hall infomation name ,location,pictures....</p>
-        <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>
 </div>
 
@@ -94,6 +83,7 @@ else
     <hr class="">
     <form class="" id="formhall" >
 
+        <input type="number" hidden name="userid" value="<?php echo $userdetail[0][3]; ?>">
         <input type="text" hidden name="previousaddress" value="<?php echo $location[0][7]; ?>">
         <input type="text" hidden name="previousaddressid" value="<?php echo $location[0][0]; ?>">
         <input type="number" hidden name="hallid" value="<?php echo $hallid; ?>">
@@ -101,11 +91,6 @@ else
         <input type="text" hidden name="previousimage" value="<?php echo $halldetail[0][5]; ?>">
         <div class="form-group row">
             <label class="col-form-label ">Hall Branch Name:</label>
-            <!--        <input name="hallname" class="form-control col-8" type="text" value="--><?php //echo $halldetail[0][0]; ?><!--">-->
-
-
-
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-place-of-worship"></i></span>
@@ -197,18 +182,79 @@ else
         </div>
 
         <div class="form-group row">
-            <!--        <input name="parking" class="form-check-input" type="checkbox" --><?php //if($halldetail[0][3]==1){ echo "checked";} ?><!-- >-->
-            <!--        <label class="form-check-label ">Have Your own parking</label>-->
+            <label class="col-form-label">Hall Manager :</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                <span class="input-group-text">
-                <input name="parking" class="form-check-input " type="checkbox" <?php if($halldetail[0][3]==1){ echo "checked";} ?> ><i class="fas fa-parking"></i>
-                </span>
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
-                <label class="form-check-label ml-3">  Have Your own parking</label>
+
+                <select name="currentManager" class="form-control">
+                    <?php
+                    $sql='SELECT `user_id`,(SELECT u.username FROM user as u WHERE u.id=BranchesJobStatus.user_id),id FROM `BranchesJobStatus` WHERE ISNULL(ExpireDate)AND (hall_id='.$hallid.')AND (WorkingStatus="Manager")';
+                    $currentManager=queryReceive($sql);
+                    echo '<option value="'.$currentManager[0][0].'">'.$currentManager[0][1].'</option>';
+
+                    $sql='SELECT `id`,`username` FROM `user` WHERE ISNULL(expire)AND (company_id='.$userdetail[0][0].')AND ((jobTitle="Owner")OR (jobTitle="Employee"))AND(id!='.$currentManager[0][0].')';
+                    $users=queryReceive($sql);
+                    for($i=0;$i<count($users);$i++)
+                    {
+                        echo '<option value="'.$users[$i][0].'">'.$users[$i][1].'</option>';
+                    }
+                    ?>
+                </select>
+                <?php
+                echo '<input hidden name="PreviousManagerId" value="'.$currentManager[0][0].'">
+                <input hidden name="BranchesJobStatusManagerId" value="'.$currentManager[0][2].'">
+                '
+                ?>
+
+
+
+
             </div>
 
+
+        </div>
+
+
+
+        <div class="form-group row">
+            <label class="col-form-label ">Advance  Online booking %</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                </div>
+                <input id="AdvanceAmount" value="0" name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance" value="<?php echo $cateringdetail[0][11]; ?>">
+            </div>
+        </div>
+
+
+
+        <div class="form-group row">
+            <label class="col-form-label">Own Parking :</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-parking"></i></span>
+                </div>
+                <select name="parking" class="form-control">
+                    <?php
+                    if($halldetail[0][3]==1)
+                    {
+                        echo '<option value="1">Yes,we have  Own parking</option>
+                                    <option value="0">No,we have not Own parking</option>'      ;
+                    }
+                    else
+                    {
+
+                        echo '
+                                <option value="0">No,we have not Own parking</option>
+                                <option value="1">Yes,we have  Own parking</option>
+                                   '      ;
+                    }
+                    ?>
+                </select>
+            </div>
         </div>
 
 
@@ -245,12 +291,12 @@ else
             <?php
             if($halldetail[0][4]=="")
             {
-                echo '<a href="?action=expire&hall='.$encoded.'" class="btn btn-danger col-6">Expire</a>';
+                echo '<a href="?action=expire&h='.$hallid.'&token='.$token.'" class="btn btn-danger col-6">Expire</a>';
 
             }
             else
             {
-                echo '<a href="?action=active&hall='.$encoded.'" class="btn btn-warning col-6">Active</a>';
+                echo '<a href="?action=active&h='.$hallid.'&token='.$token.'" class="btn btn-warning col-6">Active</a>';
             }
 
             ?>
@@ -269,7 +315,7 @@ else
 
 <?php
 
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 
 <script src="../../webdesign/JSfile/JSFunction.js" type="text/javascript"></script>
@@ -357,16 +403,16 @@ include_once ("../../webdesign/footer/footer.php");
     });
 
 
-    $(document).ready(function()
+   /* $(document).ready(function()
     {
-        latitude=<?php echo $location[0][5];?>;
-        longitude=<?php echo $location[0][1];?>;
+        latitude=<?php //echo $location[0][5];?>;
+        longitude=<?php //echo $location[0][1];?>;
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
             dataType: "script",
             cache: false
         });
-    });
+    });*/
 </script>
 </body>
 </html>

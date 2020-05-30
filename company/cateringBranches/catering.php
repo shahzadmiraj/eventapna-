@@ -45,7 +45,6 @@ $userid=$_COOKIE['userid'];
     <div class="card-body " style="opacity: 0.7 ;background: white;">
         <h1 class="display-5 text-center"><i class="fas fa-registered"></i> Catering Branches</h1>
     <p class="lead">Free register catering branches and also get free software . Book your order easily</p>
-       <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
     </div>
 </div>
 
@@ -79,10 +78,46 @@ $userid=$_COOKIE['userid'];
 
 
         <div class="form-group row">
+            <label class="col-form-label">Catering Manager :</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+
+                <select name="cateringManager" class="form-control">
+                    <?php
+                    $sql='SELECT `id`,`username` FROM `user` WHERE ISNULL(expire)AND (company_id='.$userdetail[0][0].')AND ((jobTitle="Owner")OR (jobTitle="Employee"))';
+                    $users=queryReceive($sql);
+                    for($i=0;$i<count($users);$i++)
+                    {
+                        echo '<option value="'.$users[$i][0].'">'.$users[$i][1].'</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+
+
+        </div>
+
+
+
+        <div class="form-group row">
+            <label class="col-form-label ">Advance  Online booking %</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                </div>
+                <input id="AdvanceAmount" value="0" name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance">
+            </div>
+        </div>
+
+
+        <div class="form-group row">
             <label class="col-form-label ">Latitude:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
                 <input readonly id="latitude" name="latitude" class="form-control" type="text" placeholder="Latitude Set Map">
             </div>
@@ -92,7 +127,7 @@ $userid=$_COOKIE['userid'];
             <label class="col-form-label ">longitude</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
                 <input  readonly id="longitude" name="longitude" class="form-control" type="text" placeholder="Longitude Set Map">
             </div>
@@ -102,7 +137,7 @@ $userid=$_COOKIE['userid'];
             <label class="col-form-label ">Address</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
                 <textarea  readonly id="address" name="address" class="form-control"  placeholder="Address Set Map"></textarea>
             </div>
@@ -112,7 +147,7 @@ $userid=$_COOKIE['userid'];
             <label class="col-form-label ">City</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
                 <input readonly id="city" name="city" class="form-control" type="text" placeholder="City Set Map">
             </div>
@@ -122,7 +157,7 @@ $userid=$_COOKIE['userid'];
             <label class="col-form-label ">Country</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
                 <input readonly id="country" name="country" class="form-control" type="text" placeholder="Country Set Map">
             </div>
@@ -133,7 +168,7 @@ $userid=$_COOKIE['userid'];
             <label class="col-form-label ">Target Radius / Online market show dishes with in  KM  </label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
                 <input value="9000" readonly id="radius" name="radius" class="form-control" type="text" placeholder="Target Radius Set Map ">
             </div>
@@ -170,15 +205,15 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 
-    $(document).ready(function()
-    {
-        getLocation();
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
-            dataType: "script",
-            cache: false
-        });
-    });
+    // $(document).ready(function()
+    // {
+    //     getLocation();
+    //     $.ajax({
+    //         url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
+    //         dataType: "script",
+    //         cache: false
+    //     });
+    // });
 
     $(document).ready(function ()
     {

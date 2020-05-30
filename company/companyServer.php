@@ -123,14 +123,8 @@ if(isset($_POST['option']))
 
             $hallimage =$_FILES['image']['name'];
         }
-        $daytime='';
-        $parking=0;
+        $parking=$_POST['parking'];
 
-        if(isset($_POST['parking']))
-        {
-            $parking=1;
-
-        }
         $halltype=$_POST['halltype'];
         $capacity=chechIsEmpty($_POST['capacity']);
         $partition=chechIsEmpty($_POST['partition']);
@@ -152,7 +146,7 @@ if(isset($_POST['option']))
 
 
 
-        $sql='INSERT INTO `hall`(`id`, `name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`,`active`, `token`, `AdvancePercentage`) VALUES (NULL,"'.$hallname.'",'.$capacity.',"'.$daytime.'",'.$partition.','.$parking.',NULL,"'.$hallimage.'",'.$halltype.','.$addressid.','.$companyid.',"'.$timestamp.'","'.$token.'",'.$AdvanceAmount.')';
+        $sql='INSERT INTO `hall`(`id`, `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`,`active`, `token`, `AdvancePercentage`) VALUES (NULL,"'.$hallname.'",'.$capacity.','.$partition.','.$parking.',NULL,"'.$hallimage.'",'.$halltype.','.$addressid.','.$companyid.',"'.$timestamp.'","'.$token.'",'.$AdvanceAmount.')';
         querySend($sql);
 
        $hallid=mysqli_insert_id($connect);
@@ -335,13 +329,7 @@ WHERE  id='.$order.'';
             $hallimage =$_FILES['image']['name'];
         }
         $daytime='';
-        $parking=0;
-
-        if(isset($_POST['parking']))
-        {
-            $parking=1;
-
-        }
+        $parking=$_POST['parking'];
         $timestamp = date('Y-m-d H:i:s');
         $halltype=$_POST['halltype'];
         $capacity=chechIsEmpty($_POST['capacity']);
@@ -365,8 +353,73 @@ WHERE  id='.$order.'';
             $previousaddressid=$addressid;
         }
 
-        $sql='UPDATE `hall` SET `name`="'.$hallname.'",`max_guests`='.$capacity.',`noOfPartitions`='.$partition.',`ownParking`='.$parking.',`image`="'.$hallimage.'",`hallType`='.$halltype.',`location_id`='.$previousaddressid.' WHERE id='.$hallid.'';
+
+
+
+
+        $PreviousManagerId=$_POST['PreviousManagerId'];
+        $BranchesJobStatusManagerId=$_POST['BranchesJobStatusManagerId'];
+        $currentManager=$_POST['currentManager'];
+        $userid=$_POST['userid'];
+        if($currentManager!=$PreviousManagerId)
+        {
+            $sql='UPDATE `BranchesJobStatus` SET ExpireUserId`='.$userid.',`ExpireDate`="'.$timestamp.'"  WHERE id='.$BranchesJobStatusManagerId.'';
+            querySend($sql);
+            $sql='INSERT INTO `BranchesJobStatus`(`id`, `hall_id`, `catering_id`, `ActiveUserId`, `ExpireUserId`, `ActiveDate`, `ExpireDate`, `WorkingStatus`, `user_id`) VALUES (NULL,'.$hallid.',NULL,'.$userid.',NULL,"'.$timestamp.'",NULL,"Manager",'.$currentManager.')';
+            querySend($sql);
+        }
+        $AdvanceAmount=$_POST['AdvanceAmount'];
+
+        $sql='SELECT `id`, `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id`, `company_id`, `active`, `token`, `AdvancePercentage` FROM `hall` WHERE id='.$hallid.'';
+        $previousHallDetail=queryReceive($sql);
+
+
+        if($previousHallDetail[0][1]!=$hallname)
+        {
+            //name
+            $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`,`primaryKeyInTable`) VALUES (NULL,"hall","name","'.$previousHallDetail[0][1].'",'.$userid.',"'.$timestamp.'",'.$hallid.')';
+            querySend($sql);
+        }
+        if($previousHallDetail[0][2]!=$capacity)
+        {
+            //max guest
+            $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`,`primaryKeyInTable`) VALUES (NULL,"hall","max_guests","'.$previousHallDetail[0][2].'",'.$userid.',"'.$timestamp.'",'.$hallid.')';
+            querySend($sql);
+        }
+        if($previousHallDetail[0][3]!=$partition)
+        {
+            //$partition
+            $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`,`primaryKeyInTable`) VALUES (NULL,"hall","noOfPartitions","'.$previousHallDetail[0][3].'",'.$userid.',"'.$timestamp.'",'.$hallid.')';
+            querySend($sql);
+        }
+        if($previousHallDetail[0][4]!=$parking)
+        {
+            //parking
+            $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`,`primaryKeyInTable`) VALUES (NULL,"hall","ownParking","'.$previousHallDetail[0][4].'",'.$userid.',"'.$timestamp.'",'.$hallid.')';
+            querySend($sql);
+        }
+        if($previousHallDetail[0][6]!=$hallimage)
+        {
+            //image
+            $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`,`primaryKeyInTable`) VALUES (NULL,"hall","image","'.$previousHallDetail[0][6].'",'.$userid.',"'.$timestamp.'",'.$hallid.')';
+            querySend($sql);
+        }
+
+        if($previousHallDetail[0][7]!=$halltype)
+        {
+            //hallType
+            $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`,`primaryKeyInTable`) VALUES (NULL,"hall","hallType","'.$previousHallDetail[0][7].'",'.$userid.',"'.$timestamp.'",'.$hallid.')';
+            querySend($sql);
+        }
+        if($previousHallDetail[0][12]!=$AdvanceAmount)
+        {
+                //advanceAMount
+            $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`,`primaryKeyInTable`) VALUES (NULL,"hall","AdvancePercentage",'.$previousHallDetail[0][12].','.$userid.',"'.$timestamp.'",'.$hallid.')';
+            querySend($sql);
+        }
+        $sql='UPDATE `hall` SET `name`="'.$hallname.'",`max_guests`='.$capacity.',`noOfPartitions`='.$partition.',`ownParking`='.$parking.',`image`="'.$hallimage.'",`hallType`='.$halltype.',`location_id`='.$previousaddressid.',`AdvancePercentage`='.$AdvanceAmount.' WHERE id='.$hallid.'';
         querySend($sql);
+
     }
     else if($_POST['option']=="Showdishessystem")
     {
@@ -374,6 +427,8 @@ WHERE  id='.$order.'';
         echo dishesOfPakage($sql);
 
     }
+
+
 
 
 
