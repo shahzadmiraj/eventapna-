@@ -80,15 +80,7 @@ include_once ("../../../webdesign/header/header.php");
 <?php
 $HeadingImage=$catering[0][1];
 $HeadingName=$catering[0][0];
-if(file_exists('../../../images/catering/'.$HeadingImage)&&($HeadingImage!=""))
-{
-    $HeadingImage='../../../images/catering/'.$HeadingImage;
-
-}
-else
-    {
-   $HeadingImage = 'https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg';
-}
+$Source='../../../images/catering/';
 include_once ("../Company/Box.php");
 ?>
 

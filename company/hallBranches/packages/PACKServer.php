@@ -77,7 +77,8 @@ if(isset($_POST['option']))
         $packagename=$_POST['packagename'];
         $rate=chechIsEmpty($_POST['rate']);
         $describe=$_POST['describe'];
-        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, `minimumAmountBooking`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL,'.$MinimumAmount.')';
+        $token=uniqueToken('packages');
+        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, `minimumAmountBooking`,`token`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL,'.$MinimumAmount.',"'.$token.'")';
         querySend($sql);
         $id=mysqli_insert_id($connect);
         for ($i=0;$i<count($selectedDates);$i++)

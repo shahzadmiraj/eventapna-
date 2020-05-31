@@ -93,7 +93,10 @@ AND(p.hall_id='.$hallid.')
 else if($_POST['option']=="encordpackage")
 {
     $id=$_POST['id'];
-    echo base64url_encode($id);
+    $sql='SELECT `id`,`token` FROM `packages` WHERE id='.$id.'';
+    $Packagedetail=queryReceive($sql);
+    echo '&pid='.$Packagedetail[0][0].'&ptoken='.$Packagedetail[0][1];
+
 }
 else if($_POST['option']=='SpecificpackageView')
 {

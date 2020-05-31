@@ -95,16 +95,7 @@ include_once ("../../../webdesign/header/header.php");
 <?php
 $HeadingImage=$hallInformation[0][6];
 $HeadingName=$hallInformation[0][1];
-if(file_exists('../../../images/hall/'.$HeadingImage)&&($HeadingImage!=""))
-{
-    $HeadingImage='../../../images/hall/'.$HeadingImage;
-
-}
-else
-{
-    $HeadingImage = 'https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg';
-}
-
+$Source='../../../images/hall/';
 include_once ("../Company/Box.php");
 ?>
 

@@ -4,9 +4,12 @@ include_once ("packages/packagesServerfunction.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
-$encoded=$_GET['h'];
+$hallid=$_GET['h'];
+$token=$_GET['token'];
 
-$hallid=$encoded;
+$sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$hallid.')AND(token="'.$token.'")AND(ISNULL(expire))';
+$halldetail=queryReceive($sql);
+$Query='h='.$hallid.'&token='.$token;
 $userid=$_COOKIE['userid'];
 
 ?>
@@ -58,15 +61,16 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
 
 ?>
-
-<div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/spicy-dishes-dinner-menu-icon-design-grilled-chicken-curry-sauce-vegetable-stew-pasta-pesto-sauce-ham-curry-84629311.jpg);background-size:100% 115%;background-repeat: no-repeat;">
-    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 "><i class="fas fa-plus-square"></i>Add new Package</h1>
-    </div>
-</div>
+<?php
+$HeadingImage=$halldetail[0][1];
+$HeadingName=$halldetail[0][0];
+$Source='../../images/hall/';
+$pageName='Package Add ';
+include_once ("../ClientSide/Company/Box.php");
+?>
 
 
 
@@ -78,11 +82,6 @@ include_once ("../../webdesign/header/header.php");
 
 
 <div class="container card">
-
-
-
-
-
 
 
     <div class="form-group row ">
@@ -350,7 +349,7 @@ include_once ("../../webdesign/header/header.php");
 
 
 <?php
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 
 <script type="text/javascript">

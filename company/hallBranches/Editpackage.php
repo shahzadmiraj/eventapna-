@@ -1,17 +1,18 @@
 <?php
 include_once ("../../connection/connect.php");
-
-if(!((isset($_GET['hall']))&&(isset($_GET['pack']))))
-{
-    header("location:../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['hall'];
-$id=base64url_decode($encoded);
-$encodedPack=$_GET['pack'];
-$packageid=base64url_decode($encodedPack);
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['h'];
+$packageid=$_GET['pid'];
+$packageToken=$_GET['ptoken'];
+$token=$_GET['token'];
 $hallid=$id;
-$companyid=$_COOKIE['companyid'];
-$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')';
+$sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$hallid.')AND(token="'.$token.'")AND(ISNULL(expire))';
+$halldetail=queryReceive($sql);
+$Query='h='.$hallid.'&token='.$token;
+
+$companyid=$userdetail[0][0];
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')AND(token="'.$packageToken.'")AND(ISNULL(expire))';
 $packageDetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
 ?>
@@ -65,19 +66,20 @@ $userid=$_COOKIE['userid'];
 <body>
 
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
 
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/spicy-dishes-dinner-menu-icon-design-grilled-chicken-curry-sauce-vegetable-stew-pasta-pesto-sauce-ham-curry-84629311.jpg);background-size:100% 115%;background-repeat: no-repeat;">
-
-    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 "><i class="fas fa-edit"></i>Edit Package</h1>
-    </div>
-</div>
+<?php
+$HeadingImage=$halldetail[0][1];
+$HeadingName=$halldetail[0][0];
+$Source='../../images/hall/';
+$pageName='Package Edit ';
+include_once ("../ClientSide/Company/Box.php");
+?>
 
 <div class="container card">
-    <h4>You can just manage Dates  and Expire package</h4>
+    <h6>You can just manage Dates  and Expire package</h6>
     <div class="form-group row">
         <lable class="col-form-label">Packages Name</lable>
         <div class="input-group mb-3 input-group-lg">
@@ -361,7 +363,7 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
 
 
 <?php
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

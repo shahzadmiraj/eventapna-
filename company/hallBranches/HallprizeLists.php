@@ -6,6 +6,7 @@ include_once('packages/packagesServerfunction.php');
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $id=$_GET['h'];
+$token=$_GET['token'];
 
 $encoded=$id;
 
@@ -21,8 +22,9 @@ $hallid='';
 $companyid='';
 $hallid=$id;
 $companyid=$userdetail[0][0];
-$sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE id='.$hallid.'';
+$sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE (id='.$hallid.')AND(token="'.$token.'")AND(ISNULL(expire))';
 $halldetail=queryReceive($sql);
+$Query='h='.$id.'&token='.$token;
 
 ?>
 <!DOCTYPE html>
@@ -60,32 +62,21 @@ $halldetail=queryReceive($sql);
 <body>
 
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
 
 ?>
 
-<div class="jumbotron jumbotron-fluid text-center" style="background-image: url(<?php
-if((file_exists('../../images/hall/'.$halldetail[0][5]))&&($halldetail[0][5]!=""))
-{
-    echo "'../../images/hall/".$halldetail[0][5]."'";
-}
-else
-{
-    echo "https://www.pakvenues.com/system/halls/cover_images/000/000/048/original/Umar_Marriage_Hall_lahore.jpg?1566758537";
-}
-?>);background-repeat: no-repeat ;background-size: 100% 100%">
-    <div class="container" style="background-color: white;opacity: 0.7">
-        <h1 class="display-4"><i class="fas fa-clipboard-list fa-1x"></i>    <?php echo $halldetail[0][0]; ?></h1>
-        <p class="lead">You can manage month wise prize list.Prize list consist of per head with food  and per head only seating .</p>
-        <h1 class="text-center"> <a href="../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
-    </div>
-</div>
 
+<?php
+$HeadingImage=$halldetail[0][5];
+$HeadingName=$halldetail[0][0];
+$Source='../../images/hall/';
+$pageName='Package Manage';
+include_once ("../ClientSide/Company/Box.php");
+?>
 
 <div class="container card">
 
-<h4>Package information</h4>
-    <hr>
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item">
         <a class="nav-link active daytime"  data-daytime="All" id="pills-All-tab" data-toggle="pill" href="#pills-All" role="tab" aria-controls="pills-All" aria-selected="true">All</a>
@@ -102,7 +93,7 @@ else
     </li>
 
     <li class="nav-item">
-        <a class="nav-link"    href="addnewpackage.php?h=<?php echo $_GET['h']; ?>" >Add Package</a>
+        <a class="nav-link"    href="addnewpackage.php?<?php echo $Query;?>" >Add Package</a>
     </li>
 </ul>
 <!--<div class="tab-content" id="pills-tabContent">-->
@@ -150,7 +141,7 @@ else
 
 <?php
 
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 
 <script>
@@ -227,7 +218,7 @@ include_once ("../../webdesign/footer/footer.php");
                         data:{id:id,option:"encordpackage"},
                         success:function(data)
                         {
-                            location.href='Editpackage.php?hall='+'<?php echo $_GET['h']; ?>'+'&pack='+data;
+                            location.href='Editpackage.php?'+'<?php echo $Query;?>'+data;
                         }
                     });
 

@@ -1,5 +1,18 @@
 
-<header class="bg-primary py-5 mb-5 " style="background-image: url('<?php echo $HeadingImage?>');
+<header class="bg-primary py-5 mb-5 " style="background-image: url('<?php
+
+
+if(file_exists($Source.$HeadingImage)&&($HeadingImage!=""))
+{
+    $HeadingImage=$Source.$HeadingImage;
+
+}
+else {
+    $HeadingImage = 'https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg';
+}
+
+
+echo $HeadingImage?>');
             width: 100%;
             height: auto;
             background-size: cover;
@@ -14,4 +27,15 @@
         </div>
     </div>
 </header>
+<?php
+if(isset($pageName))
+{
+    echo '
+<div class="container">
+    <h2 align="center">'.$pageName.'</h2>
+    <hr>
+</div>';
+
+}
+?>
 
