@@ -8,18 +8,14 @@
 include_once ("../../../connection/connect.php");
 
 
-if(!isset($_GET['hall']))
-{
 
-    header("location:../../companyRegister/companyEdit.php");
-}
-$encoded=$_GET['hall'];
-$id=base64url_decode($encoded);
-
-if((!is_numeric($id))||$id=="")
-{
-    header("location:../../companyRegister/companyEdit.php");
-}
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$id=$_GET['h'];
+$token=$_GET['token'];
+$sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+$halldetail=queryReceive($sql);
+$Query='h='.$id.'&token='.$token;
 $hall=$id;
 ?>
 <!DOCTYPE html>
@@ -40,23 +36,20 @@ $hall=$id;
 </head>
 <body >
 <?php
-include_once ("../../../webdesign/header/header.php");
+//include_once ("../../../webdesign/header/header.php");
 ?>
-
-<div class="jumbotron  shadow" style="background-image: url(https://cdn.flatworldsolutions.com/featured-images/outsource-outbound-call-center-services.jpg);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-plus"></i> <i class="fas fa-drum"></i> Add Item </h3>
-        <h6>You can add fog light ,smog ,dancing floor and extra items with sperate charges</h6>
-    </div>
-</div>
+<?php
+$HeadingImage=$halldetail[0][1];
+$HeadingName=$halldetail[0][0];
+$Source='../../../images/hall/';
+$pageName='Add Extra item';
+include_once ("../../ClientSide/Company/Box.php");
+?>
 
 
 
 
     <form class="card container">
-        <h2>Add Extra Hall items</h2>
-        <hr>
         <input type="number" hidden name="hall" value=<?php echo $hall;?>  >
 
         <div class="form-group row">
@@ -144,7 +137,7 @@ include_once ("../../../webdesign/header/header.php");
         <div class="form-group row justify-content-center">
 
             <button id="Back"  class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i> Cancel</button>
-            <button type="button" id="submit" class="form-control col-5 btn-success"><i class="fas fa-check "></i> Submit</button>
+            <button type="button" id="submit" class="form-control col-5 btn-primary"><i class="fas fa-check "></i> Submit</button>
 
         </div>
     </form>
@@ -153,7 +146,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
 <?php
-include_once ("../../../webdesign/footer/footer.php");
+//include_once ("../../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

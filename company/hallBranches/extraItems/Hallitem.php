@@ -13,7 +13,10 @@ include_once ("../../../connection/connect.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $id=$_GET['h'];
-
+$token=$_GET['token'];
+$sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+$halldetail=queryReceive($sql);
+$Query='h='.$id.'&token='.$token;
 $encoded=$id;
 ?>
 <!DOCTYPE html>
@@ -37,25 +40,16 @@ $encoded=$id;
 </head>
 <body>
 <?php
-include_once ("../../../webdesign/header/header.php");
+//include_once ("../../../webdesign/header/header.php");
 
 ?>
-<div class="jumbotron  shadow text-center " style="background-image: url(<?php
-
-    echo "https://media.istockphoto.com/photos/photo-studio-with-lighting-equipment-and-digital-camera-picture-id639474056";
-
-
-
-
+<?php
+$HeadingImage=$halldetail[0][1];
+$HeadingName=$halldetail[0][0];
+$Source='../../../images/hall/';
+$pageName='Extra Item Manage';
+include_once ("../../ClientSide/Company/Box.php");
 ?>
-    );background-size:100% 100%;background-repeat: no-repeat">
-    <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h1 class="text-center"><i class="fas fa-sitemap fa-1x"></i> Extra items Detail</h1>
-        <p class="lead">Extra items information such as Sound system ,Dancing floor ,Fog light ,Snow system Price manager others </p>
-        <h6>You can add fog light ,smog ,dancing floor and extra items with sperate charges</h6>
-        <h5 class="text-center"> <a href="../../companyRegister/companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h5>
-    </div>
-</div>
 
 
 
@@ -64,9 +58,6 @@ include_once ("../../../webdesign/header/header.php");
 
 
 <div class="container card">
-
-    <h3 class="font-weight-bold">Extra item Catergories</h3>
-    <hr>
 
 
 
@@ -111,7 +102,7 @@ include_once ("../../../webdesign/header/header.php");
         <div class="text-right">
 
             <?php
-            echo '        <a  href="CreateItem.php?hall='.$encoded.'" class="btn btn-success"><i class="fas fa-plus"></i> Add Extra item</a>
+            echo '        <a  href="CreateItem.php?'.$Query.'" class="btn btn-success"><i class="fas fa-plus"></i> Add Extra item</a>
 ';
             ?>
         </div>
@@ -220,7 +211,7 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
 
 
 <?php
-include_once ("../../../webdesign/footer/footer.php");
+//include_once ("../../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()
