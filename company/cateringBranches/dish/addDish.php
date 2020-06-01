@@ -10,10 +10,12 @@ include_once ("../../../connection/connect.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
+
 $id=$_GET['c'];
-
+$token=$_GET['token'];
+$sql='SELECT `name`,`image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+$cateringdetail=queryReceive($sql);
 $cateringid=$id;
-
 $userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
@@ -37,19 +39,17 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-include_once ("../../../webdesign/header/header.php");
+//include_once ("../../../webdesign/header/header.php");
 ?>
-<div class="jumbotron  shadow text-center" style="background-image: url(https://shaadishopblog.files.wordpress.com/2015/10/indian-wedding-punjabi-jain-kunal-shveta-bride-groom-hotel-irvine-global-photography-lehenga-sherwani-sera-manohar-delhi-palace-indian-food.jpg?w=720&h=480);background-size:100% 100%;background-repeat: no-repeat">
-
-    <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i> Add new Dish</h1>
-        <p class="lead">Add new dish such as chieken biryan,halwa ...</p>
-    </div>
-</div>
+<?php
+$HeadingImage=$cateringdetail[0][1];
+$HeadingName=$cateringdetail[0][0];
+$Source='../../../images/catering/';
+$pageName='Add Dish';
+include_once ("../../ClientSide/Company/Box.php");
+?>
 
 <div class="container card">
-    <h4>Add Dish in Catering Branch</h4>
-    <hr>
 
     <form>
 
@@ -113,7 +113,7 @@ include_once ("../../../webdesign/header/header.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                 </div>
-                <input   id="dishprice" name="dishprice" class="form-control" type="text" placeholder="Dish Price">
+                <input   id="dishprice" name="dishprice" class="form-control" type="number" placeholder="Dish Price">
             </div>
 
         </div>
@@ -169,7 +169,7 @@ include_once ("../../../webdesign/header/header.php");
 
         <div class="form-group row justify-content-center">
             <button id="cancel" type="button" class="col-5 form-control btn-danger btn" value="cancel"><span class="fas fa-window-close "></span>  Cancel</button>
-            <button id="submit" type="button" value="Submit" class="col-5 form-control btn-success btn"><i class="fas fa-check "></i>  Submit</button>
+            <button id="submit" type="button" value="Submit" class="col-5 form-control btn-primary btn"><i class="fas fa-check "></i>  Submit</button>
         </div>
 
 
@@ -182,7 +182,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
 <?php
-include_once ("../../../webdesign/footer/footer.php");
+//include_once ("../../../webdesign/footer/footer.php");
 ?>
 
 <script>

@@ -58,24 +58,14 @@ $location=queryReceive($sql);
 ?>
 
 
+<?php
+$HeadingImage=$halldetail[0][5];
+$HeadingName=$halldetail[0][0];
+$Source='../../images/hall/';
+$pageName='General Setting';
+include_once ("../ClientSide/Company/Box.php");
+?>
 
-
-<div class="jumbotron jumbotron-fluid text-center" style="background-image: url(<?php
-
-if((file_exists('../../images/hall/'.$halldetail[0][5]))&&($halldetail[0][5]!=""))
-{
-    echo "'../../images/hall/".$halldetail[0][5]."'";
-}
-else
-{
-    echo "https://www.pakvenues.com/system/halls/cover_images/000/000/048/original/Umar_Marriage_Hall_lahore.jpg?1566758537";
-}
-?>);background-repeat: no-repeat ;background-size: 100% 100%">
-    <div class="container" style="background-color: white;opacity: 0.7">
-        <h1 class="display-4"><i class="fas fa-cogs fa-1x"></i> <?php echo $halldetail[0][0]; ?></h1>
-        <p class="lead">Edit Hall infomation name ,location,pictures....</p>
-    </div>
-</div>
 
 
 <div class="container card">

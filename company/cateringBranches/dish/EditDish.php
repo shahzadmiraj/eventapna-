@@ -10,17 +10,22 @@ include_once ("../../../connection/connect.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
+
+
+$packageid=$_GET['Did'];
+$packagetoken=$_GET['Dtoken'];
+
+
 $id=$_GET['c'];
-
-
-$encodedPack=$_GET['dish'];
-$packageid=base64url_decode($encodedPack);
-
+$token=$_GET['token'];
+$sql = 'SELECT  `name`, `expire`, `image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+$cateringdetail = queryReceive($sql);
 
 $cateringid=$id;
 $dishID=$packageid;
-$sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image,(SELECT u.username FROM user as u WHERE u.id=d.user_id),d.active,d.id FROM dish as d WHERE d.id='.$dishID.'';
+$sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image,(SELECT u.username FROM user as u WHERE u.id=d.user_id),d.active,d.id FROM dish as d WHERE (d.id='.$dishID.')AND(ISNULL(d.expire))AND(d.token="'.$packagetoken.'")';
 $dishDetail=queryReceive($sql);
+//
 
 $sql='SELECT dwa.id, dwa.active, dwa.expire, dwa.price, dwa.dish_id,(SELECT u.username FROM user as u WHERE u.id=dwa.user_id)  FROM dishWithAttribute as dwa WHERE (ISNULL(dwa.expire)) AND (dwa.dish_id='.$dishDetail[0][5].')';
 $dishWithAttribute=queryReceive($sql);
@@ -56,16 +61,14 @@ $userid=$_COOKIE['userid'];
 //include_once ("../../../webdesign/header/header.php");
 
 ?>
-<div class="jumbotron  shadow text-center" style="background-image: url(https://shaadishopblog.files.wordpress.com/2015/10/indian-wedding-punjabi-jain-kunal-shveta-bride-groom-hotel-irvine-global-photography-lehenga-sherwani-sera-manohar-delhi-palace-indian-food.jpg?w=720&h=480);background-size:100% 100%;background-repeat: no-repeat">
-
-    <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 text-center"><i class="fas fa-utensils fa-3x mr-1"></i> Edit Dish</h1>
-        <p class="lead">Edit dish such as chieken biryan,halwa ...</p>
-    </div>
-</div>
-<div class="container card">
-    <h1><i class="fas fa-concierge-bell"></i>System Dish Edit</h1>
-    <hr>
+<?php
+$HeadingImage=$cateringdetail[0][2];
+$HeadingName=$cateringdetail[0][0];
+$Source='../../../images/catering/';
+$pageName='Dishes Edit';
+include_once ("../../ClientSide/Company/Box.php");
+?>
+<div class="container ">
 
         <div class="col-12 shadow card-header p-4">
             <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
@@ -424,7 +427,7 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
 
 
 <?php
-include_once ("../../../webdesign/footer/footer.php");
+//include_once ("../../../webdesign/footer/footer.php");
 ?>
 
 <script>

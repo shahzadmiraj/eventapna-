@@ -13,17 +13,42 @@ $cateringid="";
 $hallorcater="";
 $name="";
 $id=1;
+$token=$_GET['token'];
+
+
+$HeadingImage="";
+$HeadingName="";
+$Source='';
 if(isset($_GET['c']))
 {
     $cateringid= $_GET['c'];
     $name="c";
     $id=$_GET['c'];
+
+    //header set
+    $sql='SELECT `name`,`image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+    $detailBranch=queryReceive($sql);
+    $Source="../images/catering/";
+    $HeadingImage=$detailBranch[0][1];
+    $HeadingName=$detailBranch[0][0];
+
+
 }
 else if(isset($_GET['h']))
 {
     $hallid=$_GET['h'];
     $name="h";
     $id=$_GET['h'];
+
+    //header set
+    $sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+    $detailBranch=queryReceive($sql);
+
+
+    $Source="../images/hall/";
+    $HeadingImage=$detailBranch[0][1];
+    $HeadingName=$detailBranch[0][0];
+
 }
 
 $order_info="";
@@ -32,17 +57,6 @@ if (isset($_GET['order_status']))
     $order_info= $_GET['order_status'];
 }
 
-//if(isset($_SESSION['branchtype']))
-//{
-//    if($_SESSION['branchtype']=="hall")
-//    {
-//        $hallid=$_SESSION['branchtypeid'];
-//    }
-//    else
-//    {
-//        $cateringid=$_SESSION['branchtypeid'];
-//    }
-//}
 
 $midOfHallOrCater="";
 if(isset($_GET['order_status']))
@@ -106,14 +120,13 @@ else
 //include_once ("../webdesign/header/header.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://university.daraz.pk/pluginfile.php/26/course/section/10/Order%20Fulfilment-01.png);background-size:100% 100%;background-repeat: no-repeat">
+<?php
+$pageName=$order_info." orders :".'<button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>';
+include_once ("../company/ClientSide/Company/Box.php");
+?>
 
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 class="text-dark"> <i class="fas fa-search-plus fa-3x"></i>Find Orders</h3>
-        <p> Check <?php echo $order_info." order and "?> all orders</p>
-        <button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>
-    </div>
-</div>
+
+
 
 
 <div class="container card">

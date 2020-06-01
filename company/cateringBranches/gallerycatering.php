@@ -12,11 +12,12 @@ include_once ("../../connection/connect.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $id=$_GET['c'];
-
-
-$cateringid=$id;
-$sql='SELECT  `name`, `expire`, `image`, `location_id` FROM `catering` WHERE id='.$cateringid.'';
+$token=$_GET['token'];
+$sql='SELECT `name`,`image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
 $cateringdetail=queryReceive($sql);
+$Query='h='.$id.'&token='.$token;
+$cateringid=$id;
+
 
 $userid=$_COOKIE['userid'];
 
@@ -42,34 +43,21 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
 
 ?>
-<div class="jumbotron  shadow text-center" style="background-image: url(<?php
 
-if((file_exists('../../images/catering/'.$cateringdetail[0][2])) &&($cateringdetail[0][2]!=""))
-{
-    echo "'../../images/catering/".$cateringdetail[0][2]."'";
-}
-else
-{
-    echo "https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg";
-}
+<?php
+$HeadingImage=$cateringdetail[0][1];
+$HeadingName=$cateringdetail[0][0];
+$Source='../../images/catering/';
+$pageName='Gallery';
+include_once ("../ClientSide/Company/Box.php");
 ?>
-    );background-size:100% 100%;background-repeat: no-repeat">
-
-    <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 text-center"><i class="fas fa-images fa-3x"></i><?php echo $cateringdetail[0][0];?> Gallery</h1>
-        <p class="lead">View and upload picture of dishes </p>
-        <h1 class="text-center"> <a href="../companyRegister/companyEdit.php" class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
-
-    </div>
-</div>
 
 
 
 <div class="container card">
-    <h1 class="font-weight-light text-lg-left mt-4 mb-3">Gallery</h1>
 
 
     <form id="multiplesimages" enctype="multipart/form-data" class="form-inline">
@@ -170,7 +158,7 @@ else
 
 
 <?php
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
 

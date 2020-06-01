@@ -11,11 +11,14 @@ include_once ("../../../connection/connect.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $id=$_GET['c'];
+$token=$_GET['token'];
 
 
 $cateringid=$id;
-$sql = 'SELECT  `name`, `expire`, `image` FROM `catering` WHERE id=' . $cateringid . '';
+$sql = 'SELECT  `name`, `expire`, `image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
 $cateringdetail = queryReceive($sql);
+
+$Query='c='.$id.'&token='.$token;
 ?>
 <!DOCTYPE html>
 <head>
@@ -42,29 +45,16 @@ $cateringdetail = queryReceive($sql);
 
 ?>
 
+<?php
+$HeadingImage=$cateringdetail[0][2];
+$HeadingName=$cateringdetail[0][0];
+$Source='../../../images/catering/';
+$pageName='Dishes Manage';
+include_once ("../../ClientSide/Company/Box.php");
+?>
 
 
 
-    <div class="jumbotron  shadow text-center " style="background-image: url(<?php
-    if((file_exists('../../../images/catering/'.$cateringdetail[0][2])) &&($cateringdetail[0][2]!=""))
-    {
-        echo "'../../../images/catering/".$cateringdetail[0][2]."'";
-    }
-    else
-    {
-        echo "https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg";
-    }
-
-
-
-    ?>
-            );background-size:100% 100%;background-repeat: no-repeat">
-
-        <div class="card-body " style="opacity: 0.7 ;background: white;">
-            <h1 class="display-5 text-center"><i class="fas fa-hamburger fa-3x"></i><?php echo $cateringdetail[0][0];?> Dishes info</h1>
-            <p class="lead">Edit dishes information,dishes type,images and others </p>
-        </div>
-    </div>
 <div class="container">
 
 
@@ -73,7 +63,7 @@ $cateringdetail = queryReceive($sql);
 
     <div  class="col-12 badge-light ">
 
-        <h3 class="font-weight-bold">System Dish info <a  href="addDish.php?c=<?php echo $id;?>" class="float-right btn btn-success col-4 form-control">Add dish +</a></h3>
+        <h3 class="font-weight-bold">System Dish info <a  href="addDish.php?<?php echo $Query;?>" class="float-right btn btn-success col-4 form-control">Add dish +</a></h3>
 
         <br>
 
@@ -128,8 +118,8 @@ $cateringdetail = queryReceive($sql);
 
 
 
-<div class="container badge-light" >
-    <h1>Catering Dishes</h1>
+<div class="container badge-light " >
+    <h3>Catering Dishes</h3>
     <hr>
     <?php
 
@@ -140,7 +130,7 @@ $cateringdetail = queryReceive($sql);
     {
         $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"><i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
 
-        $sql = 'SELECT d.name, d.id,d.image,(SELECT price FROM `dishWithAttribute` WHERE dish_id=d.id ) FROM dish as d WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND((ISNULL(d.expire))) ';
+        $sql = 'SELECT d.name, d.id,d.image,(SELECT price FROM `dishWithAttribute` WHERE dish_id=d.id limit 1 ),d.token FROM dish as d WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND((ISNULL(d.expire))) ';
 
       //  $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(expire)) AND(catering_id='.$cateringid.')';
         $dishDetail=queryReceive($sql);
@@ -149,7 +139,7 @@ $cateringdetail = queryReceive($sql);
         for ($j=0;$j<count($dishDetail);$j++)
         {
             $display .= ' 
-         <a    href="EditDish.php?dish='.base64url_encode($dishDetail[$j][1]).'&c='.$id.'"  class="col-md-4 card m-1" >';
+         <a    href="EditDish.php?Did='.$dishDetail[$j][1].'&Dtoken='.$dishDetail[$j][4].'&'.$Query.'"  class="col-md-4 card m-1" >';
 
 
 
@@ -187,7 +177,7 @@ $cateringdetail = queryReceive($sql);
 
 
 <?php
-include_once ("../../../webdesign/footer/footer.php");
+//include_once ("../../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

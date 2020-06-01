@@ -4,9 +4,15 @@ include_once ('../../../../connection/connect.php');
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
+
 $id=$_GET['c'];
+$token=$_GET['token'];
+$sql='SELECT `name`,`image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+$cateringdetail=queryReceive($sql);
+
 $companyid=$userdetail[0][0];
 $cateringid=$id;
+
 
 
 
@@ -46,32 +52,22 @@ $cateringid=$id;
 <body>
 
 <?php
-include_once ("../../../../webdesign/header/header.php");
+//include_once ("../../../../webdesign/header/header.php");
 
 ?>
 
-<div class="jumbotron jumbotron-fluid text-center" style="background-image: url(<?php
-if((file_exists('../../images/hall/'.$halldetail[0][5]))&&($halldetail[0][5]!=""))
-{
-    echo "'../../images/hall/".$halldetail[0][5]."'";
-}
-else
-{
-    echo "https://www.pakvenues.com/system/halls/cover_images/000/000/048/original/Umar_Marriage_Hall_lahore.jpg?1566758537";
-}
-?>);background-repeat: no-repeat ;background-size: 100% 100%">
-    <div class="container" style="background-color: white;opacity: 0.7">
-        <h1 class="display-4"><i class="fas fa-clipboard-list fa-1x"></i>  </h1>
-        <p class="lead">You can manage month wise prize list.Prize list consist of per head with food  and per head only seating .</p>
-        <h1 class="text-center"> <a href="../../../companyRegister/companyEdit.php " class="col-6 btn btn-info "> <i class="fas fa-city mr-2"></i>Edit Company</a></h1>
-    </div>
-</div>
+
+<?php
+$HeadingImage=$cateringdetail[0][1];
+$HeadingName=$cateringdetail[0][0];
+$Source='../../../../images/catering/';
+$pageName='Orders Status';
+include_once ("../../../ClientSide/Company/Box.php");
+?>
 
 
 <div class="container card">
 
-    <h4>Searching Order </h4>
-    <hr>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active Search"  data-search="Running" id="pills-SearchRunning-tab" data-toggle="pill" href="#pills-SearchRunning" role="tab" aria-controls="pills-SearchRunning" aria-selected="true">Running</a>
@@ -120,7 +116,7 @@ else
 
 <?php
 
-include_once ("../../../../webdesign/footer/footer.php");
+//include_once ("../../../../webdesign/footer/footer.php");
 ?>
 
 <script>

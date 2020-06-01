@@ -28,9 +28,6 @@ ISNULL(cl.expire)AND
 ;
 $cateringdetail=queryReceive($sql);
 
-//////////////////////////////////////may be double array error check
-//print_r($cateringdetail);
-
 $userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
@@ -64,24 +61,13 @@ $userid=$_COOKIE['userid'];
 //include_once ("../../webdesign/header/header.php");
 
 ?>
-<div class="jumbotron  shadow text-center" style="background-image: url(<?php
-
-if((file_exists('../../images/catering/'.$cateringdetail[0][1])) &&($cateringdetail[0][1]!=""))
-{
-    echo "'../../images/catering/".$cateringdetail[0][1]."'";
-}
-else
-{
-    echo "https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg";
-}
+<?php
+$HeadingImage=$cateringdetail[0][1];
+$HeadingName=$cateringdetail[0][0];
+$Source='../../images/catering/';
+$pageName='General Setting';
+include_once ("../ClientSide/Company/Box.php");
 ?>
-    );background-size:100% 100%;background-repeat: no-repeat">
-
-    <div class="card-body " style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 text-center"><i class="fas fa-cogs fa-3x"></i> <?php echo $cateringdetail[0][0];?></h1>
-        <p class="lead">Edit Catering infomation name ,location,pictures... </p>
-    </div>
-</div>
 
 
 
@@ -257,7 +243,7 @@ else
 
 <script src="../../mapRadius/js/gmaps-lat-lng-radius.js"></script>
 <?php
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 
 
