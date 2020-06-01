@@ -242,16 +242,48 @@ include_once ("../Company/Box.php");
 
 
 
-        <address class="col-md-4">
-            <img src="http://placehold.it/300x200" class="img-thumbnail" style="width: 40%">
-            <span>Name</span>
+        <?php
+        //'.$hallInformation[0][0].'
+        $sql='SELECT u.username, u.image,BJS.WorkingStatus, u.email, u.number FROM user as u inner join BranchesJobStatus as BJS on (u.id=BJS.user_id) WHERE (ISNULL(BJS.ExpireDate)AND(BJS.WorkingStatus="Manager") AND(ISNULL(u.expire))AND(BJS.catering_id='.$cateringid.') )';
+        $users=queryReceive($sql);
+        $sql='SELECT  `username`,`image`,`jobTitle`, `email`, `number` FROM `user` WHERE ISNULL(expire)AND(company_id='.$catering[0][2].')AND(jobTitle="Owner")';
+        $Owners=queryReceive($sql);
+
+
+        $count=count($Owners);
+        if(count($users)>0)
+            $Owners[$count]=$users[0];
+        for($i=0;$i<count($Owners);$i++)
+        {
+
+            $imageUser='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+            if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))
+            {
+                $imageUser= '../../../images/users/'.$Owners[$i][1];
+            }
+
+            echo '
+    <div class="col-md-4 mb-5">
+
+        <address>
+
+            <img src="'.$imageUser.'" class="img-thumbnail" style="width: 40%">
+            <span>'.$Owners[$i][0].'</span>
             <br>
-            <span>Job Title</span>
+            <strong>'.$Owners[$i][2].'</strong>
             <br>
-            <strong>Email</strong>
+            <span>'.$Owners[$i][3].'</span>
             <br>
-            <strong>P#.</strong>
+            <span>P# '.$Owners[$i][4].'.</span>
         </address>
+
+
+    </div>';
+        }
+
+
+
+        ?>
 
     </div>
 

@@ -197,7 +197,8 @@ else if($_POST['option']=="LocatUserRegisters")
     $Email=$_POST['Email'];
     $password=$_POST['password'];
     $string=base64url_encodeLength();
-    $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyIdentificaton`, `image`, `jobTitle`, `email`, `number`) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'",NULL,NULL,"User","'.$Email.'",NULL)';
+    $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid`) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'",NULL,NULL,"User","'.$Email.'",NULL,0,NULL)';
+
     querySend($sql);
 
 
@@ -212,7 +213,7 @@ email :'.$Email.'
 </pre>';
 
     $display="";
-    // $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+    //$display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
     if($display=="")
     {
         echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email </a></p>';

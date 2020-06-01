@@ -267,7 +267,7 @@ include_once ("../Company/Box.php");
             <address>
                 <span class="p-2">City   <?php echo $hallInformation[0][11];?> </span>
                 <br>
-                <span class="p-2">cuntry    <?php echo $hallInformation[0][10];?></span>
+                <span class="p-2">Country    <?php echo $hallInformation[0][10];?></span>
                 <p class="p-2">Address:  <?php echo $hallInformation[0][12];?></p>
                 <br>
             </address>
@@ -358,22 +358,51 @@ include_once ("../Company/Box.php");
 
 
 
+    <?php
+    //'.$hallInformation[0][0].'
+    $sql='SELECT u.username, u.image,BJS.WorkingStatus, u.email, u.number FROM user as u inner join BranchesJobStatus as BJS on (u.id=BJS.user_id) WHERE (ISNULL(BJS.ExpireDate)AND(BJS.WorkingStatus="Manager") AND(ISNULL(u.expire))AND(BJS.hall_id='.$hallInformation[0][0].') )';
+$users=queryReceive($sql);
+$sql='SELECT  `username`,`image`,`jobTitle`, `email`, `number` FROM `user` WHERE ISNULL(expire)AND(company_id='.$hallInformation[0][8].')AND(jobTitle="Owner")';
+$Owners=queryReceive($sql);
+
+
+    $count=count($Owners);
+    if(count($users)>0)
+    $Owners[$count]=$users[0];
+    for($i=0;$i<count($Owners);$i++)
+    {
+
+        $imageUser='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+        if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))
+        {
+            $imageUser= '../../../images/users/'.$Owners[$i][1];
+        }
+
+        echo '
     <div class="col-md-4 mb-5">
 
         <address>
 
-            <img src="http://placehold.it/300x200" class="img-thumbnail" style="width: 40%">
-            <span>Name</span>
+            <img src="'.$imageUser.'" class="img-thumbnail" style="width: 40%">
+            <span>'.$Owners[$i][0].'</span>
             <br>
-            <span>Job Title</span>
+            <strong>'.$Owners[$i][2].'</strong>
             <br>
-            <strong>Email</strong>
+            <span>'.$Owners[$i][3].'</span>
             <br>
-            <strong>P#.</strong>
+            <span>P# '.$Owners[$i][4].'.</span>
         </address>
 
 
-    </div>
+    </div>';
+    }
+
+
+
+    ?>
+
+
+
 
 
 </div>

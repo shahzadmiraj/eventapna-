@@ -17,10 +17,22 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
     $mail->Password = 'Shahzad@123';                           // SMTP password
     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 465;        //465                            // TCP port to connect to
-    $mail->XMailer=" ";
+    $mail->XMailer="   ";
     $mail->From = 'admin@eventapna.com';
     $mail->FromName = 'EVENT APNA';
-    $mail->addAddress($SenderAddress, $SenderName);     // Add a recipient
+
+    if(is_array($SenderAddress))
+    {
+        //if array $SenderAddress
+        for($i=0;$i<count($SenderAddress);$i++)
+        {
+            $mail->addAddress($SenderAddress[$i], $SenderName[$i]);
+        }
+    }
+    else
+    {
+        $mail->addAddress($SenderAddress, $SenderName);     // Add a recipient
+    }
 //$mail->addAddress('ellen@example.com');               // Name is optional
 //$mail->addReplyTo('info@example.com', 'Information');
 //$mail->addCC('cc@example.com');
@@ -44,3 +56,7 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
 
     return $display;
 }
+
+
+
+

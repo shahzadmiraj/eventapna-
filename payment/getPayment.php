@@ -6,12 +6,6 @@
  * Time: 14:15
  */
 
-//
-//if(!isset($_GET["user_id"]) && !isset($_GET["order"]))
-//{
-//    echo 'orderDetail id and user id is not GET';
-//    exit();
-//}
 
 include_once ("../connection/connect.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';

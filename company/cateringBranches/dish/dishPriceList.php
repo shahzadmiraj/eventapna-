@@ -6,7 +6,16 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
+
+
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
 $cateringid=$_GET['c'];
+$token=$_GET['token'];
+$sql='SELECT `name`,`image` FROM `catering` WHERE (id='.$cateringid.')AND(token="'.$token.'")AND(ISNULL(expire))';
+$cateringdetail=queryReceive($sql);
+
+
 $sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
 $dishTypeDetail=queryReceive($sql);
 ?>
@@ -32,21 +41,20 @@ $dishTypeDetail=queryReceive($sql);
 
 
 <?php
-include_once ("../../../webdesign/header/header.php");
+//include_once ("../../../webdesign/header/header.php");
+?>
+<?php
+$HeadingImage=$cateringdetail[0][1];
+$HeadingName=$cateringdetail[0][0];
+$Source='../../../images/catering/';
+$pageName='Dishes Price list';
+include_once ("../../ClientSide/Company/Box.php");
 ?>
 
-<div class="jumbotron  shadow" style="background-image: url(https://maunewsonline.uitvconnect.com/wp-content/uploads/2017/10/indian-food.jpg);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 ><i class="fas fa-list-ol fa-3x"></i>Price List of Dishes </h3>
-    </div>
-</div>
 
 
 
 <div class="container badge-light" >
-    <h4>Catering Dishes Price list</h4>
-    <hr>
     <?php
     $display='';
     for($i=0;$i<count($dishTypeDetail);$i++)
@@ -60,12 +68,7 @@ include_once ("../../../webdesign/header/header.php");
         {
             $display .= ' 
          <div  class="col-5 m-2 m-sm-auto  shadow-lg p-3 bg-white rounded" >';
-
-
-
             $image='';
-
-
             if(file_exists('../../../images/dishImages/'.$dishDetail[$j][2])&&($dishDetail[$j][2]!=""))
             {
                 $image= '../../../images/dishImages/'.$dishDetail[$j][2];
@@ -121,7 +124,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
 <?php
-include_once ("../../../webdesign/footer/footer.php");
+//include_once ("../../../webdesign/footer/footer.php");
 ?>
 <script>
 

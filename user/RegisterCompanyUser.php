@@ -35,7 +35,7 @@ $companyid=$userdetail[0][0];
 </head>
 <body>
 <?php
-include_once ("../webdesign/header/header.php");
+//include_once ("../webdesign/header/header.php");
 ?>
 <div class="container">
 
@@ -141,7 +141,7 @@ include_once ("../webdesign/header/header.php");
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+//include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 
