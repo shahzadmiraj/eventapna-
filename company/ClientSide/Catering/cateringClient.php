@@ -243,6 +243,8 @@ include_once ("../Company/Box.php");
 
 
         <?php
+        $SenderAddress=array();
+        $SenderName=array();
         //'.$hallInformation[0][0].'
         $sql='SELECT u.username, u.image,BJS.WorkingStatus, u.email, u.number FROM user as u inner join BranchesJobStatus as BJS on (u.id=BJS.user_id) WHERE (ISNULL(BJS.ExpireDate)AND(BJS.WorkingStatus="Manager") AND(ISNULL(u.expire))AND(BJS.catering_id='.$cateringid.') )';
         $users=queryReceive($sql);
@@ -255,6 +257,8 @@ include_once ("../Company/Box.php");
             $Owners[$count]=$users[0];
         for($i=0;$i<count($Owners);$i++)
         {
+            $SenderAddress[$i]=$Owners[$i][3];
+                $SenderName[$i]=$Owners[$i][0];
 
             $imageUser='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
             if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))
@@ -346,7 +350,11 @@ container-->
 
 
 
-
+<?php
+$urlContactus="../../../contactUs/contactServer.php";
+$ExtraInformation="contact form".'<h2>'.$catering[0][0].'</h2>';
+include_once ("../../../contactUs/contactUs.php");
+?>
 
 
 

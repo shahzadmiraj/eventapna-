@@ -11,7 +11,6 @@ if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
     if($companyid!="")
     header("location:company/companyRegister/companyAdminPanel.php");
 }
-
 ?>
 
 <!DOCTYPE html>

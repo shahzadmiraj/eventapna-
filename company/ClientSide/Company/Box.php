@@ -32,7 +32,7 @@ if(isset($pageName))
 {
     echo '
 <div class="container">
-    <h2 align="center">'.$pageName.'</h2>
+    <h2 align="center" class="text-muted">'.$pageName.'</h2>
     <hr>
 </div>';
 

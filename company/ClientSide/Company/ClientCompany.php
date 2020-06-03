@@ -48,8 +48,6 @@ $catering=queryReceive($sql);
 <?php
 include_once ("../../../webdesign/header/header.php");
 
-
-
 ?>
 
 
@@ -70,15 +68,19 @@ include_once ("../../../webdesign/header/header.php");
         </div>
     </div>
 </nav>
-
+<?php
+$sql='SELECT `name` FROM `company` WHERE ISNULL(expire)AND(id='.$companyid.')';
+$company=queryReceive($sql);
+$HeadingImage="";
+$HeadingName=$company[0][0];
+$Source='';
+$pageName="You  are contacting company";
+include_once ("Box.php");
+?>
 <div class="container">
 
     <h2>Hall Services</h2>
     <hr>
-
-
-
-
         <?php
         $img='';
 
