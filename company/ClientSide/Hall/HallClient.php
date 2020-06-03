@@ -15,7 +15,8 @@ $hallInformation=queryReceive($sql);
 $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE  ISNULL(expire)AND(hall_id='.$hallid.')';
 $ExtraType=queryReceive($sql);
 
-
+$SenderAddress=array();
+$SenderName=array();
 ?>
 <!DOCTYPE html>
 <head>
@@ -377,6 +378,8 @@ $Owners=queryReceive($sql);
     for($i=0;$i<count($Owners);$i++)
     {
 
+        $SenderAddress[$i]=$Owners[$i][3];
+        $SenderName[$i]=$Owners[$i][1];
         $imageUser='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
         if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))
         {

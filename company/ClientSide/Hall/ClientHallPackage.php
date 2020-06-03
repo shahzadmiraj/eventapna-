@@ -28,7 +28,8 @@ $ExtraType=queryReceive($sql);
 
 
 $MaxGuestMaxPartition=hallOrderExist($PackageDetail[0][4], $hallInformation[0][0], $PackageDate[0][1]);
-
+$SenderAddress=array();
+$SenderName=array();
 
 ?>
 <!DOCTYPE html>
@@ -469,6 +470,8 @@ else
             $Owners[$count]=$users[0];
         for($i=0;$i<count($Owners);$i++)
         {
+            $SenderAddress[$i]=$Owners[$i][3];
+            $SenderName[$i]=$Owners[$i][1];
 
             $imageUser='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
             if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))
