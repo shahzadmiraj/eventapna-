@@ -79,7 +79,7 @@ $company=queryReceive($sql);
 $HeadingImage="";
 $HeadingName=$company[0][0];
 $Source='';
-$pageName="You  are contacting company";
+$pageName="Company";
 include_once ("Box.php");
 ?>
 <div class="container">

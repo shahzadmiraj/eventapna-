@@ -544,6 +544,20 @@ else
 
 
 
+
+
+
+
+<?php
+$urlContactus="../../../contactUs/contactServer.php";
+$ExtraInformation="contact form hall name: ".'<h2>'.$hallInformation[0][1].' , package name : '.$PackageDetail[0][6].' , package Date is '.$PackageDetail[0][1].' and package timing is '.$PackageDetail[0][4].'</h2>';
+include_once ("../../../contactUs/contactUs.php");
+?>
+
+
+
+
+
 <?php
 $formApend= '<input hidden type="number" name="hallid" value="'.$hallInformation[0][0].'">
 <input hidden type="number" name="userid" value="'.$userid.'">

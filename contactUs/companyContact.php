@@ -1,8 +1,19 @@
 <?php
 include_once ("../connection/connect.php");
-$companyid=$_GET['c'];
-$sql='SELECT `name` FROM `company` WHERE ISNULL(expire)AND(id='.$companyid.')';
-$company=queryReceive($sql);
+
+
+
+$show="showAsAdminEmail";
+if(isset($_GET['c'])) {
+    $show="showAsCompanyEmail";
+    $companyid = $_GET['c'];
+    $sql = 'SELECT `name` FROM `company` WHERE ISNULL(expire)AND(id=' . $companyid . ')';
+    $company = queryReceive($sql);
+}
+
+$ExtraInformation="Contact by company page";
+$SenderAddress=array();
+$SenderName=array();
 
 ?>
 
@@ -30,6 +41,11 @@ $company=queryReceive($sql);
 
 <?php
 include_once ("../webdesign/header/header.php");
+
+if($show=="showAsCompanyEmail")
+{
+
+
 ?>
 
 
@@ -56,6 +72,7 @@ include_once ("../webdesign/header/header.php");
     </div>
 </nav>
 <?php
+
 $HeadingImage="";
 $HeadingName=$company[0][0];
 $Source='';
@@ -63,18 +80,23 @@ $pageName="You  are contacting company";
 include_once ("../company/ClientSide/Company/Box.php");
 ?>
 
-<?php
-$ExtraInformation="Contact by company page";
-    $SenderAddress=array();
-        $SenderName=array();
-        $sql='SELECT `username`,`email` FROM `user` WHERE ISNULL(expire)AND(company_id='.$companyid.')AND(jobTitle="Owner")';
-$users=queryReceive($sql);
-for($i=0;$i<count($users);$i++)
-{
-    $SenderAddress=$users[$i][1];
-        $SenderName=$users[$i][0];
+    <?php
+            $sql='SELECT `username`,`email` FROM `user` WHERE ISNULL(expire)AND(company_id='.$companyid.')AND(jobTitle="Owner")';
+    $users=queryReceive($sql);
+    for($i=0;$i<count($users);$i++)
+    {
+        $SenderAddress[$i]=$users[$i][1];
+            $SenderName[$i]=$users[$i][0];
+    }
 }
-$urlContactus="contactUs.php";
+else
+{
+    $SenderAddress[0]="group.of.shaheen@gmail.com";
+        $SenderName[1]="Event Apna";
+        echo '<h3 class="text-muted text-center">Event Apna Website Owner</h3><hr>';
+    $ExtraInformation="";
+}
+$urlContactus="contactServer.php";
 include_once ("contactUs.php");
 ?>
 

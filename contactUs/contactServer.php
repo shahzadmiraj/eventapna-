@@ -15,7 +15,7 @@ $SenderAddress=unserialize(base64_decode($_POST['SenderAddress']));
 $SenderName=unserialize(base64_decode($_POST['SenderName']));
 
     $Subject="Customer Contact to your company";
-        $html='h2>I am '.$username.' and my Email is '.$email.',</h2>'.$Message.'<h5>Information by page:</h5>'.$ExtraInformation;
+        $html='<h2>I am '.$username.' and my Email is '.$email.',</h2>'.$Message.'<h5>Information from page:</h5>'.$ExtraInformation;
        echo $html;
         //echo serverSendMessage($SenderAddress,$SenderName,$Subject,$html);
 }

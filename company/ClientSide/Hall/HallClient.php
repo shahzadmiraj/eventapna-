@@ -451,6 +451,19 @@ $Owners=queryReceive($sql);
 
 
 
+
+
+<?php
+$urlContactus="../../../contactUs/contactServer.php";
+$ExtraInformation="contact form hall name: ".'<h2>'.$hallInformation[0][1].' </h2>';
+include_once ("../../../contactUs/contactUs.php");
+?>
+
+
+
+
+
+
 <?php
 $formApend= '<input hidden type="number" name="hallid" value="'.$hallid.'">
 <input hidden type="number" name="userid" value="'.$userid.'">
