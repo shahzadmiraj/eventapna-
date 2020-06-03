@@ -93,7 +93,7 @@ else
 {
     $SenderAddress[0]="group.of.shaheen@gmail.com";
         $SenderName[1]="Event Apna";
-        echo '<h3 class="text-muted text-center">Event Apna Website Owner</h3><hr>';
+        echo '<h3 class="text-muted text-center">Event Apna Contact us</h3><hr>';
     $ExtraInformation="";
 }
 $urlContactus="contactServer.php";

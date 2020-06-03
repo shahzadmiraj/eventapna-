@@ -42,6 +42,7 @@ $ExtraType=queryReceive($sql);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
 
     <style>
         .checked {
@@ -355,7 +356,7 @@ include_once ("../Company/Box.php");
 
 
 
-    <h2>Contact Us</h2>
+    <h2>Team information</h2>
     <hr>
 
 <div class="row">
@@ -450,12 +451,16 @@ $Owners=queryReceive($sql);
 
 
 
-
+<div class="container">
+    <h2>Contact us</h2>
+</div>
 
 
 <?php
 $urlContactus="../../../contactUs/contactServer.php";
 $ExtraInformation="contact form hall name: ".'<h2>'.$hallInformation[0][1].' </h2>';
+
+
 include_once ("../../../contactUs/contactUs.php");
 ?>
 

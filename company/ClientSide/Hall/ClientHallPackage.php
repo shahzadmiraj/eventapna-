@@ -53,6 +53,7 @@ $MaxGuestMaxPartition=hallOrderExist($PackageDetail[0][4], $hallInformation[0][0
     <link rel="stylesheet" href="../../../Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
     <link rel="stylesheet" href="../../../Fractional-Star-Rating-jsRapStar/index.css" />
     <script src="../../../Fractional-Star-Rating-jsRapStar/jsRapStar.js"></script>
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
 
     <style>
         .checked {
@@ -449,7 +450,7 @@ else
 
 
 
-    <h2>Contact Us</h2>
+    <h2>Team information</h2>
     <hr>
     <div class="row">
 
@@ -546,7 +547,9 @@ else
 
 
 
-
+<div class="container">
+    <h2>Contact us</h2>
+</div>
 
 <?php
 $urlContactus="../../../contactUs/contactServer.php";

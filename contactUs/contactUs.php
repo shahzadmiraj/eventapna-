@@ -15,7 +15,7 @@
 
                 <div class="card border-warning rounded-0">
                     <div class="card-header p-0">
-                        <div class="bg-warning text-white text-center py-2">
+                        <div class="text-white text-center py-2" style="background-color: #ff328c;">
                             <h3><i class="fa fa-envelope"></i> Contact Form</h3>
                             <p class="m-0" id="error">message</p>
                         </div>

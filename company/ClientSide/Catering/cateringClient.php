@@ -37,6 +37,7 @@ $dishTypeDetail=queryReceive($sql);
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
     <link rel="stylesheet" href="../../../mapRadius/css/gmaps-lat-lng-radius.css" type="text/css">
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
     <style>
         .checked {
             color: orange;
@@ -240,7 +241,7 @@ include_once ("../Company/Box.php");
 
 
 
-    <h2>Contact Us</h2>
+    <h2>Team information</h2>
     <hr>
 
     <div class="row">
@@ -352,7 +353,10 @@ container-->
 
 
 
-
+<div class="container">
+    <h2>Contact us</h2>
+    <hr>
+</div>
 
 
 <?php
