@@ -29,7 +29,7 @@ $company=queryReceive($sql);
 
 
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 ?>
 
 
@@ -42,8 +42,13 @@ $company=queryReceive($sql);
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Company Service
+                    <a class="nav-link active" href="#">Contact us
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../company/ClientSide/Company/ClientCompany.php?c=<?php echo $companyid;?>">Company Service
                     </a>
                 </li>
             </ul>

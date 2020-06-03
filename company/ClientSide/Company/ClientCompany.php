@@ -60,6 +60,11 @@ include_once ("../../../webdesign/header/header.php");
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link " href="../../../contactUs/companyContact.php?c=<?php echo $companyid;?>">Contact us
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Company Service
                     </a>
