@@ -94,6 +94,10 @@ include_once ("../../../webdesign/header/header.php");
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link " href="../../../contactUs/companyContact.php?c=<?php echo $hallInformation[0][8];?>">Contact us
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="HallClient.php?h=<?php echo $hallInformation[0][0]; ?>">Hall Packages </a>
                 </li>
                 <li class="nav-item">

@@ -70,6 +70,11 @@ include_once ("../../../webdesign/header/header.php");
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link " href="../../../contactUs/companyContact.php?c=<?php echo $catering[0][2];?>">Contact us
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="../Company/ClientCompany.php?c=<?php echo $catering[0][2]; ?>">Company Service</a>
                 </li>
             </ul>
