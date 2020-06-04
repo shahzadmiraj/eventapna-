@@ -10,23 +10,33 @@ class PDF extends FPDF
         // Logo
        // $this->Image('../gmail.png',10,6,20);
         // Arial bold 15
-        $this->SetFont('Arial','B',10);
+        $this->SetFont('Arial','B',20);
         // Move to the right
-        $this->Cell(80);
         // Title
-        $this->Cell(30,10,$branchinfo[0][0],1,1,'C');
+        $this->Cell(189,10,$branchinfo[0][0],0,1,'C');
 
-        $displaynum=$branchinfo[0][0]." company # : ";
+        $this->SetFont('Arial','B',8);
+
+
+        $this->Cell(189,10,$branchinfo[0][2],0,1,'C');
+
+
+        $this->SetFont('Arial','B',10);
+        $this->Cell(189,10,'Management information',1,1,'C');
+
+        $this->Cell(45,10,"User Name",0,0);
+        $this->Cell(40,10,"Phone no",0,0);
+        $this->Cell(40,10,"Membership",0,0);
+        $this->Cell(64,10,"Email",0,1);
+
         for($i=0;$i<count($owerinfo)&&($i!=3);$i++)
         {
-            if($owerinfo[$i][1]!="")
-            {
-                //$displaynum .= $owerinfo[$i][0] . " " . $owerinfo[$i][1] . " | ";
-                $displaynum .= $owerinfo[$i][1] . " , ";
-            }
+            $this->Cell(45,10,$owerinfo[$i][0],0,0);
+            $this->Cell(40,10,$owerinfo[$i][1],0,0);
+            $this->Cell(40,10,$owerinfo[$i][2],0,0);
+            $this->Cell(64,10,$owerinfo[$i][3],0,1);
         }
 
-        $this->Cell(189,10,$displaynum,0,1,"C");
 
     }
 
@@ -56,7 +66,7 @@ class PDF extends FPDF
         $this->HeaderCompany($branchinfo,$owerinfo);
 
         $this->Cell(189,10,'Information ',1,1,'C');
-        $displayDateTime="order status : ".$detailorder[0][17]." , Date : ". $detailorder[0][14]."  , Time :".$detailorder[0][16]." , persons ".$detailorder[0][12];
+        $displayDateTime="order status : ".$detailorder[0][17]." , Date(Y:M:D) : ". $detailorder[0][14]."  , Time :".$detailorder[0][16]." , persons ".$detailorder[0][12];
 
 
         $this->Cell(30,10,$displayDateTime,0,1);
@@ -399,21 +409,24 @@ WHERE (p.id='".$person[0][2]."')AND(ISNULL(n.expire)) order BY n.id";
         if($detailorder[0][1]=="")
         {
 
-            $sql='SELECT `name`,`company_id` FROM `catering` WHERE id='.$detailorder[0][2].'';
+            $sql='SELECT `name`,`company_id`,(SELECT `address`FROM `cateringLocation` WHERE ISNULL(expire)AND(catering_id=catering.id)) FROM `catering` WHERE id='.$detailorder[0][2].'';
             $branchinfo=queryReceive($sql);
 
+
+            $sql='SELECT u.username,u.number,BJS.WorkingStatus, u.email FROM user as u inner join BranchesJobStatus as BJS on (u.id=BJS.user_id) WHERE (ISNULL(BJS.ExpireDate)AND(BJS.WorkingStatus="Manager") AND(ISNULL(u.expire))AND(BJS.catering_id='.$detailorder[0][2].') )';
+            $users=queryReceive($sql);
+            $sql='SELECT  `username`, `number`,`jobTitle`, `email` FROM `user` WHERE ISNULL(expire)AND(company_id='.$branchinfo[0][1].')AND(jobTitle="Owner")';
+            $Owners=queryReceive($sql);
+
+
+            $count=count($Owners);
+            if(count($users)>0)
+                $Owners[$count]=$users[0];
+
             //catering owener info
-            $sql='SELECT p.name,n.number FROM company as c INNER join user as u 
-on (c.user_id=u.id)
-INNER join person as p 
-on (p.id=u.person_id)
-INNER join number as n 
-on (p.id=n.person_id)
-WHERE
- (c.id='.$branchinfo[0][1].')
- AND(ISNULL(n.expire)) order BY n.id
-';
-            $owerinfo=queryReceive($sql);
+
+
+            $owerinfo=$Owners;
 
 
             //detail of order dish
@@ -432,22 +445,21 @@ WHERE
             //hall order
 
 
-            $sql='SELECT `name`, `company_id` FROM `hall` WHERE id='.$detailorder[0][1].'';
+            $sql='SELECT `name`, `company_id`,(SELECT `address` FROM `location` WHERE id=hall.location_id) FROM `hall` WHERE id='.$detailorder[0][1].'';
             $branchinfo=queryReceive($sql);
 
             //catering owener info
-            $sql='SELECT p.name,n.number FROM company as c INNER join user as u 
-on (c.user_id=u.id)
-INNER join person as p 
-on (p.id=u.person_id)
-INNER join number as n 
-on (p.id=n.person_id)
-WHERE
- (c.id='.$branchinfo[0][1].')
- AND(ISNULL(n.expire)) order BY n.id
-';
-            $owerinfo=queryReceive($sql);
+            $sql='SELECT u.username,u.number,BJS.WorkingStatus, u.email FROM user as u inner join BranchesJobStatus as BJS on (u.id=BJS.user_id) WHERE (ISNULL(BJS.ExpireDate)AND(BJS.WorkingStatus="Manager") AND(ISNULL(u.expire))AND(BJS.hall_id='.$detailorder[0][1].') )';
+            $users=queryReceive($sql);
+            $sql='SELECT  `username`, `number`,`jobTitle`, `email` FROM `user` WHERE ISNULL(expire)AND(company_id='.$branchinfo[0][1].')AND(jobTitle="Owner")';
+            $Owners=queryReceive($sql);
 
+
+            $count=count($Owners);
+            if(count($users)>0)
+                $Owners[$count]=$users[0];
+
+            $owerinfo=$Owners;
 
             $menu=array();
             if($detailorder[0][3]==1)

@@ -10,7 +10,8 @@ include_once ("../connection/connect.php");
 include_once ("../connection/printOrderDetail.php");
 
 
-
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
 
 
 $pid=$_GET['pid'];
