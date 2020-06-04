@@ -128,7 +128,7 @@ $Query='pid=' . $pid . '&token='.$token;
             if($result[0][1]!="")
             {
                 echo '
-             <a href="../dish/AllSelectedDishes.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>';
+             <a href="../dish/AllSelectedDishes.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>';
             }
         ?>
 

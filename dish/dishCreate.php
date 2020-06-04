@@ -262,7 +262,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 }
                 else
                 {
-                    echo "window.history.back();";
+                    echo 'location.replace("AllSelectedDishes.php?pid=' . $pid . '&token='.$token.'");';
                 }
                 ?>
             }
