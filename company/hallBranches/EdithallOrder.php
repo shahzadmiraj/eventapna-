@@ -62,10 +62,31 @@ $priceDetailOfExtraItem=queryReceive($sql);
     </style>
 </head>
 <body>
+<?php
 
+//include_once ("../../webdesign/header/header.php");
+if($processInformation[0][4]==0)
+{
+    ?>
+    <div class="container">
+        <div class="row" >
+
+            <div class="container">
+                <ul class="pagination float-right">
+                    <li class="page-item ">
+                        <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+                    <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
 
 <?php
-//include_once ("../../webdesign/header/header.php");
 $whichActive = 2;
 $imageCustomer = "../../images/customerimage/";
 $PageName="Hall Order info";
@@ -517,6 +538,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             //processing
             echo '
         <button id="cancel" type="button" class=" col-4 btn btn-danger" > << back</button>
+         <button id="SkipBtn" class="col-4 form-control btn btn-success">Skip>></button>
         <button id="submitform" type="button" class=" col-4 btn btn-primary" >Next >> </button>';
 
         }
@@ -588,7 +610,7 @@ include_once ("../../webdesign/footer/footer.php");
             barnches();
         });
         barnches();
-        $("#cancel").click(function ()
+        $("#cancel,#PreviouseWizard").click(function ()
         {
 
             <?php
@@ -795,6 +817,12 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 
+        $("#SkipBtn,#NextWizard").click(function (e) {
+            e.preventDefault();
+            <?php
+            echo 'location.replace("orderInfo/orderItem.php?pid=' . $pid . '&token='.$token.'");';
+            ?>
+        });
 
 
 

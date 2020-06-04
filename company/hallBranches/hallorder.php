@@ -53,9 +53,30 @@ $cateringids=queryReceive($sql);
 
 <?php
 //include_once ("../../webdesign/header/header.php");
+?>
+
+<div class="container">
+
+
+    <div class="row" >
+
+        <div class="container">
+            <ul class="pagination float-right">
+                <li class="page-item ">
+                    <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+<!--                <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>-->
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+<?php
 $whichActive = 2;
 $imageCustomer = "../../images/customerimage/";
-
 $PageName="Hall Order info";
 include_once("../../webdesign/orderWizard/wizardOrder.php");
 ?>
@@ -257,7 +278,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     <div class="form-group row justify-content-center shadow">
 
-        <a id="btnbackhistory"  data-href="../../customer/customerEdit.php?<?php echo 'pid='.$pid.'&token='.$token ?>"  class=" col-5  btn btn-danger"> << Back </a>
+        <a id="btnbackhistory"  class=" col-5  btn btn-danger"> << Back </a>
         <a id="submitform" data-href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" class=" col-4 btn btn-primary">  Next >> </a>
     </div>
 
@@ -269,10 +290,9 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     $(document).ready(function ()
     {
 
-        $("#btnbackhistory").click(function (e) {
+        $("#btnbackhistory,#PreviouseWizard").click(function (e) {
             e.preventDefault();
-            var direction=$(this).data("href");
-            location.replace(direction);
+            location.replace("<?php echo '../../customer/customerEdit.php?pid='.$pid.'&token='.$token.''; ?>");
         });
 
         $("#submitform").hide("slow");

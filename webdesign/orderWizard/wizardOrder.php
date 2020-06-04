@@ -18,20 +18,6 @@
     ?>
 
 
-    <div class="row" >
-
-        <div class="container">
-            <ul class="pagination float-right">
-                <li class="page-item ">
-                    <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
-                <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>
-            </ul>
-        </div>
-
-
-    </div>
         <?php
     }
         ?>
@@ -250,5 +236,12 @@
 
 
 <script>
+
+    $("#CloseWizard").click(function (e)
+    {
+        e.preventDefault();
+        window.history.back();
+    });
+
 </script>
 

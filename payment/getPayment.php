@@ -51,8 +51,33 @@ $StatusOrder=queryReceive($sql);
     </style>
 </head>
 <body >
+
 <?php
+
 //include_once ("../webdesign/header/header.php");
+if($processInformation[0][4]==0)
+{
+    ?>
+    <div class="container">
+        <div class="row" >
+
+            <div class="container">
+                <ul class="pagination float-right">
+                    <li class="page-item ">
+                        <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+                    <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
+
+<?php
+
 $whichActive = 5;
 $imageCustomer = "../images/customerimage/";
 $PageName="Payment";
@@ -165,8 +190,9 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
                 echo '
     
-              <button id="backbtn" class="form-control col-6 btn-danger btn"><< Back</button>
-            <button id="submitBtnfrom" type="submit" class="form-control col-6 btn-primary btn">Next >></button>
+              <button id="backbtn" class="form-control col-4 btn-danger btn"><< Back</button>
+               <button id="SkipBtn" class="col-4 form-control btn btn-success">Skip>></button>
+            <button id="submitBtnfrom" type="submit" class="form-control col-4 btn-primary btn">Next >></button>
             
             ';
 
@@ -198,7 +224,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
     $(document).ready(function ()
     {
-        $("#backbtn").click(function (e)
+        $("#backbtn,#PreviouseWizard").click(function (e)
         {
             e.preventDefault();
 
@@ -281,6 +307,19 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
           });
         });
 
+
+
+
+        $("#SkipBtn,#NextWizard").click(function (e) {
+            e.preventDefault();
+            <?php
+            if($processInformation[0][4]==0)
+            {
+                //catering order also book and select dishes
+                echo 'location.replace("../order/PreviewOrder.php?pid=' . $pid . '&token='.$token.'");';
+            }
+            ?>
+        });
 
     });
 </script>

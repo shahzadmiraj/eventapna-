@@ -12,19 +12,8 @@
 
 include_once ("../connection/connect.php");
 
-if(!isset($_POST['option']))
-{
-    echo "option is not created";
-    exit();
-}
 
 
-$orderId='';
-if(isset($_SESSION['order']))
-{
-
-    $orderId=$_SESSION['order'];
-}
 if($_POST['option']=="removeDish")
 {
     $timestamp = date('Y-m-d H:i:s');
@@ -32,8 +21,7 @@ if($_POST['option']=="removeDish")
     $sql='UPDATE `dish_detail` SET `expire_date`="'.$timestamp.'" WHERE id='.$dishId.'';
     querySend($sql);
 }
-
-if($_POST['option']=='createDish')
+else if($_POST['option']=='createDish')
 {
     $orderid=$_POST['orderid'];
     $userid=$_POST['userid'];
@@ -48,7 +36,7 @@ if($_POST['option']=='createDish')
     $CurrentDateTime=date('Y-m-d H:i:s');
    // $sql='INSERT INTO `dish_detail`(`id`, `describe`, `price`, `expire_date`, `quantity`, `dish_id`, `orderDetail_id`)VALUES(NULL,"'.$describe.'","'.$each_price.'",NULL,"'.$quantity.'",'.$dishId.','.$orderId.')';
 
-    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `expire`, `quantity`, `orderDetail_id`, `user_id`, `dishWithAttribute_id`, `active`, `price`, `expireUser`) VALUES (NULL,"'.$describe.'",NULL,'.$quantity.','.$orderId.','.$userid.','.$dishId.',"'.$timestamp.'",'.$each_price.',NULL)';
+    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `expire`, `quantity`, `orderDetail_id`, `user_id`, `dishWithAttribute_id`, `active`, `price`, `expireUser`) VALUES (NULL,"'.$describe.'",NULL,'.$quantity.','.$orderid.','.$userid.','.$dishId.',"'.$timestamp.'",'.$each_price.',NULL)';
     querySend($sql);
     $sql='SELECT od.hall_id,od.total_amount FROM orderDetail as od WHERE od.id='.$orderid.'';
     $detailhall=queryReceive($sql);

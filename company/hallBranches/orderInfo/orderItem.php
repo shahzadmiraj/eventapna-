@@ -51,8 +51,35 @@ $StatusOrder=queryReceive($sql);
     </style>
 </head>
 <body>
+
+
 <?php
+
 //include_once ("../../../webdesign/header/header.php");
+if($processInformation[0][4]==0)
+{
+?>
+    <div class="container">
+        <div class="row" >
+
+            <div class="container">
+                <ul class="pagination float-right">
+                    <li class="page-item ">
+                        <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+                    <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+
+
+
+<?php
 $whichActive = 3;
 $imageCustomer = "../../../images/customerimage/";
 $PageName="Hall Extra Item";
@@ -64,12 +91,13 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 <form id="formitems" class="alert-light">
 
+
     <input hidden id="PreviousExtraFixAmount" type="text"  value="<?php echo  $priceDetailOfExtraItem[0][0]; ?>" name="PreviousExtraFixAmount">
 
     <input hidden id="orderid"  type="text" name="order" value="<?php echo $order;?>">
     <input hidden type="number" name="userid" value="<?php echo $userid;?>" >
     <div class="container card">
-        <h4 class="m-auto">Selected Item of order   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i>  <input  name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
+        <h4 class="row form-inline">Total   <span class="text-primary ml-5"> <input  name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
           if(empty($priceDetailOfExtraItem[0][0]))
           {
               echo 0;
@@ -166,8 +194,9 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
             {
                 //processing
                 echo '
-        <button id="cancel"    class="btn btn-danger col-6"><< Back</button>
-            <button id="btnsubmit"  class="btn btn-primary col-6">Next >></button>';
+        <button id="cancel"    class="btn btn-danger col-4"><< Back</button>
+             <button id="SkipBtn" class="col-4 form-control btn btn-success">Skip>></button>
+            <button id="btnsubmit"  class="btn btn-primary col-4">Next >></button>';
 
             }
             else
@@ -269,11 +298,7 @@ $display.=$imagespath;
 
 
 
-        <h2>
-            <span class="float-left"></span>
-            <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i></span>
 
-        </h2>
 
 
 
@@ -335,7 +360,7 @@ $display.=$imagespath;
             $("#jsid"+id).remove();
         });
 
-        $("#cancel").click(function (e)
+        $("#cancel,#PreviouseWizard").click(function (e)
         {
             e.preventDefault();
             <?php
@@ -447,6 +472,28 @@ $display.=$imagespath;
             });
 
         });
+
+
+
+
+
+        $("#SkipBtn,#NextWizard").click(function (e) {
+            e.preventDefault();
+            <?php
+            if(($StatusOrder[0][0]!="")&&(($StatusOrder[0][1]=="Running")))
+            {
+                //catering order also book and select dishes
+                echo 'location.replace("../../../dish/dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+            }
+            else
+            {
+
+                //not catering Order so payment collect
+                echo 'location.replace("../../../payment/getPayment.php?pid=' . $pid . '&token='.$token.'");';
+            }
+            ?>
+        });
+
     });
 
 

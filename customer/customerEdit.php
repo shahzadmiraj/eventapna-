@@ -17,16 +17,16 @@ $hallid="No";
 $cateringid='No';
 $order="No";
 
-if($processInformation[0][2]!="")
+if(!empty($processInformation[0][2]))
 {
     $cateringid=$processInformation[0][2];
 }
-else if($processInformation[0][3]!="")
+else if(!empty($processInformation[0][3]))
 {
     $hallid=$processInformation[0][3];
 }
 
-if($processInformation[0][4]!="")
+if(!empty($processInformation[0][4]))
 {
     $order=$processInformation[0][4];
 }
@@ -63,13 +63,46 @@ $companyid=$userdetail[0][0];
 </head>
 <body>
 <?php
+
 //include_once ("../webdesign/header/header.php");
+
+if($processInformation[0][4]==0)
+{
+
+?>
+
+
+<div class="container">
+    <div class="row" >
+
+        <div class="container">
+            <ul class="pagination float-right">
+                <!--<li class="page-item ">
+                    <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
+                </li>-->
+                <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+                <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<?php
+}
+
+
+
 $whichActive=1;
 $imageCustomer="../images/customerimage/";
 
 $PageName="Customer infomation";
 include_once ("../webdesign/orderWizard/wizardOrder.php");
 ?>
+
+
+
+
+
 
     <?php
     echo '<input name="customerid" hidden value="'.$customerId.'">';
@@ -204,60 +237,22 @@ p.id='.$customerId.'';
             ?>
 
         </div>
-        <div class="form-group row mb-3 p-4">
+        <div class="form-group row ">
 
             <?php
-            $NextButton='';
-
-
             if($Isprocessing==0)
             {
                 //order is in processing phase
 
 
-                if($order=="No")
-                {
-                    //order is process and not book yet
-
-                    if($hallid!="No")
-                    {
-                        //hall order is procesing  phase but not book yet
-
-                        $NextButton='../company/hallBranches/hallorder.php?pid='.$pid.'&token='.$token;
-
-                    }
-                    if($cateringid!="No")
-                    {
-                        //catering order is procesing  phase but not book yet
-
-                        $NextButton='../order/orderCreate.php?pid='.$pid.'&token='.$token;
-                    }
-                }
-                else
-                {
-                    //order is process and order is already  booked
-
-
-                    if($hallid!="No")
-                    {
-                        //hall order is procesing  phase but order is booked
-                        $NextButton='../company/hallBranches/EdithallOrder.php?pid='.$pid.'&token='.$token;
-                    }
-                    if($cateringid!="No")
-                    {
-                        //catering order is procesing  phase but order is booked
-
-                        $NextButton='../order/orderEdit.php?pid='.$pid.'&token='.$token;
-                    }
-
-                }
-
 
 
                 //  not this is customer back and reprocess
                 echo '
-                <a id="btnbackhistory" class="m-auto col-6 form-control btn btn-danger">Close</a>';
-                echo '<a  id="formcustomer"  data-href="'.$NextButton.'" class=" col-6 form-control btn btn-primary">  Next >></a>   ';
+                <a id="btnbackhistory" class="m-auto col-4 form-control btn btn-danger">Close</a>
+                     <a id="SkipBtn" class="m-auto col-4 form-control btn btn-success">Skip>></a>
+                <a  id="formcustomer"   class=" col-4 form-control btn btn-primary">  Next >></a>
+             ';
             }
             else  if($Isprocessing==1)
             {
@@ -265,8 +260,7 @@ p.id='.$customerId.'';
                     echo '
             <a id="btnbackhistory"  class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Close</a>';
 
-                $NextButton="saveAndBack";
-                echo '<a  id="formcustomer"  data-href="'.$NextButton.'" class=" col-6 form-control btn btn-primary"><i class="fas fa-check "></i>  Save </a>   ';
+                echo '<a  id="formcustomer"   class=" col-6 form-control btn btn-primary"><i class="fas fa-check "></i>  Save </a>   ';
             }
 
 
@@ -282,7 +276,7 @@ p.id='.$customerId.'';
 
 
     <?php
-    include_once ("../webdesign/footer/footer.php");
+   // include_once ("../webdesign/footer/footer.php");
     ?>
 
 <script>
@@ -396,7 +390,6 @@ p.id='.$customerId.'';
      $("#formcustomer").click(function ()
      {
         var formData=new  FormData($("#formEditCustomer")[0]);
-        var direction=$(this).data("href");
         formData.append("option","EditCustomerform");
          $.ajax({
              url:"customerEditServer.php",
@@ -417,14 +410,53 @@ p.id='.$customerId.'';
                  }
                  else
                  {
-                     if(direction==="saveAndBack")
+
+                     <?php
+
+                     if($Isprocessing==0)
                      {
-                         window.history.back();
+                         //order is in processing phase
+                         if($order=="No")
+                         {
+                             //order is process and not book yet
+                             if($hallid!="No")
+                             {
+                                 //hall order is procesing  phase but not book yet
+                                 echo 'location.replace("../company/hallBranches/hallorder.php?pid='.$pid.'&token='.$token.'");';
+                             }
+                             if($cateringid!="No")
+                             {
+                                 //catering order is procesing  phase but not book yet
+                                 echo 'location.replace("../order/orderCreate.php?pid='.$pid.'&token='.$token.'");';
+                             }
+                         }
+                         else
+                         {
+                             //order is process and order is already  booked
+                             if($hallid!="No")
+                             {
+                                 //hall order is procesing  phase but order is booked
+                                 echo 'location.replace("../company/hallBranches/EdithallOrder.php?pid='.$pid.'&token='.$token.'");';
+                             }
+                             if($cateringid!="No")
+                             {
+                                 //catering order is procesing  phase but order is booked
+                                 echo 'location.replace("../order/orderEdit.php?pid='.$pid.'&token='.$token.'");';
+                             }
+
+                         }
                      }
-                     else
+                     else  if($Isprocessing==1)
                      {
-                         location.replace(direction);
+                         // order hase been completed in order preview
+                    echo 'window.history.back();';
                      }
+
+
+                     ?>
+
+
+
 
                  }
              }
@@ -435,6 +467,43 @@ p.id='.$customerId.'';
      $("#btnbackhistory").click(function (e) {
          e.preventDefault();
         window.history.back();
+     });
+
+
+     $("#SkipBtn,#NextWizard").click(function (e) {
+         e.preventDefault();
+         <?php
+         //order is in processing phase
+         if($order=="No")
+         {
+             //order is process and not book yet
+             if($hallid!="No")
+             {
+                 //hall order is procesing  phase but not book yet
+                 echo 'location.replace("../company/hallBranches/hallorder.php?pid='.$pid.'&token='.$token.'");';
+             }
+             if($cateringid!="No")
+             {
+                 //catering order is procesing  phase but not book yet
+                 echo 'location.replace("../order/orderCreate.php?pid='.$pid.'&token='.$token.'");';
+             }
+         }
+         else
+         {
+             //order is process and order is already  booked
+             if($hallid!="No")
+             {
+                 //hall order is procesing  phase but order is booked
+                 echo 'location.replace("../company/hallBranches/EdithallOrder.php?pid='.$pid.'&token='.$token.'");';
+             }
+             if($cateringid!="No")
+             {
+                 //catering order is procesing  phase but order is booked
+                 echo 'location.replace("../order/orderEdit.php?pid='.$pid.'&token='.$token.'");';
+             }
+
+         }
+         ?>
      });
 
 

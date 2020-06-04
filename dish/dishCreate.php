@@ -15,11 +15,6 @@ $sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orde
 $processInformation=queryReceive($sql);
 
 
-if(!isset($_POST['dishesid']))
-{
-    header("location:AllSelectedDishes.php");
-    exit();
-}
 $orderId=$processInformation[0][5];
 $dishesName=$_POST['dishesName'];
 $dishesid=$_POST['dishesid'];
@@ -55,8 +50,32 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 
+
 <?php
 //include_once ("../webdesign/header/header.php");
+
+if($processInformation[0][4]==0)
+{
+    ?>
+    <div class="container">
+        <div class="row" >
+
+            <div class="container">
+                <ul class="pagination float-right">
+                    <li class="page-item ">
+                        <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+                    <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
+
+<?php
 
 $whichActive = 4;
 $imageCustomer = "../images/customerimage/";
@@ -64,13 +83,6 @@ $imageCustomer = "../images/customerimage/";
 $PageName="Catering Dishes Create";
 include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
-<div class="jumbotron  shadow" style="background-image: url(http://tongil.com.au/wp-content/uploads/2018/02/ingredients.jpg);background-size:100% 115%;background-repeat: no-repeat">
-
-    <div class="card-header text-center" style="opacity: 0.7 ;background: white;">
-        <h3 class="text-dark"><i class="fas fa-file-word fa-3x mr-2 "></i>Dishes Create</h3>
-    </div>
-
-</div>
 
 <div class="container">
 
@@ -204,7 +216,39 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 <script>
     $(document).ready(function ()
     {
+
+
+        $("#NextWizard").click(function (e) {
+            e.preventDefault();
+            <?php
+
+            if($processInformation[0][4]==0)
+            {
+                //catering order also book and select dishes
+                echo 'location.replace("../payment/getPayment.php?pid=' . $pid . '&token='.$token.'");';
+            }
+            ?>
+        });
+
+
+
+        $("#PreviouseWizard").click(function (e) {
+            e.preventDefault();
+            <?php
+
+            if($processInformation[0][4]==0)
+            {
+                //catering order also book and select dishes
+                echo 'location.replace("dishDisplay.php?pid=' . $pid . '&token='.$token.'");';
+            }
+            ?>
+        });
+
+
        var totalitems= $("#totalRemaing").val();
+
+
+
        function redirect()
        {
            totalitems--;
@@ -228,6 +272,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
        $(document).on('click','.submitForm',function ()
        {
           var id=$(this).data("formid");
+
           var state=false;
           if(validationWithString("quantity"+id,"Please Enter Quantity of Dishes"))
               state=true;

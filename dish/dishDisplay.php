@@ -18,7 +18,7 @@ $token=$_GET['token'];
 $sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
 $processInformation=queryReceive($sql);
 
-$order=$processInformation[0][6];
+$order=$processInformation[0][5];
 /*
  $sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
 WHERE od.id='.$order.'';
@@ -59,10 +59,31 @@ $dishTypeDetail=queryReceive($sql);
 </head>
 <body>
 
-
 <?php
 //include_once ("../webdesign/header/header.php");
+if($processInformation[0][4]==0)
+{
+    ?>
+    <div class="container">
+        <div class="row" >
 
+            <div class="container">
+                <ul class="pagination float-right">
+                    <li class="page-item ">
+                        <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+                    <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
+
+
+<?php
 
 $whichActive = 4;
 $imageCustomer = "../images/customerimage/";
@@ -78,12 +99,9 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 </div>
 
 
-    <form  id="formid" method="post" action="dishCreate.php" class="container alert-light ">
+    <form  id="formid" method="post" action="dishCreate.php<?php echo '?pid=' . $pid . '&token='.$token;?>" class="container alert-light ">
         <h1>Selecting Dishes </h1>
         <hr>
-
-
-
         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <h4 class="mr-auto">Dish Deleted</h4>
@@ -113,8 +131,9 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 //processing
                 echo '
         
-            <a href="../order/orderEdit.php" type="button" class="col-6 btn btn-danger form-control"><< Back </a>
-            <button id="submit" type="submit" class="btn-success form-control btn col-6"> Next >></button>';
+            <a id="cancelDish" type="button" class="col-4 btn btn-danger form-control"><< Back </a>
+             <button id="SkipBtn" class="col-4 form-control btn btn-success">Skip>></button>
+            <button id="submit" type="submit" class="btn-primary form-control btn col-4"> Next >></button>';
 
             }
             else
@@ -122,8 +141,8 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
                 echo '
         
-            <a href="../order/orderEdit.php" type="button" class="col-6 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
-            <button id="submit" type="submit" class="btn-success form-control btn col-6"><i class="fas fa-check "></i>Submit</button>';
+            <a id="cancelDish" type="button" class="col-6 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
+            <button id="submit" type="submit" class="btn-primary form-control btn col-6"><i class="fas fa-check "></i>Submit</button>';
             }
             ?>
 
@@ -312,7 +331,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
             {
                 //process is running
 
-                if($processInformation[0][2]!="")
+                if(!empty($processInformation[0][2]))
                 {
                     // came from catering order
 
@@ -396,7 +415,12 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
     ?>
 
-
+        $("#SkipBtn,#NextWizard").click(function (e) {
+            e.preventDefault();
+            <?php
+            echo 'location.replace("../payment/getPayment.php?pid=' . $pid . '&token='.$token.'");';
+            ?>
+        });
 
 
     });

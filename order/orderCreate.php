@@ -43,6 +43,27 @@ $customer=$processInformation[0][7];
 <body >
 <?php
 //include_once ("../webdesign/header/header.php");
+?>
+
+<div class="container">
+
+    <div class="row" >
+
+        <div class="container">
+            <ul class="pagination float-right">
+                <li class="page-item ">
+                    <a class="page-link" href="#"  id="PreviouseWizard" >Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#" id="CloseWizard">Close</a></li>
+                <!--                <li class="page-item"><a class="page-link" href="#" id="NextWizard">Next</a></li>-->
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<?php
+
 
 $whichActive = 2;
 $imageCustomer = "../images/customerimage/";
@@ -163,13 +184,13 @@ include_once ("../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
-        $("#btnbackhistory").click(function (e) {
+        $("#btnbackhistory,#PreviouseWizard").click(function (e) {
             e.preventDefault();
             <?php
             if($processInformation[0][4]==0)
             {
                 //process is running
-                echo 'location.replace("../EdithallOrder.php?pid=' . $pid . '&token='.$token.'");';
+                echo 'location.replace("../customer/customerEdit.php?pid=' . $pid . '&token='.$token.'");';
 
             }
             ?>
