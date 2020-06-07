@@ -5,26 +5,7 @@ include_once('packages/packagesServerfunction.php');
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
-$id=$_GET['h'];
-$token=$_GET['token'];
-
-$encoded=$id;
-
-if(isset($_GET['editpackage']))
-{
-
-    $packageEncoded=base64url_encode($_GET['packageid']);
-    header("location:Editpackage.php?hallname=".$_GET['hallname']."&month=".$_GET['month']."&daytime=".$_GET['daytime']."&hall=".$encoded."&pack=".$packageEncoded."");
-
-}
-
-$hallid='';
-$companyid='';
-$hallid=$id;
 $companyid=$userdetail[0][0];
-$sql='SELECT `name`, `max_guests`, `noOfPartitions`, `ownParking`, `expire`, `image`, `hallType`, `location_id` FROM `hall` WHERE (id='.$hallid.')AND(token="'.$token.'")AND(ISNULL(expire))';
-$halldetail=queryReceive($sql);
-$Query='h='.$id.'&token='.$token;
 
 ?>
 <!DOCTYPE html>
@@ -68,9 +49,9 @@ $Query='h='.$id.'&token='.$token;
 
 
 <?php
-$HeadingImage=$halldetail[0][5];
-$HeadingName=$halldetail[0][0];
-$Source='../../images/hall/';
+$HeadingImage="";
+$HeadingName="Company Name";
+$Source='';
 $pageName='Package Manage';
 include_once ("../ClientSide/Company/Box.php");
 ?>
@@ -80,7 +61,7 @@ include_once ("../ClientSide/Company/Box.php");
 
     <div class="container mt-2 mb-4  ">
         <h3  class="float-left"> <i class="fas fa-place-of-worship "></i> Halls Packages</h3>
-        <a href="addnewpackage.php?<?php echo $Query;?>"  class="btn btn-success float-right"><i class="fas fa-plus"></i> Add Package</a>
+        <a href="addnewpackage.php"  class="btn btn-success float-right"><i class="fas fa-plus"></i> Add Package</a>
     </div>
 
     <h5>Package hall</h5>
@@ -89,16 +70,23 @@ include_once ("../ClientSide/Company/Box.php");
         <li class="nav-item">
             <a class="nav-link active  hallnumber"  data-hallnumber="All" id="pills-All-tab" data-toggle="pill" href="#pills-All" role="tab" aria-controls="pills-All" aria-selected="true">All</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link hallnumber" data-hallnumber="1" id="pills-1-tab" data-toggle="pill" href="#" role="tab" aria-controls="pills-1" aria-selected="false">1</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link hallnumber"  data-hallnumber="2" id="pills-2-tab" data-toggle="pill" href="#" role="tab" aria-controls="pills-2" aria-selected="false">2</a>
-        </li>
 
+
+        <?php
+        $sql='SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')';
+        $AllHalls=queryReceive($sql);
+
+
+        for($i=0;$i<count($AllHalls);$i++)
+        {
+            echo '  
+              
         <li class="nav-item">
-            <a class="nav-link hallnumber" data-hallnumber="3" id="pills-3-tab" data-toggle="pill" href="#" role="tab" aria-controls="pills-3" aria-selected="false">3</a>
-        </li>
+            <a class="nav-link hallnumber" data-hallnumber="'.$AllHalls[$i][0].'" id="pills-'.$AllHalls[$i][0].'-tab" data-toggle="pill" href="#" role="tab" aria-controls="pills-'.$AllHalls[$i][0].'" aria-selected="false">'.$AllHalls[$i][1].'</a>
+        </li>';
+        }
+        ?>
+
     </ul>
 
     <h5>Package timing</h5>
@@ -142,6 +130,15 @@ include_once ("../ClientSide/Company/Box.php");
             </ul>
 
 
+    <h4>Result Packages </h4>
+    <hr>
+
+    <div class="container" id="TableCalender">
+
+
+    </div>
+
+
     <h2>Calender </h2>
     <hr>
     <div id="calendar" ></div>
@@ -173,9 +170,31 @@ include_once ("../ClientSide/Company/Box.php");
         $(document).ready(function()
         {
 
+            function tabel(packids)
+            {
 
+                $.ajax({
+                    url:"../../calender/fulcalender/pacakageOption.php",
+                    type:"POST",
+                    data:{option:"PackagesShowsOnTable","PackID":packids},
+                    success:function(data)
+                    {
+                        $("#TableCalender").html(data);
+                    }
+                });
+            }
+
+
+            var hallnumber='All';
             var daytime='All';
             var PackageType='All';
+
+            $(".hallnumber").click(function ()
+            {
+                hallnumber=$(this).data("hallnumber");
+                formdata.append("hallnumber",hallnumber);
+                $('#calendar').fullCalendar('refetchEvents');
+            });
 
             $(".daytime").click(function ()
             {
@@ -191,14 +210,12 @@ include_once ("../ClientSide/Company/Box.php");
             var formdata=new FormData;
             formdata.append("daytime",daytime);
             formdata.append("packagetype",PackageType);
+            formdata.append("hallnumber",hallnumber);
+            formdata.append("companyid","<?php echo $companyid;?>");
             formdata.append("option","ViewPackages");
-            formdata.append("hallid","<?php echo $hallid;?>");
 
 
-
-
-
-/*            var calendar = $('#calendar').fullCalendar({
+          var calendar = $('#calendar').fullCalendar({
                 editable:false,
                 header:{
                     left:'prev,next today',
@@ -213,9 +230,11 @@ include_once ("../ClientSide/Company/Box.php");
                         data:formdata,
                         contentType: false,
                         processData: false,
-                        success: function(doc) {
+                        success: function(doc)
+                        {
                             var obj = jQuery.parseJSON(doc);
                             var events = [];
+                            var packids=[];
                             $.each(obj, function(index, value) {
                                 events.push({
                                     end: value['end'],
@@ -223,8 +242,10 @@ include_once ("../ClientSide/Company/Box.php");
                                     start: value['start'],
                                     title: value['title'],
                                 });
-                                //console.log(value)
+                                packids.push(parseInt(value['id']));
                             });
+                            tabel(packids);
+
                             callback(events);
                         },
                         error: function(e, x, y) {
@@ -245,16 +266,18 @@ include_once ("../ClientSide/Company/Box.php");
                         data:{id:id,option:"encordpackage"},
                         success:function(data)
                         {
-                            location.href='Editpackage.php?'+'<?php echo $Query;?>'+data;
+                            location.href='Editpackage.php?'+data;
                         }
                     });
-
-
                 }
 
-            });*/
+            });
             //
             // $('#calendar').fullCalendar('refetchEvents');
+
+
+
+
 
         });
 

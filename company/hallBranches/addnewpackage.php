@@ -4,12 +4,6 @@ include_once ("packages/packagesServerfunction.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
-$hallid=$_GET['h'];
-$token=$_GET['token'];
-
-$sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$hallid.')AND(token="'.$token.'")AND(ISNULL(expire))';
-$halldetail=queryReceive($sql);
-$Query='h='.$hallid.'&token='.$token;
 $userid=$_COOKIE['userid'];
 
 ?>
@@ -65,9 +59,9 @@ $userid=$_COOKIE['userid'];
 
 ?>
 <?php
-$HeadingImage=$halldetail[0][1];
-$HeadingName=$halldetail[0][0];
-$Source='../../images/hall/';
+$HeadingImage="";
+$HeadingName="Company name";
+$Source='..';
 $pageName='Package Add ';
 include_once ("../ClientSide/Company/Box.php");
 ?>
@@ -155,7 +149,6 @@ include_once ("../ClientSide/Company/Box.php");
     <?php
     echo
         '
-                    <input hidden  name="hallid"  value="'.$hallid.'">
                     <input hidden  name="userid"  value="'.$userid.'">
                     ';
     ?>

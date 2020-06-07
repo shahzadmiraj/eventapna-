@@ -5,9 +5,25 @@ include_once ("../../connection/connect.php");
 if($_POST['option']=="ViewPackages")
 {
 
-    $hallid=$_POST['hallid'];
+    $hallnumber=$_POST['hallnumber'];
     $daytime='';
     $packagetype='';
+    $companyid=$_POST['companyid'];
+    $List="";
+    if($hallnumber=="All")
+    {
+        $sql='SELECT `id` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')';
+
+        $AllHalls=queryReceive($sql);
+        $hallOneD = array_column($AllHalls, 0);
+        $List = implode(', ', $hallOneD);
+
+    }
+    else
+    {
+        $List=$hallnumber;
+    }
+
     if($_POST['daytime']=="Morning")
     {
         $daytime='AND(p.dayTime="Morning")';
@@ -38,6 +54,10 @@ if($_POST['option']=="ViewPackages")
         $packagetype='AND(p.isFood=0)';
     }
 
+    $sql='SELECT  `package_id`  FROM `packageControl` WHERE ISNULL(expire)AND(company_id='.$companyid.')AND(hall_id IN('.$List.'))';
+    $packagesSql=queryReceive($sql);
+    $packagesList = array_column($packagesSql, 0);
+    $packagesStringList = implode(', ', $packagesList);
 
 
 
@@ -46,7 +66,7 @@ if($_POST['option']=="ViewPackages")
 on p.id=pd.package_id
 WHERE
 (ISNULL(p.expire))AND (ISNULL(pd.expire))
-AND(p.hall_id='.$hallid.')
+AND(p.id IN ('.$packagesStringList.') )
 '.$daytime.' '.$packagetype.'
 ';
     $ViewPackages = queryReceive($sql);
@@ -95,7 +115,7 @@ else if($_POST['option']=="encordpackage")
     $id=$_POST['id'];
     $sql='SELECT `id`,`token` FROM `packages` WHERE id='.$id.'';
     $Packagedetail=queryReceive($sql);
-    echo '&pid='.$Packagedetail[0][0].'&ptoken='.$Packagedetail[0][1];
+    echo 'pid='.$Packagedetail[0][0].'&ptoken='.$Packagedetail[0][1];
 
 }
 else if($_POST['option']=='SpecificpackageView')
@@ -193,6 +213,48 @@ AND(p.id='.$packageid.')';
             <td>'.$ViewPackages[$i][3].'</td>
         </tr>';
     }
+    echo $display;
+}
+else if($_POST['option']=="PackagesShowsOnTable")
+{
+
+    if(!isset($_POST['PackID']))
+    {
+        echo '<h4 class="btn-danger">Package not found !!!</h4>';
+        exit();
+    }
+    $PackID=$_POST['PackID'];
+    $PackUnique =array_unique($PackID);
+    $List = implode(', ', $PackUnique);
+
+    $sql = 'SELECT p.id,p.isFood,package_name,pd.selectedDate,p.dayTime,pd.id FROM packages as p INNER JOIN packageDate as pd
+on p.id=pd.package_id
+WHERE
+(ISNULL(p.expire))AND (ISNULL(pd.expire))
+AND(p.id IN ('.$List.') )
+';
+    $ViewPackages = queryReceive($sql);
+
+    $display='<table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Package Name</th>
+            </tr>
+            </thead>
+            <tbody>';
+
+    for($i=0;$i<count($ViewPackages);$i++)
+    {
+        $display.='
+            <tr>
+                <th scope="row">'.($i+1).'</th>
+                <td>'.$ViewPackages[$i][2].'</td>
+            </tr>';
+    }
+
+  $display.='  </tbody>
+        </table>';
     echo $display;
 }
 ?>

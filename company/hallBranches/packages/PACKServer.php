@@ -74,12 +74,11 @@ if(isset($_POST['option']))
         $PackagesType=$_POST['PackagesType'];
         $userid=$_POST['userid'];
         $daytime=$_POST['Daytime'];
-        $hallid=$_POST['hallid'];
         $packagename=$_POST['packagename'];
         $rate=chechIsEmpty($_POST['rate']);
         $describe=$_POST['describe'];
         $token=uniqueToken('packages');
-        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, `minimumAmountBooking`,`token`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,'.$hallid.',"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL,'.$MinimumAmount.',"'.$token.'")';
+        $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `package_name`, `active`, `user_id`, `expireUser`, `minimumAmountBooking`,`token`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL,'.$MinimumAmount.',"'.$token.'")';
         querySend($sql);
         $id=mysqli_insert_id($connect);
         for ($i=0;$i<count($selectedDates);$i++)
@@ -101,7 +100,7 @@ if(isset($_POST['option']))
             $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `package_id`) VALUES (NULL,"'.trim($dishnames[$i]).'","'.trim($image[$i]).'",NULL,'.$id.')';
             querySend($sql);
         }
-        
+
         if(isset($_POST['hallactive']))
         {
             $hallactive=$_POST['hallactive'];
@@ -120,6 +119,7 @@ if(isset($_POST['option']))
         $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.') AND(name LIKE "%'.(trim($dishname)).'%")';
         echo dishesOfPakage($sql);
     }
+
 
 
 
