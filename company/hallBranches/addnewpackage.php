@@ -228,6 +228,28 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
+        <div class="form-group card">
+            <input hidden name="companyid" value="<?php echo $companyid;?>">
+
+            <lable  class="col-form-label">Select hall for package active</lable>
+
+
+            <?php
+            $sql='SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')';
+           $AllHalls=queryReceive($sql);
+            for($i=0;$i<count($AllHalls);$i++)
+            {
+                echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox" checked  name="hallactive[]" value="'.$AllHalls[$i][0].'"> '.$AllHalls[$i][1].'</h4>
+                </div>';
+            }
+            ?>
+
+        </div>
+
+
+
         <div class="form-group row">
             <lable for="describe" class="col-form-label">Packages Description</lable>
 

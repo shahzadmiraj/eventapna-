@@ -77,6 +77,34 @@ include_once ("../ClientSide/Company/Box.php");
 
 <div class="container card">
 
+
+    <div class="container mt-2 mb-4  ">
+        <h3  class="float-left"> <i class="fas fa-place-of-worship "></i> Halls Packages</h3>
+        <a href="addnewpackage.php?<?php echo $Query;?>"  class="btn btn-success float-right"><i class="fas fa-plus"></i> Add Package</a>
+    </div>
+
+    <h5>Package hall</h5>
+    <hr>
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active  hallnumber"  data-hallnumber="All" id="pills-All-tab" data-toggle="pill" href="#pills-All" role="tab" aria-controls="pills-All" aria-selected="true">All</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link hallnumber" data-hallnumber="1" id="pills-1-tab" data-toggle="pill" href="#" role="tab" aria-controls="pills-1" aria-selected="false">1</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link hallnumber"  data-hallnumber="2" id="pills-2-tab" data-toggle="pill" href="#" role="tab" aria-controls="pills-2" aria-selected="false">2</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link hallnumber" data-hallnumber="3" id="pills-3-tab" data-toggle="pill" href="#" role="tab" aria-controls="pills-3" aria-selected="false">3</a>
+        </li>
+    </ul>
+
+    <h5>Package timing</h5>
+    <hr>
+
+
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item">
         <a class="nav-link active daytime"  data-daytime="All" id="pills-All-tab" data-toggle="pill" href="#pills-All" role="tab" aria-controls="pills-All" aria-selected="true">All</a>
@@ -91,10 +119,6 @@ include_once ("../ClientSide/Company/Box.php");
     <li class="nav-item">
         <a class="nav-link daytime" data-daytime="Evening" id="pills-Evening-tab" data-toggle="pill" href="#pills-Evening" role="tab" aria-controls="pills-Evening" aria-selected="false">Evening</a>
     </li>
-
-    <li class="nav-item">
-        <a class="nav-link"    href="addnewpackage.php?<?php echo $Query;?>" >Add Package</a>
-    </li>
 </ul>
 <!--<div class="tab-content" id="pills-tabContent">-->
 <!--    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">FIRST TABE</div>-->
@@ -105,7 +129,7 @@ include_once ("../ClientSide/Company/Box.php");
 
     <h5>Package type</h5>
     <hr>
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <ul class="nav nav-pills mb-3"  role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active PackageType" data-packagetype="All" id="pills-type-All-tab" data-toggle="pill" href="#pills-type-All" role="tab" aria-controls="pills-type-All" aria-selected="true">All</a>
                 </li>
@@ -171,7 +195,10 @@ include_once ("../ClientSide/Company/Box.php");
             formdata.append("hallid","<?php echo $hallid;?>");
 
 
-            var calendar = $('#calendar').fullCalendar({
+
+
+
+/*            var calendar = $('#calendar').fullCalendar({
                 editable:false,
                 header:{
                     left:'prev,next today',
@@ -225,7 +252,7 @@ include_once ("../ClientSide/Company/Box.php");
 
                 }
 
-            });
+            });*/
             //
             // $('#calendar').fullCalendar('refetchEvents');
 

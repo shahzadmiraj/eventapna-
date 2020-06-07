@@ -67,6 +67,7 @@ if(isset($_POST['option']))
     {
 
 
+        $companyid=$_POST['companyid'];
         $selectedDatesString=$_POST['selectedDates'];
         $selectedDates=explode (",", $selectedDatesString);
         $MinimumAmount=$_POST['MinimumAmount'];
@@ -99,6 +100,16 @@ if(isset($_POST['option']))
         {
             $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `package_id`) VALUES (NULL,"'.trim($dishnames[$i]).'","'.trim($image[$i]).'",NULL,'.$id.')';
             querySend($sql);
+        }
+        
+        if(isset($_POST['hallactive']))
+        {
+            $hallactive=$_POST['hallactive'];
+            for($i=0;$i<count($hallactive);$i++)
+            {
+                $sql='INSERT INTO `packageControl`(`id`, `package_id`, `hall_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$id.','.$hallactive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
+                querySend($sql);
+            }
         }
 
     }
