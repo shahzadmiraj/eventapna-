@@ -63,11 +63,14 @@ AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")AND(od.id!='.$
     $perheadwith=$_POST['perheadwith'];
     $hallid=$_POST['hallid'];
     $isShowButton=true;
+
+
     $sql='SELECT distinct p.id,p.package_name,p.price,p.describe,p.isFood,p.minimumAmountBooking,pd.id,pd.selectedDate FROM packages as p INNER join 	packageDate as pd
-on (p.id=pd.package_id)
+on (p.id=pd.package_id) inner join packageControl as pc 
+on (pc.package_id=p.id)
 WHERE 
-(p.hall_id='.$hallid.')AND (ISNULL(p.expire))AND(ISNULL(pd.expire))
-AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perheadwith.')
+(ISNULL(p.expire))AND(ISNULL(pd.expire))
+AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perheadwith.')AND(pc.hall_id='.$hallid.')AND(ISNULL(pc.expire))
 ';
     $detailpackage=queryReceive($sql);
 
