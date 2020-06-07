@@ -2,17 +2,13 @@
 include_once ("../../connection/connect.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
-$id=$_GET['h'];
+
+
 $packageid=$_GET['pid'];
 $packageToken=$_GET['ptoken'];
-$token=$_GET['token'];
-$hallid=$id;
-$sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$hallid.')AND(token="'.$token.'")AND(ISNULL(expire))';
-$halldetail=queryReceive($sql);
-$Query='h='.$hallid.'&token='.$token;
 
 $companyid=$userdetail[0][0];
-$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `hall_id`, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')AND(token="'.$packageToken.'")AND(ISNULL(expire))';
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`,1, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')AND(token="'.$packageToken.'")AND(ISNULL(expire))';
 $packageDetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
 ?>
@@ -71,15 +67,21 @@ $userid=$_COOKIE['userid'];
 ?>
 
 <?php
-$HeadingImage=$halldetail[0][1];
-$HeadingName=$halldetail[0][0];
-$Source='../../images/hall/';
+$HeadingImage="";
+$HeadingName="Package Image";
+$Source='';
 $pageName='Package Edit ';
 include_once ("../ClientSide/Company/Box.php");
 ?>
 
 <div class="container card">
-    <h6>You can just manage Dates  and Expire package</h6>
+    <form id="EditPackageForm">
+        <input hidden name="companyid" value="<?php echo $companyid;?>">
+
+        <input hidden name="userid" value="<?php echo $userid;?>">
+
+        <input hidden name="packageid" value="<?php echo $packageDetail[0][0];?>">
+    <h6>You can just manage Dates  , Delect package and activation for halls</h6>
     <div class="form-group row">
         <lable class="col-form-label">Packages Name</lable>
         <div class="input-group mb-3 input-group-lg">
@@ -172,6 +174,42 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
     </div>
 
+
+    <div class="form-group card">
+
+
+        <lable  class="col-form-label">Select hall for package active</lable>
+
+
+        <?php
+        //
+        $sql='SELECT `hall_id`,`id`,(SELECT hall.name from hall WHERE hall.id=packageControl.hall_id) FROM `packageControl` WHERE (ISNULL(expire))AND(package_id='.$packageDetail[0][0].')';
+        $SelectiveHalls=queryReceive($sql);
+        for($i=0;$i<count($SelectiveHalls);$i++)
+        {
+            echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox" checked  name="selectedHalls[]" value="'.$SelectiveHalls[$i][1].'"> '.$SelectiveHalls[$i][2].'</h4>
+                </div>';
+        }
+        $SelectiveHalls=array_column($SelectiveHalls, 0);
+        $List = implode(', ', $SelectiveHalls);
+
+
+
+        $sql='SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')AND( id NOT IN ('.$List.'))';
+        $AllHalls=queryReceive($sql);
+        for($i=0;$i<count($AllHalls);$i++)
+        {
+            echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox"   name="hallactive[]" value="'.$AllHalls[$i][0].'"> '.$AllHalls[$i][1].'</h4>
+                </div>';
+        }
+        ?>
+
+    </div>
+
     <div class="form-group row">
         <lable class="col-form-label">Packages Active User</lable>
         <div class="input-group mb-3 input-group-lg">
@@ -181,6 +219,9 @@ include_once ("../ClientSide/Company/Box.php");
             <input readonly  class="form-control" type="text" value="<?php echo $packageDetail[0][11];?>">
         </div>
     </div>
+
+
+    </form>
     <h2>Calender </h2>
     <hr>
     <div id="calendar" ></div>
@@ -248,7 +289,8 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 <div class="col-12 mt-2 row" >
-        <button id="deletePackage"  type="button"  class="btn btn-danger col-12 m-auto"><i class="fas fa-trash-alt"></i>Delect Package</button>
+        <button id="deletePackage"  type="button"  class="btn btn-danger col-6 m-auto"><i class="fas fa-trash-alt"></i>Delect Package</button>
+    <button id="SubmitFormPackage"  type="button"  class="btn btn-primary col-6 m-auto">Submit</button>
     </div>
 
 </form>
@@ -263,9 +305,8 @@ include_once ("../ClientSide/Company/Box.php");
         <div class="col-md-12 col-md-offset-2 col-sm-12 m-auto">
             <div class="comment-wrapper">
                 <div class="panel panel-info ">
-                    <form id="commentform">
+                    <form id="commentform" hidden>
                         <?php
-                        echo '<input hidden type="number" name="hallid" value="'.$hallid.'">';
                         echo '<input hidden type="number" name="userid" value="'.$userid.'">';
                         echo '<input hidden type="number" name="packageid" value="'.$packageid.'">';
                         ?>
@@ -281,11 +322,14 @@ include_once ("../ClientSide/Company/Box.php");
 
                     <?php
                     $display='';
-
+                    $sql='SELECT `id` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')';
+                    $AllHalls=queryReceive($sql);
+                    $hallOneD = array_column($AllHalls, 0);
+                    $List = implode(', ', $hallOneD);
                     // $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire` FROM `comments` WHERE (hall_id='.$hallid.')&&(ISNULL(expire))';
                     $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, (SELECT u.username FROM user as u 
 where u.id=comments.user_id), (SELECT u.image FROM user as u 
-where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM `comments` WHERE (hall_id='.$hallid.')AND(ISNULL(expire))AND(PackOrDishId='.$packageid.') ';
+where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM `comments` WHERE (hall_id IN ('.$List.'))AND(ISNULL(expire))AND(PackOrDishId='.$packageid.') ';
                     $commentresult=queryReceive($sql);
                     for ($i=0;$i<count($commentresult);$i++)
                     {
@@ -369,6 +413,27 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
     $(document).ready(function ()
     {
 
+        $("#SubmitFormPackage").click(function () {
+
+            var formdata = new FormData($("#EditPackageForm")[0]);
+            formdata.append("option","SubmitPackagesSave");
+            $.ajax({
+                url:"packages/PACKServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+
+                    $("#preloader").hide();
+                }
+            });
+        });
 
 
         function updateTable()

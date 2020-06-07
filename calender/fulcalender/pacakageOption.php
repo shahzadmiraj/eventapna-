@@ -227,10 +227,9 @@ else if($_POST['option']=="PackagesShowsOnTable")
     $PackUnique =array_unique($PackID);
     $List = implode(', ', $PackUnique);
 
-    $sql = 'SELECT p.id,p.isFood,package_name,pd.selectedDate,p.dayTime,pd.id FROM packages as p INNER JOIN packageDate as pd
-on p.id=pd.package_id
+    $sql = 'SELECT p.id,p.isFood,p.package_name FROM packages as p 
 WHERE
-(ISNULL(p.expire))AND (ISNULL(pd.expire))
+(ISNULL(p.expire))
 AND(p.id IN ('.$List.') )
 ';
     $ViewPackages = queryReceive($sql);
@@ -239,6 +238,7 @@ AND(p.id IN ('.$List.') )
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">id</th>
                 <th scope="col">Package Name</th>
             </tr>
             </thead>
@@ -249,6 +249,7 @@ AND(p.id IN ('.$List.') )
         $display.='
             <tr>
                 <th scope="row">'.($i+1).'</th>
+                <th scope="col">'.$ViewPackages[$i][0].'</th>
                 <td>'.$ViewPackages[$i][2].'</td>
             </tr>';
     }

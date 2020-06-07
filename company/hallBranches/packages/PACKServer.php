@@ -119,7 +119,41 @@ if(isset($_POST['option']))
         $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.') AND(name LIKE "%'.(trim($dishname)).'%")';
         echo dishesOfPakage($sql);
     }
+    else if($_POST['option']=="SubmitPackagesSave")
+    {
+        $companyid=$_POST['companyid'];
+        $userid=$_POST['userid'];
+        $packageid=$_POST['packageid'];
+        $sql='SELECT `hall_id`,`id`,(SELECT hall.name from hall WHERE hall.id=packageControl.hall_id) FROM `packageControl` WHERE (ISNULL(expire))AND(package_id='.$packageid.')';
+        $Selective=queryReceive($sql); //previous selections
+        $Selectived= array_column($Selective, 1);
+       $selectedHalls=array();
+        if(isset($_POST['selectedHalls']))
+        {
+           $selectedHalls=$_POST['selectedHalls'];//current selections packageControl ids
 
+        }
+        $result=array_diff($Selectived,$selectedHalls); //different packageControl ids
+
+        foreach ($result as $k => $v) //disactive different packageControl ids
+        {
+            $sql='UPDATE `packageControl` SET `expire`="'.$timestamp.'",`expireUserid`='.$userid.' WHERE id='.$v.'';
+            querySend($sql);
+        }
+
+        if(isset($_POST['hallactive']))
+        {
+            //create new
+            $hallactive=$_POST['hallactive'];
+            for($i=0;$i<count($hallactive);$i++)
+            {
+                $sql='INSERT INTO `packageControl`(`id`, `package_id`, `hall_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$packageid.','.$hallactive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
+                querySend($sql);
+            }
+        }
+
+
+    }
 
 
 

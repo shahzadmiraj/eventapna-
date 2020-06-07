@@ -9,7 +9,19 @@ $hallOneD = array_column($SqlArray, Colume name or number);
         $List = implode(', ', $hallOneD);
 
 
+3: array unique
+$a=array("a"=>"red","b"=>"green","c"=>"red");
+print_r(array_unique($a));
 
+
+4:array differ intercession
+$diff=array_diff(array1,array2)
+
+5:foreach loop
+
+foreach ($array as $key => $value) {
+
+}
 
 
 
