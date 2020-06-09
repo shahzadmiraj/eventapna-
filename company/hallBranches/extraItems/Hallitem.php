@@ -13,6 +13,7 @@ include_once ("../../../connection/connect.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 
+$userid=$_COOKIE['userid'];
 $sql='SELECT `id`, `name`, `token` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$userdetail[0][0].')';
 $HallName=queryReceive($sql);
 $List=array();
@@ -204,18 +205,27 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
               
               
               <p>
-              Amount:'.$kinds[$i][2].' /Dish id# '.$kinds[$i][0].'<form id="changeActivationOfHall'.$kinds[$i][0].'" class="row">';
+              Amount : '.$kinds[$i][2].' /Dish id# '.$kinds[$i][0].'
+              
+              <form id="changeActivationOfHall'.$kinds[$i][0].'" >
+              
+                 <input hidden name="companyid" value="'.$userdetail[0][0].'">
+
+        <input hidden name="userid" value="'.$userid.'">
+
+        <input hidden name="packageid" value="'.$kinds[$i][0].'">
+              ';
 
 
 
-                // acctavition of hall
+                // start actavition of hall
 
                 $sql = 'SELECT `hall_id`,`id`,(SELECT hall.name from hall WHERE hall.id=ExtraItemControl.hall_id) FROM `ExtraItemControl` WHERE (ISNULL(expire))AND(Extra_Item_id=' . $kinds[$i][0] . ')';
                 $SelectiveHalls = queryReceive($sql);
-                for ($i = 0; $i < count($SelectiveHalls); $i++) {
+                for ($K = 0; $K < count($SelectiveHalls); $K++) {
                     $display.= '  
-              <div class="checkbox">
-                <h4><input class="changeActivationOfHall" data-formid="'.$kinds[$i][0].'" type="checkbox" checked  name="selectedHalls[]" value="' . $SelectiveHalls[$i][1] . '"> ' . $SelectiveHalls[$i][2] . '</h4>
+              <div class="checkbox ">
+                <h4><input class="changeActivationOfHall" data-formid="'.$kinds[$K][0].'" type="checkbox" checked  name="selectedHalls[]" value="' . $SelectiveHalls[$K][1] . '">  ' . $SelectiveHalls[$K][2] . '</h4>
                 </div>';
                 }
                 $SelectiveHalls = array_column($SelectiveHalls, 0);
@@ -224,12 +234,15 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
 
                 $sql = 'SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= ' . $userdetail[0][0] . ')AND( id NOT IN (' . $List . '))';
                 $AllHalls = queryReceive($sql);
-                for ($i = 0; $i < count($AllHalls); $i++) {
+                for ($K = 0; $K < count($AllHalls); $K++) {
                     $display.= '  
               <div class="checkbox">
-                <h4><input class="changeActivationOfHall" data-formid="'.$kinds[$i][0].'" type="checkbox"   name="hallactive[]" value="' . $AllHalls[$i][0] . '"> ' . $AllHalls[$i][1] . '</h4>
+                <h4><input class="changeActivationOfHall" data-formid="'.$kinds[$K][0].'" type="checkbox"   name="hallactive[]" value="' . $AllHalls[$K][0] . '"> ' . $AllHalls[$K][1] . '</h4>
                 </div>';
                 }
+
+                // end actavition of hall
+
 
 
                 $display.='</form><button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger float-right"><i class="fas fa-minus-circle"></i> Delete</button>
@@ -287,10 +300,10 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
 
         function changeActivationOfHall(formid)
         {
-            var formdata = new FormData($("#EditPackageForm"+formid)[0]);
-            formdata.append("option","SubmitPackagesSave");
+            var formdata = new FormData($("#changeActivationOfHall"+formid)[0]);
+            formdata.append("option","SubmitExtraItemHallSave");
             $.ajax({
-                url:"packages/PACKServer.php",
+                url:"hallitemsServer.php",
                 method:"POST",
                 data:formdata,
                 contentType: false,

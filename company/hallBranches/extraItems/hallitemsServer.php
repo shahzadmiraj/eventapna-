@@ -70,4 +70,41 @@ else if($_POST['option']=="addItem")
     }
 
 }
+
+else if($_POST['option']=="SubmitExtraItemHallSave")
+{
+    $companyid=$_POST['companyid'];
+    $userid=$_POST['userid'];
+    $packageid=$_POST['packageid'];
+    $sql='SELECT `hall_id`,`id`,(SELECT hall.name from hall WHERE hall.id=ExtraItemControl.hall_id) FROM `ExtraItemControl` WHERE (ISNULL(expire))AND(Extra_Item_id='.$packageid.')';
+    $Selective=queryReceive($sql); //previous selections
+    $Selectived= array_column($Selective, 1);
+    $selectedHalls=array();
+    if(isset($_POST['selectedHalls']))
+    {
+        $selectedHalls=$_POST['selectedHalls'];//current selections packageControl ids
+
+    }
+    $result=array_diff($Selectived,$selectedHalls); //different packageControl ids
+
+    foreach ($result as $k => $v) //disactive different packageControl ids
+    {
+        $sql='UPDATE `ExtraItemControl` SET `expire`="'.$timestamp.'",`expireUserid`='.$userid.' WHERE id='.$v.'';
+        querySend($sql);
+    }
+
+    if(isset($_POST['hallactive']))
+    {
+        //create new
+        $hallactive=$_POST['hallactive'];
+        for($i=0;$i<count($hallactive);$i++)
+        {
+            $sql='INSERT INTO `ExtraItemControl`(`id`, `Extra_Item_id`, `hall_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$packageid.','.$hallactive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
+            querySend($sql);
+        }
+    }
+
+
+}
+
 ?>
