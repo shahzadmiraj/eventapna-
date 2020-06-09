@@ -230,8 +230,12 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
         <?php
 
-        //$sql='SELECT id,name FROM dish_type WHERE catering_id='.$cateringid.'';
-        $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE (hall_id='.$id.')&&(ISNULL(expire))';
+        $sql='SELECT EIT.id,EIT.name FROM ExtraItemControl as EIC INNER join  Extra_Item as EI 
+on(EIC.Extra_Item_id=EI.id) INNER join Extra_item_type as EIT 
+on (EI.Extra_item_type_id=EIT.id)
+WHERE
+(ISNULL(EIC.expire)) AND(ISNULL(EIT.expire))AND(EIC.hall_id in('.$id.'))
+GROUP by (EIT.id)';
 
         $Category=queryReceive($sql);
         $Display='';
@@ -243,9 +247,12 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-            //  $sql = 'SELECT d.name, d.id, (SELECT dt.name from dish_type as dt WHERE dt.id=d.dish_type_id),(SELECT dt.isExpire from dish_type as dt WHERE dt.id=d.dish_type_id), d.isExpire,d.image FROM dish as d WHERE dish_type_id=' . $Category[$j][0] . ' ';
+            $sql='SELECT ex.id,ex.name,ex.price,ex.image,ex.active FROM Extra_Item as ex
+ INNER join
+ ExtraItemControl as EIC
+ on(EIC.Extra_Item_id=ex.id)
+ WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$Category[$j][0].')AND(ISNULL(EIC.expire))AND(EIC.hall_id in('.$id.'))';
 
-            $sql='SELECT ex.id,ex.name,ex.price,ex.image,ex.active FROM Extra_Item as ex WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$Category[$j][0].')';
             $kinds = queryReceive($sql);
 
 
@@ -272,10 +279,9 @@ $display.=$imagespath;
               <img  class="card-img-top img-fluid" src="'.$img.'" alt="Card image cap" style="height: 30vh"
               <h2>
                 <span class="float-left">'.$kinds[$i][1].'</span>
-              <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i> '.$kinds[$i][2].'</span>
-              
+              <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i>Amount '.$kinds[$i][2].'</span>
               </h2>
-          
+         
             </div>
             
               <button data-name="'.$kinds[$i][1].'" data-image="'.$img.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'"   class="AddItemOrder btn btn-primary">Select</button>
@@ -338,11 +344,11 @@ $display.=$imagespath;
             '                <img class="card-img-top img-fluid" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
             '                <div class="card-body ">\n' +
 
-            '                <h4>\n' +
+            '                <h5>\n' +
                 '            <span class="float-left">'+name+'</span>\n' +
-                '            <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i>'+amount+'</span>\n' +
+                '            <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i>Amount '+amount+'</span>\n' +
                 '\n' +
-                '        </h4>\n' +
+                '        </h5>\n' +
             '                    <input type="hidden" name="selecteditem[]" value="'+id+'">\n' +
             '                </div>\n' +
                 '                    <button  data-amount="'+amount+'" data-jsid="'+javaid+'" class="btn btn-danger deleteitems">Delete</button>\n' +

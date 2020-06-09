@@ -58,19 +58,11 @@ $encoded=1;
 
 ?>
 
-<div class="jumbotron  shadow " style="background-image: url(https://i2.wp.com/findlawyer.com.ng/wp-content/uploads/2018/05/Pros-and-Cons-of-Working-at-Large-Companies.jpg?resize=1024%2C512&ssl=1);background-size:100% 115%;background-repeat: no-repeat;">
-
-    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 "><i class="fas fa-city mr-2"></i><?php echo $companydetail[0][0];?></h1>
-        <p>check your orders of hall and as well as catering</p>
-    </div>
-</div>
-
 
 
 <div class="container ">
 
-    <h2>Company Management</h2>
+    <h2 class="text-center text-muted">Company Management</h2>
     <hr>
 
     <div class="container">
@@ -80,8 +72,8 @@ $encoded=1;
             <a href="../cateringBranches/catering.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-utensils fa-3x"></i> <h6> + Add Catering</h6></a>
             <a href="../../user/RegisterCompanyUser.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-user-plus fa-3x"></i> <h6> + Add User</h6></a>
             <a href="../ClientSide/Company/ClientCompany.php?c=<?php echo $companyid;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6> Your website</h6></a>
-
-            <a href="../cateringBranches/dish/dishesInfo.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-hamburger fa-3x"></i><h6>Dishes Mangement system</h6></a>
+            <a href="../cateringBranches/dish/dishesInfo.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-hamburger fa-3x"></i><h6>Catering Dishes Mangement system</h6></a>
+            <a href="../hallBranches/extraItems/Hallitem.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-guitar fa-3x"></i> <h6>Hall Extra items Mangement</h6></a>
         </div>
     </div>
     <hr>
@@ -146,7 +138,6 @@ $encoded=1;
                         <a  href="../../payment/RemainingAmount.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments information</h6></a>
                         <a href="../hallBranches/hallInfo.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6> Hall Setting</h6></a>
                         <a href="../hallBranches/galleryhall.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-images fa-3x"></i><h6>Gallery</h6></a>
-                        <a href="../hallBranches/extraItems/Hallitem.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-guitar fa-3x"></i> <h6> Extra items Control</h6></a>
                     </div>
                 </div>
             </div>
@@ -220,12 +211,11 @@ $encoded=1;
                         <a href="../../customer/CustomerCreate.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Delieved&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Delieved&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-truck fa-3x"></i><h6>Delievered Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Clear&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Cancel&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
                         <a href="../cateringBranches/infoCatering.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6>Branch Setting</h6></a>
                         <a href="../cateringBranches/gallerycatering.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-images fa-3x"></i> <h6>Gallery</h6></a>
-                         <a  href="../../company/cateringBranches/dish/dishPriceList.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fa fa-list-ol fa-3x" ></i><h6>Dishes Price List</h6></a>
                         <a  href="../../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>
                         <a  href="../../company/ClientSide/Catering/cateringClient.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6>Website</h6></a>
                         <a  href="../../payment/RemainingAmount.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>
