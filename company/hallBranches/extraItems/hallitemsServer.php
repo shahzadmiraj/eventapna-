@@ -28,9 +28,10 @@ else if($_POST['option']=="changeCategory")
 else if($_POST['option']=="addItem")
 {
 
+    $companyid=$_POST['companyid'];
+    $userid=$_POST['userid'];
     $image='';
     $timestamp = date('Y-m-d H:i:s');
-    $hall=$_POST['hall'];
     $name=$_POST['name'];
     $Price=$_POST['Price'];
     $typeofitem=$_POST['typeofitem'];
@@ -48,11 +49,25 @@ else if($_POST['option']=="addItem")
     }
     if($typeofitem=="other")
     {
-        $sql='INSERT INTO `Extra_item_type`(`id`, `name`, `active`, `expire`, `hall_id`) VALUES (NULL,"'.$otherTypeName.'","'.$timestamp.'",NULL,'.$hall.')';
+        $sql='INSERT INTO `Extra_item_type`(`id`, `name`, `active`, `expire`, `user_id`) VALUES (NULL,"'.$otherTypeName.'","'.$timestamp.'",NULL,'.$userid.')';
         querySend($sql);
         $typeofitem=mysqli_insert_id($connect);
     }
-    $sql='INSERT INTO `Extra_Item`(`id`, `active`, `expire`, `image`, `price`, `Extra_item_type_id`, `name`) VALUES (NULL,"'.$timestamp.'",NULL,"'.$image.'",'.$Price.','.$typeofitem.',"'.$name.'")';
+    $sql='INSERT INTO `Extra_Item`(`id`, `active`, `expire`, `image`, `price`, `Extra_item_type_id`, `name`, `user_id`) VALUES (NULL,"'.$timestamp.'",NULL,"'.$image.'",'.$Price.','.$typeofitem.',"'.$name.'",'.$userid.')';
     querySend($sql);
+
+    $lastid=mysqli_insert_id($connect);
+
+
+    if(isset($_POST['branchactive']))
+    {
+        $branchactive=$_POST['branchactive'];
+        for($i=0;$i<count($branchactive);$i++)
+        {
+            $sql='INSERT INTO `ExtraItemControl`(`id`, `Extra_Item_id`, `hall_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$lastid.','.$branchactive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
+            querySend($sql);
+        }
+    }
+
 }
 ?>

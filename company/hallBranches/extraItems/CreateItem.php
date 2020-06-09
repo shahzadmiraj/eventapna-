@@ -16,6 +16,7 @@ $sql='SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$
 $Names=queryReceive($sql);
 $listOfCatering=array_column($Names, 0);
 $List = implode(', ', $listOfCatering);
+$userid=$_COOKIE['userid'];
 ?>
 <!DOCTYPE html>
 <head>
@@ -42,6 +43,8 @@ $List = implode(', ', $listOfCatering);
 
     <form class="card container">
 
+        <input hidden name="userid" value="<?php echo $userid;?>">
+        <input hidden name="companyid" value="<?php echo $userdetail[0][0];?>">
         <h1 class="text-muted text-center">Add Extra item</h1>
         <div class="form-group row">
 

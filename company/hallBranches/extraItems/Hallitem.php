@@ -12,12 +12,32 @@ include_once ("../../../connection/connect.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
-$id=$_GET['h'];
-$token=$_GET['token'];
-$sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
-$halldetail=queryReceive($sql);
-$Query='h='.$id.'&token='.$token;
-$encoded=$id;
+
+$sql='SELECT `id`, `name`, `token` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$userdetail[0][0].')';
+$HallName=queryReceive($sql);
+$List=array();
+$cateringid='';
+$Active="All";
+if(isset($_GET['id']))
+{
+
+    $id=$_GET['id'];
+    $token=$_GET['token'];
+    $cateringid=$id;
+    $sql = 'SELECT  `name` FROM `hall` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+    $Halldetail = queryReceive($sql);
+    if(count($Halldetail)<=0)
+        exit();
+    $List=$id;
+    $Active=$id;
+
+}
+else
+{
+
+    $listOfCatering=array_column($HallName, 0);
+    $List = implode(', ', $listOfCatering);
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -43,13 +63,7 @@ $encoded=$id;
 //include_once ("../../../webdesign/header/header.php");
 
 ?>
-<?php
-$HeadingImage=$halldetail[0][1];
-$HeadingName=$halldetail[0][0];
-$Source='../../../images/hall/';
-$pageName='Extra Item Manage';
-include_once ("../../ClientSide/Company/Box.php");
-?>
+
 
 
 
@@ -59,9 +73,43 @@ include_once ("../../ClientSide/Company/Box.php");
 
 <div class="container card">
 
+    <h3 class="font-weight-bold">Extra items <a  href="CreateItem.php" class="float-right btn btn-success col-4 form-control"> + Add Extra item</a></h3>
+
+    <ul class="nav nav-pills mb-3" >
+        <li class="nav-item">
+            <a class="nav-link <?php
+            if($Active=="All")
+            {
+                echo "active";
+            }
+
+            ?>  "  data-cateringnumber="All"  href="?">All</a>
+        </li>
 
 
-    <h3 align="center"> Catergories information</h3>
+        <?php
+
+
+        $display="";
+        for($i=0;$i<count($HallName);$i++)
+        {
+            $display.= '  
+              
+        <li class="nav-item">
+            <a class="nav-link  ';
+
+            if($Active==$HallName[$i][0])
+                $display.="active";
+
+            $display.='"   href="?id='.$HallName[$i][0].'&token='.$HallName[$i][2].'" >'.$HallName[$i][1].'</a>
+        </li>';
+        }
+        echo $display;
+        ?>
+
+    </ul>
+
+    <hr>
     <div class="col-12 form-group row font-weight-bold border">
         <label class="col-8  col-form-label "><i class="fas fa-sitemap"></i>Catergory</label>
         <label class="col-4  col-form-label ">Delete</label>
@@ -70,9 +118,12 @@ include_once ("../../ClientSide/Company/Box.php");
 
 
         <?php
-
-     //   $sql='SELECT `id`, `name`, `isExpire` FROM `dish_type` WHERE catering_id='.$cateringid.'';
-        $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE (hall_id='.$id.')&&(ISNULL(expire))';
+        $sql='SELECT EIT.id,EIT.name FROM ExtraItemControl as EIC INNER join  Extra_Item as EI 
+on(EIC.Extra_Item_id=EI.id) INNER join Extra_item_type as EIT 
+on (EI.Extra_item_type_id=EIT.id)
+WHERE
+(ISNULL(EIC.expire)) AND(ISNULL(EIT.expire))AND(EIC.hall_id in('.$List.'))
+GROUP by (EIT.id)';
         $Category=queryReceive($sql);
         $Display='';
         for($i=0;$i<count($Category);$i++)
@@ -96,28 +147,12 @@ include_once ("../../ClientSide/Company/Box.php");
 
     <div class="container badge-light mt-5">
 
-        <div class="text-left">
-            <h4 > Extra items information</h4>
-        </div>
-        <div class="text-right">
-
-            <?php
-            echo '        <a  href="CreateItem.php?'.$Query.'" class="btn btn-success"><i class="fas fa-plus"></i> Add Extra item</a>
-';
-            ?>
-        </div>
-
-        <hr>
         <br>
 
 
 
         <?php
 
-        //$sql='SELECT id,name FROM dish_type WHERE catering_id='.$cateringid.'';
-        $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE (hall_id='.$id.')&&(ISNULL(expire))';
-
-        $Category=queryReceive($sql);
         $Display='';
         $display='';
         for($j=0;$j<count($Category);$j++)
@@ -129,7 +164,11 @@ include_once ("../../ClientSide/Company/Box.php");
 
           //  $sql = 'SELECT d.name, d.id, (SELECT dt.name from dish_type as dt WHERE dt.id=d.dish_type_id),(SELECT dt.isExpire from dish_type as dt WHERE dt.id=d.dish_type_id), d.isExpire,d.image FROM dish as d WHERE dish_type_id=' . $Category[$j][0] . ' ';
 
-            $sql='SELECT ex.id,ex.name,ex.price,ex.image,ex.active FROM Extra_Item as ex WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$Category[$j][0].')';
+            $sql='SELECT ex.id,ex.name,ex.price,ex.image,ex.active FROM Extra_Item as ex
+ INNER join
+ ExtraItemControl as EIC
+ on(EIC.Extra_Item_id=ex.id)
+ WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$Category[$j][0].')AND(ISNULL(EIC.expire))AND(EIC.hall_id in('.$List.'))';
             $kinds = queryReceive($sql);
 
 
@@ -156,15 +195,44 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
             <img class="card-img-top img-fluid" src="https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg" alt="Card image cap" style="height: 20vh">';
         }
 
-      $display.='   <div class="card-footer ">
+
+
+
+
+                $display.='   <div class="card-footer ">
    <h5 class="card-title" ><i class="fas fa-drum mr-1"></i>'.$kinds[$i][1].'</h5>   
               
               
               <p>
-              <span class="float-left text-danger">
-              <i class="far fa-money-bill-alt mr-3"></i>Amount:'.$kinds[$i][2].' 
-                </span>
-               <button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger float-right"><i class="fas fa-minus-circle"></i> Delete</button>
+              Amount:'.$kinds[$i][2].' /Dish id# '.$kinds[$i][0].'<form id="changeActivationOfHall'.$kinds[$i][0].'" class="row">';
+
+
+
+                // acctavition of hall
+
+                $sql = 'SELECT `hall_id`,`id`,(SELECT hall.name from hall WHERE hall.id=ExtraItemControl.hall_id) FROM `ExtraItemControl` WHERE (ISNULL(expire))AND(Extra_Item_id=' . $kinds[$i][0] . ')';
+                $SelectiveHalls = queryReceive($sql);
+                for ($i = 0; $i < count($SelectiveHalls); $i++) {
+                    $display.= '  
+              <div class="checkbox">
+                <h4><input class="changeActivationOfHall" data-formid="'.$kinds[$i][0].'" type="checkbox" checked  name="selectedHalls[]" value="' . $SelectiveHalls[$i][1] . '"> ' . $SelectiveHalls[$i][2] . '</h4>
+                </div>';
+                }
+                $SelectiveHalls = array_column($SelectiveHalls, 0);
+                $List = implode(', ', $SelectiveHalls);
+
+
+                $sql = 'SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= ' . $userdetail[0][0] . ')AND( id NOT IN (' . $List . '))';
+                $AllHalls = queryReceive($sql);
+                for ($i = 0; $i < count($AllHalls); $i++) {
+                    $display.= '  
+              <div class="checkbox">
+                <h4><input class="changeActivationOfHall" data-formid="'.$kinds[$i][0].'" type="checkbox"   name="hallactive[]" value="' . $AllHalls[$i][0] . '"> ' . $AllHalls[$i][1] . '</h4>
+                </div>';
+                }
+
+
+                $display.='</form><button data-option="deleteItem" data-id='.$kinds[$i][0].' class="actionDelete btn btn-danger float-right"><i class="fas fa-minus-circle"></i> Delete</button>
                 </p>
            
             </div>
@@ -216,6 +284,34 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
 <script>
     $(document).ready(function ()
     {
+
+        function changeActivationOfHall(formid)
+        {
+            var formdata = new FormData($("#EditPackageForm"+formid)[0]);
+            formdata.append("option","SubmitPackagesSave");
+            $.ajax({
+                url:"packages/PACKServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+
+                    $("#preloader").hide();
+                }
+            });
+        }
+
+
+        $(".changeActivationOfHall").change(function () {
+            var formid=$(this).data("formid");
+            changeActivationOfHall(formid);
+        });
 
 
         $(document).on("change",".changeCategory",function ()

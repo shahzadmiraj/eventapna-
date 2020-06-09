@@ -171,16 +171,22 @@ GROUP by (dt.id)';
     {
         $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"><i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
 
-        $sql = 'SELECT d.name, d.id,d.image,(SELECT price FROM `dishWithAttribute` WHERE dish_id=d.id limit 1 ),d.token FROM dish as d WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND((ISNULL(d.expire))) ';
+        $sql = 'SELECT d.name, d.id,d.image,(SELECT price FROM `dishWithAttribute` WHERE dish_id=d.id limit 1 ),d.token FROM dish as d
+ INNER join
+ dishControl as dc
+ on(dc.dish_id=d.id)
+ 
+ 
+ 
+ WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND(ISNULL(d.expire))AND(ISNULL(dc.expire))AND(dc.catering_id in('.$List.')) ';
 
-      //  $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(expire)) AND(catering_id='.$cateringid.')';
         $dishDetail=queryReceive($sql);
         //print_r($dishDetail);
         $display.='<div id="dishtype'.$i.'"  class="row" style="display: none">';
         for ($j=0;$j<count($dishDetail);$j++)
         {
             $display .=' 
-         <a    href="EditDish.php?Did='.$dishDetail[$j][1].'&Dtoken='.$dishDetail[$j][4].'"  class="col-md-4 card m-1" >';
+         <a    href="EditDish.php?Did='.$dishDetail[$j][1].'&Dtoken='.$dishDetail[$j][4].'"  class="col-md-4" >';
 
 
 
