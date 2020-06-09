@@ -73,8 +73,9 @@ else
 
 
 <div class="container card">
+    <h2 class="text-center text-muted">Extra Item Add in Hall</h2>
 
-    <h3 class="font-weight-bold">Extra items <a  href="CreateItem.php" class="float-right btn btn-success col-4 form-control"> + Add Extra item</a></h3>
+    <h6 class="font-weight-bold fa-border">Extra charges of item <a  href="CreateItem.php" class="float-right btn btn-success col-6 form-control"> + Add item</a></h6>
 
     <ul class="nav nav-pills mb-3" >
         <li class="nav-item">

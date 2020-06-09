@@ -36,7 +36,8 @@ else
     $listOfCatering=array_column($CateringName, 0);
     $List = implode(', ', $listOfCatering);
 }
-
+$userid=$_COOKIE['userid'];
+$companyid=$userdetail[0][0];
 
 
 ?>
@@ -182,11 +183,12 @@ GROUP by (dt.id)';
 
         $dishDetail=queryReceive($sql);
         //print_r($dishDetail);
-        $display.='<div id="dishtype'.$i.'"  class="row" style="display: none">';
+        //
+        $display.='<div id="dishtype'.$i.'"  class="row" style="display: none" >';
         for ($j=0;$j<count($dishDetail);$j++)
         {
             $display .=' 
-         <a    href="EditDish.php?Did='.$dishDetail[$j][1].'&Dtoken='.$dishDetail[$j][4].'"  class="col-md-4" >';
+         <div     class="col-md-4 card" >';
 
 
 
@@ -207,13 +209,56 @@ GROUP by (dt.id)';
 
             $display.='<img class="card-img-top " src="'.$image.'" alt="Card image" style="height: 100px" >
 
-<p>
-<span class="float-left"><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</span>
+<div class="card-body">
+<h5 ><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</h5>
+Amount=' . $dishDetail[$j][3] . '/Dish id# '.$dishDetail[$j][1].' /
 
-<span class="float-right text-danger"><i class="far fa-money-bill-alt"></i>' . $dishDetail[$j][3] . '</span>
-</p>
+
+
+<form id="FormActivationDish'.$dishDetail[$j][0].'" >
+              
+                 <input hidden name="companyid" value="'.$userdetail[0][0].'">
+
+        <input hidden name="userid" value="'.$userid.'">
+
+        <input hidden name="dishid" value="'.$dishDetail[$j][1].'">
+              ';
+
+
+            //Start Activation
+            $sql = 'SELECT `catering_id`,`id`,(SELECT catering.name from catering WHERE catering.id=dishControl.catering_id) FROM `dishControl` WHERE (ISNULL(expire))AND(dish_id=' . $dishDetail[$j][1] . ')';
+            $Selective = queryReceive($sql);
+            for ($K = 0; $K < count($Selective); $K++) {
+                $display.= '  
+              <div class="checkbox">
+                <h4><input data-formid="'.$dishDetail[$j][0].'" class="SubmitFormActivationDishes" type="checkbox" checked  name="selected[]" value="' . $Selective[$K][1] . '"> ' . $Selective[$K][2] . '</h4>
+                </div>';
+            }
+            $Selective = array_column($Selective, 0);
+            $List = implode(', ', $Selective);
+
+
+            $sql = 'SELECT `id`, `name` FROM `catering` WHERE (ISNULL(expire))AND (company_id= ' . $companyid . ')AND( id NOT IN (' . $List . '))';
+            $All = queryReceive($sql);
+            for ($K = 0; $K < count($All); $K++) {
+                $display.= '  
+              <div class="checkbox">
+                <h4><input data-formid="'.$dishDetail[$j][0].'" class="SubmitFormActivationDishes" type="checkbox"   name="active[]" value="' . $All[$K][0] . '"> ' . $All[$K][1] . '</h4>
+                </div>';
+            }
+
+            //End Activation
+            $display.='</form>
+
+
+                    <a href="EditDish.php?Did='.$dishDetail[$j][1].'&Dtoken='.$dishDetail[$j][4].'"  class="btn btn-primary ">Manage >></a>
+        </div>
        
-        </a>';
+       
+       
+       
+       
+        </div>';
         }
         $display.='</div>';
     }
@@ -229,6 +274,35 @@ GROUP by (dt.id)';
 <script>
     $(document).ready(function ()
     {
+
+
+
+        $(".SubmitFormActivationDishes").change(function ()
+        {
+            var formid=$(this).data("formid");
+
+            var formdata = new FormData($("#FormActivationDish"+formid)[0]);
+            formdata.append("option","SubmitPackagesSave");
+            $.ajax({
+                url:"dishServer.php",
+                method:"POST",
+                data:formdata,
+                contentType: false,
+                processData: false,
+
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+
+                    location.reload();
+                }
+            });
+        });
+
+
 
 
         $(document).on("click",".dishtypes",function () {

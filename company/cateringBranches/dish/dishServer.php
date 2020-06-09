@@ -17,7 +17,6 @@ if(isset($_POST['option']))
     {
         $companyid=$_POST['companyid'];
         $dishname=chechIsEmpty($_POST['dishname']);
-        $cateringid=$_POST['cateringid'];
         $userid=$_POST['userid'];
         $dishimage='';
         if(!empty($_FILES['image']["name"]))
