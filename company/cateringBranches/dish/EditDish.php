@@ -16,12 +16,6 @@ $packageid=$_GET['Did'];
 $packagetoken=$_GET['Dtoken'];
 
 
-$id=$_GET['c'];
-$token=$_GET['token'];
-$sql = 'SELECT  `name`, `expire`, `image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
-$cateringdetail = queryReceive($sql);
-
-$cateringid=$id;
 $dishID=$packageid;
 $sql='SELECT d.name,(SELECT dt.name FROM dish_type as dt WHERE dt.id=d.dish_type_id), d.image,(SELECT u.username FROM user as u WHERE u.id=d.user_id),d.active,d.id FROM dish as d WHERE (d.id='.$dishID.')AND(ISNULL(d.expire))AND(d.token="'.$packagetoken.'")';
 $dishDetail=queryReceive($sql);
@@ -31,6 +25,7 @@ $sql='SELECT dwa.id, dwa.active, dwa.expire, dwa.price, dwa.dish_id,(SELECT u.us
 $dishWithAttribute=queryReceive($sql);
 $userid=$_COOKIE['userid'];
 
+$companyid=$userdetail[0][0];
 ?>
 <!DOCTYPE html>
 <head>
@@ -61,17 +56,16 @@ $userid=$_COOKIE['userid'];
 //include_once ("../../../webdesign/header/header.php");
 
 ?>
-<?php
-$HeadingImage=$cateringdetail[0][2];
-$HeadingName=$cateringdetail[0][0];
-$Source='../../../images/catering/';
-$pageName='Dishes Edit';
-include_once ("../../ClientSide/Company/Box.php");
-?>
 <div class="container ">
 
+
+    <form id="EditPackageForm">
+    <h1 align="center" class="text-muted">Dish Edit</h1>
+
         <div class="col-12 shadow card-header p-4">
-            <input id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
+            <input hidden name="companyid" value="<?php echo $companyid;?>">
+            <input name="dishid" id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
+            <input name="userid" type="number" hidden value="<?php echo $userid; ?>">
 
             <div class="form-group row justify-content-center">
                 <img style="height: 30vh " src="<?php
@@ -136,6 +130,39 @@ include_once ("../../ClientSide/Company/Box.php");
 
             </div>
 
+            <div class="card">
+            <lable  class="col-form-label">Select Catering branches for dish active</lable>
+
+
+            <?php
+            //
+            $sql='SELECT `catering_id`,`id`,(SELECT catering.name from catering WHERE catering.id=dishControl.catering_id) FROM `dishControl` WHERE (ISNULL(expire))AND(dish_id='.$dishDetail[0][5].')';
+            $Selective=queryReceive($sql);
+            for($i=0;$i<count($Selective);$i++)
+            {
+                echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox" checked  name="selected[]" value="'.$Selective[$i][1].'"> '.$Selective[$i][2].'</h4>
+                </div>';
+            }
+            $Selective=array_column($Selective, 0);
+            $List = implode(', ', $Selective);
+
+
+
+            $sql='SELECT `id`, `name` FROM `catering` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')AND( id NOT IN ('.$List.'))';
+            $All=queryReceive($sql);
+            for($i=0;$i<count($All);$i++)
+            {
+                echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox"   name="active[]" value="'.$All[$i][0].'"> '.$All[$i][1].'</h4>
+                </div>';
+            }
+            ?>
+
+        </div>
+
 
 
             <div class="form-group row">
@@ -147,6 +174,7 @@ include_once ("../../ClientSide/Company/Box.php");
                     <input readonly     value="<?php echo $dishDetail[0][3]; ?>" class="form-control" type="text">
                 </div>
             </div>
+    </form>
 
 
             <hr>
@@ -192,7 +220,7 @@ GROUP by name';
                              
                                
                                             <div class="form-group row">
-                <label class="col-form-label">'.$TypeOfAttribute[$i][0].'</label>
+                <label class="col-form-label">Attribute '.$TypeOfAttribute[$i][0].' :</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text">  <i class="fa fa-calculator" aria-hidden="true"></i> </span>
@@ -309,118 +337,12 @@ echo $display;
         </div>
 
 
-    <button id="deletedish" data-dishid="<?php echo $dishDetail[0][5]; ?>" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete Dish</button>
+    <div class="row">
+        <button id="deletedish" data-dishid="<?php echo $dishDetail[0][5]; ?>" class="btn btn-danger col-6"><i class="far fa-trash-alt"></i> Delete Dish</button>
+        <button id="SubmitFormPackage"  type="button"  class="btn btn-primary col-6 m-auto">Submit</button>
 
-
-</div>
-
-
-
-
-<div class="container badge-light">
-    <h1 class="font-weight-light  mt-4 mb-0">Comments</h1>
-    <hr class="mt-2 mb-3">
-    <div class="row bootstrap snippets">
-
-        <div class="col-md-12 col-md-offset-2 col-sm-12 m-auto">
-            <div class="comment-wrapper">
-                <div class="panel panel-info ">
-                    <form id="commentform">
-                        <?php
-                        echo '<input hidden type="number" name="cateringid" value="'.$cateringid.'">';
-                        echo '<input hidden type="number" name="packid" value="'.$dishID.'">';
-                        echo '<input hidden type="number" name="userid" value="'.$userid.'">';
-                        ?>
-                        <div class="panel-body">
-                            <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                            <br>
-                            <div id="divMain ">
-                                <div id="demo1" name="stars" value="3" ></div>
-                            </div>
-                            <input name="image" type="file" class="btn-outline-secondary   btn col-5 ">
-                            <button id="btncoment" type="button" class="btn btn-info pull-right float-right col-5">Post</button>
-                    </form>
-
-                    <?php
-                    $display='';
-
-                    // $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `email`, `datetime`, `expire` FROM `comments` WHERE (hall_id='.$hallid.')&&(ISNULL(expire))';
-                    $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, (SELECT u.username FROM user as u 
-where u.id=comments.user_id), (SELECT u.image FROM user as u 
-where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM `comments` WHERE (catering_id='.$cateringid.')AND(ISNULL(expire))AND(PackOrDishId='.$dishID.')';
-                    $commentresult=queryReceive($sql);
-                    for ($i=0;$i<count($commentresult);$i++)
-                    {
-                        $display.='                   
-                    <div class="clearfix" ></div>
-                        <hr>
-                        <ul class="media-list" >
-                                                        
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="';
-                        //userimage
-                        if((file_exists('../../../images/users/'.$commentresult[$i][7])) &&($commentresult[$i][7]!=""))
-                        {
-                            $display.='../../../images/users/'.$commentresult[$i][7];
-                        }
-                        else
-                        {
-                            $display.='https://bootdey.com/img/Content/user_1.jpg"';
-                        }
-                        $display.='alt="" class="img-circle"></a>
-                                <div class="media-body">
-                                <span class="text-muted pull-right">
-                                    <small class="text-dark">'.$commentresult[$i][5].'</small>
-                                </span>
-                                    <strong class="text-primary">@'.$commentresult[$i][6].' </strong>
-                             ';
-                        //star out of 5
-                        for($s=0;$s<5;$s++)
-                        {
-                            if($commentresult[$i][10]>$s)
-                            {
-
-                                $display.='<span class="fa fa-star checked"></span>';
-                            }
-                            else
-                            {
-                                $display.='<span class="fa fa-star"></span>';
-                            }
-                        }
-
-
-                        //paragraph of image uploaded comment packageid
-                        $display.='
-                                   <p>';
-
-
-                        //user uploaded image or video
-                        if((file_exists('../../../images/comment/cateringComment/'.$commentresult[$i][11])) &&($commentresult[$i][11]!=""))
-                        {
-                            $display.='<img  style="width: 100%;height: 40vh" class="m-2"  src="../../../images/comment/cateringComment/'.$commentresult[$i][11].'"><br>';
-                        }
-
-                        //comment and delete button
-                        $display.=$commentresult[$i][3].'<button hidden type="button" class="btn btn-danger float-right deletecomment" data-deletecomment="'.$commentresult[$i][2].'"><i class="fas fa-trash-alt"></i>Delete</button>
-                                    
-                                    
-                                    </p>
-                                     
-                                </div>
-                                
-                            </li>
-
-                        </ul>
-';
-                    }
-                    echo $display;
-                    ?>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
+
 </div>
 
 
@@ -440,38 +362,21 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
                 scores=score;
             }});
     });
+
+
+
     $(document).ready(function ()
     {
 
 
-        $(".deletecomment").click(function (e) {
-            e.preventDefault();
-            var id = $(this).data("deletecomment");
-            var userid = "<?php  echo $userid;?>";
-            $.ajax({
-                url: "../cateringComment/commentCateringServer.php",
-                method: "POST",
-                data: {id: id, userid: userid, option: "deletecomment"},
-                dataType: "text",
-                beforeSend: function () {
-                    $("#preloader").show();
-                },
-                success: function (data) {
-                    $("#preloader").hide();
-                    location.reload();
-                }
-            });
-        });
-
-        $("#btncoment").click(function ()
+        $("#SubmitFormPackage").click(function ()
         {
-            var formdata = new FormData($("#commentform")[0]);
-            formdata.append("option", "commentCatering");
-            formdata.append("stars", scores);
+            var formdata = new FormData($("#EditPackageForm")[0]);
+            formdata.append("option","SubmitPackagesSave");
             $.ajax({
-                url: "../cateringComment/commentCateringServer.php",
-                method: "POST",
-                data: formdata,
+                url:"dishServer.php",
+                method:"POST",
+                data:formdata,
                 contentType: false,
                 processData: false,
 
@@ -480,25 +385,13 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
                 },
                 success:function (data)
                 {
+
                     $("#preloader").hide();
-                    if(data)
-                    {
-                        alert(data);
-                    }
-                    location.reload();
+
+                    window.history.back();
                 }
             });
-        }) ;
-
-    });
-
-
-
-
-    $(document).ready(function ()
-    {
-
-
+        });
 
 
         $(".deleteprice").click(function (e)

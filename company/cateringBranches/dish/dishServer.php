@@ -12,8 +12,10 @@ include_once ("../../../connection/connect.php");
 
 if(isset($_POST['option']))
 {
+
     if($_POST["option"]=="addDishsystem")
     {
+        $companyid=$_POST['companyid'];
         $dishname=chechIsEmpty($_POST['dishname']);
         $cateringid=$_POST['cateringid'];
         $userid=$_POST['userid'];
@@ -34,7 +36,7 @@ if(isset($_POST['option']))
         {
             $dishtypename=$_POST['otherdishType'];
 
-            $sql='INSERT INTO `dish_type`(`id`, `name`, `expire`, `catering_id`, `active`, `user_id`) VALUES (NULL,"'.$dishtypename.'",NULL,'.$cateringid.',"'.$timestamp.'",'.$userid.')';
+            $sql='INSERT INTO `dish_type`(`id`, `name`, `expire`, `active`, `user_id`) VALUES (NULL,"'.$dishtypename.'",NULL,"'.$timestamp.'",'.$userid.')';
             //$sql='INSERT INTO `dish_type`(`id`, `name`, `isExpire`,`catering_id`) VALUES (NULL,"'.$dishtypename.'",NULL,'.$cateringid.')';
             querySend($sql);
             $dishtype=mysqli_insert_id($connect);
@@ -45,7 +47,7 @@ if(isset($_POST['option']))
         }
 
         $token=uniqueToken("dish");
-        $sql='INSERT INTO `dish`(`name`, `id`, `image`, `dish_type_id`, `expire`, `catering_id`, `active`, `user_id`,`token`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",'.$dishtype.',NULL,'.$cateringid.',"'.$timestamp.'",'.$userid.',"'.$token.'")';
+        $sql='INSERT INTO `dish`(`name`, `id`, `image`, `dish_type_id`, `expire`, `active`, `user_id`,`token`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",'.$dishtype.',NULL,"'.$timestamp.'",'.$userid.',"'.$token.'")';
         querySend($sql);
         $dishid=mysqli_insert_id($connect);
         $countAttribute=0;
@@ -79,7 +81,15 @@ if(isset($_POST['option']))
                 $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$dishprice.','.$dishid.','.$userid.',"'.$token.'")';
                 querySend($sql);
             }
-
+                        if(isset($_POST['branchactive']))
+                        {
+                            $branchactive=$_POST['branchactive'];
+                            for($i=0;$i<count($branchactive);$i++)
+                            {
+                                $sql='INSERT INTO `dishControl`(`id`, `dish_id`, `catering_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$dishid.','.$branchactive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
+                                querySend($sql);
+                            }
+                        }
 
     }
     else if($_POST['option']=="attributesCreate")
@@ -216,7 +226,7 @@ if(isset($_POST['option']))
 
 
     }
-    else if($_POST['option']='showPriceofAllDishes')
+    else if($_POST['option']=='showPriceofAllDishes')
     {
         $image=$_POST['image'];
         $dishid=$_POST['dishid'];
@@ -325,6 +335,39 @@ if(isset($_POST['option']))
         echo $display;
 
 
+    }
+    else if($_POST['option']=="SubmitPackagesSave")
+    {
+        $companyid=$_POST['companyid'];
+        $userid=$_POST['userid'];
+        $packageid=$_POST['dishid'];
+        $sql='SELECT `catering_id`,`id`,(SELECT catering.name from catering WHERE catering.id=dishControl.catering_id) FROM `dishControl` WHERE (ISNULL(expire))AND(dish_id='.$packageid.')';
+        $Selective=queryReceive($sql); //previous selections
+        $Selectived= array_column($Selective, 1);
+        $selectedPrevious=array();
+        if(isset($_POST['selected']))
+        {
+            $selectedPrevious=$_POST['selected'];//current selections packageControl ids
+
+        }
+        $result=array_diff($Selectived,$selectedPrevious); //different packageControl ids
+
+        foreach ($result as $k => $v) //disactive different packageControl ids
+        {
+            $sql='UPDATE `dishControl` SET `expire`="'.$timestamp.'",`expireUserid`='.$userid.' WHERE id='.$v.'';
+            querySend($sql);
+        }
+
+        if(isset($_POST['active']))
+        {
+            //create new
+            $createActive=$_POST['active'];
+            for($i=0;$i<count($createActive);$i++)
+            {
+                $sql='INSERT INTO `dishControl`(`id`, `dish_id`, `catering_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$packageid.','.$createActive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
+                querySend($sql);
+            }
+        }
     }
 }
 

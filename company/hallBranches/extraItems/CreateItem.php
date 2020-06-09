@@ -11,12 +11,11 @@ include_once ("../../../connection/connect.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
-$id=$_GET['h'];
-$token=$_GET['token'];
-$sql='SELECT `name`,`image` FROM `hall` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
-$halldetail=queryReceive($sql);
-$Query='h='.$id.'&token='.$token;
-$hall=$id;
+
+$sql='SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$userdetail[0][0].')';
+$Names=queryReceive($sql);
+$listOfCatering=array_column($Names, 0);
+$List = implode(', ', $listOfCatering);
 ?>
 <!DOCTYPE html>
 <head>
@@ -38,20 +37,12 @@ $hall=$id;
 <?php
 //include_once ("../../../webdesign/header/header.php");
 ?>
-<?php
-$HeadingImage=$halldetail[0][1];
-$HeadingName=$halldetail[0][0];
-$Source='../../../images/hall/';
-$pageName='Add Extra item';
-include_once ("../../ClientSide/Company/Box.php");
-?>
-
 
 
 
     <form class="card container">
-        <input type="number" hidden name="hall" value=<?php echo $hall;?>  >
 
+        <h1 class="text-muted text-center">Add Extra item</h1>
         <div class="form-group row">
 
             <label for="name" class="col-form-label">Name item </label>
@@ -104,15 +95,26 @@ include_once ("../../ClientSide/Company/Box.php");
                     <span class="input-group-text"><i class="fas fa-sitemap"></i></span>
                 </div>
                 <select  name="typeofitem" id="typeofitem" class="form-control">
-                    <option value="other">other</option>
+
                     <?php
-                    $sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE (hall_id='.$hall.')&&(ISNULL(expire))';
+                    //dish type of catering
+                    $sql='SELECT EIT.id,EIT.name FROM ExtraItemControl as EIC INNER join  Extra_Item as EI 
+on(EIC.Extra_Item_id=EI.id) INNER join Extra_item_type as EIT 
+on (EI.Extra_item_type_id=EIT.id)
+WHERE
+(ISNULL(EIC.expire)) AND(ISNULL(EIT.expire))AND(EIC.hall_id in('.$List.'))
+GROUP by (EIT.id)';
+
                     $typeDetail=queryReceive($sql);
+
+
                     for($i=0;$i<count($typeDetail);$i++)
                     {
                         echo '<option value="'.$typeDetail[$i][0].'">'.$typeDetail[$i][1].'</option>';
                     }
+
                     ?>
+                    <option value="other">other</option>
 
                 </select>
             </div>
@@ -120,16 +122,35 @@ include_once ("../../ClientSide/Company/Box.php");
         </div>
 
 
+
+
         <div class="form-group row" id="showType">
 
             <label for="otherTypeName" class="col-form-label">Other Type name</label>
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
                 </div>
                 <input id="otherTypeName" type="text" name="otherTypeName" class="form-control " placeholder="other  type name">
             </div>
+        </div>
+
+
+        <div class="form-group card">
+
+
+            <lable  class="col-form-label">Select hall for Extra item active</lable>
+
+
+            <?php
+            for($i=0;$i<count($Names);$i++)
+            {
+                echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox" checked  name="branchactive[]" value="'.$Names[$i][0].'"> '.$Names[$i][1].'</h4>
+                </div>';
+            }
+            ?>
 
         </div>
 

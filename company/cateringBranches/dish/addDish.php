@@ -11,12 +11,14 @@ include_once ("../../../connection/connect.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 
-$id=$_GET['c'];
-$token=$_GET['token'];
-$sql='SELECT `name`,`image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
-$cateringdetail=queryReceive($sql);
-$cateringid=$id;
 $userid=$_COOKIE['userid'];
+$companyid=$userdetail[0][0];
+
+$sql='SELECT `id`, `name`, `token` FROM `catering` WHERE (ISNULL(expire))AND (company_id= '.$userdetail[0][0].')';
+$CateringName=queryReceive($sql);
+$listOfCatering=array_column($CateringName, 0);
+$List = implode(', ', $listOfCatering);
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -41,20 +43,13 @@ $userid=$_COOKIE['userid'];
 <?php
 //include_once ("../../../webdesign/header/header.php");
 ?>
-<?php
-$HeadingImage=$cateringdetail[0][1];
-$HeadingName=$cateringdetail[0][0];
-$Source='../../../images/catering/';
-$pageName='Add Dish';
-include_once ("../../ClientSide/Company/Box.php");
-?>
 
 <div class="container card">
-
+<h1 class="text-muted text-center">Add Dish</h1>
     <form>
 
         <input type="number" hidden name="userid" value="<?php echo $userid;?>">
-        <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
+        <input hidden name="companyid" value="<?php echo $companyid;?>">
         <div class="form-group row">
             <label class="col-form-label">Dish Name</label>
 
@@ -135,12 +130,21 @@ include_once ("../../ClientSide/Company/Box.php");
                 <select id="dishtype" name="dishtype" class="form-control">
                     <?php
 
-                    $sql='SELECT `id`, `name` FROM `dish_type` WHERE (ISNULL(expire))AND(catering_id='.$cateringid.')';
-                    $dish_type=queryReceive($sql);
 
-                    for($i=0;$i<count($dish_type);$i++)
+                    //dish type of catering
+                    $sql='SELECT dt.id,dt.name FROM dishControl as dc INNER join  dish as d 
+on(dc.dish_id=d.id) INNER join dish_type as dt 
+on (d.dish_type_id=dt.id)
+WHERE
+(ISNULL(dc.expire)) AND(ISNULL(dt.expire))AND(dc.catering_id in('.$List.'))
+GROUP by (dt.id)';
+
+                    $dishTypeDetail=queryReceive($sql);
+
+
+                    for($i=0;$i<count($dishTypeDetail);$i++)
                     {
-                        echo '<option value="'.$dish_type[$i][0].'">'.$dish_type[$i][1].'</option>';
+                        echo '<option value="'.$dishTypeDetail[$i][0].'">'.$dishTypeDetail[$i][1].'</option>';
                     }
                     echo '<option value="others">others</option>'
                     ?>
@@ -165,6 +169,27 @@ include_once ("../../ClientSide/Company/Box.php");
 
 
         </div>
+
+        <div class="form-group card">
+
+
+            <lable  class="col-form-label">Select catering for dishes active</lable>
+
+
+            <?php
+            $sql='SELECT `id`, `name` FROM `catering` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')';
+            $allbranch=queryReceive($sql);
+            for($i=0;$i<count($allbranch);$i++)
+            {
+                echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox" checked  name="branchactive[]" value="'.$allbranch[$i][0].'"> '.$allbranch[$i][1].'</h4>
+                </div>';
+            }
+            ?>
+
+        </div>
+
 
 
         <div class="form-group row justify-content-center">
@@ -284,7 +309,6 @@ include_once ("../../ClientSide/Company/Box.php");
             }
             else
             {
-
                 $("#showdishtype").show('slow');
             }
         }

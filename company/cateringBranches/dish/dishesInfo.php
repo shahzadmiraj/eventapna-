@@ -10,15 +10,35 @@ include_once ("../../../connection/connect.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
-$id=$_GET['c'];
-$token=$_GET['token'];
+
+$sql='SELECT `id`, `name`, `token` FROM `catering` WHERE (ISNULL(expire))AND (company_id= '.$userdetail[0][0].')';
+$CateringName=queryReceive($sql);
+$List=array();
+$cateringid='';
+$Active="All";
+if(isset($_GET['id']))
+{
+
+    $id=$_GET['id'];
+    $token=$_GET['token'];
+    $cateringid=$id;
+    $sql = 'SELECT  `name` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
+    $cateringdetail = queryReceive($sql);
+    if(count($cateringdetail)<=0)
+        exit();
+    $List=$id;
+    $Active=$id;
+
+}
+else
+{
+
+    $listOfCatering=array_column($CateringName, 0);
+    $List = implode(', ', $listOfCatering);
+}
 
 
-$cateringid=$id;
-$sql = 'SELECT  `name`, `expire`, `image` FROM `catering` WHERE (id='.$id.')AND(token="'.$token.'")AND(ISNULL(expire))';
-$cateringdetail = queryReceive($sql);
 
-$Query='c='.$id.'&token='.$token;
 ?>
 <!DOCTYPE html>
 <head>
@@ -45,29 +65,52 @@ $Query='c='.$id.'&token='.$token;
 
 ?>
 
-<?php
-$HeadingImage=$cateringdetail[0][2];
-$HeadingName=$cateringdetail[0][0];
-$Source='../../../images/catering/';
-$pageName='Dishes Manage';
-include_once ("../../ClientSide/Company/Box.php");
-?>
 
 
 
 <div class="container">
+    <h1 class="text-muted text-center">Dish Manage</h1>
+
+    <h3 class="font-weight-bold">Catering Dishes <a  href="addDish.php" class="float-right btn btn-success col-4 form-control">Add dish +</a></h3>
+
+    <ul class="nav nav-pills mb-3" >
+        <li class="nav-item">
+            <a class="nav-link <?php
+            if($Active=="All")
+            {
+                echo "active";
+            }
+
+                ?> cateringnumber "  data-cateringnumber="All"  href="?">All</a>
+        </li>
 
 
+        <?php
+
+
+        $display="";
+        for($i=0;$i<count($CateringName);$i++)
+        {
+            $display.= '  
+              
+        <li class="nav-item">
+            <a class="nav-link cateringnumber ';
+
+            if($Active==$CateringName[$i][0])
+                $display.="active";
+
+            $display.='" data-cateringnumber="'.$CateringName[$i][0].'"  href="?id='.$CateringName[$i][0].'&token='.$CateringName[$i][2].'" >'.$CateringName[$i][1].'</a>
+        </li>';
+        }
+        echo $display;
+        ?>
+
+    </ul>
+    <hr>
 
 
 
     <div  class="col-12 badge-light ">
-
-        <h3 class="font-weight-bold">System Dish info <a  href="addDish.php?<?php echo $Query;?>" class="float-right btn btn-success col-4 form-control">Add dish +</a></h3>
-
-        <br>
-
-        <h4  class="col-12"> Dish Type information</h4>
 
         <div class="col-12 form-group row font-weight-bold border ">
             <label class="col-9  col-form-label "><i class="fas fa-utensils mr-1"></i>Name Dish type</label>
@@ -77,22 +120,23 @@ include_once ("../../ClientSide/Company/Box.php");
 
         <?php
 
-        $sql='SELECT `id`, `name`, `expire` FROM `dish_type` WHERE (ISNULL(expire))AND (catering_id='.$cateringid.')';
-        $dishTypes=queryReceive($sql);
-        $Display='';
-        for($i=0;$i<count($dishTypes);$i++)
-        {
-            $Display.= '<div class="form-group row  border " id="Delele_Dish_Type_'.$dishTypes[$i][0].'">
-            <input data-dishtypeid="'.$dishTypes[$i][0].'"   value="'.$dishTypes[$i][1].'" class="changeDishType col-9  form-control ">';
-            if($dishTypes[$i][2]=="")
-            {
-                $Display.=' <input data-dishtypeid="'.$dishTypes[$i][0].'"  class=" btn Delele_Dish_Type col-3  form-control btn-outline-danger " value="Disable"> ';
-            }
-            else
-            {
-                $Display.=' <input data-dishtypeid="'.$dishTypes[$i][0].'"  class=" btn Delele_Dish_Type col-3  form-control btn-danger" value="Enable"> ';
 
-            }
+        //dish type of catering
+        $sql='SELECT dt.id,dt.name FROM dishControl as dc INNER join  dish as d 
+on(dc.dish_id=d.id) INNER join dish_type as dt 
+on (d.dish_type_id=dt.id)
+WHERE
+(ISNULL(dc.expire)) AND(ISNULL(dt.expire))AND(dc.catering_id in('.$List.'))
+GROUP by (dt.id)';
+
+        $dishTypeDetail=queryReceive($sql);
+        $Display='';
+        for($i=0;$i<count($dishTypeDetail);$i++)
+        {
+            $Display.= '<div class="form-group row  border " id="Delele_Dish_Type_'.$dishTypeDetail[$i][0].'">
+            <input data-dishtypeid="'.$dishTypeDetail[$i][0].'"   value="'.$dishTypeDetail[$i][1].'" class="changeDishType col-9  form-control ">';
+
+            $Display.=' <input data-dishtypeid="'.$dishTypeDetail[$i][0].'"  class=" btn Delele_Dish_Type col-3  form-control btn-outline-danger " value="Disable"> ';
 
             $Display.= '</div>';
 
@@ -122,9 +166,6 @@ include_once ("../../ClientSide/Company/Box.php");
     <h3>Catering Dishes</h3>
     <hr>
     <?php
-
-    $sql='SELECT `id`, `name`, `expire` FROM `dish_type` WHERE (ISNULL(expire))AND (catering_id='.$cateringid.')';
-    $dishTypeDetail=queryReceive($sql);
     $display='';
     for($i=0;$i<count($dishTypeDetail);$i++)
     {
@@ -138,8 +179,8 @@ include_once ("../../ClientSide/Company/Box.php");
         $display.='<div id="dishtype'.$i.'"  class="row" style="display: none">';
         for ($j=0;$j<count($dishDetail);$j++)
         {
-            $display .= ' 
-         <a    href="EditDish.php?Did='.$dishDetail[$j][1].'&Dtoken='.$dishDetail[$j][4].'&'.$Query.'"  class="col-md-4 card m-1" >';
+            $display .=' 
+         <a    href="EditDish.php?Did='.$dishDetail[$j][1].'&Dtoken='.$dishDetail[$j][4].'"  class="col-md-4 card m-1" >';
 
 
 
