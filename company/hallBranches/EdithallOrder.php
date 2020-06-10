@@ -42,6 +42,8 @@ on(hei.Extra_Item_id=ei.id)
 WHERE (hei.orderDetail_id='.$orderid.') AND(ISNULL(hei.expire)) ';
 $priceDetailOfExtraItem=queryReceive($sql);
 
+$Query='pid='.$pid."&token=".$token;
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -104,65 +106,9 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 <div class="container card form-group form-inline">
     <h4 class="m-auto">Extra Items detail   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i><?php echo $priceDetailOfExtraItem[0][0];?></span></h4>
-    <a href="orderInfo/orderItem.php" class="btn btn-primary" >manage items</a>
+    <a href="orderInfo/orderItem.php?<?php echo $Query;?>" class="btn btn-primary" >manage items</a>
 </div>
 <hr>
-
-    <div class="container  card form-inline">
-
-        <?php
-        $display='';
-
-
-        $sql='SELECT hei.id,(SELECT ei.name from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.price from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.image from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),hei.active FROM hall_extra_items as hei  WHERE (ISNULL(hei.expire)) AND (hei.orderDetail_id='.$orderid.')';
-            $kinds = queryReceive($sql);
-
-
-            $orignalImage='';
-            $imagespath='';
-            $display.='<div class="container-fluid"><div class="card-deck ">';
-            for ($i = 0; $i < count($kinds); $i++)
-            {
-
-
-                $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
-                if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
-                {
-                    $img='../../../images/hallExtra/'.$kinds[$i][3];
-                }
-
-
-                $display.='
-        <div  data-name="'.$kinds[$i][1].'" data-image="'.$orignalImage.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'" class="AddItemOrder card col-md-4  ">';
-
-
-                $display.=$imagespath;
-                $display.='   <div class="card-body">
-              <img  class="card-img-top img-fluid" src="'.$img.'" alt="Card image cap" style="height: 30vh"
-                 <h2>
-                <span class="float-left">'.$kinds[$i][1].'</span>
-              <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i> '.$kinds[$i][2].'</span>
-              </h2>
-            </div>
-        </div>
-        <div class="w-100 d-none d-sm-block d-md-none"></div>';
-            }
-            $display.='</div></div>';
-
-        echo $display;
-
-
-        ?>
-
-
-
-    </div>
-
-
-
-
-
-
 
 
 <form class="form container card" >
@@ -554,7 +500,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 </form>
 <?php
-include_once ("../../webdesign/footer/footer.php");
+//include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

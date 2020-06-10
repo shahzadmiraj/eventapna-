@@ -31,6 +31,63 @@ $priceDetailOfExtraItem=queryReceive($sql);
 $sql='SELECT catering_id,status_catering FROM orderDetail WHERE id='.$order.'';
 $StatusOrder=queryReceive($sql);
 
+
+function ExtraItemShow($sql,$IsAlreadyBooked)
+{
+    $id="No";
+    $ActionClass="AddItemOrder "." btn-primary";
+    $ButtonValue="Select";
+    if($IsAlreadyBooked=="Yes")
+    {
+        $id='Selected';
+        $ActionClass="deleteSelected ". " btn-danger";
+        $ButtonValue="Delete";
+    }
+
+
+
+    $display='';
+    $kinds = queryReceive($sql);
+
+
+    $orignalImage='';
+    $imagespath='';
+    $display.='<div class="row">';
+    for ($i = 0; $i < count($kinds); $i++)
+    {
+
+        $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
+        if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
+        {
+            $img='../../../images/hallExtra/'.$kinds[$i][3];
+        }
+
+
+        $display.='
+        <div id="'.$id.$kinds[$i][0].'"  class="card col-md-4">
+        
+        
+              <img  class="card-img-top " src="'.$img.'" alt="Card image cap" style="height: 30vh">
+        ';
+
+
+        $display.=$imagespath;
+        $display.='   <div class="card-body ">
+              
+                <h5 >'.$kinds[$i][1].'</h5>
+                <h6 >ID#'.$kinds[$i][0].'</h6>
+              <span class="text-danger "><i class="far fa-money-bill-alt"></i>Amount '.$kinds[$i][2].'</span>
+            
+                <button data-name="'.$kinds[$i][1].'" data-image="'.$img.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'"   class="'.$ActionClass.' btn  col-12">'.$ButtonValue.'</button>
+            </div>
+            
+        </div>
+        <div class="w-100 d-none d-sm-block d-md-none"></div>';
+    }
+    $display.='</div>';
+    return $display;
+}
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -96,7 +153,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
     <input hidden id="orderid"  type="text" name="order" value="<?php echo $order;?>">
     <input hidden type="number" name="userid" value="<?php echo $userid;?>" >
-    <div class="container card">
+    <div class="container">
         <h4 class="row form-inline">Total   <span class="text-primary ml-5"> <input  name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
           if(empty($priceDetailOfExtraItem[0][0]))
           {
@@ -109,64 +166,14 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
             ?>"</span></h4>
 
         <hr>
-        <div class="container form-inline " id="additems">
-<!--
-            <div id="jsid1" class="card mb-4 col-12 col-md-6 col-lg-4 col-xl-3 btn btn-primary">
-                <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap" style="height: 30vh">
-                <div class="card-body ">
-                    <h4 class="card-title">Name</h4>
-                    <h6 class="float-right ">price</h6>
-                    <button  data-jsid="1" class="btn btn-danger">Delete</button>
-                    <input type="hidden" name="selecteditem[]" value="">
-                </div>
-            </div>
--->
-
-
-
+        <div class=" row " id="additems">
 
 
 
 
             <?php
-            $display='';
-
-
             $sql='SELECT hei.id,(SELECT ei.name from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.price from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.image from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),hei.active FROM hall_extra_items as hei  WHERE (ISNULL(hei.expire)) AND (hei.orderDetail_id='.$order.')';
-            $kinds = queryReceive($sql);
-
-
-            $orignalImage='';
-            $imagespath='';
-            for ($i = 0; $i < count($kinds); $i++)
-            {
-
-
-                $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
-                if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
-                {
-                    $img='../../../images/hallExtra/'.$kinds[$i][3];
-                }
-
-
-                $display.='
-        <div  id="Selected'.$kinds[$i][0].'"   class="card col-md-4 ">
-         <div class="card-body ">
-              <img  class="card-img-top img-fluid" src="'.$img.'" alt="Card image cap" style="height: 30vh"
-                 <h2>
-                <span class="float-left">'.$kinds[$i][1].'</span>
-              <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i> '.$kinds[$i][2].'</span>
-              </h2>
-            </div>
-          
-<button data-itemsid="'.$kinds[$i][0].'" data-amount="'.$kinds[$i][2].'"   class="deleteSelected btn btn-danger">Delete</button>
-        </div>
-        <div class="w-100 d-none d-sm-block d-md-none"></div>';
-            }
-
-            echo $display;
-
-
+            echo ExtraItemShow($sql,"Yes");
             ?>
 
 
@@ -180,7 +187,8 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-        <div class="form-group row">
+
+        <div class="form-group row mt-5">
 
 
 
@@ -224,10 +232,10 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<h1 class="text-center mt-3">Select Item</h1>
-<hr>
     <div class="container">
 
+        <h1 class="text-center mt-3">Select Item</h1>
+        <hr>
         <?php
 
         $sql='SELECT EIT.id,EIT.name FROM ExtraItemControl as EIC INNER join  Extra_Item as EI 
@@ -247,48 +255,15 @@ GROUP by (EIT.id)';
 
 
 
+
+
             $sql='SELECT ex.id,ex.name,ex.price,ex.image,ex.active FROM Extra_Item as ex
  INNER join
  ExtraItemControl as EIC
  on(EIC.Extra_Item_id=ex.id)
  WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$Category[$j][0].')AND(ISNULL(EIC.expire))AND(EIC.hall_id in('.$id.'))';
 
-            $kinds = queryReceive($sql);
-
-
-            $orignalImage='';
-            $imagespath='';
-            $display.='<div class="row">';
-            for ($i = 0; $i < count($kinds); $i++)
-            {
-
-                $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
-                if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
-                {
-                    $img='../../../images/hallExtra/'.$kinds[$i][3];
-                }
-
-
-                $display.='
-        <div   class="card col-md-4 btn">';
-
-
-$display.=$imagespath;
-                $display.='   <div class="card-body ">
-   
-              <img  class="card-img-top img-fluid" src="'.$img.'" alt="Card image cap" style="height: 30vh"
-              <h2>
-                <span class="float-left">'.$kinds[$i][1].'</span>
-              <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i>Amount '.$kinds[$i][2].'</span>
-              </h2>
-         
-            </div>
-            
-              <button data-name="'.$kinds[$i][1].'" data-image="'.$img.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'"   class="AddItemOrder btn btn-primary">Select</button>
-        </div>
-        <div class="w-100 d-none d-sm-block d-md-none"></div>';
-            }
-            $display.='</div>';
+            $display.=ExtraItemShow($sql,"No");
 
         }
 
@@ -341,16 +316,15 @@ $display.=$imagespath;
                 var name=$(this).data("name");
                 var image=$(this).data("image");
             var text='<div id="jsid'+javaid+'" class="card col-md-4">\n' +
-            '                <img class="card-img-top img-fluid" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
+            '                <img class="card-img-top" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
             '                <div class="card-body ">\n' +
 
-            '                <h5>\n' +
-                '            <span class="float-left">'+name+'</span>\n' +
-                '            <span class="float-right text-danger "><i class="far fa-money-bill-alt"></i>Amount '+amount+'</span>\n' +
-                '\n' +
-                '        </h5>\n' +
+            '                <h5>\n' + name+ '        </h5>' +
+                '<h6 >ID# '+id+'</h6>' +
+                '    <span class="text-danger "><i class="far fa-money-bill-alt"></i>Amount '+amount+'</span>\n' +
+                '        \n' +
             '                    <input type="hidden" name="selecteditem[]" value="'+id+'">\n' +
-            '                </div>\n' +
+            '                  </div>\n' +
                 '                    <button  data-amount="'+amount+'" data-jsid="'+javaid+'" class="btn btn-danger deleteitems">Delete</button>\n' +
             '            </div>';
 
@@ -390,7 +364,7 @@ $display.=$imagespath;
             var id=$(this).data("itemsid");
             var amount=$(this).data("amount");
             SetAmount("Minus",amount);
-            var orderid=$("#orderid").val();
+            var orderid="<?php echo $order;?>";
 
             var CurrentAmount=parseInt($("#AmountSet").val());
             var formdata=new FormData;

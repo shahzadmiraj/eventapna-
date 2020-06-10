@@ -45,7 +45,7 @@ on (od.packageDate_id=pd.id)
 INNER join packages as p 
 on (p.id=pd.package_id)
 where 
-(od.id='.$order.')) FROM orderDetail as od WHERE od.id='.$orderid.'';
+(od.id='.$orderid.')) FROM orderDetail as od WHERE od.id='.$orderid.'';
     $orderDetail=queryReceive($sql);
     $CurrentAmount=(int)$orderDetail[0][0]*(int)$orderDetail[0][1];
     $CurrentAmount+=(int)$CurrentExtraAmount;
