@@ -36,7 +36,13 @@ $hallpackage=queryReceive($sql);
 $sql='SELECT catering_id FROM `orderDetail` WHERE id='.$order.'';
 $cateringresult=queryReceive($sql);
 $cateringid=$cateringresult[0][0];
-$sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
+
+$sql='SELECT dt.id,dt.name FROM dishControl as dc INNER join  dish as d 
+on(dc.dish_id=d.id) INNER join dish_type as dt 
+on (d.dish_type_id=dt.id)
+WHERE
+(ISNULL(dc.expire)) AND(ISNULL(dt.expire))AND(dc.catering_id in('.$cateringid.'))
+GROUP by (dt.id)';
 $dishTypeDetail=queryReceive($sql);
 ?>
 <!DOCTYPE html>
@@ -161,16 +167,23 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         $display='';
         for($i=0;$i<count($dishTypeDetail);$i++)
         {
-            $display.='<h2 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning"><i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
+            $display.='<h4 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning">Dish type '.($i+1).' :  <i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
 
-            $sql='SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id='.$dishTypeDetail[$i][0].') AND (ISNULL(expire)) AND(catering_id='.$cateringid.')';
+
+            $sql = 'SELECT d.name, d.id,d.image,d.dish_type_id FROM dish as d
+ INNER join
+ dishControl as dc
+ on(dc.dish_id=d.id)
+ WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND(ISNULL(d.expire))AND(ISNULL(dc.expire))AND(dc.catering_id in('.$cateringid.')) ';
+
+
             $dishDetail=queryReceive($sql);
-            //print_r($dishDetail);
-            $display.='<div id="dishtype'.$i.'"  class="row" style="display: none">';
+            //print_r($dishDetail);style="display: none"
+            $display.='<div id="dishtype'.$i.'"  class="row" >';
             for ($j=0;$j<count($dishDetail);$j++)
             {
                 $display .= ' 
-         <div  class="col-5 m-2 m-sm-auto  shadow-lg p-3 bg-white rounded" >';
+         <div  class="card col-md-4" >';
 
 
 
@@ -191,9 +204,11 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         $display.='<img class="card-img-top " src="'.$image.'" alt="Card image" style="height: 100px" >
         
-            <p  class="font-weight-bold p-0 card-title col-12
-            "><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</p>
+            <div  class="card-body ">
+            <i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '<br>
+            <span> Dish id # ' . $dishDetail[$j][1] . '</span>
             <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary"><i class="fas fa-check "></i>  Select</button>
+            </div>
        
         </div>';
             }

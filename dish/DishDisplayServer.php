@@ -10,7 +10,7 @@ if($_POST['option']=="showPriceofAllDishes")
     $display='    
    
         <div class="modal-header">
-                <h4 class="modal-title"><i class="fas fa-concierge-bell mr-1"></i>'.$dishName.'  </h4>
+                <h4 class="modal-title "><i class="fas fa-concierge-bell mr-1"></i>'.$dishName.' <br>dish id# '.$dishid.' </h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             
@@ -38,39 +38,6 @@ if($_POST['option']=="showPriceofAllDishes")
 
 
 
-    /*<div class="card" style="width: 18rem;">
-           <div class="card-header text-danger">
-               <i class="fas fa-money-bill-alt"></i>  Price
-           </div>
-           <ul class="list-group list-group-flush">
-               <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i> AttributeName : Quantity</li>
-           </ul>
-           <div class="card-footer m-auto">
-               <button  type="button" data-dishid="1"  class="btn btn-success  adddish "><i class=" far fa-check-circle"></i>Select</button>
-           </div>
-       </div>-->
-
-
-
-
-
-       <div   id="dishid_1" class="card" style="width: 18rem;">
-           <div class="card-header ">
-               <h5>Dishname</h5>
-               <i class="fas fa-money-bill-alt text-danger float-right"> Price</i>
-           </div>
-           <ul class="list-group list-group-flush">
-               <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i> AttributeName:quantity</li>
-           </ul>
-           <div class="card-footer  m-auto">
-
-               <button  data-dishid="1" class="btn btn-danger remove "><i class="far fa-trash-alt"></i>Delete</button>
-           </div>
-       </div>*/
-
-
-
-
     $sql='SELECT dwa.id, dwa.active, dwa.expire, dwa.price, dwa.dish_id FROM dishWithAttribute as dwa WHERE (ISNULL(dwa.expire)) AND (dwa.dish_id='.$dishid.')';
     $dishWithAttribute=queryReceive($sql);
 
@@ -81,8 +48,10 @@ if($_POST['option']=="showPriceofAllDishes")
 
 
         $display.=  '<div class="card" style="width: 18rem;">
-                    <div class="card-header text-danger">
-                        <i class="fas fa-money-bill-alt"></i>  '.$dishWithAttribute[$j][3].'
+                    <div class="card-header ">
+                    Dish price id#'.$dishWithAttribute[$j][3].'<br>
+                    
+                        <i class="fas fa-money-bill-alt text-danger"></i> Price: '.$dishWithAttribute[$j][3].'
                     </div>
                     <ul class="list-group list-group-flush">';
 
@@ -93,7 +62,8 @@ if($_POST['option']=="showPriceofAllDishes")
         // special dish with attribute and quantity
         for($i=0;$i<count($AttributeDetail);$i++)
         {
-            $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].' :  '.$AttributeDetail[$i][1].'</li>';
+
+            $display.=' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
         }
 
 
@@ -128,11 +98,19 @@ else if($_POST['option']=="AddDishOnForm")
     $dishid=$_POST['dishid'];
     $dishName=$_POST['dishName'];
     $countofdish=$_POST['countofdish'];
+
+    $sql='SELECT d.id FROM dish as d   INNER JOIN dishWithAttribute as dwa
+on (d.id=dwa.dish_id)
+Where  (dwa.id='.$dishid.')';
+    $DishDetail=queryReceive($sql);
     $display='';
 
-    $display.=  '<div id="remove'.$countofdish.'" class="card" style="width: 18rem;">
+
+
+    $display.=  '<div id="remove'.$countofdish.'" class="card col-md-4" >
                           <h5><i class="fas fa-concierge-bell mr-1"></i>'.$dishName.'</h5>
-               <i class="fas fa-money-bill-alt text-danger float-right"> '.$price.'</i>
+                          <h6>Dish id#'.$DishDetail[0][0].' <br>Dish Price id#'.$dishid.'</h6>
+               <i class="fas fa-money-bill-alt text-danger float-right">Price : '.$price.'</i>
                     <ul class="list-group list-group-flush">';
 
 
@@ -142,7 +120,9 @@ else if($_POST['option']=="AddDishOnForm")
     // special dish with attribute and quantity
     for($i=0;$i<count($AttributeDetail);$i++)
     {
-        $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].' :  '.$AttributeDetail[$i][1].'</li>';
+     //   $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].' :  '.$AttributeDetail[$i][1].'</li>';
+        $display.=' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
+
     }
 
 

@@ -166,7 +166,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
             ?>"</span></h4>
 
         <hr>
-        <div class=" row " id="additems">
+        <div class="row col-12 " id="additems">
 
 
 
@@ -324,8 +324,9 @@ GROUP by (EIT.id)';
                 '    <span class="text-danger "><i class="far fa-money-bill-alt"></i>Amount '+amount+'</span>\n' +
                 '        \n' +
             '                    <input type="hidden" name="selecteditem[]" value="'+id+'">\n' +
+                '                    <button  data-amount="'+amount+'" data-jsid="'+javaid+'" class="btn btn-danger deleteitems col-12">Delete</button>\n' +
             '                  </div>\n' +
-                '                    <button  data-amount="'+amount+'" data-jsid="'+javaid+'" class="btn btn-danger deleteitems">Delete</button>\n' +
+
             '            </div>';
 
             $("#additems").append(text);

@@ -14,22 +14,16 @@ $sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orde
 $processInformation=queryReceive($sql);
 
 $dishDetailId='';
-if(isset($_GET['dish']))
+$dishDetailToken="";
+
+if(isset($_GET['dd']))
 {
-    $dishDetailId=base64url_decode($_GET['dish']);
-    if(!is_numeric($dishDetailId))
-    {
-        exit();
-    }
-}
-else
-{
-    exit();
+    $dishDetailId=$_GET['dd'];
+    $dishDetailToken=$_GET['ddt'];
 }
 
 $orderid=$processInformation[0][5];
-//$sql='SELECT `describe`, `price`, `quantity`, `dish_id` FROM `dish_detail` WHERE id='.$dishDetailId.'';
-$sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT (SELECT d.image FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT u.username FROM user as u WHERE u.id=dd.user_id),(SELECT u.username FROM user as u WHERE u.id=dd.expireUser)  FROM dish_detail as dd WHERE  (dd.id='.$dishDetailId.')';
+$sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT (SELECT d.image FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT u.username FROM user as u WHERE u.id=dd.user_id),(SELECT u.username FROM user as u WHERE u.id=dd.expireUser)  FROM dish_detail as dd WHERE  (dd.id='.$dishDetailId.')AND(dd.token="'.$dishDetailToken.'")';
 $dishDetailOfDetai=queryReceive($sql);
 
 $userid=$_COOKIE['userid'];
@@ -86,7 +80,8 @@ else
     <div class="row m-auto">
         <div class="card">
             <img src="<?php echo $image;?>" style="height: 20vh;width: 100%">
-            <h2 ><?php echo $dishDetailOfDetai[0][10];?></h2>
+            <h4 align="center"><?php echo $dishDetailOfDetai[0][10];?></h4>
+            <?php echo '<p align="center">Dish_Detail_id #'.$dishDetailOfDetai[0][0].'</p>';?>
         </div>
     </div>
 
@@ -105,7 +100,7 @@ else
                 // special dish with attribute and quantity
                 for($j=0;$j<count($AttributeDetail);$j++)
                 {
-                    echo ' <li class="list-group-item "><h2><i class="fa fa-calculator" aria-hidden="true"></i> '.$AttributeDetail[$j][0].' :  '.$AttributeDetail[$j][1].'</h2></li>';
+                    echo ' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
                 }
                 ?>
             </ul>

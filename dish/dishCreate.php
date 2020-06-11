@@ -128,13 +128,13 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
                         <img src="<?php echo $image;?>" style="height: 20vh;width: 100%">
-                        <h4 ><?php echo $dishesName[$j]; ?></h4>
+                        <h4 class="text-center" ><?php echo $dishesName[$j].'<br> dishPriceId# '.$dishesid[$j]; ?> </h4>
                 </div>
 
 
                 <div class="form-group row">
 
-                    <ul>
+                    <ul class="card">
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishesid[$j].')';
                 $AttributeDetail=queryReceive($sql);
@@ -142,7 +142,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 // special dish with attribute and quantity
                 for($i=0;$i<count($AttributeDetail);$i++)
                 {
-                    echo ' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].' :  '.$AttributeDetail[$i][1].'</li>';
+                    $display.=' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
                 }
                 ?>
 

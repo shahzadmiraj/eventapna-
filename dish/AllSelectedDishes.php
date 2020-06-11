@@ -88,17 +88,22 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
     <?php
-  $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id)  FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND (dd.orderDetail_id='.$orderId.')';
-   $detailDishes=queryReceive($sql);
+
+
+
+
+   function DisplayDishesSelected($detailDishes,$Query)
+   {
+
     for($i=0;$i<count($detailDishes);$i++)
     {
 
-
+        //$detailDishes[$i][0] dish Detail id
         ?>
 
-        <a href="dishPreview.php?dish=<?php echo base64url_encode($detailDishes[$i][0]);?>" class="card m-2" >
+        <a href="dishPreview.php?<?php echo 'dd='.$detailDishes[$i][0].'&ddt='.$detailDishes[$i][11].'&'.$Query?>" class="card col-md-4" >
             <div class="card-header">
-                <h4><i class="fas fa-concierge-bell "></i><?php echo $detailDishes[$i][10];?></h4>
+                <h6><?php echo $i+1;?> <i class="fas fa-concierge-bell "></i>Dish Name :<?php echo $detailDishes[$i][10];?></h6>
             </div>
             <ul class="list-group list-group-flush">
 
@@ -110,11 +115,19 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 // special dish with attribute and quantity
                 for($j=0;$j<count($AttributeDetail);$j++)
                 {
-                    echo ' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$j][0].' :  '.$AttributeDetail[$j][1].'</li>';
+                    echo ' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
                 }
                 ?>
             </ul>
-            <p><i class="fas fa-comments"></i><?php echo $detailDishes[$i][1];?></p>
+            <p>Message:<?php echo $detailDishes[$i][1];?><br>
+                <?php
+                echo 'Dish_Detail_Id# '.$detailDishes[$i][0];
+
+                ?>
+
+
+
+            </p>
             <div class="card-footer ">
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -143,6 +156,15 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         <?php
     }
+   }
+
+
+    $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),dd.token  FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND (dd.orderDetail_id='.$orderId.')';
+    $detailDishes=queryReceive($sql);
+    DisplayDishesSelected($detailDishes,$Query);
+
+
+
     ?>
 </div>
 
@@ -152,7 +174,6 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 <div class="container alert-danger mt-5">
     <h3><i class="fas fa-trash-alt"></i> Expired Dishes  <input   id="expireControl" class="btn btn-danger" value="Show"></h3>
-
     <hr>
 </div>
 
@@ -163,68 +184,11 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
     <?php
-    $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id)  FROM dish_detail as dd WHERE (!ISNULL(dd.expire))AND (dd.orderDetail_id='.$orderId.')';
+    $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),dd.token  FROM dish_detail as dd WHERE (! ISNULL(dd.expire))AND (dd.orderDetail_id='.$orderId.')';
     $detailDishes=queryReceive($sql);
-    for($i=0;$i<count($detailDishes);$i++)
-    {
-
-
-        ?>
-
-        <a href="dishPreview.php?dish=<?php echo base64url_encode($detailDishes[$i][0]);?>" class="card alert-danger m-2" >
-            <div class="card-header">
-                <h4><i class="fas fa-concierge-bell"></i>  <?php echo $detailDishes[$i][10];?></h4>
-            </div>
-            <ul class="list-group list-group-flush">
-
-
-                <?
-                $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$detailDishes[$i][6].')';
-                $AttributeDetail=queryReceive($sql);
-
-                // special dish with attribute and quantity
-                for($j=0;$j<count($AttributeDetail);$j++)
-                {
-                    echo ' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$j][0].' :  '.$AttributeDetail[$j][1].'</li>';
-                }
-                ?>
-            </ul>
-            <p><i class="fas fa-comments"></i><?php echo $detailDishes[$i][1];?></p>
-            <div class="card-footer ">
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
-                    </div>
-                    <label>Price:<?php echo $detailDishes[$i][8];?></label>
-                </div>
-
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-sort-amount-up"></i></span>
-                    </div>
-                    <label>Quantity:<?php echo $detailDishes[$i][3];?></label>
-                </div>
-
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend ">
-                        <span class="input-group-text text-danger"><i class="fas fa-money-bill-alt"></i></span>
-                    </div>
-                    <label>Total:<?php echo (int) $detailDishes[$i][3]*$detailDishes[$i][8];?></label>
-                </div>
-
-                <div class="input-group mb-3 input-group-lg text-danger">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <label><?php echo $detailDishes[$i][2];?></label>
-                </div>
-
-            </div>
-        </a>
-
-        <?php
-    }
+    DisplayDishesSelected($detailDishes,$Query);
     ?>
+
 </div>
 
 <?php
