@@ -4,11 +4,17 @@ $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE
 $userdetail=queryReceive($sql);
 
 
-$packageid=$_GET['pid'];
-$packageToken=$_GET['ptoken'];
+$packageDateId=$_GET['pdid'];
+$packageDateToken=$_GET['pdtoken'];
+
+
+$sql='SELECT package_id,selectedDate FROM packageDate WHERE ISNULL(expire)AND(package_id='.$packageDateId.')AND(token="'.$packageDateToken.'")';
+$packageSelective=queryReceive($sql);
+
+$packageid=$packageSelective[0][0];
 
 $companyid=$userdetail[0][0];
-$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`,1, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')AND(token="'.$packageToken.'")AND(ISNULL(expire))';
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`,1, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')AND(ISNULL(expire))';
 $packageDetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
 ?>

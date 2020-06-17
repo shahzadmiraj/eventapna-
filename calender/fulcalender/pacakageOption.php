@@ -65,7 +65,7 @@ if($_POST['option']=="ViewPackages")
     $sql = 'SELECT p.id,p.isFood,package_name,pd.selectedDate,p.dayTime,pd.id FROM packages as p INNER JOIN packageDate as pd
 on p.id=pd.package_id
 WHERE
-(ISNULL(p.expire))AND (ISNULL(pd.expire))
+(ISNULL(p.expire)) AND (ISNULL(pd.expire))
 AND(p.id IN ('.$packagesStringList.') )
 '.$daytime.' '.$packagetype.'
 ';
@@ -101,7 +101,7 @@ AND(p.id IN ('.$packagesStringList.') )
 
 
         $data[] = array(
-            'id' => $ViewPackages[$i][0],
+            'id' => $ViewPackages[$i][5],
             'title' => 'Pid# ' . $ViewPackages[$i][0]."Did# ".$ViewPackages[$i][5]. "PN".$packagename,
             'start' => $start,
             'end' => $end
@@ -113,9 +113,9 @@ AND(p.id IN ('.$packagesStringList.') )
 else if($_POST['option']=="encordpackage")
 {
     $id=$_POST['id'];
-    $sql='SELECT `id`,`token` FROM `packages` WHERE id='.$id.'';
+    $sql='SELECT `id`,`token` FROM `packageDate` WHERE id='.$id.'';
     $Packagedetail=queryReceive($sql);
-    echo 'pid='.$Packagedetail[0][0].'&ptoken='.$Packagedetail[0][1];
+    echo 'pdid='.$Packagedetail[0][0].'&pdtoken='.$Packagedetail[0][1];
 
 }
 else if($_POST['option']=='SpecificpackageView')

@@ -3,12 +3,21 @@
 include_once ('../../../connection/connect.php');
 include_once ("functions.php");
 $userid=1;
-$PackageDateid=base64url_decode($_GET['pack']);
+$PackageDateid=$_GET['pdid'];
+$PackageToken=$_GET['pdtoken'];
+
+
+
+
 $sql='SELECT pd.package_id,pd.selectedDate FROM packageDate as pd 
-WHERE pd.id='.$PackageDateid.'';
+WHERE (pd.id='.$PackageDateid.')AND(token="'.$PackageToken.'")';
 $PackageDate=queryReceive($sql);
 
-$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `hall_id`, `package_name`, `active`,`minimumAmountBooking` FROM `packages` WHERE id='.$PackageDate[0][0].'';
+
+$sql='SELECT  `hall_id` FROM `packageControl` WHERE ISNULL(expire)AND(package_id='.$PackageDate[0][0].')';
+$PackageOrignal=queryReceive($sql);
+
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`,'.$PackageOrignal[0][0].', `package_name`, `active`,`minimumAmountBooking` FROM `packages` WHERE id='.$PackageDate[0][0].'';
 $PackageDetail=queryReceive($sql);
 
 $sql='SELECT `id`, `dishname`, `image` FROM `menu` WHERE (package_id='.$PackageDetail[0][0].')AND(ISNULL(expire))';
@@ -23,7 +32,13 @@ WHERE
 $hallInformation=queryReceive($sql);
 
 
-$sql='SELECT `id`, `name` FROM `Extra_item_type` WHERE  ISNULL(expire)AND(hall_id='.$hallInformation[0][0].')';
+$sql='SELECT EIT.id,EIT.name FROM ExtraItemControl as EIC INNER join  Extra_Item as EI 
+on(EIC.Extra_Item_id=EI.id) INNER join Extra_item_type as EIT 
+on (EI.Extra_item_type_id=EIT.id)
+WHERE
+(ISNULL(EIC.expire)) AND(ISNULL(EIT.expire))AND(EIC.hall_id in('.$hallInformation[0][0].'))
+GROUP by (EIT.id)';
+
 $ExtraType=queryReceive($sql);
 
 
@@ -74,7 +89,7 @@ $SenderName=array();
 </head>
 <body>
 <?php
-include_once ("../../../webdesign/header/header.php");
+//include_once ("../../../webdesign/header/header.php");
 
 
 
@@ -414,12 +429,16 @@ else
 
 ';
 
-            $sql='SELECT `id`,`image`, `price`,`name` FROM `Extra_Item` WHERE (ISNULL(expire))AND(Extra_item_type_id='.$ExtraType[$j][0].')';
+            $sql='SELECT ex.id,ex.name,ex.price,ex.image,ex.active FROM Extra_Item as ex
+ INNER join
+ ExtraItemControl as EIC
+ on(EIC.Extra_Item_id=ex.id)
+ WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$ExtraType[$j][0].')AND(ISNULL(EIC.expire))AND(EIC.hall_id in('.$hallInformation[0][0].'))';
 
             $Extraitem=queryReceive($sql);
             $image = "";
             for ($i = 0; $i < count($Extraitem); $i++) {
-                $image = $Extraitem[$i][1];
+                $image = $Extraitem[$i][3];
                 if ((file_exists('../../images/hallExtra/' . $image)) && ($image != ""))
                     $image = '../../images/hallExtra/' . $image;
                 else
@@ -429,9 +448,9 @@ else
             
             <div class="col-md-4 mb-5 ">
             <div class="card h-100">
-                <img src="' . $image . '" class="card-img-top" src="" alt="Image">
+                <img src="' . $image . '" class="card-img-top" src="" alt="Image" style="height: 20vh">
                 <div class="card-body">
-                    <h6 class="card-title">' . $Extraitem[$i][3] . '<span class="float-right text-danger">Amount ' . $Extraitem[$i][2] . '</span></h6>
+                    <h6 class="card-title">' . $Extraitem[$i][1] . '<span class="float-right text-danger">Amount ' . $Extraitem[$i][2] . '</span></h6>
                 </div>
             </div>
             </div>

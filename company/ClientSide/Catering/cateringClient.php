@@ -13,7 +13,13 @@ if(count($catering)==0)
 {
     exit();
 }
-$sql='SELECT dt.id, dt.name FROM dish_type as dt WHERE ISNULL(expire) AND (dt.catering_id='.$cateringid.')';
+
+$sql='SELECT dt.id,dt.name FROM dishControl as dc INNER join  dish as d 
+on(dc.dish_id=d.id) INNER join dish_type as dt 
+on (d.dish_type_id=dt.id)
+WHERE
+(ISNULL(dc.expire)) AND(ISNULL(dt.expire))AND(dc.catering_id in('.$cateringid.'))
+GROUP by (dt.id)';
 $dishTypeDetail=queryReceive($sql);
 ?>
 <!DOCTYPE html>
@@ -168,7 +174,17 @@ include_once ("../Company/Box.php");
     for($i=0;$i<count($dishTypeDetail);$i++) {
         $display .= '<div class="row">';
         $display .= '<h4  data-dishtype="' . $i . '" data-display="hide"  class="col-md-12 text-center dishtypes">' . $dishTypeDetail[$i][1] . '</h4>';
-        $sql = 'SELECT `name`, `id`, `image`, `dish_type_id` FROM `dish` WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ') AND (ISNULL(expire)) AND(catering_id=' . $cateringid . ')';
+
+        $sql = 'SELECT d.name, d.id,d.image,(SELECT price FROM `dishWithAttribute` WHERE dish_id=d.id limit 1 ),d.token FROM dish as d
+ INNER join
+ dishControl as dc
+ on(dc.dish_id=d.id)
+ 
+ 
+ 
+ WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND(ISNULL(d.expire))AND(ISNULL(dc.expire))AND(dc.catering_id in('.$cateringid.')) ';
+
+
         $dishDetail = queryReceive($sql);
 
         for ($j=0;$j<count($dishDetail);$j++)
@@ -189,7 +205,7 @@ include_once ("../Company/Box.php");
           
         <div class="col-md-4 mb-5" >
             <div class="card h-80">
-                <img class="card-img-top" src="'.$image.'" alt="">
+                <img class="card-img-top" src="'.$image.'" alt="" style="height: 20vh">
                 <div class="card-body">
                     <h6 class="card-title">' . $dishDetail[$j][0] . ' </h6>
                          <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary"><i class="fas fa-check "></i>  Show Price</button>
