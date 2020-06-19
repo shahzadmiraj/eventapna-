@@ -27,7 +27,7 @@ function SortDistanceHalls($lat,$lon,$country,$hallname)
 {
 /*    $sql='SELECT c.id,cl.latitude,cl.longitude,cl.radius,c.name FROM catering as c INNER join cateringLocation as cl
 on (c.id=cl.catering_id)
-WHERE 
+WHERE
 (ISNULL(c.expire))AND(ISNULL(cl.expire))AND(cl.country="'.$country.'")AND(c.name like "%'.(trim($hallname)).'%")';*/
 
 $sql='SELECT h.id,l.latitude,l.longitude FROM hall as h INNER join location as l 
@@ -53,6 +53,7 @@ WHERE
 function ShowAllHallPackages($latitude,$longitude,$country,$hallname,$daytime,$date,$perhead)
 {
     $halldetail=SortDistanceHalls($latitude,$longitude,$country,$hallname);
+
     $display='';
     for($i=0;$i<count($halldetail);$i++)
     {
@@ -67,6 +68,7 @@ function hallOrderExist($dayTime,$hallid,$destination_date)
     $MaxGuestMaxPartition=array();
     $sql='SELECT h.max_guests,h.noOfPartitions FROM hall as h WHERE h.id='.$hallid.'';
     $halldetal=queryReceive($sql);
+  //  print_r($halldetal);
 
     $MaxGuestMaxPartition[0]=$halldetal[0][0];
     $MaxGuestMaxPartition[1]=$halldetal[0][1];
@@ -108,12 +110,14 @@ function showCateringsdishesSeperate($hallid,$CurrentDistance,$daytime,$date,$pe
     $daytime= "Morning";
     $date="2020-04-30";
     $perhead=0;*/
-    $maxDate = date('Y-m-d', strtotime($date . ' +1 day'));
+    $maxDate = date('Y-m-d', strtotime($date . ' +20 day'));
     $halltype=array("Marquee","Hall","Deera /Open area");
-    $sql='SELECT  h.id,h.image,h.name,h.max_guests,p.id,pd.selectedDate,p.isFood,p.price,p.dayTime,p.package_name,h.hallType,h.noOfPartitions,h.ownParking from hall as h INNER join location as l 
+    $sql='SELECT  h.id,h.image,h.name,h.max_guests,p.id,pd.selectedDate,p.isFood,p.price,p.dayTime,p.package_name,h.hallType,h.noOfPartitions,h.ownParking,pd.id,pd.token from hall as h INNER join location as l 
 on (h.location_id=l.id)
+inner  join packageControl as pc 
+on (pc.hall_id=h.id)
 inner join packages as p 
-on (h.id=p.hall_id)
+on (pc.package_id=p.id)
 INNER join packageDate as pd 
 on (p.id=pd.package_id)
 WHERE
@@ -124,6 +128,7 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
 
     $display = '';
     $AllHalls=queryReceive($sql);
+  //  print_r($AllHalls);
     //print_r($sql);
 
 
@@ -133,7 +138,7 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
         $sql='SELECT AVG(c.rating) FROM comments as c WHERE (c.hall_id='.$AllHalls[$i][0].')AND(c.PackOrDishId='.$AllHalls[$i][6].') ';
         $star=queryReceive($sql);
 
-        $MaxGuestMaxPartition=hallOrderExist($AllHalls[$i][0], $AllHalls[$i][5], $AllHalls[$i][8]);
+        $MaxGuestMaxPartition=hallOrderExist($AllHalls[$i][5], $AllHalls[$i][0], $AllHalls[$i][8]);
 
         if($MaxGuestMaxPartition[0]<=0)
         {
@@ -158,8 +163,8 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
 
 
         $display.='
-            <li><span class="converse">'.$AllHalls[$i][2].'</span></li>
             <li><a href="#"><i class="fas fa-street-view"></i></a>'.$CurrentDistance.'Km</li>
+            <li></li>
         </ul>
     </div>
     <div class="middle">
@@ -198,9 +203,9 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
         }
         $display.= '</span></div>
         <div class="info">Max Guests '.$MaxGuestMaxPartition[0].'</div>
-        <div class="style">Date:'.$AllHalls[$i][5].' /Time:'.$AllHalls[$i][8].'  /Type:'.$halltype[$AllHalls[$i][10]].'</div>
+        <div class="style">Date:'.$AllHalls[$i][5].' /Time:'.$AllHalls[$i][8].'  /Type:'.$halltype[$AllHalls[$i][10]].' /Hall Name :'.$AllHalls[$i][2].'</div>
         <div class="price font-weight-bold"> <i class="far fa-money-bill-alt"></i> :'.$AllHalls[$i][7].' <span class="old-price">'.((int)$AllHalls[$i][7]+5000).'</span></div>
-        <div class="style"><a href="company/ClientSide/Hall/ClientHallPackage.php?pack='.base64url_encode($AllHalls[$i][4]).'" class="btn btn-primary">Visit And Booking >></a></div>
+        <div class="style"><a href="company/ClientSide/Hall/ClientHallPackage.php?pdid='.$AllHalls[$i][13].'&pdtoken='.$AllHalls[$i][14].'" class="btn btn-primary">Visit And Booking >></a></div>
     </div>
 
 </div>';
@@ -223,10 +228,12 @@ function HallSearching($latitude,$longitude,$country,$hallname,$daytime,$date,$p
     //$daytime=$_POST['daytime'];
     //$date=$_POST['date'];
    // $perhead=$_POST['perhead'];
-    $latitude=$_POST['latitude'];
-    $longitude=$_POST['longitude'];
+   // $latitude=$_POST['latitude'];
+    //$longitude=$_POST['longitude'];
     //$city=$_POST['city'];
-    $country=$_POST['country'];
+    //$country=$_POST['country'];
+
+
     $result=ShowAllHallPackages($latitude,$longitude,$country,$hallname,$daytime,$date,$perhead);
     if($result=="")
     {

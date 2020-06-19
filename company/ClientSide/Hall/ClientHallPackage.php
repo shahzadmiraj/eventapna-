@@ -201,6 +201,13 @@ include_once ("../Company/Box.php");
                         <?php echo $PackageDetail[0][2];?>
                     </div>
 
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        Total Patition
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        <?php echo  $MaxGuestMaxPartition[1];?>
+                    </div>
 
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
@@ -208,17 +215,25 @@ include_once ("../Company/Box.php");
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        <?php echo  $MaxGuestMaxPartition[1];?> / <?php echo $MaxGuestMaxPartition[3];?>
+                         <?php echo $MaxGuestMaxPartition[3];?>
                     </div>
 
 
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Arrangement Available
+                        Total Arrangement of Seating
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        <?php echo $MaxGuestMaxPartition[0];?>/<?php echo $MaxGuestMaxPartition[2];?>
+                        <?php echo $MaxGuestMaxPartition[0];?>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        Remaining Arrangement of Seating
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
+                        <?php echo $MaxGuestMaxPartition[2];?>
                     </div>
 
 

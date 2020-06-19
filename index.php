@@ -43,7 +43,7 @@ if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
 </head>
 <body>
 <?php
-include_once ("webdesign/header/header.php");
+//include_once ("webdesign/header/header.php");
 ?>
 
 <div class="bd-example">
@@ -321,6 +321,11 @@ include_once ("webdesign/header/header.php");
     {
         echo HallSearching($_GET['latitude'],$_GET['longitude'],$_GET['country'],$_GET['hallname'],$_GET['daytime'],$_GET['Date'],$_GET['perhead']);
     }
+    else
+    {
+
+        echo ShowAllHallPackages(12.32,12.3,"Pakistan","","Morning","2020-06-15",0);
+    }
     ?>
 
 
@@ -444,7 +449,7 @@ else
 
 
 <?php
-include_once ("webdesign/footer/footer.php");
+//include_once ("webdesign/footer/footer.php");
 ?>
 </body>
 </html>
