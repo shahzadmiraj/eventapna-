@@ -8,7 +8,7 @@ $packageDateId=$_GET['pdid'];
 $packageDateToken=$_GET['pdtoken'];
 
 
-$sql='SELECT package_id,selectedDate FROM packageDate WHERE ISNULL(expire)AND(package_id='.$packageDateId.')AND(token="'.$packageDateToken.'")';
+$sql='SELECT package_id,selectedDate FROM packageDate WHERE ISNULL(expire)AND(id='.$packageDateId.')AND(token="'.$packageDateToken.'")';
 $packageSelective=queryReceive($sql);
 
 $packageid=$packageSelective[0][0];

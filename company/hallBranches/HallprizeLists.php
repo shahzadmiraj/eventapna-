@@ -172,14 +172,14 @@ include_once ("../ClientSide/Company/Box.php");
 
             function tabel(packids)
             {
-
                 $.ajax({
                     url:"../../calender/fulcalender/pacakageOption.php",
                     type:"POST",
-                    data:{option:"PackagesShowsOnTable","PackID":packids},
+                    data:{"option":"PackagesShowsOnTable","PackID":packids},
                     success:function(data)
                     {
                         $("#TableCalender").html(data);
+
                     }
                 });
             }

@@ -189,7 +189,8 @@ else if($_POST['option']=="InsertNewDate")
     $getpackageDetail=queryReceive($sql);
     if(count($getpackageDetail)>0)
         exit();
-    $sql='INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`) VALUES (NULL,"'.$timestamp.'",NULL,'.$Packageid.','.$userid.',NULL,"'.$selectedDate.'")';
+    $token=uniqueToken("packageDate");
+    $sql='INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$Packageid.','.$userid.',NULL,"'.$selectedDate.'","'.$token.'")';
     querySend($sql);
 }
 else if($_POST['option']=="updateEdittable")
@@ -226,12 +227,11 @@ else if($_POST['option']=="PackagesShowsOnTable")
     $PackID=$_POST['PackID'];
     $PackUnique =array_unique($PackID);
     $List = implode(', ', $PackUnique);
-
-    $sql = 'SELECT p.id,p.isFood,p.package_name FROM packages as p 
-WHERE
-(ISNULL(p.expire))
-AND(p.id IN ('.$List.') )
-';
+    $sql = 'SELECT p.id,p.package_name,p.isFood FROM packages as p INNER join packageDate as pd 
+on (p.id=pd.package_id)
+WHERE 
+(ISNULL(p.expire))AND(ISNULL(pd.expire))AND (pd.id in ('.$List.'))
+                      group by (p.id)';
     $ViewPackages = queryReceive($sql);
 
     $display='<table class="table table-striped">
@@ -240,17 +240,25 @@ AND(p.id IN ('.$List.') )
                 <th scope="col">#</th>
                 <th scope="col">id</th>
                 <th scope="col">Package Name</th>
+                <th scope="col">Type</th>
             </tr>
             </thead>
             <tbody>';
 
+    $Packagetype="";
     for($i=0;$i<count($ViewPackages);$i++)
     {
+
+        $Packagetype="Seating";
+        if($ViewPackages[$i][2]==1)
+            $Packagetype="Food";
+
         $display.='
             <tr>
                 <th scope="row">'.($i+1).'</th>
                 <th scope="col">'.$ViewPackages[$i][0].'</th>
-                <td>'.$ViewPackages[$i][2].'</td>
+                <td>'.$ViewPackages[$i][1].'</td>
+                <td>'.$Packagetype.'</td>
             </tr>';
     }
 
