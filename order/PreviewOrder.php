@@ -116,7 +116,10 @@ $Query='pid=' . $pid . '&token='.$token;
             if($hallid!="")
             {
                 //1 hall order edit                //2 make hall order to user displaye
-                echo '<a href="../company/hallBranches/EdithallOrder.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Hall Order</h6></a>';
+                echo '<a href="../company/hallBranches/EdithallOrder.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Hall Order</h6></a>
+                    <a href="../company/hallBranches/orderInfo/orderItem.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x" ><i class="far fa-money-bill-alt"></i><h6>Manage Extra Items</h6></a>       
+
+';
 
             }
             else

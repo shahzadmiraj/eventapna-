@@ -97,23 +97,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-
-    <?php
-        echo '<input type="number" hidden id="extraamount" value="'.$priceDetailOfExtraItem[0][0].'">';
-    ?>
-
-
-
-<div class="container card form-group form-inline">
-    <h4 class="m-auto">Extra Items detail   <span class="text-primary ml-5"><i class="far fa-money-bill-alt"></i><?php echo $priceDetailOfExtraItem[0][0];?></span></h4>
-    <a href="orderInfo/orderItem.php?<?php echo $Query;?>" class="btn btn-primary" >manage items</a>
-</div>
-<hr>
-
-
 <form class="form container card" >
-    <h3>Order information</h3>
-    <hr>
     <input type="hidden" name="userid" value="<?php echo $userid;?>">
 
     <div class="form-group row">
@@ -313,6 +297,18 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     <div id="selectmenu" class="alert-info  m-2 form-group row shadow" >
 
 
+    </div>
+
+
+    <div class="form-group row">
+        <label class="col-form-label">Total Extra items amount:</label>
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input readonly type="number" class="form-control"   id="extraamount" value="<?php echo $priceDetailOfExtraItem[0][0];?>">
+        </div>
     </div>
 
 
