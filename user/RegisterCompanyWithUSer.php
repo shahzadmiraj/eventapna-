@@ -6,10 +6,6 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
-
-
-
 ?>
 <!DOCTYPE html>
 <head>
@@ -60,7 +56,7 @@ include_once ("../webdesign/header/header.php");
         </div>
 
         <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;>
-            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i> Company Sign up</h1>
+                  <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i>Sign Up in company</h1>
             <h4  id="error"> </h4>
             <form class="col-12" id="formLogin">
                 <div class="form-group row">

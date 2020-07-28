@@ -82,16 +82,16 @@ include_once ("../../../webdesign/header/header.php");
                         <h4 class="text-uppercase font-weight-bold">Software Features</h4>
                         <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                         <p>
-                            <a href="../../../company/companyRegister/companyRegister.php" class="text-dark">Marquee Management software</a>
+                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-dark">Marquee Management software</a>
                         </p>
                         <p>
-                            <a href="../../../company/companyRegister/companyRegister.php" class="text-dark">Hall Management software</a>
+                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-dark">Hall Management software</a>
                         </p>
                         <p>
-                            <a href="../../../company/companyRegister/companyRegister.php" class="text-dark">Catering Management software</a>
+                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-dark">Catering Management software</a>
                         </p>
                         <p>
-                            <a href="../../../company/companyRegister/companyRegister.php" class="text-dark">Dera / Open area Management software</a>
+                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-dark">Dera / Open area Management software</a>
                         </p>
                     </div>
                 </div>

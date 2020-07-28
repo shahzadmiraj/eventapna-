@@ -65,14 +65,13 @@ function showCateringsdishesSeperate($cateringid,$radius,$cateringname,$CurrentD
 {
 
 
-    $sql='SELECT d.name,d.image,dwa.price,dwa.id FROM dish as d INNER join dishWithAttribute as dwa
-on (d.id=dwa.dish_id)
-WHERE
-(ISNULL(d.expire))AND(ISNULL(dwa.expire))
-AND
-(d.catering_id='.$cateringid.')AND(d.name like "%'.$DishNamePredict.'%")';
 
 
+$sql='SELECT d.name,d.image,dwa.price,dwa.id FROM dish as d INNER join dishWithAttribute as dwa on (d.id=dwa.dish_id) INNER JOIN 
+dishControl as dc 
+on (dc.dish_id=d.id)
+WHERE (ISNULL(d.expire))AND(ISNULL(dwa.expire)) AND 
+(ISNULL(dc.expire))AND(dc.catering_id='.$cateringid.')AND(d.name like "%'.$DishNamePredict.'%")';
     $AllDishes=queryReceive($sql);
     //print_r($sql);
 
@@ -80,12 +79,12 @@ AND
     for($i=0;$i<count($AllDishes);$i++)
     {
         $dishimage='';
-        if((file_exists('../../../../images/dishImages/'.$AllDishes[$i][1])AND($AllDishes[$i][1]!="")))
+        if((file_exists('../../../images/dishImages/'.$AllDishes[$i][1])AND($AllDishes[$i][1]!="")))
         {
-            $dishimage='../../../../images/dishImages/'.$AllDishes[$i][1];
+            $dishimage='../../../images/dishImages/'.$AllDishes[$i][1];
         }else
         {
-            $dishimage='https://static1.bigstockphoto.com/3/1/1/large1500/113342513.jpg';
+            $dishimage='../../../images/systemImage/imageNotFound.png';
         }
 
 
@@ -99,9 +98,10 @@ WHERE (a.dishWithAttribute_id='.$AllDishes[$i][3].')AND
 <div class="block ">
 
     <div class="top">
+    
+    <h3 class="converse">Branch: <span class="converse">'.$cateringname.'</span></h3>
         <ul>
-            <li><span class="converse">'.$cateringname.'</span></li>
-            <li><a href="#"><i class="fas fa-street-view"></i>'.$CurrentDistance.'<span class="text-danger  m-1">/</span>'.$radius.'Km</a></li>
+            <li><a href="#"><i class="fas fa-street-view"></i>your distance :'.$CurrentDistance.'<span class="text-danger  m-1">/</span>branch services '.$radius.'Km</a></li>
         </ul>
     </div>
 
@@ -110,7 +110,7 @@ WHERE (a.dishWithAttribute_id='.$AllDishes[$i][3].')AND
     </div>
 
     <div class="bottom">
-        <div class="heading"><i class="fas fa-concierge-bell"></i>'.$AllDishes[$i][0].' /<span class="m-1"> id#'.$AllDishes[$i][3].'</span></div>
+        <div class="heading"><i class="fas fa-concierge-bell"></i> Dish name : '.$AllDishes[$i][0].' /<span class="m-1"> id#'.$AllDishes[$i][3].'</span></div>
         <div class="info"><p>';
 
 for($j=0;$j<count($Attributes);$j++)
@@ -119,7 +119,7 @@ for($j=0;$j<count($Attributes);$j++)
 }
 
         $display.= '</p></div>
-        <div class="price"><i class="far fa-money-bill-alt"></i>'.$AllDishes[$i][2].' <span class="old-price ml-3">'.($AllDishes[$i][2]+200).'</span></div>
+        <div class="price"><i class="far fa-money-bill-alt"></i>Price :'.$AllDishes[$i][2].' <span class="old-price ml-3">'.($AllDishes[$i][2]+200).'</span></div>
         <div class="style"><a href="cateringClient.php?c='.$cateringid.'" class="btn btn-primary">Visit Branch>></a></div>
     </div>
 

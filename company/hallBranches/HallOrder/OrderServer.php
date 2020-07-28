@@ -23,9 +23,9 @@ function hallOrderExist($hallid, $destination_date, $dayTime, $orderid)
 
 
     if($dayTime="Morning")
-        $dayTime=="09:00:00";
+        $dayTime="09:00:00";
     else  if($dayTime="Afternoon")
-        $dayTime=="12:00:00";
+        $dayTime="12:00:00";
     else
         $dayTime="18:00:00";
 

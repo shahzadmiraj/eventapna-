@@ -42,7 +42,7 @@
 
                     echo '
                 <li class="nav-item ">
-                    <a class="nav-link text-white" href="'.$Root.'company/companyRegister/companyRegister.php"><i class="far fa-registered"></i> Company Register<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="'.$Root.'user/RegisterCompanyWithUSer.php"><i class="far fa-registered"></i> Company Register<span class="sr-only">(current)</span></a>
                 </li>
                 
                 

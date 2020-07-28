@@ -512,9 +512,9 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             {
                 packageid=$("input[name='defaultExampleRadios']:checked").val();
                 amount=$("#selectpricefix"+packageid).val();
-                AutoTotalAmount=parseInt(amount)*parseInt(guests);
+                AutoTotalAmount=Number(amount)*Number(guests);
             }
-          //  AutoTotalAmount+=parseInt(extraAmount);
+            AutoTotalAmount=AutoTotalAmount+Number($("#extraamount").val());
             $("#totalamount").val(AutoTotalAmount);
         }
         function RemainingAmount()
@@ -670,8 +670,10 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         {
 
             var packageid=$("input[name='defaultExampleRadios']:checked").val();
-
             var describe=$("#describe"+packageid).val();
+            valueChangeAuto();
+            RemainingAmount();
+
             menushow(packageid,describe);
 
 
