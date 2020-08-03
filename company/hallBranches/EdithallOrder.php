@@ -383,7 +383,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-       $display.=' <select  name="orderStatus" class=" form-control">
+       $display.=' <select id="orderStatus"  name="orderStatus" class=" form-control">
         <option value="'.$detailorder[0][13].'">'.$detailorder[0][13].'</option>';
         for($i=0;$i<count($status);$i++)
         {
@@ -414,7 +414,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
                 <span class="input-group-text"><i class="far fa-eye"></i></span>
             </div>
 
-            <select  name="branchOrder"   class="form-control">
+            <select  id="branchOrder" name="branchOrder"   class="form-control checkpackage">
                 <?php
 
                 $sql='SELECT od.hall_id,(SELECT h.name FROM hall as h WHERE h.id=od.hall_id) FROM orderDetail as od WHERE od.id='.$orderid.'';
@@ -582,6 +582,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             var date = $("#date").val();
             var time = $("#time").val();
             var perheadwith = $("#perheadwith").val();
+            var hallid = $("#branchOrder").val();
             $("#selectmenu").html("");
             if (!checkpackage(date, time, perheadwith))
             {
@@ -594,7 +595,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             formdata.append("perheadwith", perheadwith);
             formdata.append("option", "checkpackages1");
             formdata.append("orderid", "<?php echo $orderid;?>");
-            formdata.append("hallid",<?php echo $detailorder[0][1];?>);
+            formdata.append("hallid",hallid);
             $.ajax({
                 url: "HallOrder/OrderServer.php",
                 method: "POST",
@@ -630,6 +631,13 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         {
 
             PackageAvailableCheckLimit();
+
+        });
+
+        $("#orderStatus").change(function () {
+                    var orderStatus=$(this).val();
+                    if(orderStatus=="Running")
+                        PackageAvailableCheckLimit();
 
         });
 
@@ -673,10 +681,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             var describe=$("#describe"+packageid).val();
             valueChangeAuto();
             RemainingAmount();
-
             menushow(packageid,describe);
-
-
         });
 
         var packageid=<?php echo $detailorder[0][21]; ?>;
