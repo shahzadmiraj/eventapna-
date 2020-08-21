@@ -48,6 +48,13 @@ $encoded=1;
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
+        a.disabled {
+            pointer-events: none;
+            cursor: default;
+            border: solid;
+            border-color: white;
+            background-color: #eee2e2;
+        }
 
     </style>
 </head>
@@ -67,13 +74,34 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="container">
         <div class="row justify-content-start">
-            <a href="../hallBranches/HallprizeLists.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-clipboard-list fa-3x"></i> <h6> Hall Packages Manage</h6></a>
+            <a href="../hallBranches/HallprizeLists.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center
+
+
+
+    <?php if(count($halls)==0)
+            {
+                echo 'disabled';
+            } ?>
+
+
+             disabled"><i class="fas fa-clipboard-list fa-3x"></i> <h6> Hall Packages Manage</h6></a>
             <a href="../hallBranches/hallRegister.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-place-of-worship fa-3x "></i> <h6> + Add Hall</h6></a>
             <a href="../cateringBranches/catering.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-utensils fa-3x"></i> <h6> + Add Catering</h6></a>
             <a href="../../user/RegisterCompanyUser.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-user-plus fa-3x"></i> <h6> + Add User</h6></a>
             <a href="../ClientSide/Company/ClientCompany.php?c=<?php echo $companyid;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6> Your website</h6></a>
-            <a href="../cateringBranches/dish/dishesInfo.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-hamburger fa-3x"></i><h6>Catering Dishes Mangement system</h6></a>
-            <a href="../hallBranches/extraItems/Hallitem.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-guitar fa-3x"></i> <h6>Hall Extra items Mangement</h6></a>
+            <a href="../cateringBranches/dish/dishesInfo.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center
+
+
+<?php if(count($caterings)==0)
+            {
+                echo 'disabled';
+            } ?>
+"><i class="fas fa-hamburger fa-3x"></i><h6>Catering Dishes Mangement system</h6></a>
+            <a href="../hallBranches/extraItems/Hallitem.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center
+<?php if(count($halls)==0)
+            {
+                echo 'disabled';
+            } ?>"><i class="fas fa-guitar fa-3x"></i> <h6>Hall Extra items Mangement</h6></a>
         </div>
     </div>
     <hr>
