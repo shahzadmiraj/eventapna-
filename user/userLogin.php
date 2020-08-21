@@ -35,8 +35,7 @@ function validationOfUserInSession($id,$confirm)
                 $companyid=$UserDetails[0][12];
                 if(($UserDetails[0][11]==1)||($UserDetails[0][8]=="User"))
                 {
-                    $companyid='"NULL"';
-
+                    $companyid='NULL';
                 }
                 $sql='INSERT INTO `user`(`id`, `username`, `password`, `company_id`, `active`, `image`, `expire`, `jobTitle`, `email`, `number`, `token`) VALUES (
 NULL,"'.$UserDetails[0][1].'","'.$UserDetails[0][2].'",'.$companyid.',"'.$timestamp.'","'.$UserDetails[0][7].'",NULL,"'.$UserDetails[0][8].'","'.$UserDetails[0][9].'","'.$UserDetails[0][10].'","'.$UserDetails[0][5].'")';
@@ -55,7 +54,6 @@ NULL,"'.$UserDetails[0][1].'","'.$UserDetails[0][2].'",'.$companyid.',"'.$timest
 
                 $sql='UPDATE `userSession` SET `expire`="'.$timestamp.'" WHERE id='.$UserDetails[0][0].'';
                 querySend($sql);
-
             }
         }
     }

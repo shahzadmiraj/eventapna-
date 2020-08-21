@@ -631,7 +631,6 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         {
 
             PackageAvailableCheckLimit();
-
         });
 
         $("#orderStatus").change(function () {

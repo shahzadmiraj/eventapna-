@@ -7,10 +7,10 @@
  */
 
 include_once ("../connection/connect.php");
+
+include_once ("../Mail/sending/SendingMail.php");
 require_once('../Mail/libraries/PHPMailer.php');
 require_once('../Mail/libraries/SMTP.php');
-include_once ("../Mail/sending/SendingMail.php");
-
 function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$image,$CurrentUserid)
 {
     global $timestamp;
@@ -112,18 +112,21 @@ $string=base64url_encodeLength();
  $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid` ) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'","'.$CompanyName.'","'.$image.'","Owner","'.$Email.'","'.$PhoneNo.'",1,NULL)';
 querySend($sql);
 $last=  mysqli_insert_id($connect);
-
-$htmlBody='<pre>
+/*
+$htmlBody='
 Dear '.$username.',
 Please click this link for confirmation <a href="?id='.$last.'&confim='.$string.'">www.eventapna.com?id='.$last.'&confim='.$string.'"</a>
 username :'.$username.'
 password:'.$password.'
 email :'.$Email.'
 company name:'.$CompanyName.'
-phone no:'.$PhoneNo.'
-</pre>';
+phone no:'.$PhoneNo;*/
+
+   $htmlBody='<a href="www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a>';
+
     $display="";
-  // $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+   // $htmlBody="<a >wdede</a> joewfbje ";
+   $display=serverSendMessage(trim($Email),trim($username),"Confirmation of Email",$htmlBody);
     if($display=="")
     {
         echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email</a></p>';
@@ -180,7 +183,7 @@ Position in Company:'.$jobtitle.'
 </pre>';
 
     $display="";
-    // $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+    $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
     if($display=="")
     {
         echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email </a></p>';

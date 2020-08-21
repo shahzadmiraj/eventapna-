@@ -54,7 +54,7 @@ $encoded=1;
 <body>
 
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 
@@ -144,13 +144,23 @@ $encoded=1;
 
             <?php
         }
+
         ?>
 
 
     </div>
 
 
+    <?php
 
+    if(count($halls)==0)
+    {
+        echo '<a  href="../hallBranches/hallRegister.php"  class="text-muted col-12 text-center">Add Hall branches</a>
+
+';
+    }
+    ?>
+    <hr>
 </div>
 
 
@@ -227,9 +237,19 @@ $encoded=1;
         }
         ?>
 
-    </div>
 
+    </div>
+    <?php
+
+    if(count($caterings)==0)
+    {
+        echo '<a  href="../cateringBranches/catering.php"  class="text-muted col-12 text-center">Add Catering branches</a>
+';
+    }
+    ?>
+    <hr>
 </div>
+
 
 
 
@@ -318,7 +338,7 @@ $encoded=1;
 
 
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
 
