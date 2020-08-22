@@ -6,7 +6,13 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
+include  ("../../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner","../../../index.php");
 
+if(isset($_GET['id']))
+{
+    RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner","../../../index.php");
+}
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);

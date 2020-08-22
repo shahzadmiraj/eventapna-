@@ -6,6 +6,9 @@
  * Time: 17:29
  */
 include_once ("../../connection/connect.php");
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner","../../index.php");
+
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
@@ -37,7 +40,7 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 <div class="jumbotron  shadow" style="background-image: url(https://www.hnfc.com.my/data1/images/slide2.jpg);background-size:100% 100%;background-repeat: no-repeat">
@@ -205,15 +208,15 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 
-    // $(document).ready(function()
-    // {
-    //     getLocation();
-    //     $.ajax({
-    //         url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
-    //         dataType: "script",
-    //         cache: false
-    //     });
-    // });
+    $(document).ready(function()
+    {
+        getLocation();
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
+            dataType: "script",
+            cache: false
+        });
+    });
 
     $(document).ready(function ()
     {
@@ -224,6 +227,10 @@ include_once ("../../webdesign/footer/footer.php");
                 state=true;
             if(validationWithString("address","Please select Address"))
                 state=true;
+            if(NumberRange("AdvanceAmount","Please Enter Advance  Online booking payment with percentage  min 0 and max 100",0,100))
+            {
+                state=true;
+            }
 
             if(state)
                 return false;

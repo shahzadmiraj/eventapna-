@@ -68,3 +68,42 @@ function RedirectOtherwiseOnlyAccessUserOfPackagesDate($ValidationUserJobTitleSt
         exit();
     }
 }
+
+function RedirectOtherwiseOnlyAccessUserOfCateringBranch($ValidationUserJobTitleString,$redirect)
+{
+    $Isredirect=false;
+    RedirectOtherwiseOnlyAccessUsersWho($ValidationUserJobTitleString,$redirect);
+    if(isset($_GET['id'])&&(isset($_GET['token'])))
+    {
+        $sql='SELECT  `company_id` FROM `user` WHERE id='.$_COOKIE['userid'].' and ISNULL(expire)';
+        $companyId=queryReceive($sql);
+        $id=$_GET['id'];
+        $token=$_GET['token'];
+        $sql='SELECT  c.company_id FROM catering as c WHERE (c.id='.$id.')AND (ISNULL(c.expire))AND(c.token="'.$token.'")';
+        $Companyinfo=queryReceive($sql);
+        if(count($companyId)==1&& count($Companyinfo)==1)
+        {
+            if($companyId[0][0]!=$Companyinfo[0][0])
+            {
+                $Isredirect=true;
+            }
+        }
+        else
+        {
+            $Isredirect=true;
+        }
+
+    }
+    else
+    {
+        $Isredirect=true;
+    }
+
+
+
+    if($Isredirect)
+    {
+        header("location:".$redirect);
+        exit();
+    }
+}

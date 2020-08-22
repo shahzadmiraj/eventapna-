@@ -125,14 +125,10 @@ phone no:'.$PhoneNo;*/
    $htmlBody='<a href="www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a>';
 
     $display="";
-   // $htmlBody="<a >wdede</a> joewfbje ";
    $display=serverSendMessage(trim($Email),trim($username),"Confirmation of Email",$htmlBody);
-    if($display=="")
+    if($display!="")
     {
-        echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email</a></p>';
-    }
-    else
-    {
+        //echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email</a></p>';
         echo  "<span class='alert-danger'>Check Email :".$display."</span>";
     }
 
@@ -172,23 +168,19 @@ else if($_POST['option']=="RegisterUserofCompany")
 
     $last=  mysqli_insert_id($connect);
 
-    $htmlBody='<pre>
-Dear '.$username.',
-Please click this link for confirmation <a href="?id='.$last.'&confim='.$string.'">www.eventapna.com?id='.$last.'&confim='.$string.'"</a>
-username :'.$username.'
-password:'.$password.'
-email :'.$Email.'
-phone no:'.$PhoneNo.'
-Position in Company:'.$jobtitle.'
-</pre>';
-
+//    $htmlBody='<pre>
+//Dear '.$username.',
+//Please click this link for confirmation <a href="?id='.$last.'&confim='.$string.'">www.eventapna.com?id='.$last.'&confim='.$string.'"</a>
+//username :'.$username.'
+//password:'.$password.'
+//email :'.$Email.'
+//phone no:'.$PhoneNo.'
+//Position in Company:'.$jobtitle.'
+//</pre>';
+    $htmlBody='<a href="www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a>';
     $display="";
     $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
-    if($display=="")
-    {
-        echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email </a></p>';
-    }
-    else
+    if($display!="")
     {
         echo  "<span class='alert-danger'>Check Email :".$display."</span>";
     }

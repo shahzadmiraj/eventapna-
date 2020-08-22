@@ -90,7 +90,7 @@ include_once ("../../webdesign/header/header.php");
             <a href="../cateringBranches/catering.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-utensils fa-3x"></i> <h6> + Add Catering</h6></a>
             <a href="../../user/RegisterCompanyUser.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-user-plus fa-3x"></i> <h6> + Add User</h6></a>
             <a href="../ClientSide/Company/ClientCompany.php?c=<?php echo $companyid;?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6> Your website</h6></a>
-            <a href="../cateringBranches/dish/dishesInfo.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center
+            <a href="../cateringBranches/dish/dishesInfo.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center
 
 
 <?php if(count($caterings)==0)

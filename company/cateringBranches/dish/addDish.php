@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
+include  ("../../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner","../../../index.php");
 
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
@@ -41,7 +43,7 @@ $List = implode(', ', $listOfCatering);
 </head>
 <body>
 <?php
-//include_once ("../../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 ?>
 
 <div class="container card">
@@ -207,7 +209,7 @@ GROUP by (dt.id)';
 
 
 <?php
-//include_once ("../../../webdesign/footer/footer.php");
+include_once ("../../../webdesign/footer/footer.php");
 ?>
 
 <script>

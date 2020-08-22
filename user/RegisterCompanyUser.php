@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner","../index.php");
 
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
@@ -35,7 +37,7 @@ $companyid=$userdetail[0][0];
 </head>
 <body>
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 ?>
 <div class="container">
 
@@ -141,7 +143,7 @@ $companyid=$userdetail[0][0];
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 
@@ -190,8 +192,12 @@ $companyid=$userdetail[0][0];
                     $("#preloader").hide();
                     if(data!="")
                     {
-                        $("#formLogin")[0].reset();
+                        //$("#formLogin")[0].reset();
                         $("#error").html(data);
+                    }
+                    else
+                    {
+                        alert("Please check Email for verification");
                     }
 
                 }
