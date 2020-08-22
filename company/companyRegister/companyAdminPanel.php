@@ -7,7 +7,8 @@
  */
 
 include  ("../../connection/connect.php");
-
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner,Employee,Viewer","../../index.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
@@ -70,21 +71,21 @@ include_once ("../../webdesign/header/header.php");
 <div class="container ">
 
     <h2 class="text-center text-muted">Company Management</h2>
-    <hr>
 
+    <?php
+     if(onlyAccessUsersWho("Owner"))
+     {
+    ?>
+    <hr>
     <div class="container">
         <div class="row justify-content-start">
             <a href="../hallBranches/HallprizeLists.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center
-
-
 
     <?php if(count($halls)==0)
             {
                 echo 'disabled';
             } ?>
-
-
-             disabled"><i class="fas fa-clipboard-list fa-3x"></i> <h6> Hall Packages Manage</h6></a>
+             "><i class="fas fa-clipboard-list fa-3x"></i> <h6> Hall Packages Manage</h6></a>
             <a href="../hallBranches/hallRegister.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-place-of-worship fa-3x "></i> <h6> + Add Hall</h6></a>
             <a href="../cateringBranches/catering.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-utensils fa-3x"></i> <h6> + Add Catering</h6></a>
             <a href="../../user/RegisterCompanyUser.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-user-plus fa-3x"></i> <h6> + Add User</h6></a>
@@ -104,6 +105,15 @@ include_once ("../../webdesign/header/header.php");
             } ?>"><i class="fas fa-guitar fa-3x"></i> <h6>Hall Extra items Mangement</h6></a>
         </div>
     </div>
+
+
+
+    <?php
+     }
+    ?>
+
+
+
     <hr>
 
 
@@ -131,7 +141,7 @@ include_once ("../../webdesign/header/header.php");
         }
         else
         {
-            $img='https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg';
+            $img='../../images/systemImage/imageNotFound.png';
         }
 
 
@@ -153,7 +163,10 @@ include_once ("../../webdesign/header/header.php");
                 <hr>
                 <div class="container">
                     <div class="row justify-content-start">
-                        <a href="../../customer/CustomerCreate.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
+                        <?php if(onlyAccessUsersWho("Owner,Employee"))
+                        {
+                            echo '      <a href="../../customer/CustomerCreate.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>';
+                        } ?>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Delieved&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
@@ -164,7 +177,11 @@ include_once ("../../webdesign/header/header.php");
 <!--                         <a  href="../hallBranches/userDisplay/extraItem/ExtraitemHall.php?h=--><?php //echo $hallEncorded;?><!--" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-calendar-alt fa-3x"></i><h6>Extra items Price List</h6></a>-->
                          <a  href="../ClientSide/Hall/HallClient.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6>Hall Website</h6></a>
                         <a  href="../../payment/RemainingAmount.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments information</h6></a>
-                        <a href="../hallBranches/hallInfo.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6> Hall Setting</h6></a>
+
+                        <?php if(onlyAccessUsersWho("Owner"))
+                        {
+                            echo '  <a href="../hallBranches/hallInfo.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6> Hall Setting</h6></a>';
+                        } ?>
                         <a href="../hallBranches/galleryhall.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-images fa-3x"></i><h6>Gallery</h6></a>
                     </div>
                 </div>
@@ -181,10 +198,9 @@ include_once ("../../webdesign/header/header.php");
 
     <?php
 
-    if(count($halls)==0)
+    if((count($halls)==0)&&(onlyAccessUsersWho("Owner")))
     {
         echo '<a  href="../hallBranches/hallRegister.php"  class="text-muted col-12 text-center">Add Hall branches</a>
-
 ';
     }
     ?>
@@ -224,7 +240,7 @@ include_once ("../../webdesign/header/header.php");
             }
             else
             {
-                $img='https://www.liberaldictionary.com/wp-content/uploads/2019/02/cater-4956.jpg';
+                $img='../../images/systemImage/imageNotFound.png';
             }
 
 
@@ -246,13 +262,20 @@ include_once ("../../webdesign/header/header.php");
                 <hr>
                 <div class="container">
                     <div class="row justify-content-start">
-                        <a href="../../customer/CustomerCreate.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>
+
+                        <?php if(onlyAccessUsersWho("Owner,Employee"))
+                        {
+                            echo '<a href="../../customer/CustomerCreate.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>';
+                        } ?>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Delieved&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-truck fa-3x"></i><h6>Delievered Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Clear&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Cancel&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
-                        <a href="../cateringBranches/infoCatering.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6>Branch Setting</h6></a>
+                        <?php if(onlyAccessUsersWho("Owner"))
+                        {
+                            echo '    <a href="../cateringBranches/infoCatering.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6>Branch Setting</h6></a>';
+                        } ?>
                         <a href="../cateringBranches/gallerycatering.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-images fa-3x"></i> <h6>Gallery</h6></a>
                         <a  href="../../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>
                         <a  href="../../company/ClientSide/Catering/cateringClient.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6>Website</h6></a>
@@ -269,7 +292,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
     <?php
 
-    if(count($caterings)==0)
+    if((count($caterings)==0)&&(onlyAccessUsersWho("Owner")))
     {
         echo '<a  href="../cateringBranches/catering.php"  class="text-muted col-12 text-center">Add Catering branches</a>
 ';
@@ -321,7 +344,7 @@ include_once ("../../webdesign/header/header.php");
             }
             else
             {
-                $img='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+                $img='../../images/systemImage/imageNotFound.png';
             }
 
 

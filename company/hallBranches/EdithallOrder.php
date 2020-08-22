@@ -44,6 +44,9 @@ $priceDetailOfExtraItem=queryReceive($sql);
 
 $Query='pid='.$pid."&token=".$token;
 
+
+
+
 ?>
 <!DOCTYPE html>
 <head>

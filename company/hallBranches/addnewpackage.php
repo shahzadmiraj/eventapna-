@@ -1,11 +1,16 @@
 <?php
 include_once ("../../connection/connect.php");
+
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner","../../index.php");
+
 include_once ("packages/packagesServerfunction.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
 $userid=$_COOKIE['userid'];
-
+$sql='SELECT `name` FROM `company` WHERE id='.$companyid.' AND ISNULL(expire)';
+$CompanyInfo=queryReceive($sql);
 ?>
 
 <!DOCTYPE html>
@@ -55,12 +60,12 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 <?php
 $HeadingImage="";
-$HeadingName="Company name";
+$HeadingName=$CompanyInfo[0][0];
 $Source='..';
 $pageName='Package Add ';
 include_once ("../ClientSide/Company/Box.php");
@@ -364,7 +369,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 
 <script type="text/javascript">

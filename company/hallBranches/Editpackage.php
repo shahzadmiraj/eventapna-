@@ -1,5 +1,9 @@
 <?php
 include_once ("../../connection/connect.php");
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfPackagesDate("Owner","../../index.php");
+
+
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 
@@ -17,6 +21,9 @@ $companyid=$userdetail[0][0];
 $sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`,1, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')AND(ISNULL(expire))';
 $packageDetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
+
+$sql='SELECT `name` FROM `company` WHERE id='.$companyid.' AND ISNULL(expire)';
+$CompanyInfo=queryReceive($sql);
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +81,7 @@ $userid=$_COOKIE['userid'];
 
 <?php
 $HeadingImage="";
-$HeadingName="Package Image";
+$HeadingName=$CompanyInfo[0][0];
 $Source='';
 $pageName='Package Edit ';
 include_once ("../ClientSide/Company/Box.php");

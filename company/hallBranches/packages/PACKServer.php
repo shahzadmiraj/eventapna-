@@ -83,8 +83,9 @@ if(isset($_POST['option']))
         $id=mysqli_insert_id($connect);
         for ($i=0;$i<count($selectedDates);$i++)
         {
+            $token=uniqueToken('packageDate');
             $date=date('Y-m-d ',strtotime(trim($selectedDates[$i])));
-            $sql = 'INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`) VALUES (NULL,"' . $timestamp . '",NULL,' . $id . ',' . $userid . ',NULL,"' .$date.'")';
+            $sql = 'INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`, `token`) VALUES (NULL,"' . $timestamp . '",NULL,' . $id . ',' . $userid . ',NULL,"' .$date.'","'.$token.'")';
             querySend($sql);
         }
         $dishnames=array();

@@ -6,11 +6,12 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner","../../index.php");
+
 $sql='SELECT `company_id`,`username`, `jobTitle`,`id` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
-
-
 ?>
 <!DOCTYPE html>
 <head>
@@ -36,7 +37,7 @@ $companyid=$userdetail[0][0];
 </head>
 <body>
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 <div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg);background-size:100% 115%;background-repeat: no-repeat">
@@ -208,7 +209,7 @@ $companyid=$userdetail[0][0];
 
     <div class="form-group row mt-5">
         <button id="cancel" type="button" class="btn btn-danger col-6 form-control"  value="Cancel"><span class="fas fa-window-close "></span>Cancel</button>
-        <button id="submit" type="button" class=" btn btn-success col-6 form-control" value="Submit"><i class="fas fa-check "></i>Submit</button>
+        <button id="submit" type="button" class="btn btn-primary col-6 form-control" value="Submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 
 
@@ -221,7 +222,7 @@ $companyid=$userdetail[0][0];
 <script src="../../map/javascript.js"></script>
 
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 
 
@@ -239,11 +240,15 @@ $companyid=$userdetail[0][0];
         {
             e.preventDefault();
             var state=false;
-            if(NumberRange("partitions","Please Enter Valid Patition",1,10))
+            if(NumberRange("partitions","Please Enter Valid Patition min 1 and max 4",1,4))
             {
                 state=true;
             }
             if(NumberRange("capacity","Please Enter Valid capacity up to 50 and maximum 3000",50,3000))
+            {
+                state=true;
+            }
+            if(NumberRange("AdvanceAmount","Please Enter Valid Advance online booking in % 0 to 100",0,100))
             {
                 state=true;
             }
@@ -294,14 +299,14 @@ $companyid=$userdetail[0][0];
     });
 
 
-    // $(document).ready(function()
-    // {
-    //     $.ajax({
-    //         url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-    //         dataType: "script",
-    //         cache: false
-    //     });
-    // });
+    $(document).ready(function()
+    {
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
+        });
+    });
 
 </script>
 
