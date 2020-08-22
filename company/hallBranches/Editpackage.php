@@ -75,7 +75,7 @@ $CompanyInfo=queryReceive($sql);
 <body>
 
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 
@@ -250,7 +250,6 @@ include_once ("../ClientSide/Company/Box.php");
         <?php
         $sql='SELECT `id`, `dishname`, `image`, `expire`, `package_id` FROM `menu` WHERE (package_id='.$packageid.') AND ISNULL(expire)';
         $menuDetail=queryReceive($sql);
-        print_r($menuDetail);
         if(count($menuDetail)>0)
         {
             echo '
@@ -310,7 +309,7 @@ include_once ("../ClientSide/Company/Box.php");
 </form>
 </div>
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()
