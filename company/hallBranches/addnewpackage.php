@@ -149,8 +149,6 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-
-
     <?php
     echo
         '
@@ -265,8 +263,8 @@ include_once ("../ClientSide/Company/Box.php");
 
     <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Your Package</h3>
 
-    <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 60vh">
 
+    <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 60vh">
 
 
 
@@ -328,7 +326,7 @@ include_once ("../ClientSide/Company/Box.php");
                 <div class="modal-body">
                     <form id="formDishaddss">
                         <input hidden value="<?php echo $userid; ?>" name="userid">
-                        <input hidden value="<?php echo $companyid; ?>" name="$companyid">
+                        <input hidden value="<?php echo $companyid; ?>" name="companyid">
 
                         <div class="form-group row">
                             <div class="input-group mb-3 input-group-lg">
@@ -375,6 +373,7 @@ include_once ("../../webdesign/footer/footer.php");
 <script type="text/javascript">
 $(document).ready(function ()
 {
+
     var numbers=0;
 
     $("#btncancel").click(function () {
@@ -388,8 +387,8 @@ $(document).ready(function ()
             "            <img src=\""+image+"\" class=\"card-img-top\" style=\"height: 15vh\">\n" +
             "            <p class=\"col-form-label\">"+dishname+"</p>\n" +
             "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"touchdish btn btn-danger\">\n" +
-            "            <input hidden type=\"number\"  name=\"dishesname[]\"  value=\""+dishname+"\">\n" +
-           "            <input hidden type=\"number\"  name=\"dishimages[]\"  value=\""+basimage+"\">\n" +
+            "            <input hidden  type=\"text\"  name=\"dishesname[]\"  value=\""+dishname+"\">\n" +
+           "            <input hidden  type=\"text\"  name=\"dishimages[]\"  value=\""+basimage+"\">\n" +
             "        </div>";
         numbers++;
         return text;
@@ -497,7 +496,6 @@ $(document).ready(function ()
    $("#btnsubmit").click(function ()
    {
        var state=false;
-
        if(validationWithString("MinimumAmount","Pleas enter minimum Amount to book this package for online customer"))
        {
            state=true;

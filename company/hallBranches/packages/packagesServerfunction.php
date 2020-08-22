@@ -9,14 +9,17 @@ function dishesOfPakage($sql)
     for ($j = 0; $j < count($dishdetail); $j++)
     {
 
-        $image="https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png";
+        $image="../../images/systemImage/imageNotFound.png";
 
 
-        if((file_exists('../../../images/dishImages/'.$dishdetail[$j][2]))&&($dishdetail[$j][2]!=""))
+        if((file_exists('../../images/dishImages/'.$dishdetail[$j][2]))&&($dishdetail[$j][2]!=""))
         {
-            $image='../../images/dishImages/'.$dishdetail[$j][2];;
+            $image='../../images/dishImages/'.$dishdetail[$j][2];
         }
-
+        else if((file_exists('../../../images/dishImages/'.$dishdetail[$j][2]))&&($dishdetail[$j][2]!=""))
+            {
+                $image='../../images/dishImages/'.$dishdetail[$j][2];
+            }
 
         $display.= '
         <div id="dishid' . $dishdetail[$j][1] . '" class="col-md-4 card border" style="height: 30vh;" >

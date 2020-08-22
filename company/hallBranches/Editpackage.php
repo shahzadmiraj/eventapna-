@@ -250,6 +250,7 @@ include_once ("../ClientSide/Company/Box.php");
         <?php
         $sql='SELECT `id`, `dishname`, `image`, `expire`, `package_id` FROM `menu` WHERE (package_id='.$packageid.') AND ISNULL(expire)';
         $menuDetail=queryReceive($sql);
+        print_r($menuDetail);
         if(count($menuDetail)>0)
         {
             echo '
@@ -263,7 +264,7 @@ include_once ("../ClientSide/Company/Box.php");
 
             echo '
         <div id="alreadydishid'.$menuDetail[$i][0].'" class="col-4 border m-2 form-group p-0 card shadow " style="height: 30vh;" >
-            <img src="'.$menuDetail[$i][2].'" class="col-12" style="height: 15vh">
+            <img src="../../images/dishImages/'.$menuDetail[$i][2].'" class="col-12" style="height: 15vh">
             <p class="col-form-label" class="form-control col-12">'.$menuDetail[$i][1].'</p>
             <input  hidden data-dishid="'.$menuDetail[$i][0].'" type="button" value="Remove" class="form-control alreadydishid col-12  btn btn-success">
         </div>';
