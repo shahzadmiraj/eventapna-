@@ -79,8 +79,6 @@ include_once ("../../../webdesign/header/header.php");
         <div class="form-group row">
             <label class="col-form-label">Attribute Name</label>
 
-
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-calculator" aria-hidden="true"></i></span>
@@ -89,6 +87,8 @@ include_once ("../../../webdesign/header/header.php");
                 <input id="addAttribute" type="button" class="col-2 form-control btn-primary" value="+">
             </div>
 
+            <ul id="myAttributelist" class="container">
+            </ul>
 
         </div>
        <div class="card" id="attributeHere">
@@ -218,6 +218,38 @@ include_once ("../../../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
+
+        $(document).on("keyup","#attributetext",function (e)
+        {
+
+            e.preventDefault();
+            var value=$(this).val();
+            if(value=="")
+                return false;
+            $.ajax({
+                url:"dishServer.php",
+                data:{value:value,option:"checkAttributeExistByKeyUp",company_id:"<?php echo $companyid;?>"},
+                dataType:"text",
+                method: "POST",
+                beforeSend: function() {
+                    $("#preloader").show();
+                },
+                success:function (data)
+                {
+                    $("#preloader").hide();
+                    $("#myAttributelist").html(data);
+                }
+            });
+        });
+
+        $(document).on("click",".rightAttribute",function (e)
+        {
+
+            e.preventDefault();
+            var attributename=$(this).data("attributename");
+            $("#attributetext").val($.trim(attributename));
+        });
+
         var attributecount=0;
         var rowadded=0;
         function rowaddedfucntion()
@@ -226,14 +258,13 @@ include_once ("../../../webdesign/footer/footer.php");
                 '                    <th scope="row"><button data-deleterow="'+rowadded+'"  class="btn btn-danger deleteRow"><i class="fas fa-trash-alt"></i>Delete</button></th>\n' ;
 
 
-
             $(".nameofattribute").each( function() {
-                text+= ' <td><i class="fa fa-calculator" aria-hidden="true"></i><input type="number" name="quantity[]" class="Quantity" placeholder="Quantity"></td>\n' ;
+                text+= ' <td><input type="number" name="quantity[]" class="Quantity" placeholder="Quantity"></td>\n' ;
             });
 
 
 
-            text+= ' <td><i class="fas fa-money-bill-alt"></i><input type="number" name="price[]" class="Price" placeholder="Price"></td>\n' +
+            text+= ' <td><input type="number" name="price[]" class="Price" placeholder="Price"></td>\n' +
                 '\n' +
                 '                </tr>\n' ;
             rowadded++;
@@ -275,10 +306,10 @@ include_once ("../../../webdesign/footer/footer.php");
 
 
             $(".nameofattribute").each( function() {
-                text+=' <th scope="col"><i class="fa fa-calculator" aria-hidden="true"></i>'+$(this).val()+'</th>\n';
+                text+=' <th scope="col"><i class="fa fa-calculator" aria-hidden="true">Attribute : </i>'+$(this).val()+'</th>\n';
             });
 
-            text+=   ' <th scope="col"><i class="fas fa-money-bill-alt"></i> Price </th>\n' +
+            text+=   ' <th scope="col"><i class="fas fa-money-bill-alt"></i>Total Price </th>\n' +
                 '                </tr>\n' +
                 '                </thead>\n' +
                 '                <tbody id="appendrow">\n' +

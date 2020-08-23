@@ -265,7 +265,6 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 data:{value:value,option:"checkExistByKeyUp",company_id:"<?php echo $companyid;?>"},
                 dataType:"text",
                 method: "POST",
-
                 beforeSend: function() {
                     $("#preloader").show();
                 },

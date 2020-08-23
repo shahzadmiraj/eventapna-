@@ -7,6 +7,8 @@
  */
 include_once ("../../../connection/connect.php");
 
+include  ("../../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfDish("Owner","../../../index.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
@@ -53,7 +55,7 @@ $companyid=$userdetail[0][0];
 </head>
 <body>
 <?php
-//include_once ("../../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 
 ?>
 <div class="container ">
@@ -75,7 +77,8 @@ $companyid=$userdetail[0][0];
                 }
                 else
                 {
-                    echo 'https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+
+                    echo '../../../images/systemImage/imageNotFound.png';
                 }
 
                 ?>"   class="col-8 " alt="Image is not set" >
@@ -205,7 +208,7 @@ $companyid=$userdetail[0][0];
                                 <?php
 
 
-                                $sql='SELECT name FROM attribute WHERE (ISNULL(expire))AND(dishWithAttribute_id='.$dishID.')
+                                $sql='SELECT name FROM attribute WHERE (ISNULL(expire))AND(dishWithAttribute_id='.$dishWithAttribute[0][0].')
 GROUP by name';
                                 $TypeOfAttribute=queryReceive($sql);
                                 echo '<input hidden name="dishid" value="'.$dishDetail[0][5].'">
@@ -220,14 +223,14 @@ GROUP by name';
                              
                                
                                             <div class="form-group row">
-                <label class="col-form-label">Attribute '.$TypeOfAttribute[$i][0].' :</label>
+                <label class="col-form-label">Attribute name: '.$TypeOfAttribute[$i][0].' :</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text">  <i class="fa fa-calculator" aria-hidden="true"></i> </span>
                     </div>
                      
                                     <input hidden type="number" name="attribute[]" value="'.$TypeOfAttribute[$i][0].'">
-                                    <input   type="number" name="quantity[]" class="Quantity form-control">
+                                    <input   type="number" name="quantity[]" class="Quantity form-control" placeholder="Quantity of product">
                 </div>
             </div>
                                
@@ -237,12 +240,12 @@ GROUP by name';
                                 echo '
                                
                                    <div class="form-group row">
-                <label class="col-form-label">Price :</label>
+                <label class="col-form-label">Total price :</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fas fa-money-bill-alt"></i></span>
                     </div>
-                    <input id="priceInDish" type="number" name="price" class="form-control">
+                    <input  id="priceInDish" type="number" name="price" class="form-control" placeholder="Total price">
                 </div>
             </div>
                                 
@@ -280,7 +283,7 @@ GROUP by name';
 
                         $display.='  <div class="card m-2">
                 <div class="card-header text-danger">
-                   <i class="fas fa-money-bill-alt"></i> '.$dishWithAttribute[$j][3].'
+                   <i class="fas fa-money-bill-alt"></i>Total price: '.$dishWithAttribute[$j][3].'
                 </div>
                    <ul class="list-group list-group-flush">
                 ';
@@ -290,7 +293,7 @@ GROUP by name';
 
                         for($i=0;$i<count($AttributeDetail);$i++)
                         {
-                            $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].':'.$AttributeDetail[$i][1].'</li>';
+                            $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name : '.$AttributeDetail[$i][0].'  , Quantity : '.$AttributeDetail[$i][1].'</li>';
                         }
 
                         $display.='  
@@ -349,7 +352,7 @@ echo $display;
 
 
 <?php
-//include_once ("../../../webdesign/footer/footer.php");
+include_once ("../../../webdesign/footer/footer.php");
 ?>
 
 <script>

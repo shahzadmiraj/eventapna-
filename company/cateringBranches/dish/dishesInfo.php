@@ -68,7 +68,7 @@ $companyid=$userdetail[0][0];
 </head>
 <body>
 <?php
-//include_once ("../../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 
 ?>
 
@@ -209,7 +209,7 @@ GROUP by (dt.id)';
             }
             else
             {
-                $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+                $image='../../../images/systemImage/imageNotFound.png';
             }
 
 
@@ -275,7 +275,7 @@ Amount=' . $dishDetail[$j][3] . '/Dish id# '.$dishDetail[$j][1].' /
 
 
 <?php
-//include_once ("../../../webdesign/footer/footer.php");
+include_once ("../../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

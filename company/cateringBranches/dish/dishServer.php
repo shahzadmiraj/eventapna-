@@ -66,7 +66,7 @@ if(isset($_POST['option']))
                     $dishWithAttributeid=mysqli_insert_id($connect);
                     for($j=0;$j<$countAttribute;$j++)
                     {
-                        $sql='INSERT INTO `attribute`(`name`, `id`, `expire`, `active`, `quantity`, `dishWithAttribute_id`, `user_id`) VALUES ("'.$addAttributes[$j].'",NULL,NULL,"'.$timestamp.'",'.checknumberOtherNull($quantity[$CountQuantity]).','.$dishWithAttributeid.','.$userid.')';
+                        $sql='INSERT INTO `attribute`(`name`, `id`, `expire`, `active`, `quantity`, `dishWithAttribute_id`, `user_id`) VALUES ("'.trim($addAttributes[$j]).'",NULL,NULL,"'.$timestamp.'",'.checknumberOtherNull($quantity[$CountQuantity]).','.$dishWithAttributeid.','.$userid.')';
                         querySend($sql);
                         $CountQuantity++;
                     }
@@ -164,7 +164,7 @@ if(isset($_POST['option']))
             {
 
 
-                $sql='INSERT INTO `attribute`(`name`, `id`, `expire`, `active`, `quantity`, `dishWithAttribute_id`, `user_id`) VALUES ("'.$addAttributes[$j].'",NULL,NULL,"'.$timestamp.'",'.checknumberOtherNull($quantity[$j]).','.$dishWithAttributeid.','.$userid.')';
+                $sql='INSERT INTO `attribute`(`name`, `id`, `expire`, `active`, `quantity`, `dishWithAttribute_id`, `user_id`) VALUES ("'.trim($addAttributes[$j]).'",NULL,NULL,"'.$timestamp.'",'.checknumberOtherNull($quantity[$j]).','.$dishWithAttributeid.','.$userid.')';
                 querySend($sql);
             }
 
@@ -368,7 +368,32 @@ if(isset($_POST['option']))
             }
         }
     }
+    else  if($_POST['option']=="checkAttributeExistByKeyUp")
+    {
+        $display='';
+        $value=trim($_POST['value']);
+        if($value=="")
+            exit();
+        $company_id=$_POST['company_id'];
+
+      $sql='SELECT a.name FROM attribute as a INNER join dishWithAttribute as dwa
+on (a.dishWithAttribute_id=dwa.id) INNER join dish as d 
+on (d.id=dwa.dish_id) INNER join dishControl as dc 
+on (d.id=dc.dish_id)
+WHERE 
+(ISNULL(dc.expire))AND
+(ISNULL(d.expire))AND(ISNULL(dwa.expire))AND (ISNULL(a.expire))AND (dc.company_id='.$company_id.')AND (a.name like "%'.$value.'%") 
+GROUP by a.name limit 5';
+        $exist=queryReceive($sql);
+        for($i=0;$i<count($exist);$i++)
+        {
+            $display.='
+            <li class="border border-info"><a href="#" data-attributename="'.$exist[$i][0].'" class="rightAttribute btn btn-light ">  '.$exist[$i][0].'</a></li>';
+        }
+        echo $display;
+    }
 }
+
 
 
 ?>
