@@ -6,6 +6,8 @@
  * Time: 13:49
  */
 include_once ("../connection/connect.php");
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
 
 
 $pid=$_GET['pid'];
@@ -15,16 +17,26 @@ $processInformation=queryReceive($sql);
 
 $dishDetailId='';
 $dishDetailToken="";
-
+$dishDetailOfDetai=array();
 if(isset($_GET['dd']))
 {
     $dishDetailId=$_GET['dd'];
     $dishDetailToken=$_GET['ddt'];
+    $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT (SELECT d.image FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT u.username FROM user as u WHERE u.id=dd.user_id),(SELECT u.username FROM user as u WHERE u.id=dd.expireUser)  FROM dish_detail as dd WHERE  (dd.id='.$dishDetailId.')AND(dd.token="'.$dishDetailToken.'")';
+    $dishDetailOfDetai=queryReceive($sql);
+    if($processInformation[0][0]!=$dishDetailOfDetai[0][4])
+    {
+        header("location:../index.php");
+        exit();
+    }
+}
+else
+{
+    header("location:../index.php");
+    exit();
 }
 
 $orderid=$processInformation[0][5];
-$sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT (SELECT d.image FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT u.username FROM user as u WHERE u.id=dd.user_id),(SELECT u.username FROM user as u WHERE u.id=dd.expireUser)  FROM dish_detail as dd WHERE  (dd.id='.$dishDetailId.')AND(dd.token="'.$dishDetailToken.'")';
-$dishDetailOfDetai=queryReceive($sql);
 
 $userid=$_COOKIE['userid'];
 
@@ -47,13 +59,18 @@ $userid=$_COOKIE['userid'];
     <link rel="stylesheet" href="../webdesign/css/complete.css">
 
     <style>
-
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
     </style>
 </head>
 <body>
 
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 $whichActive = 6;
 $imageCustomer = "../images/customerimage/";
 $PageName="Catering Dish Preview";
@@ -63,47 +80,73 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 <div class="container card">
-<?php
 
-$image='';
-if(file_exists('../images/dishImages/'.$dishDetailOfDetai[0][11])&&($dishDetailOfDetai[0][11]!=""))
-{
-    $image= '../images/dishImages/'.$dishDetailOfDetai[0][11];
-}
-else
-{
-    $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
-}
-?>
     <form id="form">
 
-    <div class="row m-auto">
-        <div class="card">
-            <img src="<?php echo $image;?>" style="height: 20vh;width: 100%">
-            <h4 align="center"><?php echo $dishDetailOfDetai[0][10];?></h4>
-            <?php echo '<p align="center">Dish_Detail_id #'.$dishDetailOfDetai[0][0].'</p>';?>
+
+        <div class="card border-0">
+            <?php
+
+            $image='';
+
+
+            if(file_exists('../images/dishImages/'.$dishDetailOfDetai[0][11])&&($dishDetailOfDetai[0][11]!=""))
+            {
+                $image= '../images/dishImages/'.$dishDetailOfDetai[0][11];
+            }
+            else
+            {
+                $image='../images/systemImage/imageNotFound.png';
+            }
+            ?>
+
+
+
+            <img  class="center" src="<?php echo $image;?>" style="height: 20vh;width: 40%" >
+
+            <div class="card-body">
+                <ul>
+                    <li class="h5 text-center">Dish Name :<?php echo $dishDetailOfDetai[0][10];?></li>
+                    <li>Dish Price Id :<?php echo $dishDetailOfDetai[0][0];?> </li>
+                </ul>
+            </div>
         </div>
-    </div>
 
 
         <div class="form-group row">
 
 
-            <ul class="list-group list-group-flush">
 
 
-
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Attribute </th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishDetailOfDetai[0][6].')';
                 $AttributeDetail=queryReceive($sql);
 
                 // special dish with attribute and quantity
-                for($j=0;$j<count($AttributeDetail);$j++)
+                for($k=0;$k<count($AttributeDetail);$k++)
                 {
-                    echo ' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
+                    echo ' 
+    <tr>
+      <th scope="row">'.($k+1).'</th>
+      <td>'.$AttributeDetail[$k][0].'</td>
+      <td>'.$AttributeDetail[$k][2].'</td>
+   </tr>';
+
                 }
                 ?>
-            </ul>
+                </tbody>
+            </table>
+
+
         </div>
 
     <input hidden id="dishDetailID" value="<?php echo $dishDetailOfDetai[0][0];?>">
@@ -213,7 +256,7 @@ else
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 

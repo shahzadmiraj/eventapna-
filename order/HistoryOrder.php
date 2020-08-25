@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
 
 $pid=$_GET['pid'];
 $token=$_GET['token'];
@@ -61,7 +63,7 @@ function timingConvert($Time)
 <body>
 
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 $whichActive = 5;
 $imageCustomer = "../images/customerimage/";
 $PageName="Order History ";
@@ -301,7 +303,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function () {

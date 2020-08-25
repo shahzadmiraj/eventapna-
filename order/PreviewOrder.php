@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
 
 include_once ("../connection/printOrderDetail.php");
 

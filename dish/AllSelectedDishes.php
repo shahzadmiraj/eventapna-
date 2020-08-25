@@ -7,6 +7,10 @@
  */
 
 include_once ("../connection/connect.php");
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
+
+
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 
@@ -49,7 +53,7 @@ $Query='pid=' . $pid . '&token='.$token;
 <body>
 
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 
 $whichActive = 6;
 $imageCustomer = "../images/customerimage/";
@@ -103,10 +107,17 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         <a href="dishPreview.php?<?php echo 'dd='.$detailDishes[$i][0].'&ddt='.$detailDishes[$i][11].'&'.$Query?>" class="card col-md-4" >
             <div class="card-header">
-                <h6><?php echo $i+1;?> <i class="fas fa-concierge-bell "></i>Dish Name :<?php echo $detailDishes[$i][10];?></h6>
+                <h5><?php echo $i+1;?> <i class="fas fa-concierge-bell "></i>Dish Name :<?php echo $detailDishes[$i][10];?></h5>
             </div>
-            <ul class="list-group list-group-flush">
-
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Attribute</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
 
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$detailDishes[$i][6].')';
@@ -115,43 +126,34 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 // special dish with attribute and quantity
                 for($j=0;$j<count($AttributeDetail);$j++)
                 {
-                    echo ' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
+                    echo ' 
+    <tr>
+      <th scope="row">'.($i+1).'</th>
+      <td>'.$AttributeDetail[$i][0].'</td>
+      <td>'.$AttributeDetail[$i][1].'</td>
+   </tr>';
+                    //echo ' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
                 }
                 ?>
+                </tbody>
+            </table>
+
+            <ul class="list-group">
+                <li class="list-group-item">Message:<?php echo $detailDishes[$i][1];?></li>
+                <li class="list-group-item"><?php
+                    echo 'Dish_Detail_Id# '.$detailDishes[$i][0];
+
+                    ?></li>
+                <li class="list-group-item">Price:<?php echo $detailDishes[$i][8];?></li>
+                <li class="list-group-item">Quantity:<?php echo $detailDishes[$i][3];?></li>
+                <li class="list-group-item">Total:<?php echo (int) $detailDishes[$i][3]*$detailDishes[$i][8];?></li>
+                <li class="list-group-item"></li>
             </ul>
-            <p>Message:<?php echo $detailDishes[$i][1];?><br>
-                <?php
-                echo 'Dish_Detail_Id# '.$detailDishes[$i][0];
-
-                ?>
 
 
 
-            </p>
-            <div class="card-footer ">
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
-                    </div>
-                    <label>Price:<?php echo $detailDishes[$i][8];?></label>
-                </div>
-
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-sort-amount-up"></i></span>
-                    </div>
-                    <label>Quantity:<?php echo $detailDishes[$i][3];?></label>
-                </div>
-
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend ">
-                        <span class="input-group-text text-danger"> <i class="fas fa-money-bill-alt"></i></span>
-                    </div>
-                    <label>Total:<?php echo (int) $detailDishes[$i][3]*$detailDishes[$i][8];?></label>
-                </div>
 
 
-            </div>
         </a>
 
         <?php
@@ -192,7 +194,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 </div>
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 

@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
 
 
 
@@ -46,7 +48,7 @@ $customerID=$orderDetailPerson[0][1];
 <body>
 
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 
 
 
@@ -223,7 +225,7 @@ $display='';
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 

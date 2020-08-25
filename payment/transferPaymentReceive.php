@@ -2,6 +2,9 @@
 <?php
 
 include_once ("../connection/connect.php");
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
+
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $pid=$_GET['pid'];
@@ -40,7 +43,7 @@ $customerID=$orderDetailPerson[0][1];
 
 <body>
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 
 $whichActive = 5;
 $imageCustomer = "../images/customerimage/";
@@ -253,7 +256,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 </div>
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 
 

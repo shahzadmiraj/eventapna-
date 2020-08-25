@@ -6,6 +6,10 @@
  * Time: 16:48
  */
 include_once ("../connection/connect.php");
+
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
+
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 
@@ -21,7 +25,6 @@ $dishesid=$_POST['dishesid'];
 $prices=$_POST['prices'];
 $images=$_POST['images'];
 $userid=$_COOKIE['userid'];
-
 
 ?>
 
@@ -45,14 +48,19 @@ $userid=$_COOKIE['userid'];
 
 
     <style>
-
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
     </style>
 </head>
 <body>
 
 
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 
 if($processInformation[0][4]==0)
 {
@@ -86,7 +94,14 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 <div class="container">
 
-    <h4 align="center" class="alert-light">Total number of dishes<input readonly type="number" id="totalRemaing" class="btn font-weight-bold " value="<?php echo count($dishesid);?>"></h4>
+
+    <ul class="list-group">
+        <li class="text-center h5 list-group-item">Information of Dishes</li>
+        <li class="list-group-item">Total number of dishes : <input readonly type="number" id="totalRemaing"  value="<?php echo count($dishesid);?>"></li>
+        <li class="list-group-item">Total Amount : <input readonly type="number" id="AllTotalamount"  value="0"></li>
+    </ul>
+    <br>
+    <hr>
 
     <input hidden type="number" id="orderIdindish" value="<?php echo $orderId;?>">
 
@@ -109,49 +124,76 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
             <div class="card shadow-lg p-4 mb-4 border  col-12">
 
 
-                    <div class="m-auto card">
+                    <div class="card border-0">
                         <?php
 
                         $image='';
 
+                        $sql='SELECT d.image FROM dish as d INNER JOIN dishWithAttribute as dwa
+on (d.id=dwa.dish_id)
+WHERE 
+dwa.id='.$dishesid[$j].'';
+                        $EachDishInfo=queryReceive($sql);
 
-                        if(file_exists('../images/dishImages/'.$images[$j])&&($images[$j]!=""))
+                        if(file_exists('../images/dishImages/'.$EachDishInfo[0][0])&&($EachDishInfo[0][0]!=""))
                         {
-                            $image= '../images/dishImages/'.$images[$j];
+                            $image= '../images/dishImages/'.$EachDishInfo[0][0];
                         }
                         else
                         {
-                            $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+                            $image='../images/systemImage/imageNotFound.png';
                         }
                         ?>
 
 
 
-                        <img src="<?php echo $image;?>" style="height: 20vh;width: 100%">
-                        <h4 class="text-center" ><?php echo $dishesName[$j].'<br> dishPriceId# '.$dishesid[$j]; ?> </h4>
+                        <img  class="center" src="<?php echo $image;?>" style="height: 20vh;width: 40%" >
+
+                        <div class="card-body">
+                           <ul>
+                               <li class="h5 text-center">Dish Name :<?php echo $dishesName[$j];?></li>
+                               <li>Dish Price Id :<?php echo $dishesid[$j];?> </li>
+                           </ul>
+                        </div>
                 </div>
 
 
                 <div class="form-group row">
 
-                    <ul class="card">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Attribute </th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishesid[$j].')';
                 $AttributeDetail=queryReceive($sql);
 
                 // special dish with attribute and quantity
-                for($i=0;$i<count($AttributeDetail);$i++)
+                for($k=0;$k<count($AttributeDetail);$k++)
                 {
-                    $display.=' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
+                    echo ' 
+    <tr>
+      <th scope="row">'.($k+1).'</th>
+      <td>'.$AttributeDetail[$k][0].'</td>
+      <td>'.$AttributeDetail[$k][2].'</td>
+   </tr>';
+
                 }
                 ?>
+                        </tbody>
+                    </table>
 
-                    </ul>
+
                 </div>
 
 
                 <div class="form-group row">
-                    <label class="col-form-label">each price</label>
+                    <label class="col-form-label">Each price</label>
 
 
                     <div class="input-group mb-3 input-group-lg">
@@ -171,11 +213,26 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-sort-amount-up"></i></span>
                         </div>
-                        <input id="quantity<?php echo $j; ?>" name="quantity" class="form-control" type="number" placeholder="how many dishes 1,2,3,...">
+                        <input data-productprice="<?php echo $prices[$j];?>"  data-quantityid="<?php echo $j;?>"  id="quantity<?php echo $j; ?>" name="quantity" class="quantity form-control" type="number" placeholder="how many dishes 1,2,3,...">
 
                     </div>
 
                 </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label">Total Price</label>
+
+
+                    <div class="input-group mb-3 input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-sort-amount-up"></i></span>
+                        </div>
+                        <input  id="TotalPrice<?php echo $j; ?>" readonly  class="EachTotalPrice form-control" type="number" >
+
+                    </div>
+
+                </div>
+
 
                 <div class="form-group row">
                     <label class="col-form-label">describe</label>
@@ -210,13 +267,25 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 
 <script>
     $(document).ready(function ()
     {
+        $(document).on('keyup','.quantity',function ()
+        {
+            var Quantity=$(this).val();
+            var id=$(this).data("quantityid");
+            var productPrice=$(this).data("productprice");
+            $("#TotalPrice"+id).val(Number(Quantity)*Number(productPrice))
+            var Alltotalprice=0;
+            $(".EachTotalPrice").each(function() {
+                Alltotalprice=Alltotalprice+Number($(this).val());
+            });
+            $("#AllTotalamount").val(Alltotalprice);
 
+        });
 
         $("#NextWizard").click(function (e) {
             e.preventDefault();

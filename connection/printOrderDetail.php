@@ -466,7 +466,7 @@ WHERE (p.id='".$person[0][2]."')AND(ISNULL(n.expire)) order BY n.id";
             {
 
                 //with menu
-                $sql = 'SELECT `dishname`, `image` FROM `menu` WHERE (hallprice_id='.$detailorder[0][21] . ') AND ISNULL(expire)';
+                $sql = 'SELECT `dishname`, `image` FROM `menu` WHERE (package_id='.$detailorder[0][21] . ') AND ISNULL(expire)';
                 $menu = queryReceive($sql);
             }
             $sql='SELECT (SELECT ei.name FROM Extra_Item as ei WHERE ei.id=hei.Extra_Item_id), (SELECT ei.price FROM Extra_Item as ei WHERE ei.id=hei.Extra_Item_id) from hall_extra_items as hei

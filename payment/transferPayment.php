@@ -7,6 +7,7 @@
  */
 
 include_once ("../connection/connect.php");
+
 $pid=$_GET['pid'];
 $token=$_GET['token'];
 $sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';

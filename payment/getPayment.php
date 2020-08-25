@@ -8,6 +8,10 @@
 
 
 include_once ("../connection/connect.php");
+
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
+
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 
@@ -54,7 +58,7 @@ $StatusOrder=queryReceive($sql);
 
 <?php
 
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 if($processInformation[0][4]==0)
 {
     ?>
@@ -216,7 +220,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 
 

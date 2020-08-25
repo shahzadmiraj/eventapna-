@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include  ("../../connection/connect.php");
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../../index.php");
 
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
@@ -69,7 +71,7 @@ $Query='pid='.$pid."&token=".$token;
 <body>
 <?php
 
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 if($processInformation[0][4]==0)
 {
     ?>
@@ -499,7 +501,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 </form>
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

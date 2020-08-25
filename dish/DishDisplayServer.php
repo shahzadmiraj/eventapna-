@@ -177,8 +177,5 @@ Where  (dwa.id='.$dishid.')';
                     </div>
                 </div>';
     echo $display;
-
-
-
 }
 
