@@ -7,6 +7,9 @@
  */
 include_once ("../connection/connect.php");
 
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
+
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
@@ -42,7 +45,7 @@ $customer=$processInformation[0][7];
 </head>
 <body >
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 ?>
 
 <div class="container">
@@ -144,7 +147,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
         <div class="form-group row">
-            <label for="describe" class="col-form-label">Describe order </label>
+            <label for="describe" class="col-form-label">Describe Order </label>
 
 
 

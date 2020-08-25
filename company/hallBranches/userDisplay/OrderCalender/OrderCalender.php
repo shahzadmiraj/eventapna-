@@ -1,6 +1,8 @@
 <?php
 include_once ('../../../../connection/connect.php');
 //include_once('../../packages/packagesServerfunction.php');
+include  ("../../../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee,Viewer","../../../../index.php",'h');
 
 $sql='SELECT `company_id`,`username`, `jobTitle` ,`id`  FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);

@@ -148,7 +148,7 @@ include_once ("../../webdesign/header/header.php");
            // $hallEncorded=base64url_encode($halls[$i][0]);
             $token=$halls[$i][3];
             $hallEncorded=$halls[$i][0];
-            $Query='id='.$hallEncorded.'&token='.$token.'&h=hall';
+            $Query='h='.$hallEncorded.'&token='.$token;
             ?>
 
             <div class="col-md-4 mb-5">
@@ -180,7 +180,7 @@ include_once ("../../webdesign/header/header.php");
 
                         <?php if(onlyAccessUsersWho("Owner"))
                         {
-                            echo '  <a href="../hallBranches/hallInfo.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6> Hall Setting</h6></a>';
+                            echo '  <a href="../hallBranches/hallInfo.php?'.$Query.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6> Hall Setting</h6></a>';
                         } ?>
                         <a href="../hallBranches/galleryhall.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-images fa-3x"></i><h6>Gallery</h6></a>
                     </div>
@@ -246,7 +246,8 @@ include_once ("../../webdesign/header/header.php");
 
             $token=$caterings[$i][3];
             $id=$caterings[$i][0];
-            $Query='c='.$id.'&token='.$token.'&c=cat';
+          //  $CateringQuery='id='.$id.'&token='.$token.'&c='.$id;
+            $Query='c='.$id.'&token='.$token;
             ?>
 
             <div class="col-md-4 mb-5">
@@ -273,7 +274,7 @@ include_once ("../../webdesign/header/header.php");
                         <a href="../../order/FindOrder.php?order_status=Cancel&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
                         <?php if(onlyAccessUsersWho("Owner"))
                         {
-                            echo '    <a href="../cateringBranches/infoCatering.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6>Branch Setting</h6></a>';
+                            echo '    <a href="../cateringBranches/infoCatering.php?'.$Query.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cogs fa-3x"></i><h6>Branch Setting</h6></a>';
                         } ?>
                         <a href="../cateringBranches/gallerycatering.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-images fa-3x"></i> <h6>Gallery</h6></a>
                         <a  href="../../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>

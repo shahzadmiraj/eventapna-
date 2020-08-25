@@ -182,7 +182,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
             $dishDetail=queryReceive($sql);
             //print_r($dishDetail);style="display: none"
-            $display.='<div id="dishtype'.$i.'"  class="row" >';
+            $display.='<div id="dishtype'.$i.'"  class="row"  style="display: none">';
             for ($j=0;$j<count($dishDetail);$j++)
             {
                 $display .= ' 

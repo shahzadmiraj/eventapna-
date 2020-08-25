@@ -69,7 +69,7 @@ $SenderName=array();
 </head>
 <body>
 <?php
-//include_once ("../../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 
 
 ?>

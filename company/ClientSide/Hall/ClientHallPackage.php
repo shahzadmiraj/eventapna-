@@ -1,6 +1,7 @@
 
 <?php
 include_once ('../../../connection/connect.php');
+
 include_once ("functions.php");
 $userid=1;
 $PackageDateid=$_GET['pdid'];
@@ -89,7 +90,7 @@ $SenderName=array();
 </head>
 <body>
 <?php
-//include_once ("../../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 
 
 

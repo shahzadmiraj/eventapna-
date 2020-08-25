@@ -53,7 +53,7 @@ $location=queryReceive($sql);
 <body>
 
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 
@@ -305,7 +305,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 <?php
 
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 
 <script src="../../webdesign/JSfile/JSFunction.js" type="text/javascript"></script>
@@ -341,7 +341,7 @@ include_once ("../ClientSide/Company/Box.php");
         {
             e.preventDefault();
             var state=false;
-            if(NumberRange("partitions","Please Enter Valid Patition",1,10))
+            if(NumberRange("partitions","Please Enter Valid Patition 1 -4 ",1,4))
             {
                 state=true;
             }
@@ -354,6 +354,11 @@ include_once ("../ClientSide/Company/Box.php");
                 state=true;
             }
             if(validationWithString("map-search","Please Select Location of Hall"))
+            {
+                state=true;
+            }
+
+            if(NumberRange("AdvanceAmount","Please Enter Valid Advance online booking in % 0 to 100",0,100))
             {
                 state=true;
             }
@@ -393,7 +398,7 @@ include_once ("../ClientSide/Company/Box.php");
     });
 
 
-   /* $(document).ready(function()
+   $(document).ready(function()
     {
         latitude=<?php //echo $location[0][5];?>;
         longitude=<?php //echo $location[0][1];?>;
@@ -402,7 +407,7 @@ include_once ("../ClientSide/Company/Box.php");
             dataType: "script",
             cache: false
         });
-    });*/
+    });
 </script>
 </body>
 </html>

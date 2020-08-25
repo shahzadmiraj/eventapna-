@@ -6,6 +6,16 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+include  ("../access/userAccess.php");
+
+if(isset($_GET['c']))
+{
+   RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee", "../index.php","c");
+}
+else
+{
+    RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee", "../index.php","h");
+}
 
 
 $hallid="";
@@ -117,7 +127,7 @@ else
 <body>
 
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 ?>
 
 <?php
@@ -131,7 +141,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
 <div class="container card">
 
-        <form class="col-12 shadow mb-4   " id="formId1" >
+        <form class="col-12 shadow mb-4   " id="formId1" style="display: none">
 
             <?php
             echo '<input type="number" name="'.$name.'" value='.$id.' hidden>';
@@ -489,7 +499,7 @@ od.destination_date ASC,od.destination_time ASC';
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 
 <script>

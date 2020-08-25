@@ -13,13 +13,13 @@ if(isset($_GET['h']))
 {
     //come from hall
 
-    RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee","../index.php");
+    RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee","../index.php",'h');
 }
 else
 {
     //come from catering
 
-    RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee","../index.php");
+    RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee","../index.php","c");
 
 }
 
@@ -32,11 +32,11 @@ $hallid="No";
 $cateringid='No';
 if(isset($_GET['h']))
 {
-    $hallid=$_GET['id'];
+    $hallid=$_GET['h'];
 }
 if(isset($_GET['c']))
 {
-    $cateringid=$_GET['id'];
+    $cateringid=$_GET['c'];
 }
 $userid=$_COOKIE['userid'];
 ?>
