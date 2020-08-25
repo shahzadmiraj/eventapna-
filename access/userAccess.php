@@ -29,7 +29,6 @@ function RedirectOtherwiseOnlyAccessUsersWho($ValidationUserJobTitleString,$redi
     }
 }
 
-
 function RedirectOtherwiseOnlyAccessUserOfPackagesDate($ValidationUserJobTitleString,$redirect)
 {
     $Isredirect=false;
@@ -147,3 +146,93 @@ function RedirectOtherwiseOnlyAccessUserOfDish($ValidationUserJobTitleString,$re
         exit();
     }
 }
+
+function RedirectOtherwiseOnlyAccessUserOfHall($ValidationUserJobTitleString,$redirect)
+{
+    $Isredirect=false;
+    RedirectOtherwiseOnlyAccessUsersWho($ValidationUserJobTitleString,$redirect);
+    if(isset($_GET['id'])&&(isset($_GET['token'])))
+    {
+        $sql='SELECT  `company_id` FROM `user` WHERE id='.$_COOKIE['userid'].' and ISNULL(expire)';
+        $companyId=queryReceive($sql);
+        $id=$_GET['id'];
+        $token=$_GET['token'];
+       $sql='SELECT `company_id` FROM `hall` WHERE (id='.$id.')AND (ISNULL(expire))AND (token="'.$token.'")';
+        $Companyinfo=queryReceive($sql);
+        if(count($companyId)==1&& count($Companyinfo)==1)
+        {
+            if($companyId[0][0]!=$Companyinfo[0][0])
+            {
+                $Isredirect=true;
+            }
+        }
+        else
+        {
+            $Isredirect=true;
+        }
+
+    }
+    else
+    {
+        $Isredirect=true;
+    }
+
+
+
+    if($Isredirect)
+    {
+        header("location:".$redirect);
+        exit();
+    }
+}
+
+function RedirectOtherwiseOnlyAccessUserOfOrderBooked($ValidationUserJobTitleString,$redirect)
+{
+
+    $Isredirect=false;
+    RedirectOtherwiseOnlyAccessUsersWho($ValidationUserJobTitleString,$redirect);
+    if(isset($_GET['pid'])&&(isset($_GET['token'])))
+    {
+        $sql='SELECT  `company_id` FROM `user` WHERE id='.$_COOKIE['userid'].' and ISNULL(expire)';
+        $companyId=queryReceive($sql);
+        $id=$_GET['pid'];
+        $token=$_GET['token'];
+
+        $sql='SELECT  `catering_id`, `hall_id` FROM `BookingProcess` WHERE (id='.$id.')AND(token="'.$token.'")';
+         $HallOrCatering=queryReceive($sql);
+          if(count($HallOrCatering)==1)
+          {
+
+              if (empty($HallOrCatering[0][0])) {
+                  //hall
+                  $sql = 'SELECT `company_id` FROM `hall` WHERE (id=' . $HallOrCatering[0][1] . ')AND (ISNULL(expire))';
+              } else {
+                  //catering
+                  $sql = 'SELECT  c.company_id FROM catering as c WHERE (c.id=' . $HallOrCatering[0][0] . ')AND (ISNULL(c.expire))';
+              }
+              $Companyinfo = queryReceive($sql);
+              if (count($companyId) == 1 && count($Companyinfo) == 1) {
+                  if ($companyId[0][0] != $Companyinfo[0][0]) {
+                      $Isredirect = true;
+                  }
+              } else {
+                  $Isredirect = true;
+              }
+          }else {
+              $Isredirect = true;
+          }
+
+    }
+    else
+    {
+        $Isredirect=true;
+    }
+
+
+    if($Isredirect)
+    {
+        header("location:".$redirect);
+        exit();
+    }
+}
+

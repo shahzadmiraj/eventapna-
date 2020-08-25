@@ -198,7 +198,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 }
                 else
                 {
-                    $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+                    $image='../images/systemImage/imageNotFound.png';
                 }
 
 

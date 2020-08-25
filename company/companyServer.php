@@ -181,7 +181,7 @@ WHERE
         $display='<h4 align="center" class="col-12">Menu</h4>';
         for ($i=0;$i<count($menu);$i++)
         {
-            $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
+            $img='../../images/systemImage/imageNotFound.png';
 
             if((file_exists('../images/dishImages/'.$menu[$i][1]))&&($menu[$i][1]!=""))
                 $img='../../images/dishImages/'.$menu[$i][1];

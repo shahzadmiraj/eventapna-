@@ -6,6 +6,24 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+
+include  ("../access/userAccess.php");
+
+if(isset($_GET['h']))
+{
+    //come from hall
+
+    RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee","../index.php");
+}
+else
+{
+    //come from catering
+
+    RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee","../index.php");
+
+}
+
+
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
@@ -14,11 +32,11 @@ $hallid="No";
 $cateringid='No';
 if(isset($_GET['h']))
 {
-    $hallid=$_GET['h'];
+    $hallid=$_GET['id'];
 }
 if(isset($_GET['c']))
 {
-    $cateringid=$_GET['c'];
+    $cateringid=$_GET['id'];
 }
 $userid=$_COOKIE['userid'];
 ?>
@@ -69,6 +87,10 @@ $userid=$_COOKIE['userid'];
 
 </head>
 <body>
+<?php
+include_once ("../webdesign/header/header.php");
+
+?>
 
 <div class="container">
     <div class="row" >
@@ -121,7 +143,6 @@ $userid=$_COOKIE['userid'];
 
 </div>
 <?php
-//include_once ("../webdesign/header/header.php");
 
 
 
@@ -244,7 +265,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 

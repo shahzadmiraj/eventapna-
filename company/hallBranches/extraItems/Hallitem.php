@@ -6,8 +6,13 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
-//$encoded=$_GET['hall'];
-//$id=base64url_decode($encoded);
+include  ("../../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner","../../../index.php");
+
+if(isset($_GET['id']))
+{
+    RedirectOtherwiseOnlyAccessUserOfHall("Owner","../../../index.php");
+}
 
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
@@ -61,7 +66,7 @@ else
 </head>
 <body>
 <?php
-//include_once ("../../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 
 ?>
 
@@ -73,7 +78,7 @@ else
 
 
 <div class="container card">
-    <h2 class="text-center text-muted">Extra Item Add in Hall</h2>
+    <h2 class="text-center text-muted">Extra Item Manage</h2>
 
     <h6 class="font-weight-bold fa-border">Extra charges of item <a  href="CreateItem.php" class="float-right btn btn-success col-6 form-control"> + Add item</a></h6>
 
@@ -293,7 +298,7 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
 
 
 <?php
-//include_once ("../../../webdesign/footer/footer.php");
+include_once ("../../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

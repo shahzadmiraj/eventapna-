@@ -49,11 +49,22 @@ if($_POST['option']=="showPriceofAllDishes")
 
         $display.=  '<div class="card" style="width: 18rem;">
                     <div class="card-header ">
-                    Dish price id#'.$dishWithAttribute[$j][3].'<br>
+                    <ul>
+                    <li class="text-center font-weight-bold h5"> Dish price id#'.$dishWithAttribute[$j][0].'</li>
                     
-                        <i class="fas fa-money-bill-alt text-danger"></i> Price: '.$dishWithAttribute[$j][3].'
+                    <li class="text-danger"> Price: '.$dishWithAttribute[$j][3].'</li>
+                    </ul>
+ 
                     </div>
-                    <ul class="list-group list-group-flush">';
+                    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Attribute</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>';
 
 
         $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishWithAttribute[$j][0].')';
@@ -63,13 +74,19 @@ if($_POST['option']=="showPriceofAllDishes")
         for($i=0;$i<count($AttributeDetail);$i++)
         {
 
-            $display.=' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
+            $display.=' 
+    <tr>
+      <th scope="row">'.($i+1).'</th>
+      <td>'.$AttributeDetail[$i][0].'</td>
+      <td>'.$AttributeDetail[$i][1].'</td>
+   </tr>';
         }
 
 
 
 
-        $display.=  '</ul>
+        $display.=  '</tbody>
+</table>
                     <div class="card-footer m-auto">
                         <button    data-$image="'.$image.'"  data-price="'.$dishWithAttribute[$j][3].'" data-dishname="'.$dishName.'"  data-dishid="'.$dishWithAttribute[$j][0].'"  class="btn btn-success  DishAddOnform "><i class=" far fa-check-circle"></i>Select</button>
                     </div>
@@ -108,10 +125,27 @@ Where  (dwa.id='.$dishid.')';
 
 
     $display.=  '<div id="remove'.$countofdish.'" class="card col-md-4" >
-                          <h5><i class="fas fa-concierge-bell mr-1"></i>'.$dishName.'</h5>
-                          <h6>Dish id#'.$DishDetail[0][0].' <br>Dish Price id#'.$dishid.'</h6>
-               <i class="fas fa-money-bill-alt text-danger float-right">Price : '.$price.'</i>
-                    <ul class="list-group list-group-flush">';
+
+                    <ul>
+                    <li class="text-center h4 font-weight-bold"> <i class="fas fa-concierge-bell mr-1"></i>'.$dishName.'</li>
+                   
+                    <li> Dish Price Id : '.$dishid.'</li>
+                     <li> Dish  id : '.$DishDetail[0][0].'</li>
+                    <li> <i class="fas fa-money-bill-alt text-danger float-right">Price : '.$price.'</i></li>
+                    </ul>
+
+             
+                    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Attribute Name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  ';
 
 
     $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishid.')';
@@ -120,15 +154,20 @@ Where  (dwa.id='.$dishid.')';
     // special dish with attribute and quantity
     for($i=0;$i<count($AttributeDetail);$i++)
     {
-     //   $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].' :  '.$AttributeDetail[$i][1].'</li>';
-        $display.=' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
+        $display.=' 
+    <tr>
+      <th scope="row">'.($i+1).'</th>
+      <td>'.$AttributeDetail[$i][0].'</td>
+      <td>'.$AttributeDetail[$i][1].'</td>
+   </tr>';
 
     }
 
 
 
 
-    $display.=  '</ul>
+    $display.=  '</tbody>
+</table>
                     <div class="card-footer m-auto">
                                 <input type="text" hidden  name="dishesName[]" value="'.$dishName.'"> 
                               <input type="number" hidden  name="dishesid[]" value="'.$dishid.'"> 

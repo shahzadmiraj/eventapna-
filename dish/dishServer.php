@@ -87,16 +87,23 @@ else if($_POST['option']=='deleteDish')
 else if($_POST['option']=="viewmenu")
 {
     $packageid=$_POST['packageid'];
-    $sql='SELECT `dishname`, `image` FROM `menu` WHERE (hallprice_id='.$packageid.') AND ISNULL(expire)';
+    $sql='SELECT `dishname`, `image` FROM `menu` WHERE (package_id='.$packageid.') AND ISNULL(expire)';
     $menu=queryReceive($sql);
-    $display='<h4 align="center" class="col-12">Menu</h4>';
+    $display='';
     for ($i=0;$i<count($menu);$i++)
     {
+        $img='../images/systemImage/imageNotFound.png';
+
+        if((file_exists('../images/dishImages/'.$menu[$i][1]))&&($menu[$i][1]!=""))
+            $img='../images/dishImages/'.$menu[$i][1];
         $display.='
-            <div  class="col-3 alert-danger shadow border m-2 form-group rounded" style="height: 30vh;" >
-                <img src="'.substr($menu[$i][1],3).'" class="col-12 " style="height: 15vh">
-                <p class="col-form-label" class="form-control col-12">'.$menu[$i][0].'</p>
-            </div>';
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="'.$img.'" alt="Card image cap" style="height: 20vh">
+  <div class="card-body">
+    <p class="card-text">'.$menu[$i][0].'</p>
+  </div>
+</div>
+     ';
     }
     echo $display;
 }

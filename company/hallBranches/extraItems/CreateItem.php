@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../../../connection/connect.php");
+include  ("../../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner","../../../index.php");
 
 
 
@@ -36,7 +38,7 @@ $userid=$_COOKIE['userid'];
 </head>
 <body >
 <?php
-//include_once ("../../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 ?>
 
 
@@ -63,7 +65,7 @@ $userid=$_COOKIE['userid'];
 
         <div class="form-group row">
 
-            <label for="image" class="col-form-label">image item </label>
+            <label for="image" class="col-form-label">Image Item </label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -170,7 +172,7 @@ GROUP by (EIT.id)';
 
 
 <?php
-//include_once ("../../../webdesign/footer/footer.php");
+include_once ("../../../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function ()

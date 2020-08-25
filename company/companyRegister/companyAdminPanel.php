@@ -148,7 +148,7 @@ include_once ("../../webdesign/header/header.php");
            // $hallEncorded=base64url_encode($halls[$i][0]);
             $token=$halls[$i][3];
             $hallEncorded=$halls[$i][0];
-            $Query='h='.$hallEncorded.'&token='.$token;
+            $Query='id='.$hallEncorded.'&token='.$token.'&h=hall';
             ?>
 
             <div class="col-md-4 mb-5">
@@ -165,7 +165,7 @@ include_once ("../../webdesign/header/header.php");
                     <div class="row justify-content-start">
                         <?php if(onlyAccessUsersWho("Owner,Employee"))
                         {
-                            echo '      <a href="../../customer/CustomerCreate.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>';
+                            echo '      <a href="../../customer/CustomerCreate.php?'.$Query.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>';
                         } ?>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
@@ -244,10 +244,9 @@ include_once ("../../webdesign/header/header.php");
             }
 
 
-            // $hallEncorded=base64url_encode($halls[$i][0]);
             $token=$caterings[$i][3];
-            $hallEncorded=$caterings[$i][0];
-            $Query='c='.$hallEncorded.'&token='.$token;
+            $id=$caterings[$i][0];
+            $Query='c='.$id.'&token='.$token.'&c=cat';
             ?>
 
             <div class="col-md-4 mb-5">
@@ -265,7 +264,7 @@ include_once ("../../webdesign/header/header.php");
 
                         <?php if(onlyAccessUsersWho("Owner,Employee"))
                         {
-                            echo '<a href="../../customer/CustomerCreate.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>';
+                            echo '<a href="../../customer/CustomerCreate.php?'.$Query.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>';
                         } ?>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
