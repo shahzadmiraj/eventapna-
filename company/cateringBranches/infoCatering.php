@@ -6,6 +6,8 @@
  * Time: 21:31
  */
 include_once ("../../connection/connect.php");
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner","../../index.php",'c');
 
 
 
@@ -58,7 +60,7 @@ $userid=$_COOKIE['userid'];
 
 
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 <?php
@@ -243,7 +245,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 <script src="../../mapRadius/js/gmaps-lat-lng-radius.js"></script>
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 
 
@@ -253,14 +255,14 @@ include_once ("../ClientSide/Company/Box.php");
 
     $(document).ready(function()
     {
-       /* latitude="<?php // echo $cateringdetail[0][4];?>";
-        longitude="<?php //echo $cateringdetail[0][3];?>";
+        latitude="<?php  echo $cateringdetail[0][4];?>";
+        longitude="<?php echo $cateringdetail[0][3];?>";
         $.ajax({
         url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
         dataType: "script",
         cache: false
         });
-        */
+
 
 
     });
@@ -308,7 +310,10 @@ include_once ("../ClientSide/Company/Box.php");
                 state=true;
             if(validationWithString("address","Please select Address"))
                 state=true;
-
+            if(NumberRange("AdvanceAmount","Please Enter Advance  Online booking payment with percentage  min 0 and max 100",0,100))
+            {
+                state=true;
+            }
             if(state)
                 return false;
 

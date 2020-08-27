@@ -56,7 +56,7 @@ $companyid=$userdetail[0][0];
 <body>
 
 <?php
-//include_once ("../../../../webdesign/header/header.php");
+include_once ("../../../../webdesign/header/header.php");
 
 ?>
 
@@ -135,6 +135,31 @@ include_once ("../../../ClientSide/Company/Box.php");
             <a class="nav-link PackageType" data-packagetype="1" id="pills-FoodAndSeating-tab" data-toggle="pill" href="#pills-FoodAndSeating" role="tab" aria-controls="pills-FoodAndSeating" aria-selected="false">Food+Seating</a>
         </li>
     </ul>
+    <hr>
+    <h2>Table Monthly</h2>
+    <hr>
+    <div class="row" style="height: 70vh ;overflow: auto">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Package Name</th>
+                <th scope="col">Booked Person</th>
+                <th scope="col">Order id</th>
+                <th scope="col">Order Status</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Order Timing</th>
+                <th scope="col">Detail</th>
+            </tr>
+            </thead>
+            <tbody id="tableAll">
+
+            </tbody>
+        </table>
+    </div>
+
+
+
 
 
     <h2>Calender </h2>
@@ -160,7 +185,7 @@ include_once ("../../../ClientSide/Company/Box.php");
 
 <?php
 
-//include_once ("../../../../webdesign/footer/footer.php");
+include_once ("../../../../webdesign/footer/footer.php");
 ?>
 
 <script>
@@ -197,7 +222,7 @@ include_once ("../../../ClientSide/Company/Box.php");
         formdata.append("searching",searching);
         formdata.append("packagetype",PackageType);
         formdata.append("option","ViewOrders");
-        formdata.append("hallid",1);
+        formdata.append("hallid","<?php echo $hallid;?>");
 
 
         var calendar = $('#calendar').fullCalendar({
@@ -216,19 +241,32 @@ include_once ("../../../ClientSide/Company/Box.php");
                     contentType: false,
                     processData: false,
                     success: function(doc) {
-                    //alert(doc);
-
+                        var text='';
+                      //  console.log(doc);
                         var obj = jQuery.parseJSON(doc);
+                          //console.log(obj);
                         var events = [];
                         $.each(obj, function(index, value) {
+
                             events.push({
                                 end: value['end'],
                                 id: value['id'],
                                 start: value['start'],
                                 title: value['title'],
                             });
+                            text+='<tr>\n' +
+                                '                <th scope="row">'+(index+1) +'</th>\n' +
+                                '                <td>'+value['PackageName']+'</td>\n' +
+                                '                <td>'+value['orderTotalperson']+'</td>\n' +
+                                '                <td>'+value['orderid']+'</td>\n' +
+                                '                <td>'+value['orderstatus']+'</td>\n' +
+                                '                <td>'+value['orderdate']+'</td>\n' +
+                                '                <td>'+value['ordertiming']+'</td>\n' +
+                                '                <td><a href="../../../../order/PreviewOrder.php?pid='+value['orderProcessid']+'&token='+value['orderProcesstoken']+'" class="btn btn-success">Detail</a></td>\n' +
+                                '            </tr>';
                             //console.log(value)
                         });
+                        $("#tableAll").html(text);
                         callback(events);
                     },
                     error: function(e, x, y) {
@@ -249,7 +287,7 @@ include_once ("../../../ClientSide/Company/Box.php");
                     data:{id:id,option:"orderCustomerGo"},
                     success:function(data)
                     {
-                        location.href="../../../../order/PreviewOrder.php";
+                        location.href="../../../../order/PreviewOrder.php"+data;
                     }
                 });
 
@@ -258,7 +296,7 @@ include_once ("../../../ClientSide/Company/Box.php");
 
         });
         //
-       // $('#calendar').fullCalendar('refetchEvents');
+        $('#calendar').fullCalendar('refetchEvents');
 
     });
 

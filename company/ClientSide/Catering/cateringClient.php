@@ -1,6 +1,10 @@
 <?php
 include_once ('../../../connection/connect.php');
+include  ("../../../access/userAccess.php");
+RedirectOtherwiseOrCateringignoreUsers("../../../index.php",'c');
 
+$userid=1;
+if(isset($_COOKIE['userid']))
 $userid=$_COOKIE['userid'];
 $cateringid=$_GET['c'];
 $sql='SELECT c.name,c.image,c.company_id,cl.country,cl.city,cl.address,cl.longitude,cl.latitude,cl.radius FROM catering as c INNER join cateringLocation as cl 
@@ -198,7 +202,7 @@ include_once ("../Company/Box.php");
             }
             else
             {
-                $image='https://www.pngkey.com/png/detail/430-4307759_knife-fork-and-plate-vector-icon-dishes-png.png';
+                $image='../../../images/systemImage/imageNotFound.png';
             }
 
             $display.='
@@ -282,7 +286,7 @@ include_once ("../Company/Box.php");
             $SenderAddress[$i]=$Owners[$i][3];
                 $SenderName[$i]=$Owners[$i][0];
 
-            $imageUser='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+            $imageUser='../../../images/systemImage/imageNotFound.png';
             if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))
             {
                 $imageUser= '../../../images/users/'.$Owners[$i][1];

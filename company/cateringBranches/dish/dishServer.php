@@ -295,10 +295,24 @@ if(isset($_POST['option']))
 
             $display.=  '<div class="card" style="width: 18rem;">
                     <div class="card-header">
-                    <h5>Dish id : '.$dishWithAttribute[$j][0].'</h5>
+                 
+                 <ul>
+                    <li class="text-center font-weight-bold h5"> Dish price id#'.$dishWithAttribute[$j][0].'</li>
+                    
+                 
+                    </ul>
                  
                     </div>
-                    <ul class="list-group list-group-flush">';
+                    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Attribute</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+                    ';
 
 
             $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishWithAttribute[$j][0].')';
@@ -307,13 +321,20 @@ if(isset($_POST['option']))
             // special dish with attribute and quantity
             for($i=0;$i<count($AttributeDetail);$i++)
             {
-                $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>'.$AttributeDetail[$i][0].' :  '.$AttributeDetail[$i][1].'</li>';
+
+                $display.=' 
+    <tr>
+      <th scope="row">'.($i+1).'</th>
+      <td>'.$AttributeDetail[$i][0].'</td>
+      <td>'.$AttributeDetail[$i][1].'</td>
+   </tr>';
             }
 
 
 
 
-            $display.=  '</ul>
+            $display.=  '</tbody>
+</table>
                     <div class="card-footer m-auto">
                     <h6 class="text-danger">Price: <i class="fas fa-money-bill-alt"></i>  '.$dishWithAttribute[$j][3].'</h6>
                     </div>

@@ -9,20 +9,8 @@
 
 include_once ("../connection/connect.php");
 
-if(isset($_SESSION['order']))
-{
-    unset($_SESSION['order']);
-}
-if(isset($_SESSION['customer']))
-{
-    unset($_SESSION['customer']);
-}
 
-if(!isset($_SESSION['branchtype']))
-{
-    header("location:../company/companyRegister/companydisplay.php");
 
-}
 if(isset($_GET['action']))
 {
     $_SESSION['order']=$_GET['order'];
@@ -278,8 +266,6 @@ include_once ("../webdesign/footer/footer.php");
                 }
             });
         });
-
-
         $("#searchBtn").click(function () {
             var display=$(this).data("display");
             if(display=="hide")

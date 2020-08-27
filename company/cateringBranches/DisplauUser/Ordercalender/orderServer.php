@@ -52,10 +52,10 @@ if($_POST['option']=="ViewCateringOrder")
 else if($_POST['option']=="orderCustomerGo")
 {
     $orderid=$_POST['id'];
-    $sql='SELECT od.person_id FROM orderDetail as od 
-WHERE od.id='.$orderid.'';
+    $sql='SELECT `id`, `token` FROM `BookingProcess`  
+WHERE orderDetail_id=
+'.$orderid;
     $customerdetail=queryReceive($sql);
 
-    $_SESSION['order']=$orderid;
-    $_SESSION['customer']=$customerdetail[0][0];
+    echo '?pid='.$customerdetail[0][0].'&token='.$customerdetail[0][1];
 }

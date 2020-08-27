@@ -1,8 +1,7 @@
 <?php
 include_once ('../../connection/connect.php');
-
-
-
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee","../../index.php",'h');
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
@@ -37,7 +36,7 @@ $userid=$_COOKIE['userid'];
 <body>
 
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 
@@ -152,7 +151,7 @@ include_once ("../ClientSide/Company/Box.php");
 </div>
 
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 
 

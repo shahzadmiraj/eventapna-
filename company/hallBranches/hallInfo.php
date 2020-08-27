@@ -1,5 +1,7 @@
 <?php
 include_once ('../../connection/connect.php');
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee","../../index.php",'h');
 
 
 

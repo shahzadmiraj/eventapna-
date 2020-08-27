@@ -7,6 +7,8 @@
  */
 include_once ("../../connection/connect.php");
 
+include  ("../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner","../../index.php",'c');
 
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
@@ -43,7 +45,7 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 
 ?>
 
@@ -158,7 +160,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 <?php
-//include_once ("../../webdesign/footer/footer.php");
+include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
 

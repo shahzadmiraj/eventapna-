@@ -53,13 +53,16 @@ if($_POST['option']=="ViewOrders")
 
 
     $data = array();
-    $sql = 'SELECT p.id,p.isFood,package_name,pd.selectedDate,p.dayTime,pd.id,od.id FROM packages as p INNER JOIN packageDate as pd
+    $sql = 'SELECT p.id,p.isFood,package_name,pd.selectedDate,p.dayTime,pd.id,od.id,od.status_hall,bp.id,bp.token,od.total_person FROM packages as p INNER JOIN packageDate as pd
 on (p.id=pd.package_id) INNER join orderDetail as od 
-on (pd.id=od.packageDate_id)
+on (pd.id=od.packageDate_id) INNER JOIN packageControl as pc 
+on (pc.package_id=p.id)inner  join  BookingProcess as bp
+on(bp.orderDetail_id=od.id)
 WHERE
-(ISNULL(p.expire))AND (ISNULL(pd.expire))
-AND(p.hall_id='.$hallid.')
+(ISNULL(p.expire))AND (ISNULL(pd.expire))AND(ISNULL(pc.expire))
+AND(pc.hall_id='.$hallid.')
 '.$daytime.' '.$packagetype.'  '.$searching.'
+ORDER BY DATE(pd.selectedDate) DESC
 ';
     $ViewPackages = queryReceive($sql);
     //echo $sql;
@@ -97,19 +100,26 @@ AND(p.hall_id='.$hallid.')
             'id' => $ViewPackages[$i][6],
             'title' => 'Oid# ' . $ViewPackages[$i][6]. "PN>".$packagename,
             'start' => $start,
-            'end' => $end
+            'end' => $end, //extra
+            'PackageName'=>$ViewPackages[$i][2],
+            'orderid'=>$ViewPackages[$i][6],
+            'orderstatus'=>$ViewPackages[$i][7],
+            'orderdate'=>$ViewPackages[$i][3],
+            'ordertiming'=>$ViewPackages[$i][4],
+            'orderProcessid'=>$ViewPackages[$i][8],
+            'orderProcesstoken'=>$ViewPackages[$i][9],
+            'orderTotalperson'=>$ViewPackages[$i][10],
         );
     }
-
    echo json_encode($data);
 }
 else if($_POST['option']=="orderCustomerGo")
 {
     $orderid=$_POST['id'];
-    $sql='SELECT od.person_id FROM orderDetail as od 
-WHERE od.id='.$orderid.'';
+    $sql='SELECT `id`, `token` FROM `BookingProcess`  
+WHERE orderDetail_id=
+'.$orderid;
     $customerdetail=queryReceive($sql);
 
-    $_SESSION['order']=$orderid;
-    $_SESSION['customer']=$customerdetail[0][0];
+    echo '?pid='.$customerdetail[0][0].'&token='.$customerdetail[0][1];
 }

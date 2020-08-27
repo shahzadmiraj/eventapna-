@@ -76,10 +76,8 @@ function RedirectOtherwiseOnlyAccessUserOfCateringBranch($ValidationUserJobTitle
     {
         $sql='SELECT  `company_id` FROM `user` WHERE id='.$_COOKIE['userid'].' and ISNULL(expire)';
         $companyId=queryReceive($sql);
-        $id=$_GET[$IdNames];
-        $token=$_GET['token'];
 
-        $Companyinfo=RedirectOtherwiseOrCateringignoreUsers($redirect,$id,$token);
+        $Companyinfo=RedirectOtherwiseOrCateringignoreUsers($redirect,$IdNames);
         if(count($companyId)==1&& count($Companyinfo)==1)
         {
             if($companyId[0][0]!=$Companyinfo[0][0])
@@ -146,26 +144,37 @@ function RedirectOtherwiseOnlyAccessUserOfDish($ValidationUserJobTitleString,$re
         exit();
     }
 }
-function RedirectOtherwiseOrHallignoreUsers($redirect,$id,$token)
+function RedirectOtherwiseOrHallignoreUsers($redirect,$IdNames)
 {
-    $sql='SELECT `company_id` FROM `hall` WHERE (id='.$id.')AND (ISNULL(expire))AND (token="'.$token.'")';
-    $Companyinfo=queryReceive($sql);
-    if(count($Companyinfo)==1)
+
+    if(isset($_GET[$IdNames])&&(isset($_GET['token'])))
     {
-        return $Companyinfo;
+        $id=$_GET[$IdNames];
+        $token=$_GET['token'];
+        $sql='SELECT `company_id` FROM `hall` WHERE (id='.$id.')AND (ISNULL(expire))AND (token="'.$token.'")';
+        $Companyinfo=queryReceive($sql);
+        if(count($Companyinfo)==1)
+        {
+            return $Companyinfo;
+        }
     }
     header("location:".$redirect);
     exit();
 
 }
 
-function RedirectOtherwiseOrCateringignoreUsers($redirect,$id,$token)
+function RedirectOtherwiseOrCateringignoreUsers($redirect,$IdNames)
 {
-    $sql='SELECT  c.company_id FROM catering as c WHERE (c.id='.$id.')AND (ISNULL(c.expire))AND(c.token="'.$token.'")';
-    $Companyinfo=queryReceive($sql);
-    if(count($Companyinfo)==1)
+    if(isset($_GET[$IdNames])&&(isset($_GET['token'])))
     {
-        return $Companyinfo;
+        $id=$_GET[$IdNames];
+        $token=$_GET['token'];
+        $sql='SELECT  c.company_id FROM catering as c WHERE (c.id='.$id.')AND (ISNULL(c.expire))AND(c.token="'.$token.'")';
+        $Companyinfo=queryReceive($sql);
+        if(count($Companyinfo)==1)
+        {
+            return $Companyinfo;
+        }
     }
     header("location:".$redirect);
     exit();
@@ -179,9 +188,7 @@ function RedirectOtherwiseOnlyAccessUserOfHall($ValidationUserJobTitleString,$re
     {
         $sql='SELECT  `company_id` FROM `user` WHERE id='.$_COOKIE['userid'].' and ISNULL(expire)';
         $companyId=queryReceive($sql);
-        $id=$_GET[$IdNames];
-        $token=$_GET['token'];
-        $Companyinfo=RedirectOtherwiseOrHallignoreUsers($redirect,$id,$token);
+        $Companyinfo=RedirectOtherwiseOrHallignoreUsers($redirect,$IdNames);
         if(count($companyId)==1&& count($Companyinfo)==1)
         {
             if($companyId[0][0]!=$Companyinfo[0][0])

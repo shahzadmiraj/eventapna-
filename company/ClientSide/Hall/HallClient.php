@@ -1,7 +1,8 @@
 
 <?php
 include_once ('../../../connection/connect.php');
-
+include  ("../../../access/userAccess.php");
+RedirectOtherwiseOrHallignoreUsers("../../../index.php",'h');
 
 $hallid=$_GET['h'];
 $userid=1;

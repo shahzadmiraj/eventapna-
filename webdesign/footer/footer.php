@@ -73,7 +73,10 @@
                 <!-- Content -->
                 <h6 class="text-uppercase font-weight-bold">EVENT APNA</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                <p>This website provide software to their company.Company can manage their orders by using software.when company use EVENT APNA software it can Solve many issues such as booking date,Time ,Avaibility,Accurate Price List  </p>
+                <p>
+                    Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
+                    Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
+                    EVENT APNA  provides Free Software ....... So Register NOW  </p>
 
             </div>
             <!-- Grid column -->
@@ -85,16 +88,16 @@
                 <h6 class="text-uppercase font-weight-bold">Products</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <a href="<?php echo $Root;?>company/companyRegister/companyRegister.php" class="text-white">Marquee Management software</a>
+                    <a href="<?php echo $Root;?>user/RegisterCompanyWithUSer.php" class="text-white">Marquee Management software</a>
                 </p>
                 <p>
-                    <a href="<?php echo $Root;?>company/companyRegister/companyRegister.php" class="text-white">Hall Management software</a>
+                    <a href="<?php echo $Root;?>user/RegisterCompanyWithUSer.php" class="text-white">Hall Management software</a>
                 </p>
                 <p>
-                    <a href="<?php echo $Root;?>company/companyRegister/companyRegister.php" class="text-white">Catering Management software</a>
+                    <a href="<?php echo $Root;?>user/RegisterCompanyWithUSer.php" class="text-white">Catering Management software</a>
                 </p>
                 <p>
-                    <a href="<?php echo $Root;?>company/companyRegister/companyRegister.php" class="text-white">Dera / Open area Management software</a>
+                    <a href="<?php echo $Root;?>user/RegisterCompanyWithUSer.php" class="text-white">Dera / Open area Management software</a>
                 </p>
             </div>
 

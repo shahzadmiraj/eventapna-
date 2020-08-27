@@ -1,5 +1,7 @@
 <?php
 include_once ('../../../../connection/connect.php');
+include  ("../../../../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee,Viewer","../../../../index.php",'c');
 
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
@@ -52,7 +54,7 @@ $cateringid=$id;
 <body>
 
 <?php
-//include_once ("../../../../webdesign/header/header.php");
+include_once ("../../../../webdesign/header/header.php");
 
 ?>
 
@@ -116,7 +118,7 @@ include_once ("../../../ClientSide/Company/Box.php");
 
 <?php
 
-//include_once ("../../../../webdesign/footer/footer.php");
+include_once ("../../../../webdesign/footer/footer.php");
 ?>
 
 <script>
@@ -191,7 +193,7 @@ include_once ("../../../ClientSide/Company/Box.php");
                     data:{id:id,option:"orderCustomerGo"},
                     success:function(data)
                     {
-                        location.href="../../../../order/PreviewOrder.php";
+                        location.href="../../../../order/PreviewOrder.php"+data;
                     }
                 });
 

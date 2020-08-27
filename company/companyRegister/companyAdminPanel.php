@@ -175,8 +175,8 @@ include_once ("../../webdesign/header/header.php");
 
                          <a  href="../hallBranches/userDisplay/OrderCalender/OrderCalender.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>
 <!--                         <a  href="../hallBranches/userDisplay/extraItem/ExtraitemHall.php?h=--><?php //echo $hallEncorded;?><!--" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light"><i class="far fa-calendar-alt fa-3x"></i><h6>Extra items Price List</h6></a>-->
-                         <a  href="../ClientSide/Hall/HallClient.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6>Hall Website</h6></a>
-                        <a  href="../../payment/RemainingAmount.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments information</h6></a>
+                         <a  href="../ClientSide/Hall/HallClient.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6>Hall Website</h6></a><!--
+                        <a  href="../../payment/RemainingAmount.php?<?php /*echo $Query; */?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments information</h6></a>-->
 
                         <?php if(onlyAccessUsersWho("Owner"))
                         {
@@ -279,7 +279,7 @@ include_once ("../../webdesign/header/header.php");
                         <a href="../cateringBranches/gallerycatering.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-images fa-3x"></i> <h6>Gallery</h6></a>
                         <a  href="../../company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-calendar-alt fa-3x"></i><h6>Calender Orders</h6></a>
                         <a  href="../../company/ClientSide/Catering/cateringClient.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-chrome fa-3x"></i> <h6>Website</h6></a>
-                        <a  href="../../payment/RemainingAmount.php?<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>
+<!--                        <a  href="../../payment/RemainingAmount.php?<?php /*echo $Query; */?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fab fa-amazon-pay fa-3x"></i><h6>All Orders Payments info</h6></a>-->
                     </div>
                 </div>
             </div>
