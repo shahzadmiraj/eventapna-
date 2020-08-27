@@ -27,7 +27,7 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit)
 function SortDistanceCatering($lat,$lon,$country,$cateringNamePredict)
 {
     // $sql="SELECT h.id,l.latitude,l.longitude FROM hall as h INNER join location as l on (h.location_id=l.id) WHERE (ISNULL(h.expire))AND(ISNULL(l.expire))";
-    $sql='SELECT c.id,cl.latitude,cl.longitude,cl.radius,c.name FROM catering as c INNER join cateringLocation as cl 
+    $sql='SELECT c.id,cl.latitude,cl.longitude,cl.radius,c.name,1,c.token FROM catering as c INNER join cateringLocation as cl 
 on (c.id=cl.catering_id)
 WHERE 
 (ISNULL(c.expire))AND(ISNULL(cl.expire))AND(cl.country="'.$country.'")AND(c.name like "%'.(trim($cateringNamePredict)).'%")';
@@ -56,12 +56,12 @@ function ShowAllCateringDishes($latitude,$longitude,$country,$cateringNamePredic
         if($catring[$i][3]>=$catring[$i][5])
         {
 
-            $display .= showCateringsdishesSeperate($catring[$i][0], $catring[$i][3], $catring[$i][4], $catring[$i][5],$DishNamePredict);
+            $display .= showCateringsdishesSeperate($catring[$i][0], $catring[$i][3], $catring[$i][4], $catring[$i][5],$DishNamePredict,$catring[$i][6]);
         }
     }
     return $display;
 }
-function showCateringsdishesSeperate($cateringid,$radius,$cateringname,$CurrentDistance,$DishNamePredict)
+function showCateringsdishesSeperate($cateringid,$radius,$cateringname,$CurrentDistance,$DishNamePredict,$cateringToken)
 {
 
 
@@ -110,7 +110,7 @@ WHERE (a.dishWithAttribute_id='.$AllDishes[$i][3].')AND
     </div>
 
     <div class="bottom">
-        <div class="heading"><i class="fas fa-concierge-bell"></i> Dish name : '.$AllDishes[$i][0].' /<span class="m-1"> id#'.$AllDishes[$i][3].'</span></div>
+        <div class="heading"><i class="fas fa-concierge-bell"></i> Dish name : '.$AllDishes[$i][0].' <br><span class="m-1"> id#'.$AllDishes[$i][3].'</span></div>
         <div class="info"><p>';
 
 for($j=0;$j<count($Attributes);$j++)
@@ -120,7 +120,7 @@ for($j=0;$j<count($Attributes);$j++)
 
         $display.= '</p></div>
         <div class="price"><i class="far fa-money-bill-alt"></i>Price :'.$AllDishes[$i][2].' <span class="old-price ml-3">'.($AllDishes[$i][2]+200).'</span></div>
-        <div class="style"><a href="cateringClient.php?c='.$cateringid.'" class="btn btn-primary">Visit Branch>></a></div>
+        <div class="style"><a href="cateringClient.php?c='.$cateringid.'&token='.$cateringToken.'" class="btn btn-primary">Visit Branch>></a></div>
     </div>
 
 </div>';
