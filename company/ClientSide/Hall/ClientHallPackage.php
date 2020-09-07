@@ -401,12 +401,11 @@ else
                 <br>
                 <span class="p-2">cuntry    <?php echo $hallInformation[0][10];?></span>
                 <p class="p-2">Address:  <?php echo $hallInformation[0][12];?></p>
-
-                <br>
+                <button class="btn btn-primary" id="See_Map">Click to see Map</button>
             </address>
 
 
-            <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
+
             <div hidden>
                 <label  for="">Lat: <input name="latitude" id="latitude" type="text" class="latitude" ></label>
                 <label  for="">Long: <input  name="longitude" id="longitude" type="text" class="longitude" ></label>
@@ -416,6 +415,7 @@ else
 
 
         </div>
+        <div id="map-canvas"></div>
     </div>
 
 
@@ -651,11 +651,18 @@ include_once "../All/Comments.php"
 
         latitude=<?php echo $hallInformation[0][13];?>;
         longitude=<?php echo $hallInformation[0][14];?>;
-/*        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-            dataType: "script",
-            cache: false
-        });*/
+
+
+
+        $("#See_Map").click(function ()
+        {
+            $("#map-canvas").css({"width": "100%", "height": "60vh"});
+            $.ajax({
+                url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+                dataType: "script",
+                cache: false
+            });
+        });
 
 
 

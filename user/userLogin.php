@@ -107,7 +107,7 @@ if((isset($_GET['id']))AND(isset($_GET['confirm'])))
 </head>
 <body>
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 ?>
 <div class="container">
 

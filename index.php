@@ -23,7 +23,7 @@ Do you want Management System of Hall OR Catering  for you company? Yes,This is 
 EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Book Wedding Hall,Catering Managment system,Hall Managment system, shadi hall software,marquee Software,Book marquee">
-    <meta name="author" content="shahzad miraj">
+    <meta name="author" conte   nt="shahzad miraj">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta http-equiv="refresh" content="120">

@@ -104,7 +104,7 @@ include_once ("../Company/Box.php");
 
     <div class="row">
         <div class="col-md-8 col-12 mb-5">
-            <h2>Service Range </h2>
+            <h2>Service Range <button class="btn btn-primary" id="See_Map">Click to See Map</button></h2>
             <hr>
 
 
@@ -123,7 +123,7 @@ include_once ("../Company/Box.php");
                     <button class="copybtn" data-clipboard-target="#pos-output"><img class="clippy" src="https://clipboardjs.com/assets/images/clippy.svg" width="12" alt="Copy to clipboard"></button>
                     <div id="pos-output">Start by searching for the city...</div>
                 </div>
-                <div id="map" style="height: 100vh"></div>
+                <div id="map"></div>
             </div>
         </div>
 
@@ -177,7 +177,7 @@ include_once ("../Company/Box.php");
     $display='';
     for($i=0;$i<count($dishTypeDetail);$i++) {
         $display .= '<div class="row">';
-        $display .= '<h4  data-dishtype="' . $i . '" data-display="hide"  class="col-md-12 text-center dishtypes">' . $dishTypeDetail[$i][1] . '</h4>';
+        $display .= '<h4  data-dishtype="' . $i . '" data-display="hide"    class="col-md-12 text-center dishtypes">' . $dishTypeDetail[$i][1] . '</h4>';
 
         $sql = 'SELECT d.name, d.id,d.image,(SELECT price FROM `dishWithAttribute` WHERE dish_id=d.id limit 1 ),d.token FROM dish as d
  INNER join
@@ -472,12 +472,16 @@ include_once "../All/Comments.php"
 
     $(document).ready(function()
     {
-        /*
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
-            dataType: "script",
-            cache: false
-        });*/
+
+        $("#See_Map").click(function ()
+        {
+            $("#map").css({"width": "100%", "height": "60vh"});
+            $.ajax({
+                        url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initMap",
+                        dataType: "script",
+                        cache: false
+                    });
+        });
     });
 </script>
 
