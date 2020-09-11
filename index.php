@@ -43,6 +43,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="webdesign/css/loader.css">
+
+    <link rel="stylesheet" href="webdesign/css/complete.css">
     <link rel="stylesheet" href="map/style.css">
     <link rel="stylesheet" href="webdesign/css/card.css">
     <style>
@@ -58,6 +60,11 @@ EVENT APNA  provides Free Software ....... So Register NOW
 <?php
 include_once ("webdesign/header/header.php");
 ?>
+
+
+
+
+
 
 <div class="bd-example">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
@@ -136,7 +143,7 @@ include_once ("webdesign/header/header.php");
         <div class="text-white  text-center  row" >
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-clock"></i></div>
+                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
                 </div>
                 <select id="daytime" name="daytime" class="custom-select "  size="1">
 
@@ -188,7 +195,7 @@ include_once ("webdesign/header/header.php");
         <div class="text-white  text-center  row" >
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
                 <input  value="<?php
 
@@ -205,7 +212,7 @@ include_once ("webdesign/header/header.php");
         <div class="text-white  text-center  row" >
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-utensils"></i></div>
+                    <span class="input-group-text"><i class="fas fa-utensils"></i></span>
                 </div>
                 <select id="perhead" name="perhead" class="custom-select "  size="1">
 
@@ -243,7 +250,7 @@ include_once ("webdesign/header/header.php");
         <div class="text-white  text-center  row" >
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                    <span class="input-group-text"><i class="fas fa-place-of-worship"></i></span>
                 </div>
                 <input
                         value="<?php

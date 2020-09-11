@@ -37,6 +37,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
+
+    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../../map/style.css">
     <link rel="stylesheet" href="../../../webdesign/css/card.css">
 
@@ -134,7 +136,7 @@ include_once ("../../../webdesign/header/header.php");
     <div class="text-white  text-center  row" >
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
-                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                <span class="input-group-text"><i class="fas fa-concierge-bell"></i></span>
             </div>
             <input
 
@@ -152,7 +154,7 @@ include_once ("../../../webdesign/header/header.php");
     <div class="text-white  text-center  row" >
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
-                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                <span class="input-group-text"><i class="fas fa-place-of-worship"></i></span>
             </div>
             <input
 
@@ -165,7 +167,7 @@ include_once ("../../../webdesign/header/header.php");
 
                     ?>"
 
-                    name="cateringname" type="text" class="form-control py-0" id="cateringname" placeholder="Catering Name ">
+                    name="cateringname" type="text" class="form-control py-0" id="cateringname" placeholder="Catering Branch Name ">
         </div>
     </div>
 
