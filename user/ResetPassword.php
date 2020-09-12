@@ -7,8 +7,10 @@
  */
 include_once ("../connection/connect.php");
 
-$userid=$_COOKIE['userid'];
 
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner,User,Employee,Viewer","../index.php");
+$userid=$_COOKIE['userid'];
 
 ?>
 <!DOCTYPE html>

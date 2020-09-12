@@ -199,16 +199,17 @@ else if($_POST['option']=="LocatUserRegisters")
 
     $last=  mysqli_insert_id($connect);
 
-    $htmlBody='<pre>
+    /*$htmlBody='<pre>
 Dear '.$username.',
 Please click this link for confirmation <a href="?id='.$last.'&confim='.$string.'">www.eventapna.com?id='.$last.'&confim='.$string.'"</a>
 username :'.$username.'
 password:'.$password.'
 email :'.$Email.'
-</pre>';
+</pre>';*/
+    $htmlBody='<a href="www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a>';
 
     $display="";
-    //$display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+    $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
     if($display=="")
     {
         echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email </a></p>';
@@ -307,17 +308,26 @@ Position in Company: '.$userdetail[0][1].'
 </pre>';
 
     $display="";
-    // $display=serverSendMessage($Email,$username,"Detail  of password",$htmlBody);
+    $display=serverSendMessage($userdetail[0][2],$userdetail[0][0],"Detail  of password","password:".$userdetail[0][4]);
     echo "<span class='alert-success'>Your pasword and other detail has been sent to your email :".$userdetail[0][2]."</span>";
 }
 else if($_POST['option']=="ResetPassword")
 {
+
+
+    $Oldpassword=$_POST['Oldpassword'];
    $password1=$_POST['password1'];
     $userid=$_POST['userid'];
+
+    $sql='SELECT  `password` FROM `user` WHERE (id='.$userid.')AND(password="'.$Oldpassword.'")';
+    $userdetail=queryReceive($sql);
+    if(count($userdetail)<=0)
+    {
+        echo "<span class='alert-danger'>Incorrect Old password...</span>";
+        exit();
+    }
     $sql='UPDATE `user` SET user.password="'.$password1.'" WHERE id='.$userid.'';
-
     querySend($sql);
-
     echo "<span class='alert-success'>Your password has succesfully updated</span>";
 }
 ?>
