@@ -249,7 +249,7 @@ else if($_POST['option']=="saveandChangeLogin")
 
     $CurrentUserid=$_POST['CurrentUserid'];
     $profileUserid=$_POST['profileUserid'];
-    $sql='SELECT `username`, `image`,`jobTitle`, `number`, `id` FROM `user` WHERE id='.$profileUserid.'';
+    $sql='SELECT `username`, `image`,`jobTitle`, `number`, `id`,`company_id` FROM `user` WHERE id='.$profileUserid.'';
     $userPreviousDetail=queryReceive($sql);
     $username=$_POST['username'];
     $PhoneNo=$_POST['PhoneNo'];
@@ -257,7 +257,7 @@ else if($_POST['option']=="saveandChangeLogin")
     if(($userPreviousDetail[0][2]=="Owner")&&($jobtitle!="Owner"))
     {
         //check how many owners
-        $sql='SELECT `username` FROM `user` WHERE (company_id=1)AND(jobTitle=="Owner")AND(ISNULL(expire))';
+        $sql='SELECT `username` FROM `user` WHERE (company_id='.$userPreviousDetail[0][5].')AND(jobTitle="Owner")AND(ISNULL(expire))';
         $user=queryReceive($sql);
         if(count($user)==1)
         {

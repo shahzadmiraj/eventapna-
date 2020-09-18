@@ -245,10 +245,8 @@ include_once ("../webdesign/footer/footer.php");
 
                     if (data != '') {
                         alert(data);
-                    } else
-                    {
-                       location.reload();
                     }
+                    location.reload();
 
                 }
             });
