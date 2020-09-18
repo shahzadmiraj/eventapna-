@@ -3,7 +3,7 @@
 include_once ('../../../connection/connect.php');
 
 include_once ("functions.php");
-if(!isset($_GET['h']))
+if((!isset($_GET['pdid']))||(!isset($_GET['pdtoken'])))
 {
     header("location:../../../index.php");
 }
@@ -17,6 +17,10 @@ $PackageToken=$_GET['pdtoken'];
 $sql='SELECT pd.package_id,pd.selectedDate FROM packageDate as pd 
 WHERE (pd.id='.$PackageDateid.')AND(token="'.$PackageToken.'")';
 $PackageDate=queryReceive($sql);
+if(count($PackageDate)==0)
+{
+    header("location:../../../index.php");
+}
 
 
 $sql='SELECT  `hall_id` FROM `packageControl` WHERE ISNULL(expire)AND(package_id='.$PackageDate[0][0].')';
