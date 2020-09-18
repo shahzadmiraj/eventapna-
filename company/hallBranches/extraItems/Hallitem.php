@@ -11,7 +11,7 @@ RedirectOtherwiseOnlyAccessUsersWho("Owner","../../../index.php");
 
 if(isset($_GET['id']))
 {
-    RedirectOtherwiseOnlyAccessUserOfHall("Owner","../../../index.php");
+    RedirectOtherwiseOnlyAccessUserOfHall("Owner","../../../index.php","id");
 }
 
 
