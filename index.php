@@ -344,7 +344,7 @@ include_once ("webdesign/header/header.php");
     else
     {
 
-        echo ShowAllHallPackages(12.32,12.3,"Pakistan","","Morning","2020-06-15",0);
+        //echo ShowAllHallPackages(12.32,12.3,"Pakistan","","Morning","2020-06-15",0);
     }
     ?>
 
@@ -415,9 +415,10 @@ else
             var longitude=$("#longitude").val();
             var city=$("#reg-input-city").val();
             var country=$("#reg-input-country").val();
-            /*if(latitude=="") {
+            if(latitude=="")
+            {
                 window.setTimeout(ShowHall, 100);
-            }*/
+            }
             var formdata=new FormData;
             formdata.append("daytime",daytime);
             formdata.append("hallname",hallname);
@@ -459,11 +460,11 @@ else
 
 
     });
-    /*$.ajax({
+    $.ajax({
         url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
         dataType: "script",
         cache: false
-    });*/
+    });
 
 </script>
 

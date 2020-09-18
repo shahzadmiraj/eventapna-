@@ -31,10 +31,10 @@ WHERE
 (ISNULL(c.expire))AND(ISNULL(cl.expire))AND(cl.country="'.$country.'")AND(c.name like "%'.(trim($hallname)).'%")';*/
 
 $sql='SELECT h.id,l.latitude,l.longitude FROM hall as h INNER join location as l 
-on (h.location_id=l.id)
+on (h.location_id=l.id) inner  join company as c 
+on (c.id=h.company_id)
 WHERE
-(l.country="'.$country.'")AND (ISNULL(h.expire))AND (ISNULL(l.expire))AND (h.name like "%'.trim($hallname).'%")';
-
+(l.country="'.$country.'")AND (ISNULL(h.expire))AND (ISNULL(l.expire))AND (h.name like "%'.trim($hallname).'%")AND (c.name!="demo") ';
     $data=queryReceive($sql);
     $placeid=array();
     $distance=array();
@@ -128,7 +128,7 @@ AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS D
 
     $display = '';
     $AllHalls=queryReceive($sql);
-  //  print_r($AllHalls);
+
     //print_r($sql);
 
 

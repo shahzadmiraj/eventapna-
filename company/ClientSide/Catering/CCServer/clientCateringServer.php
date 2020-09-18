@@ -28,9 +28,10 @@ function SortDistanceCatering($lat,$lon,$country,$cateringNamePredict)
 {
     // $sql="SELECT h.id,l.latitude,l.longitude FROM hall as h INNER join location as l on (h.location_id=l.id) WHERE (ISNULL(h.expire))AND(ISNULL(l.expire))";
     $sql='SELECT c.id,cl.latitude,cl.longitude,cl.radius,c.name,1,c.token FROM catering as c INNER join cateringLocation as cl 
-on (c.id=cl.catering_id)
+on (c.id=cl.catering_id) inner  join company as co 
+on (co.id=c.company_id)
 WHERE 
-(ISNULL(c.expire))AND(ISNULL(cl.expire))AND(cl.country="'.$country.'")AND(c.name like "%'.(trim($cateringNamePredict)).'%")';
+(ISNULL(c.expire))AND(ISNULL(cl.expire))AND(cl.country="'.$country.'")AND(c.name like "%'.(trim($cateringNamePredict)).'%")AND (co.name!="demo")';
     $data=queryReceive($sql);
     $placeid=array();
     $distance=array();
