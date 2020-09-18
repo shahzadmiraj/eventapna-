@@ -3,7 +3,11 @@
 include_once ('../../../connection/connect.php');
 
 include_once ("functions.php");
-$userid=1;
+if(!isset($_GET['h']))
+{
+    header("location:../../../index.php");
+}
+$userid="NoUser";
 $PackageDateid=$_GET['pdid'];
 $PackageToken=$_GET['pdtoken'];
 

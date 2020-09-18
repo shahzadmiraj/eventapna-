@@ -22,7 +22,19 @@
                                     <div id="demo1" name="stars" value="3" ></div>
                                 </div>
                                 <input name="image" type="file" class="btn-outline-secondary   btn col-5 ">
-                                <button id="btncoment" type="button" class="btn btn-info pull-right float-right col-5">Post</button>
+                                <?php
+                                if($userid=="NoUser")
+                                {
+                                    echo '<a href="'.$Root.'user/userLogin.php" class="btn btn-info pull-right float-right col-5">Post ( only user) </a>';
+                                }
+                                else
+                                {
+                                    echo '
+                                <button id="btncoment" type="button" class="btn btn-info pull-right float-right col-5">Post</button>';
+                                }
+                                ?>
+
+
                         </form>
                         <?php
                         $display='';

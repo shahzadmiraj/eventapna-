@@ -2,10 +2,13 @@
 <?php
 include_once ('../../../connection/connect.php');
 include  ("../../../access/userAccess.php");
-RedirectOtherwiseOrHallignoreUsers("../../../index.php",'h');
-
+//RedirectOtherwiseOrHallignoreUsers("../../../index.php",'h');
+if(!isset($_GET['h']))
+{
+    header("location:../../../index.php");
+}
 $hallid=$_GET['h'];
-$userid=1;
+$userid="NoUser";
 $sql='SELECT hall.id,`name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address,l.latitude,l.longitude FROM `hall` INNER join location as l 
 on (hall.location_id=l.id)
 WHERE

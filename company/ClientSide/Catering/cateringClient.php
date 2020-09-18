@@ -1,9 +1,11 @@
 <?php
 include_once ('../../../connection/connect.php');
-include  ("../../../access/userAccess.php");
-RedirectOtherwiseOrCateringignoreUsers("../../../index.php",'c');
+if(!isset($_GET['c']))
+{
+    header("location:../../../index.php");
+}
 
-$userid=1;
+$userid="NoUser";
 if(isset($_COOKIE['userid']))
 $userid=$_COOKIE['userid'];
 $cateringid=$_GET['c'];

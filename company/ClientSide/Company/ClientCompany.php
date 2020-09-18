@@ -2,8 +2,13 @@
 include_once ('../../../connection/connect.php');
 
 
+if(!isset($_GET['c']))
+{
+    header("location:../../../index.php");
+}
 
 $companyid=$_GET['c'];
+
 
 $sql='SELECT hall.id,`name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address,(SELECT c.name FROM company as c WHERE c.id=hall.company_id) FROM `hall` INNER join location as l 
 on (hall.location_id=l.id)
@@ -96,7 +101,7 @@ include_once ("Box.php");
             if(file_exists('../../../images/hall/'.$img)&&($img!=""))
                 $img='../../../images/hall/'.$img;
             else
-                $img="https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg"
+                $img="../../../images/systemImage/imageNotFound.png";
             ?>
             <div class="row  mb-5 container">
 
@@ -245,7 +250,7 @@ include_once ("Box.php");
             if (file_exists('../../../images/catering/' . $img) && ($img != ""))
                 $img = '../../../images/catering/' . $img;
             else
-                $img = "https://st2.depositphotos.com/3336339/11976/i/950/depositphotos_119763698-stock-photo-abstract-futuristic-hall-background.jpg"
+                $img="../../../images/systemImage/imageNotFound.png";
             ?>
 
             <div class="col-md-4 mb-5">
