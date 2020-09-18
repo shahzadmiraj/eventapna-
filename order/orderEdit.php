@@ -24,6 +24,9 @@ $orderId=$processInformation[0][5];
 $sql='SELECT `id`, `total_amount`, `describe`, `total_person`, `status_catering`, `destination_date`, `booking_date`, `destination_time`,1, `person_id`,`catering_id` ,`user_id`, `discount`, `extracharges`, `address` FROM `orderDetail` WHERE id='.$orderId.'';
 $orderDetail=queryReceive($sql);
 
+$sql='SELECT sum(amount) FROM `payment` WHERE IsReturn=0 AND orderDetail_id='.$orderId;
+$PaidAmount=queryReceive($sql);
+
 
 ?>
 <!DOCTYPE html>
@@ -48,10 +51,9 @@ $orderDetail=queryReceive($sql);
 <body>
 
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 
 
-//include_once ("../webdesign/header/header.php");
 
 
 $whichActive = 2;
@@ -232,13 +234,13 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
         <div class="form-group row">
-            <label class="form-check-label" for="total_amount">Auto Total amount</label>
+            <label class="form-check-label" for="total_amount">Total amount :(Dishes Amount)</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input  readonly name="total_amount" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][1];?>>
+                <input  id="totalamount" readonly name="total_amount" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][1];?>>
             </div>
 
         </div>
@@ -252,7 +254,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input   name="Discount" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][12];?>>
+                <input  id="Discount" name="Discount" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][12];?>>
             </div>
 
         </div>
@@ -264,21 +266,31 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input   name="Charges" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][13];?>>
+                <input  id="Charges" name="Charges" type="number" class="form-control"  value=<?php echo (int) $orderDetail[0][13];?>>
             </div>
 
         </div>
 
 
-
         <div class="form-group row">
-            <label class="form-check-label" for="remaining">Remaining Amount </label>
+            <label class="form-check-label" for="remaining">Paid Amount </label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input readonly  id="remaining" name="remaining" type="number" class="form-control"  value=<?php echo (int) ($orderDetail[0][1]-$orderDetail[0][12]+$orderDetail[0][13]);?>>
+                <input readonly  id="PaidAmount"  type="number" class="form-control"  value=<?php echo (int) ($PaidAmount[0][0]);?>>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="form-check-label" for="remaining">Remaining Amount:</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                </div>
+                <input readonly  id="remaining" name="remaining" type="number" class="form-control"  value=<?php echo (int) ($orderDetail[0][1]-$orderDetail[0][12]+$orderDetail[0][13]-$PaidAmount[0][0]);?>>
             </div>
 
         </div>
@@ -288,7 +300,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
         <div class="form-group row">
-            <label class="form-check-label" for="booking_date">Order booking date</label>
+            <label class="form-check-label" for="booking_date">Visited Date</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -343,6 +355,26 @@ include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
     $(document).ready(function () {
+
+
+        function RemainingAmount()
+        {
+            var totalamount= Number($("#totalamount").val());
+            var newDiscount=Number($("#Discount").val());
+            var newcharges=Number($("#Charges").val());
+            var paidamount=Number($("#PaidAmount").val());
+            $("#remaining").val(totalamount+newcharges-newDiscount-paidamount);
+        }
+
+
+        $("#Discount").change(function (e)
+        {
+            RemainingAmount();
+        });
+        $("#Charges").change(function ()
+        {
+            RemainingAmount();
+        });
 
         $(document).on('click', '#submit', function (e) {
             e.preventDefault();

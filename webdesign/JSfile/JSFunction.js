@@ -126,12 +126,6 @@ window.PhoneNumberCheck=function (Element)
 
     }
     return state;
-/*
-    +92 1213315000
-+9231213315000
-+1 2323214316
-+2923432432432
-    0923213315000*/
 }
 
 

@@ -45,7 +45,7 @@ $userid=$_COOKIE['userid'];
 </head>
 <body>
 <?php
-//include_once ("../webdesign/header/header.php");
+include_once ("../webdesign/header/header.php");
 ?>
 <div class="container">
 
@@ -200,7 +200,7 @@ $userid=$_COOKIE['userid'];
 
 
 <?php
-//include_once ("../webdesign/footer/footer.php");
+include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
 
@@ -244,7 +244,7 @@ $userid=$_COOKIE['userid'];
                     $("#preloader").hide();
 
                     if (data != '') {
-                        $("#error").html(data);
+                        alert(data);
                     } else
                     {
                        location.reload();

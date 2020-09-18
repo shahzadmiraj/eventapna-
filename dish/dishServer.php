@@ -97,7 +97,7 @@ else if($_POST['option']=="viewmenu")
         if((file_exists('../images/dishImages/'.$menu[$i][1]))&&($menu[$i][1]!=""))
             $img='../images/dishImages/'.$menu[$i][1];
         $display.='
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 10rem;">
   <img class="card-img-top" src="'.$img.'" alt="Card image cap" style="height: 20vh">
   <div class="card-body">
     <p class="card-text">'.$menu[$i][0].'</p>

@@ -254,6 +254,21 @@ else if($_POST['option']=="saveandChangeLogin")
     $username=$_POST['username'];
     $PhoneNo=$_POST['PhoneNo'];
     $jobtitle=$_POST['jobtitle'];
+    if(($userPreviousDetail[0][2]=="Owner")&&($jobtitle!="Owner"))
+    {
+        //check how many owners
+        $sql='SELECT `username` FROM `user` WHERE (company_id=1)AND(jobTitle=="Owner")AND(ISNULL(expire))';
+        $user=queryReceive($sql);
+        if(count($user)==1)
+        {
+            echo " Atleast one owner must be operate this system  so, don't change jobtitle ||";
+            $jobtitle="Owner";
+        }
+
+    }
+
+
+
     $image="";
 
     if($userPreviousDetail[0][0]!=$username)
@@ -261,7 +276,7 @@ else if($_POST['option']=="saveandChangeLogin")
 
         if(CheckUserName($username))
         {
-            echo "<span class='alert-danger'> User name has already available  </span>";
+            echo "|| Username has already available";
             exit();
         }
     }

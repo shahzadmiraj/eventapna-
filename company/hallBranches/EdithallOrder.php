@@ -48,6 +48,8 @@ $Query='pid='.$pid."&token=".$token;
 
 
 
+$sql='SELECT sum(amount) FROM `payment` WHERE IsReturn=0 AND orderDetail_id='.$orderid;
+$PaidAmount=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>
@@ -318,7 +320,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
     <div class="form-group row">
-        <label class="col-form-label">Total amount:</label>
+        <label class="col-form-label">Total amount: (Extra item charges+ Per head rate)</label>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -352,7 +354,16 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         </div>
 
     </div>
+    <div class="form-group row">
+        <label class="form-check-label" for="remaining">Paid Amount </label>
 
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+            </div>
+            <input readonly  id="PaidAmount"  type="number" class="form-control"  value=<?php echo (int) ($PaidAmount[0][0]);?>>
+        </div>
+    </div>
 
 
     <div class="form-group row">
@@ -463,7 +474,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
     <div class="form-group row">
-        <label class="col-form-label">Booked date</label>
+        <label class="col-form-label">Visited Date</label>
 
 
 
@@ -527,7 +538,8 @@ include_once ("../../webdesign/footer/footer.php");
             var totalamount= Number($("#totalamount").val());
             var newDiscount=Number($("#Discount").val());
             var newcharges=Number($("#Charges").val());
-            $("#remaining").val(totalamount+newcharges-newDiscount);
+            var paidamount=Number($("#PaidAmount").val());
+            $("#remaining").val(totalamount+newcharges-newDiscount-paidamount);
         }
         RemainingAmount();
 

@@ -98,6 +98,7 @@ $whichActive = 4;
 $imageCustomer = "../images/customerimage/";
 $PageName="Catering Dishes Select";
 include_once("../webdesign/orderWizard/wizardOrder.php");
+
 ?>
 
 
@@ -108,7 +109,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 </div>
 
 
-    <form  id="formid" method="post" action="dishCreate.php<?php echo '?pid=' . $pid . '&token='.$token;?>" class="container alert-light ">
+    <form  id="formid" method="post" action="<?php echo 'dishCreate.php?pid='.$pid.'&token='.$token.'' ?>" class="container alert-light ">
         <h1>Selecting Dishes </h1>
         <hr>
         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -412,9 +413,9 @@ include_once ("../webdesign/footer/footer.php");
                     $("#preloader").hide();
                     if(data!="")
                     {
-                        $("#selectmenu").html('<h1 align="center" class=\'col-12\'>Package Menu</h1>');
+                        $("#selectmenu").html('<br><h4 align="center" class=\'col-12\'>Package Menu</h4>');
                         $("#selectmenu").append(data);
-                        $("#selectmenu").append("<h3 align='center' class='col-12'>Menu Description</h3><p class='col-12'>" + describe + "</p>");
+                        $("#selectmenu").append("<h5 align='center' class='col-12'>Menu Description</h5><p class='col-12'>" + describe + "</p>");
                     }
                 }
 
@@ -427,7 +428,7 @@ include_once ("../webdesign/footer/footer.php");
             if(count($hallpackage)>0)
             {
                 if ($hallpackage[0][2] == 1) {
-                    echo 'menushow(' . $hallpackage[0][0] . ',' . $hallpackage[0][1] . ');';
+                    echo 'menushow(' . $hallpackage[0][0] . ',"' . $hallpackage[0][1] . '");';
                 }
             }
 
@@ -436,7 +437,7 @@ include_once ("../webdesign/footer/footer.php");
         $("#SkipBtn,#NextWizard").click(function (e) {
             e.preventDefault();
             <?php
-            echo 'location.replace("../payment/getPayment.php?pid=' . $pid . '&token='.$token.'");';
+            echo 'location.replace("../payment/getPayment.php?pid='.$pid.'&token='.$token.'");';
             ?>
         });
 

@@ -282,7 +282,7 @@ include_once ("../ClientSide/Company/Box.php");
 <div class="container " id="selectingmenu">
 
     <hr class="border">
-    <h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>Select Dishes</h3>
+    <h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>Select items</h3>
 
 
 
@@ -295,7 +295,7 @@ include_once ("../ClientSide/Company/Box.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input id="searchdish" class="form-control" type="text" placeholder="Search dish">
+            <input id="searchdish" class="form-control" type="text" placeholder="Search items">
             <button id="modelselect" type="button" class="btn btn-primary float-right col-4" data-toggle="modal" data-target="#exampleModal">
                 ADD Items
             </button>
