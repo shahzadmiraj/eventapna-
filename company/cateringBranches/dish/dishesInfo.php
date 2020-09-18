@@ -11,7 +11,7 @@ RedirectOtherwiseOnlyAccessUsersWho("Owner","../../../index.php");
 
 if(isset($_GET['id']))
 {
-    RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner","../../../index.php");
+    RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner","../../../index.php","id");
 }
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';

@@ -128,9 +128,9 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 {
                     echo ' 
     <tr>
-      <th scope="row">'.($i+1).'</th>
-      <td>'.$AttributeDetail[$i][0].'</td>
-      <td>'.$AttributeDetail[$i][1].'</td>
+      <th scope="row">'.($j+1).'</th>
+      <td>'.$AttributeDetail[$j][0].'</td>
+      <td>'.$AttributeDetail[$j][1].'</td>
    </tr>';
                     //echo ' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
                 }
@@ -139,7 +139,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
             </table>
 
             <ul class="list-group">
-                <li class="list-group-item">Message:<?php echo $detailDishes[$i][1];?></li>
+                <li class="list-group-item">Detail:<?php echo $detailDishes[$i][1];?></li>
                 <li class="list-group-item"><?php
                     echo 'Dish_Detail_Id# '.$detailDishes[$i][0];
 

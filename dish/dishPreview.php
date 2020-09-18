@@ -18,13 +18,13 @@ $processInformation=queryReceive($sql);
 $dishDetailId='';
 $dishDetailToken="";
 $dishDetailOfDetai=array();
-if(isset($_GET['dd']))
+if(isset($_GET['dd'])&&(isset($_GET['ddt'])))
 {
     $dishDetailId=$_GET['dd'];
     $dishDetailToken=$_GET['ddt'];
     $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT (SELECT d.image FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),(SELECT u.username FROM user as u WHERE u.id=dd.user_id),(SELECT u.username FROM user as u WHERE u.id=dd.expireUser)  FROM dish_detail as dd WHERE  (dd.id='.$dishDetailId.')AND(dd.token="'.$dishDetailToken.'")';
     $dishDetailOfDetai=queryReceive($sql);
-    if($processInformation[0][0]!=$dishDetailOfDetai[0][4])
+    if($processInformation[0][5]!=$dishDetailOfDetai[0][4])
     {
         header("location:../index.php");
         exit();
@@ -32,7 +32,7 @@ if(isset($_GET['dd']))
 }
 else
 {
-    header("location:../index.php");
+   header("location:../index.php");
     exit();
 }
 
