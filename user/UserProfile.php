@@ -7,9 +7,21 @@
  */
 include_once ("../connection/connect.php");
 
+
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner,User,Employee,Viewer","../index.php");
+if((!isset($_GET['uid']))||(!isset($_GET['token'])))
+{
+ header("location:../index.php");
+}
 $UserProfileId=$_GET['uid'];
-$sql='SELECT `id`, `username`, (SELECT company.name FROM company WHERE company.id=user.`company_id`), `image`, `jobTitle`, `email`, `number`, `token` FROM `user` WHERE (id='.$UserProfileId.')AND(ISNULL(expire))';
+$userToken=$_GET['token'];
+$sql='SELECT `id`, `username`, (SELECT company.name FROM company WHERE company.id=user.`company_id`), `image`, `jobTitle`, `email`, `number`, `token` FROM `user` WHERE (id='.$UserProfileId.')AND(ISNULL(expire))AND(token="'.$userToken.'")AND(company_id=(SELECT `company_id` FROM `user` WHERE id='.$_COOKIE['userid'].' LIMIT 1))';
 $userdetail=queryReceive($sql);
+if(count($userdetail)==0)
+{
+    header("location:../index.php");
+}
 $userid=$_COOKIE['userid'];
 
 ?>
@@ -137,31 +149,51 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend ">
                             <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
                         </div>
-                        <select name="jobtitle" class="form-control">
+                        <select    name="jobtitle" class="form-control">
+
+
 
                             <?php
-                            if($userdetail[0][4]=="Owner")
-                            {
-                                echo '    <option value="Owner">Owner of company</option>
-                            <option value="Employee">Working Employee At company</option>
-                            <option value="Viewer">Viewer (Only View Orders of Company)</option>';
-                            }
-                            else if($userdetail[0][4]=="Employee")
+                            $sql='SELECT `jobTitle`FROM `user` WHERE id='.$userid;
+                            $userStatus=queryReceive($sql);
+                            if($userStatus[0][0]!="Owner")
                             {
 
-                                echo '  
+                                //Current user is not Owner then show Only his status
+                                            if ($userdetail[0][4] == "Employee") {
+
+                                                echo '  
+                                            <option value="Employee">Working Employee At company</option>';
+                                            } else if ($userdetail[0][4] == "Viewer") {
+
+                                                echo '  
+                                              <option value="Viewer">Viewer (Only View Orders of Company)</option>  
+                                  
+                                            ';
+                                            }
+
+                            }
+                            else {
+                                    //Current user is Owner then show ALL
+
+                                if ($userdetail[0][4] == "Owner") {
+                                    echo '    <option value="Owner">Owner of company</option>
+                            <option value="Employee">Working Employee At company</option>
+                            <option value="Viewer">Viewer (Only View Orders of Company)</option>';
+                                } else if ($userdetail[0][4] == "Employee") {
+
+                                    echo '  
                             <option value="Employee">Working Employee At company</option>
                             <option value="Viewer">Viewer (Only View Orders of Company)</option>
                               <option value="Owner">Owner of company</option>';
-                            }
-                            else if($userdetail[0][4]=="Viewer")
-                            {
+                                } else if ($userdetail[0][4] == "Viewer") {
 
-                                echo '  
+                                    echo '  
                               <option value="Viewer">Viewer (Only View Orders of Company)</option>  
                               <option value="Owner">Owner of company</option>
                             <option value="Employee">Working Employee At company</option>
                             ';
+                                }
                             }
                                 ?>"
                         </select>
