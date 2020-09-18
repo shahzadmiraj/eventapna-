@@ -33,6 +33,7 @@ on (co.id=c.company_id)
 WHERE 
 (ISNULL(c.expire))AND(ISNULL(cl.expire))AND(cl.country="'.$country.'")AND(c.name like "%'.(trim($cateringNamePredict)).'%")AND (co.name!="demo")';
     $data=queryReceive($sql);
+
     $placeid=array();
     $distance=array();
     for($i=0;$i<count($data);$i++)
@@ -51,6 +52,7 @@ WHERE
 function ShowAllCateringDishes($latitude,$longitude,$country,$cateringNamePredict,$DishNamePredict)
 {
     $catring=SortDistanceCatering($latitude,$longitude,$country,$cateringNamePredict);
+
     $display='';
     for($i=0;$i<count($catring);$i++)
     {
@@ -74,7 +76,6 @@ on (dc.dish_id=d.id)
 WHERE (ISNULL(d.expire))AND(ISNULL(dwa.expire)) AND 
 (ISNULL(dc.expire))AND(dc.catering_id='.$cateringid.')AND(d.name like "%'.$DishNamePredict.'%")';
     $AllDishes=queryReceive($sql);
-    //print_r($sql);
 
     $display="";
     for($i=0;$i<count($AllDishes);$i++)
@@ -100,7 +101,6 @@ WHERE (a.dishWithAttribute_id='.$AllDishes[$i][3].')AND
 
     <div class="top">
     
-    <h3 class="converse">Branch: <span class="converse">'.$cateringname.'</span></h3>
         <ul>
             <li><a href="#"><i class="fas fa-street-view"></i>your distance :'.$CurrentDistance.'<span class="text-danger  m-1">/</span>branch services '.$radius.'Km</a></li>
         </ul>
@@ -111,19 +111,47 @@ WHERE (a.dishWithAttribute_id='.$AllDishes[$i][3].')AND
     </div>
 
     <div class="bottom">
-        <div class="heading"><i class="fas fa-concierge-bell"></i> Dish name : '.$AllDishes[$i][0].' <br><span class="m-1"> id#'.$AllDishes[$i][3].'</span></div>
-        <div class="info"><p>';
+        <div class="info">
+        <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Attribute </th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>';
+
+
+
+
 
 for($j=0;$j<count($Attributes);$j++)
 {
-    $display.=$Attributes[$j][0].' : '.$Attributes[$j][1].' / ';
+    $display.= ' 
+    <tr>
+      <th scope="row">'.($j+1).'</th>
+      <td>'.$Attributes[$j][0].'</td>
+      <td>'.$Attributes[$j][1].'</td>
+   </tr>';
+
 }
 
-        $display.= '</p></div>
-        <div class="price"><i class="far fa-money-bill-alt"></i>Price :'.$AllDishes[$i][2].' <span class="old-price ml-3">'.($AllDishes[$i][2]+200).'</span></div>
-        <div class="style"><a href="cateringClient.php?c='.$cateringid.'&token='.$cateringToken.'" class="btn btn-primary">Visit Branch>></a></div>
-    </div>
+        $display.= '
 
+
+                        </tbody>
+                    </table>
+</div>
+<ul class="list-group">
+<li class="list-group-item"><i class="fas fa-concierge-bell"></i> Dish name : '.$AllDishes[$i][0].'</li>
+<li class="list-group-item">id#'.$AllDishes[$i][3].'</li>
+<li class="list-group-item">Branch Name:'.$cateringname.'</li>
+<li class="list-group-item price"><i class="far fa-money-bill-alt"></i>Price :'.$AllDishes[$i][2].' <span class="old-price ml-3">'.($AllDishes[$i][2]+200).'</span></li>
+</ul>
+      
+    </div>
+<a href="cateringClient.php?c='.$cateringid.'&token='.$cateringToken.'" class="btn btn-primary">Visit Branch>></a>
 </div>';
 
     }
