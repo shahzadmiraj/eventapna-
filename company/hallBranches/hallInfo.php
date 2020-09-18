@@ -402,8 +402,8 @@ include_once ("../../webdesign/footer/footer.php");
 
    $(document).ready(function()
     {
-        latitude=<?php //echo $location[0][5];?>;
-        longitude=<?php //echo $location[0][1];?>;
+        latitude=<?php echo $location[0][5];?>;
+        longitude=<?php echo $location[0][1];?>;
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
             dataType: "script",

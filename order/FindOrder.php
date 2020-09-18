@@ -10,11 +10,11 @@ include  ("../access/userAccess.php");
 
 if(isset($_GET['c']))
 {
-   RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee", "../index.php","c");
+  // RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee", "../index.php","c");
 }
 else
 {
-    RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee", "../index.php","h");
+    //RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee", "../index.php","h");
 }
 
 
@@ -144,7 +144,11 @@ include_once ("../company/ClientSide/Company/Box.php");
         <form class="col-12 shadow mb-4   " id="formId1" style="display: none">
 
             <?php
-            echo '<input type="number" name="'.$name.'" value='.$id.' hidden>';
+            echo '<input type="number" name="'.$name.'" value='.$id.' hidden>
+            <input type="text" name="token" value="'.$token.'" hidden>
+            <input type="text" name="order_status" hidden value="'.$_GET['order_status'].'">
+           
+            ';
             ?>
 
 
@@ -228,7 +232,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
         </div>
         <div class="form-group row">
-            <label class="col-form-label">Booking Date</label>
+            <label class="col-form-label">Visited Date</label>
 
 
 
@@ -248,7 +252,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
         </div>
         <div class="form-group row">
-            <label class="col-form-label"> Destination Date</label>
+            <label class="col-form-label"> Booked Date</label>
 
 
 
