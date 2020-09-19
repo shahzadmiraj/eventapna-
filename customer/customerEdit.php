@@ -177,10 +177,25 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 ?>
             </div>
 
+        </div>
+
+    <div class="form-group row">
+        <label for="name" class="col-form-label">Image:</label>
 
 
+
+
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-camera"></i></span>
+            </div>
+            <input type="file"  name="image"  class="form-control"  >
 
         </div>
+
+
+
+    </div>
         <div class="form-group row">
             <label for="cnic" class="col-form-label "> CNIC:</label>
             <div class="input-group mb-3 input-group-lg">
