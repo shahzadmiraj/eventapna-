@@ -165,11 +165,11 @@ include_once ("../../webdesign/header/header.php");
                     <div class="row justify-content-start">
                         <?php if(onlyAccessUsersWho("Owner,Employee"))
                         {
-                            echo '      <a href="../../customer/CustomerCreate.php?'.$Query.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>';
+                            echo '      <a href="../../customer/CustomerCreate.php?'.$Query.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Add Order</h6></a>';
                         } ?>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Delieved&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-truck fa-3x"></i><h6>Deliever Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Delivered&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-truck fa-3x"></i><h6>Delivered Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Clear&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Cancel&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
 
@@ -265,11 +265,11 @@ include_once ("../../webdesign/header/header.php");
 
                         <?php if(onlyAccessUsersWho("Owner,Employee"))
                         {
-                            echo '<a href="../../customer/CustomerCreate.php?'.$Query.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Order Create</h6></a>';
+                            echo '<a href="../../customer/CustomerCreate.php?'.$Query.'" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-plus fa-3x"></i><h6>Add Order</h6></a>';
                         } ?>
                         <a href="../../order/FindOrder.php?order_status=Today_Orders&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-book-reader fa-3x"></i><h6>Most Recent Running Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Running&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-cart-arrow-down fa-3x"></i><h6>Running Order</h6></a>
-                        <a href="../../order/FindOrder.php?order_status=Delieved&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-truck fa-3x"></i><h6>Delievered Orders</h6></a>
+                        <a href="../../order/FindOrder.php?order_status=Delivered&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-truck fa-3x"></i><h6>Delivered Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Clear&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-thumbs-up fa-3x"></i><h6>Clear Orders</h6></a>
                         <a href="../../order/FindOrder.php?order_status=Cancel&<?php echo $Query; ?>" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="far fa-trash-alt fa-3x"></i><h6>Cancel Orders</h6></a>
                         <?php if(onlyAccessUsersWho("Owner"))

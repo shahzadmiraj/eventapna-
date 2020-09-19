@@ -165,7 +165,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
                 
                 
     <div class="form-group row" id="cateringid">
-        <label class="col-form-label ">Catereing Branch</label>
+        <label class="col-form-label ">Catering Branch</label>
 
 
         <div  class="input-group mb-3 input-group-lg">

@@ -78,7 +78,7 @@ if($_POST['option']=="showPriceofAllDishes")
     <tr>
       <th scope="row">'.($i+1).'</th>
       <td>'.$AttributeDetail[$i][0].'</td>
-      <td>'.$AttributeDetail[$i][1].'</td>
+      <td>'.$AttributeDetail[$i][2].'</td>
    </tr>';
         }
 
@@ -102,6 +102,8 @@ if($_POST['option']=="showPriceofAllDishes")
     $display.='</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
             </div>';
 
     echo $display;

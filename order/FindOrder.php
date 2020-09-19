@@ -10,11 +10,11 @@ include  ("../access/userAccess.php");
 
 if(isset($_GET['c']))
 {
-  // RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee", "../index.php","c");
+  RedirectOtherwiseOnlyAccessUserOfCateringBranch("Owner,Employee", "../index.php","c");
 }
 else
 {
-    //RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee", "../index.php","h");
+    RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee", "../index.php","h");
 }
 
 
@@ -131,7 +131,7 @@ include_once ("../webdesign/header/header.php");
 ?>
 
 <?php
-$pageName=$order_info." orders :".'<button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>';
+$pageName=$order_info." Orders :".'<button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>';
 include_once ("../company/ClientSide/Company/Box.php");
 ?>
 

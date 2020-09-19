@@ -214,7 +214,7 @@ class PDF extends FPDF
 
         $this->Cell(45,10,"No of Guest : ",0,0);
         $this->Cell(45,10,$detailorder[0][12],0,0);
-        $this->Cell(45,10,"Deliver Date : ",0,0);
+        $this->Cell(45,10,"Event Booked Date : ",0,0);
         $this->Cell(45,10,$detailorder[0][14],0,1);
 
 
@@ -233,15 +233,19 @@ class PDF extends FPDF
         {
             $Eventtime="Evening";
         }
-
+        $perHead="Sitting Only";
+        if($detailorder[0][3]==1)
+        {
+            $perHead="Food +Sitting";
+        }
         $this->Cell(45,10,$Eventtime,0,0);
         $this->Cell(45,10,"per Head  : ",0,0);
-        $this->Cell(45,10,$detailorder[0][3],0,1);
+        $this->Cell(45,10,$perHead,0,1);
 
 
         $this->Cell(45,10,"current Order Status : ",0,0);
         $this->Cell(45,10,$detailorder[0][13],0,0);
-        $this->Cell(45,10,"booked Date : ",0,0);
+        $this->Cell(45,10,"Customer Visited Date : ",0,0);
         $this->Cell(45,10,$detailorder[0][15],0,1);
 
         $this->Cell(45,10,"Order no # : ",0,0);
