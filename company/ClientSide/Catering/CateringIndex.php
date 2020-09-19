@@ -24,8 +24,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta http-equiv="refresh" content="120">
-
-
     <script src="../../../jquery-3.3.1.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
     <script type="text/javascript" src="../../../bootstrap.min.js"></script>

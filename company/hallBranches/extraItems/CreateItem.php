@@ -177,9 +177,9 @@ include_once ("../../../webdesign/footer/footer.php");
 <script>
     $(document).ready(function ()
     {
-        $("#typeofitem").change(function ()
+        function Show()
         {
-            var value=$(this).val();
+            var value=$("#typeofitem").val();
             if(value=="other")
             {
                 $("#showType").show();
@@ -189,6 +189,13 @@ include_once ("../../../webdesign/footer/footer.php");
 
                 $("#showType").hide();
             }
+
+        }
+        Show();
+
+        $("#typeofitem").change(function ()
+        {
+            Show();
         });
 
         $("#Back").click(function (e)

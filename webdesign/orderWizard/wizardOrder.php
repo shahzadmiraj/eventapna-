@@ -8,24 +8,29 @@
     <?php
 
 
-    if(isset($processInformation))
-    {
+    if(isset($processInformation)) {
 
-        $sql='SELECT  `orderDetail_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
-        $processInformationForWizard=queryReceive($sql);
-        $orderIdForWizard=$processInformationForWizard[0][0];
 
-        $sql='SELECT  `total_amount`, `discount`, `extracharges` FROM `orderDetail` WHERE id='.$orderIdForWizard.'';
-        $orderForWizard=queryReceive($sql);
-        $sql='SELECT sum(amount) FROM `payment` WHERE IsReturn=0 AND orderDetail_id='.$orderIdForWizard;
-        $PaidAmountForWizard=queryReceive($sql);
-
+        $sql = 'SELECT  `orderDetail_id` FROM `BookingProcess` WHERE (id=' . $pid . ')AND(token="' . $token . '")';
+        $processInformationForWizard = queryReceive($sql);
+        $orderIdForWizard = $processInformationForWizard[0][0];
+        $orderForWizard = array();
+        $PaidAmountForWizard = array();
+        if ($orderIdForWizard != "")
+        {
+            $sql = 'SELECT  `total_amount`, `discount`, `extracharges` FROM `orderDetail` WHERE id=' . $orderIdForWizard . '';
+        $orderForWizard = queryReceive($sql);
+        $sql = 'SELECT sum(amount) FROM `payment` WHERE IsReturn=0 AND orderDetail_id=' . $orderIdForWizard;
+        $PaidAmountForWizard = queryReceive($sql);
+        }
 
     if($processInformation[0][4]==0)
     {
 
 
-    ?>
+
+
+        ?>
 
 
         <?php
@@ -78,10 +83,13 @@
                                     $hallName=queryReceive($sql);
                                     echo "<li class='list-group-item d-inline-block'>hall : ".$hallName[0][0]."</li>";
                                 }
-                                $ToalAmountForWizard=(int)($orderForWizard[0][0]-$orderForWizard[0][1]+$orderForWizard[0][2]);
-                                echo "<li class='list-group-item d-inline-block'>Total amount : ".$ToalAmountForWizard."</li>";
-                                echo "<li class='list-group-item d-inline-block'> Paid: ".(int)$PaidAmountForWizard[0][0]."</li>";
-                                echo "<li class='list-group-item d-inline-block'>Remaining : ".(int) ($ToalAmountForWizard-$PaidAmountForWizard[0][0])."</li>";
+                                if($orderIdForWizard!="")
+                                {
+                                    $ToalAmountForWizard = (int)($orderForWizard[0][0] - $orderForWizard[0][1] + $orderForWizard[0][2]);
+                                    echo "<li class='list-group-item d-inline-block'>Total amount : " . $ToalAmountForWizard . "</li>";
+                                    echo "<li class='list-group-item d-inline-block'> Paid: " . (int)$PaidAmountForWizard[0][0] . "</li>";
+                                    echo "<li class='list-group-item d-inline-block'>Remaining : " . (int)($ToalAmountForWizard - $PaidAmountForWizard[0][0]) . "</li>";
+                                }
                                 ?>
 
                             </ul>
