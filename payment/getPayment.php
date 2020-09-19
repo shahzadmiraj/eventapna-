@@ -113,7 +113,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
         <div class="form-group row">
-            <label class="col-form-label">Amount</label>
+            <label class="col-form-label">Amount paid</label>
 
 
 
@@ -121,7 +121,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input id="Amount" type="number" name="Amount" class="form-control" placeholder="amount total etc 1200xxx">
+                <input id="Amount" type="number" name="Amount" class="form-control" placeholder="Amount paid in Advance  etc 1200xxx">
 
             </div>
 

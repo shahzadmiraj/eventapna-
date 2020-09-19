@@ -131,9 +131,9 @@ class PDF extends FPDF
 
             $this->Cell(64,10,$dishDetail[$i][5],0,0);
             $this->Cell(40,13,$dishDetail[$i][3],1,0);
-            $this->Cell(40,13,$dishDetail[$i][2],1,0);
-            $systemCalculate+=$dishDetail[$i][3]*$dishDetail[$i][2];
-            $this->Cell(45,13,$dishDetail[$i][3]*$dishDetail[$i][2],1,1);
+            $this->Cell(40,13,(int)($dishDetail[$i][2]),1,0);
+            $systemCalculate+=(int)($dishDetail[$i][3]*$dishDetail[$i][2]);
+            $this->Cell(45,13,(int)($dishDetail[$i][3]*$dishDetail[$i][2]),1,1);
 
 
 
