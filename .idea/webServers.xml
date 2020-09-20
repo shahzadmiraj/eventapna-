@@ -3,7 +3,14 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="45f31089-6797-4771-ab63-5378c5e7f986" name="host" url="http://192.168.64.3/public_html/">
-        <fileTransfer port="0" mountedRoot="" accessType="MOUNT" />
+        <fileTransfer mountedRoot="" accessType="MOUNT" port="0" />
+      </webServer>
+      <webServer id="7ab93369-ce8a-4a94-842b-1ed57c6b9098" name="eventapnawebsite" url="https://eventapna.com">
+        <fileTransfer host="eventapna.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
       </webServer>
     </option>
   </component>

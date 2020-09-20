@@ -1,5 +1,5 @@
 <?php
-/*
+/*/*
 1 convert row into colum array
 $hallOneD = array_column($SqlArray, Colume name or number);
  $hallOneD = array_column($AllHalls, 0);
@@ -39,10 +39,16 @@ foreach ($array as $key => $value) {
 
 
 */
-?>
+?><!--
 
-<?php
-// Import PHPMailer classes into the global namespace
+
+
+--><?php
+
+
+
+
+/*// Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -87,4 +93,4 @@ try {
     echo 'Message has been sent';
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-}
+}*/

@@ -34,7 +34,7 @@ $sql='SELECT h.id,l.latitude,l.longitude FROM hall as h INNER join location as l
 on (h.location_id=l.id) inner  join company as c 
 on (c.id=h.company_id)
 WHERE
-(l.country="'.$country.'")AND (ISNULL(h.expire))AND (ISNULL(l.expire))AND (h.name like "%'.trim($hallname).'%")AND (c.name!="demo") ';
+(l.country="'.$country.'")AND (ISNULL(h.expire))AND (ISNULL(l.expire))AND (h.name like "%'.trim($hallname).'%") ';
     $data=queryReceive($sql);
     $placeid=array();
     $distance=array();
@@ -110,6 +110,24 @@ function showCateringsdishesSeperate($hallid,$CurrentDistance,$daytime,$date,$pe
     $daytime= "Morning";
     $date="2020-04-30";
     $perhead=0;*/
+    if($daytime="All")
+    {
+        $daytime="in('Morning','Afternoon','Evening')";
+    }
+    else
+    {
+        $daytime='="'.$daytime.'"';
+    }
+
+    if($perhead==3)
+    {
+        //all food and setting
+        $perhead=" in(0,1)";
+    }
+    else
+    {
+        $perhead=' ='.$perhead;
+    }
     $maxDate = date('Y-m-d', strtotime($date . ' +20 day'));
     $halltype=array("Marquee","Hall","Deera /Open area");
     $sql='SELECT  h.id,h.image,h.name,h.max_guests,p.id,pd.selectedDate,p.isFood,p.price,p.dayTime,p.package_name,h.hallType,h.noOfPartitions,h.ownParking,pd.id,pd.token from hall as h INNER join location as l 
@@ -123,13 +141,11 @@ on (p.id=pd.package_id)
 WHERE
 (ISNULL(h.expire))AND(ISNULL(p.expire))AND(ISNULL(pd.expire))
 AND (h.id='.$hallid.' )
-AND(p.dayTime ="'.trim($daytime).'")AND(pd.selectedDate >= CAST("'.$date.'" AS DATE ))  AND(pd.selectedDate <= CAST("'.$maxDate.'" AS DATE ))AND(p.isFood='.$perhead.')
+AND(p.dayTime '.$daytime.')AND(pd.selectedDate >= CAST("'.$date.'" AS DATE ))  AND(pd.selectedDate <= CAST("'.$maxDate.'" AS DATE ))AND(p.isFood'.$perhead.')
 ';
 
     $display = '';
     $AllHalls=queryReceive($sql);
-
-    //print_r($sql);
 
 
     for ($i=0;$i<count($AllHalls);$i++)

@@ -26,7 +26,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <meta name="author" conte   nt="shahzad miraj">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta http-equiv="refresh" content="120">
+    <meta http-equiv="refresh" content="4000000">
 
 
 
@@ -137,6 +137,7 @@ include_once ("webdesign/header/header.php");
 
 
 
+        <input type="text" hidden name="action" value="home">
 
 
 
@@ -157,7 +158,9 @@ include_once ("webdesign/header/header.php");
                             echo '
                 <option value="Morning">Morning Time </option>
                 <option value="Afternoon">Afternoon Time</option>
-                <option value="Evening">Evening Time</option>';
+                <option value="Evening">Evening Time</option>
+                 <option value="All">All (Morning,Afternoon,Evening) </option>
+                ';
                         }
                         else if($_GET['daytime']=="Afternoon")
                         {
@@ -165,21 +168,34 @@ include_once ("webdesign/header/header.php");
                             echo '
                   <option value="Afternoon">Afternoon Time</option>
                 <option value="Morning">Morning Time </option>    
-                <option value="Evening">Evening Time</option>';
+                <option value="Evening">Evening Time</option>
+                <option value="All">All (Morning,Afternoon,Evening) </option>
+                
+                ';
                         }
-                        else
+                        else if($_GET['daytime']=="Evening")
                         {
 
                             echo '
               <option value="Evening">Evening Time</option>
                 <option value="Morning">Morning Time </option>
                 <option value="Afternoon">Afternoon Time</option>
+                <option value="All">All (Morning,Afternoon,Evening) </option>
   ';
+                        }
+                        else
+                        {
+                            echo ' 
+                    <option value="All">All (Morning,Afternoon,Evening) </option>
+                <option value="Morning">Morning Time </option>
+                <option value="Afternoon">Afternoon Time</option>
+                <option value="Evening">Evening Time</option>';
                         }
                     }
                     else
                     {
                         echo ' 
+                    <option value="All">All (Morning,Afternoon,Evening) </option>
                 <option value="Morning">Morning Time </option>
                 <option value="Afternoon">Afternoon Time</option>
                 <option value="Evening">Evening Time</option>';
@@ -201,10 +217,10 @@ include_once ("webdesign/header/header.php");
 
                 if(isset($_GET['Date']))
                 {
-                    echo $_GET['DATE'];
+
+                    echo $_GET['Date'];
                 }
-                ?>
-" name="Date" type="date" class="form-control py-0" id="date" placeholder="Booking Date">
+                ?>" name="Date" type="date" class="form-control py-0" id="date" placeholder="Booking Date">
             </div>
         </div>
 
@@ -225,19 +241,32 @@ include_once ("webdesign/header/header.php");
                         {
                             echo '
                             <option value="0">Per head Only Seating</option>
-                            <option value="1">Per head Seating + Food</option>';
+                            <option value="1">Per head Seating+Food</option>
+                            <option value="3">Both (seating and seating+food)</option>
+                            ';
                         }
-                        else
+                        if($_GET['perhead']==1)
                         {
 
                             echo '
                             <option value="1">Per head Seating + Food</option>
-                            <option value="0">Per head Only Seating</option>';
+                            <option value="0">Per head Only Seating</option>
+                            <option value="3">Both (seating and seating+food)</option>
+                            ';
+                        }
+                        else
+                        {
+
+                            echo ' 
+                            <option value="3">Both (seating and seating+food)</option>
+                            <option value="0">Per head Only Seating</option>
+                            <option value="1">Per head Seating + Food</option>';
                         }
                     }
                     else
                     {
                         echo ' 
+                            <option value="3">Both (seating and seating+food)</option>
                             <option value="0">Per head Only Seating</option>
                             <option value="1">Per head Seating + Food</option>';
                     }
@@ -259,8 +288,7 @@ include_once ("webdesign/header/header.php");
                         {
                             echo $_GET['hallname'];
                         }
-                        ?>
-" name="hallname" type="text" class="form-control py-0" id="hallname" placeholder="Hall Name (optional)">
+                        ?>" name="hallname" type="text" class="form-control py-0" id="hallname" placeholder="Hall Name (optional)">
             </div>
         </div>
 
@@ -283,8 +311,7 @@ include_once ("webdesign/header/header.php");
                         {
                             echo $_GET['latitude'];
                         }
-                        ?>
-"
+                        ?>"
 
                      name="latitude"    id="latitude" type="number" step="any" class="latitude"></label>
             <label  for="">Long: <input
@@ -295,8 +322,7 @@ include_once ("webdesign/header/header.php");
                         {
                             echo $_GET['longitude'];
                         }
-                        ?>
-"
+                        ?>"
 
                 name="longitude"                         id="longitude" type="number"  step="any" class="longitude"></label>
             <label  for="">City <input
@@ -308,8 +334,7 @@ include_once ("webdesign/header/header.php");
                         {
                             echo $_GET['city'];
                         }
-                        ?>
-"
+                        ?>"
 
                          name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
             <label  for="">country
@@ -458,13 +483,13 @@ else
             ShowHall();';
         ?>
 
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
+        });
+    });
 
-    });
-    $.ajax({
-        url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-        dataType: "script",
-        cache: false
-    });
 
 </script>
 
