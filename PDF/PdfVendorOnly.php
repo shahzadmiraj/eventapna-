@@ -1,5 +1,8 @@
 <?php
+
 include_once ('../connection/connect.php');
+include  ("../access/userAccess.php");
+RedirectOtherwiseOnlyAccessUsersWho("Owner,Employee,Viewer","../index.php");
 
 require('../fpdf182/fpdf.php');
 
