@@ -8,6 +8,10 @@ $hallOneD = array_column($SqlArray, Colume name or number);
 2:convert 1 d array into seperator
         $List = implode(', ', $hallOneD);
 
+3 string to array
+$str= "foo,bar,baz,bat";
+$arr= explode(", ", $str);
+print_r ($arr) ;
 
 3: array unique
 $a=array("a"=>"red","b"=>"green","c"=>"red");

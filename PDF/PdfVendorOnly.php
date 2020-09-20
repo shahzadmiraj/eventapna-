@@ -6,7 +6,7 @@ require('../fpdf182/fpdf.php');
 class PDF extends FPDF
 {
 
-    function HeaderCompany($branchinfo,$userName,$printDate)
+    function HeaderCompany($BranchName,$userName,$printDate)
     {
         // Logo
         // $this->Image('../gmail.png',10,6,20);
@@ -14,12 +14,9 @@ class PDF extends FPDF
         $this->SetFont('Arial','B',20);
         // Move to the right
         // Title
-        $this->Cell(189,10,$branchinfo[0][0],0,1,'C');
+        $this->Cell(189,10,$BranchName,0,1,'C');
 
         $this->SetFont('Arial','B',8);
-
-
-        $this->Cell(189,10,$branchinfo[0][2],0,1,'C');
 
         $this->Cell(45,10,"Printed UserName ",0,0);
         $this->Cell(40,10,$userName,0,0);
@@ -248,18 +245,11 @@ class PDF extends FPDF
 
 
 
-    function billing($userName,$printDate,$orderIds,$catering,$hall)
+    function billing($userName,$printDate,$orderIds,$BranchName)
     {
 
-        if ($catering != "") {
-            //catering
-            $sql = 'SELECT `name`,`company_id`,(SELECT `address`FROM `cateringLocation` WHERE ISNULL(expire)AND(catering_id=catering.id)) FROM `catering` WHERE id=' . $catering . '';
-        } else {
-            //hall
-            $sql = 'SELECT `name`, `company_id`,(SELECT `address` FROM `location` WHERE id=hall.location_id) FROM `hall` WHERE id=' . $hall . '';
-        }
-        $branchinfo = queryReceive($sql);
-        $this->HeaderCompany($branchinfo, $userName, $printDate);
+
+        $this->HeaderCompany($BranchName, $userName, $printDate);
 
 
         for ($i = 0; $i < count($orderIds); $i++)
@@ -403,7 +393,7 @@ WHERE (hei.orderDetail_id=' . $orderIds[$i] . ')AND(ISNULL(hei.expire))';
 
 
 
-function action($userName,$printDate,$orderid,$action,$catering,$hall)
+function action($userName,$printDate,$orderid,$action,$BranchName)
 {
 
     // Instanciation of inherited class
@@ -411,7 +401,7 @@ function action($userName,$printDate,$orderid,$action,$catering,$hall)
     $pdf->AliasNbPages();
     $pdf->AddPage();
     $pdf->SetFont('Times','',8);
-    $pdf->billing($userName,$printDate,$orderid,$catering,$hall);
+    $pdf->billing($userName,$printDate,$orderid,$BranchName);
     //$pdf->Output($action,"orderid".$orderid."date".$printDate);
 
 
@@ -419,6 +409,17 @@ function action($userName,$printDate,$orderid,$action,$catering,$hall)
 
     $pdf->Output($action,"date".$printDate.".pdf");
 }
-action("ALi","10/12/124",array(2),'I',NULL,1);
+
+
+
+if(isset($_POST['PrintedOrders']))
+{
+    $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+    $userdetail=queryReceive($sql);
+    $currentdate = (string) date_create()->format('Y-m-d:H:i:s');
+    $PrintedOrders=$_POST['PrintedOrders'];
+    $PrintedOrdersArray= explode(", ", $PrintedOrders);
+    action($userdetail[0][1],$currentdate,$PrintedOrdersArray,'I',$_POST['BranchName']);
+}
 
 ?>

@@ -132,7 +132,6 @@ include_once ("../webdesign/header/header.php");
 <?php
 $pageName=$order_info." Orders :".'<button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>';
 
-$pageName.="<br><a href='?' class='btn btn-light'>PDF View</a>";
 include_once ("../company/ClientSide/Company/Box.php");
 ?>
 
@@ -384,6 +383,17 @@ order by
 od.destination_date ASC,od.destination_time ASC';
 
             $orderdetail=queryReceive($sql);
+
+             $OrdersOneD = array_column($orderdetail, 0);
+            $List = implode(', ', $OrdersOneD);
+            echo '<form action="../PDF/PdfVendorOnly.php" method="post">
+
+                <input hidden name="BranchName" value="'.$detailBranch[0][0].'" >
+                <input hidden type="text" name="PrintedOrders" value="'.$List.'">
+              <button type="submit" class="btn btn-primary  col-12">Clich here for View in PDF</button>
+                    </form>';
+
+
             $display='';
             for ($i=0;$i<count($orderdetail);$i++)
             {
