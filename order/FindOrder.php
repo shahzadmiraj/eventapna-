@@ -17,7 +17,6 @@ else
     RedirectOtherwiseOnlyAccessUserOfHall("Owner,Employee", "../index.php","h");
 }
 
-
 $hallid="";
 $cateringid="";
 $hallorcater="";
@@ -132,6 +131,8 @@ include_once ("../webdesign/header/header.php");
 
 <?php
 $pageName=$order_info." Orders :".'<button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>';
+
+$pageName.="<br><a href='?' class='btn btn-light'>PDF View</a>";
 include_once ("../company/ClientSide/Company/Box.php");
 ?>
 

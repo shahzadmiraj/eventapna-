@@ -34,7 +34,7 @@ $Menu=queryReceive($sql);
 
 
 
-$sql='SELECT hall.id,`name`, `max_guests`, `function_per_Day`, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address,l.latitude,l.longitude FROM `hall` INNER join location as l 
+$sql='SELECT hall.id,`name`, `max_guests`, 1, `noOfPartitions`, `ownParking`, `image`, `hallType`,`company_id`, hall.active,l.country,l.city,l.address,l.latitude,l.longitude FROM `hall` INNER join location as l 
 on (hall.location_id=l.id)
 WHERE
 (ISNULL(l.expire))AND (hall.id='.$PackageDetail[0][5].')';

@@ -70,40 +70,42 @@ include_once ("../../../webdesign/header/header.php");
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active ">
-                <img src="https://www.limewoodcaterers.com/images/slide-1.jpg" class="d-block w-100" alt="...">
+                <img style="height: 60vh" src="https://www.limewoodcaterers.com/images/slide-1.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption ">
                     <h6 class="display-4" >Catering Services</h6>
                     <p>Register Catering Order and catering company and get free software</p>
                 </div>
             </div>
             <div class="carousel-item   ">
-                <img src="https://blog.bridals.pk/wp-content/uploads/2018/11/soanam-banne-1024x512.jpg" class="d-block w-100" alt="...">
+                <img style="height: 60vh" src="https://blog.bridals.pk/wp-content/uploads/2018/11/soanam-banne-1024x512.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption   ">
                     <h5 class="display-4  ">Hall Booking</h5>
                     <p>book your nearest Hall,Marquee and Dera and get 10% discount</p>
                 </div>
             </div>
             <div class="carousel-item ">
-                <img src="https://www.brides.com/thmb/8N9PzFuItfby0vjkyjka-hfQhsE=/3615x2033/filters:fill(auto,1)/__opt__aboutcom__coeus__resources__content_migration__brides__proteus__5be5dd5661c7180ad90ce2d7__169-5f4244ae78c040a88344f8a6f6e5436a.jpeg" class="d-block w-100" alt="...">
+                <img style="height: 60vh" src="https://www.brides.com/thmb/8N9PzFuItfby0vjkyjka-hfQhsE=/3615x2033/filters:fill(auto,1)/__opt__aboutcom__coeus__resources__content_migration__brides__proteus__5be5dd5661c7180ad90ce2d7__169-5f4244ae78c040a88344f8a6f6e5436a.jpeg" class="d-block w-100" alt="...">
                 <div class="carousel-caption ">
-                    <div class="col-12 p-0 m-0">
+                    <ul class="">
+                        <li class="">
+                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-white font-weight-bold">Marquee Management software</a>
+                        </li>
 
-                        <!-- Links -->
-                        <h4 class="text-uppercase font-weight-bold">Software Features</h4>
-                        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                        <p>
-                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-dark">Marquee Management software</a>
-                        </p>
-                        <p>
-                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-dark">Hall Management software</a>
-                        </p>
-                        <p>
-                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-dark">Catering Management software</a>
-                        </p>
-                        <p>
-                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-dark">Dera / Open area Management software</a>
-                        </p>
-                    </div>
+                        <li class="">
+                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-white font-weight-bold">Hall Management software</a>
+
+                        </li>
+
+                        <li class="">
+                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-white font-weight-bold">Catering Management software</a>
+                        </li>
+
+                        <li class="">
+                            <a href="../../../user/RegisterCompanyWithUSer.php" class="text-white font-weight-bold">Dera / Open area Management software</a>
+
+                        </li>
+                    </ul>
+
                 </div>
             </div>
 
@@ -304,11 +306,7 @@ else
         $('.carousel').carousel({
             interval: 5000
         });
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-            dataType: "script",
-            cache: false
-        });
+
 
         function showDishes()
         {
@@ -357,6 +355,12 @@ else
             echo '
             showDishes();';
         ?>
+
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
+        });
 
     });
 
