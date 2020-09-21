@@ -385,7 +385,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     <?php
 
-        $status=array("Running","Deliever","Cancel","Clear");
+        $status=array("Running","Delivered","Cancel","Clear");
         $display='
     <div class="form-group row">
         <label class="col-form-label">Order status</label>

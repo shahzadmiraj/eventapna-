@@ -460,7 +460,7 @@ function checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perhead
         $status=true;
     }
 
-    if(($PreviouseDetailOrder[0][10]!=checknumberOtherNull($catering))AND(checknumberOtherNull($PreviouseDetailOrder[0][2])!=$cateringid))
+    if((checknumberOtherNull($PreviouseDetailOrder[0][10])!=$catering)AND(checknumberOtherNull($PreviouseDetailOrder[0][2])!=NULL))
     {
 
         //catering status

@@ -200,7 +200,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
                 <select  name="status_catering"   class="form-control">
                     <?php
-                    $OrderStatus=array("Running","Cancel","Delieved","Clear");
+                    $OrderStatus=array("Running","Cancel","Delivered","Clear");
                     echo '<option value='.$orderDetail[0][4].'>'.$orderDetail[0][4].'</option>';
                     for($i=0;$i<count($OrderStatus);$i++)
                     {
