@@ -223,7 +223,7 @@ AND(p.dayTime '.$daytime.')AND(pd.selectedDate >= CAST("'.$date.'" AS DATE ))  A
                 <li class="list-group-item">Date:'.$AllHalls[$i][5].' | Time:'.$AllHalls[$i][8].' </li>
                  <li class="list-group-item">Type:'.$halltype[$AllHalls[$i][10]].' </li>
                  <li class="list-group-item">Hall Name :'.$AllHalls[$i][2].'</li>
-                  <li class="list-group-item price font-weight-bold">Price <i class="far fa-money-bill-alt"></i> :'.$AllHalls[$i][7].' <span class="old-price">'.((int)$AllHalls[$i][7]+5000).'</span></li>
+                  <li class="list-group-item price font-weight-bold">Price <i class="far fa-money-bill-alt"></i> :'.$AllHalls[$i][7].' <span class="old-price">'.((int)$AllHalls[$i][7]+20).'</span></li>
                    <li class="list-group-item"><a href="company/ClientSide/Hall/ClientHallPackage.php?pdid='.$AllHalls[$i][13].'&pdtoken='.$AllHalls[$i][14].'" class="btn btn-primary">Visit And Booking >></a></li>
                
                 </ul>

@@ -175,7 +175,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 <div class="container alert-danger mt-5">
-    <h3><i class="fas fa-trash-alt"></i> Expired Dishes  <input   id="expireControl" class="btn btn-danger" value="Show"></h3>
+    <h3><i class="fas fa-trash-alt"></i> Expired Dishes  <input   readonly id="expireControl" class="btn btn-danger" value="Show"></h3>
     <hr>
 </div>
 

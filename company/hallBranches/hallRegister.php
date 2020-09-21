@@ -141,7 +141,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
-            <input id="capacity" value="200" name="capacity" type="number" class="form-control" placeholder="Maximum Capacity of guests in hall">
+            <input id="capacity"  name="capacity" type="number" class="form-control" placeholder="Min 50 and Max 3000 hall sitting Arrangement  ">
         </div>
 
 

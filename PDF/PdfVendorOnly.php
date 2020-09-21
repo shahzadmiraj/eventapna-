@@ -257,9 +257,8 @@ class PDF extends FPDF
 
         for ($i = 0; $i < count($orderIds); $i++)
         {
-
-
-
+            if(!is_numeric($orderIds[$i]))
+                continue;
             $sql = 'SELECT `id`, `hall_id`, `catering_id`,(SELECT p.isFood FROM orderDetail as od INNER join packageDate as pd
 on (od.packageDate_id=pd.id)
 INNER join packages as p
@@ -422,7 +421,8 @@ if(isset($_POST['PrintedOrders']))
     $currentdate = (string) date_create()->format('Y-m-d:H:i:s');
     $PrintedOrders=$_POST['PrintedOrders'];
     $PrintedOrdersArray= explode(", ", $PrintedOrders);
-    action($userdetail[0][1],$currentdate,$PrintedOrdersArray,'I',$_POST['BranchName']);
+        action($userdetail[0][1],$currentdate,$PrintedOrdersArray,'I',$_POST['BranchName']);
+    exit();
 }
 
 ?>
