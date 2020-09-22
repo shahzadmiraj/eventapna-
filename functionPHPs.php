@@ -73,10 +73,10 @@ try {
     $mail->Username   = 'support@eventapna.com';                     // SMTP username
     $mail->Password   = 'shhazadmirajdin1';                               // SMTP password
     $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-    $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+         $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
     //Recipients
-    $mail->setFrom('shahzadmirajdin1@gmail.com', 'EVENT APNA');
+    $mail->setFrom('support@eventapna.com', 'EVENT APNA');
     $mail->addAddress('shahzadmirajdin1@gmail.com', 'shahzad miraj');     // Add a recipient
    // $mail->addAddress('ellen@example.com');               // Name is optional
     //$mail->addReplyTo('info@example.com', 'Information');
@@ -89,9 +89,9 @@ try {
 
     // Content
     $mail->isHTML(true);// Set email format to HTML
-   // $mail->Timeout=6000;
+   $mail->Timeout=6000;
     $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This';
+    $mail->Body    = 'This kjb jbkbfbefef jkb bk bjbj  bjj ber berjr ebjkre bjkergbjk regbjk regbj kegr bjkgre  grjb <a>biwebhiehbilefwefwhblefwhblefwhblefwhblewfhblewfbhlfwebhlefwh ewfh ewfh efwh fhefw efhwh efwh efw hwef hwefhwew ehw ewf hefwhefw hefwefw ew ehw efw hewf hefw hffk efkw efw ehw efhw ewf hefw efwhewfhewfhefw hefw efwefjw ejw efwj efw jefw jewf jewfgjewfjewf</a>';
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
@@ -102,3 +102,27 @@ try {
 
 
 }
+
+
+require_once 'vendor/autoload.php';
+
+// Create the Transport
+$transport = (new Swift_SmtpTransport('mail.eventapna.com', 465))
+    ->setUsername('support@eventapna.com')
+    ->setPassword('shhazadmirajdin1')
+;
+
+// Create the Mailer using your created Transport
+$mailer = new Swift_Mailer($transport);
+
+// Create a message
+$message = (new Swift_Message('Wonderful Subject'))
+    ->setFrom(['support@eventapna.com' => 'John Doe'])
+    ->setTo(['shahzadmirajdin1@gmail.com', 'other@domain.org' => 'A name'])
+    ->setBody('Here is the message itself')
+;
+
+// Send the message
+$result = $mailer->send($message);
+?>
+
