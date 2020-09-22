@@ -19,11 +19,10 @@ include_once ("../connection/connect.php");
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
-
-    <script type="text/javascript" src="../webdesign/JSfile/JSFunction.js"></script>
-
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <script  src="../webdesign/JSfile/JSFunction.js"></script>
+
 
     <style>
 
@@ -96,7 +95,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         </div>
-                        <input id="PhoneNo" type="number" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
+                        <input id="PhoneNo" type="text" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
                     </div>
                 </div>
 
@@ -155,32 +154,32 @@ include_once ("../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
+        $.getScript("../webdesign/JSfile/JSFunction.js");
 
         $('#login').click(function ()
         {
              var state=false;
+
             if(validateEmailByString("Email","Please enter valid Email"))
                 state=true;
             if(password("password1","please enter 4 to 8 digits password",4,8))
                 state=true;
-            if(validationWithString("PhoneNo","please enter phone no "))
+
+            if(validationWithString("username","please enter username "))
+            state=true;
+
+            if(validationWithString("CompanyName","please enter any name of you company "))
+            state=true;
+
+            if(validatePakistaniNumberByString("PhoneNo"))
                 state=true;
-
-        if(validationWithString("username","please enter username "))
-            state=true;
-
-        if(validationWithString("CompanyName","please enter any name of you company "))
-            state=true;
-        if($("#agree").prop("checked")==false)
-        {
-            alert("please checkbox fill ");
-            state=true;
-        }
-
-        if(state)
+            if($("#agree").prop("checked")==false)
+            {
+                alert("please checkbox fill ");
+                state=true;
+            }
+            if(state)
             return false;
-
-
 
             var formdata = new FormData($("#formLogin")[0]);
             formdata.append("option","RegisterCompanyWithUserAlso");

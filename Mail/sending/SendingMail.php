@@ -1,7 +1,7 @@
 <?php
 
-require_once('../libraries/PHPMailer.php');
-require_once('../libraries/SMTP.php');
+//require_once('../libraries/PHPMailer.php');
+//require_once('../libraries/SMTP.php');
 
 function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
 {
@@ -9,7 +9,7 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
     $mail = new PHPMailer(true);
 
     $mail->isSMTP();
-    $mail->SMTPDebug = 2;
+    $mail->SMTPDebug = 0; //1 error or success
     // Enable verbose debug output
     // Set mailer to use SMTP
     $mail->Host = 'ssl://mail.eventapna.com';  // Specify main and backup SMTP servers
@@ -64,4 +64,4 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
 
 
 
-echo serverSendMessage("shahzadmirajdin1@gmail.com","shahzad miraj","Confirmation of Email",'jkbfqbjkefbhjkfb;hfb;hfqeb; bhwef hbew fbhlewefw ewywyfqwe h ewefw hv fwvefw efw ehvw ew u uvhv v ufefw euw uv  vuewf y  efuvwuyfgy fwyevy y ew efuvw efuvw efw vu fv fewvfuw fuvw f v fvyyfouyfuvyf vwefuv uy fuvfwuvfwuvyy f uvwuvyfy y  fr <a>fejnefjberinbenrbejnorbfjnobejnrbjbjrbjr</a>i');
+//echo serverSendMessage("shahzadmirajdin1@gmail.com","shahzad miraj","Confirmation of Email",'jkbfqbjkefbhjkfb;hfb;hfqeb; bhwef hbew fbhlewefw ewywyfqwe h ewefw hv fwvefw efw ehvw ew u uvhv v ufefw euw uv  vuewf y  efuvwuyfgy fwyevy y ew efuvw efuvw efw vu fv fewvfuw fuvw f v fvyyfouyfuvyf vwefuv uy fuvfwuvfwuvyy f uvwuvyfy y  fr <a>fejnefjberinbenrbejnorbfjnobejnrbjbjrbjr</a>i');

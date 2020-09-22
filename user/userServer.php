@@ -112,20 +112,18 @@ $string=base64url_encodeLength();
  $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid` ) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'","'.$CompanyName.'","'.$image.'","Owner","'.$Email.'","'.$PhoneNo.'",1,NULL)';
 querySend($sql);
 $last=  mysqli_insert_id($connect);
-/*
-$htmlBody='
-Dear '.$username.',
-Please click this link for confirmation <a href="?id='.$last.'&confim='.$string.'">www.eventapna.com?id='.$last.'&confim='.$string.'"</a>
-username :'.$username.'
-password:'.$password.'
-email :'.$Email.'
-company name:'.$CompanyName.'
-phone no:'.$PhoneNo;*/
 
-   $htmlBody='<a href="www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a>';
+$htmlBody='
+Dear '.$username.',<br>
+Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a><br>
+username :'.$username.'<br>
+password:'.$password.'<br>
+email :'.$Email.'<br>
+company name:'.$CompanyName.'<br>
+phone no:'.$PhoneNo.'<br>';
 
     $display="";
-   $display=serverSendMessage(trim($Email),trim($username),"Confirmation of Email",$htmlBody);
+   $display=serverSendMessage(trim($Email),trim($username),"Confirmation of Account",$htmlBody);
     if($display!="")
     {
         //echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email</a></p>';
@@ -177,9 +175,17 @@ else if($_POST['option']=="RegisterUserofCompany")
 //phone no:'.$PhoneNo.'
 //Position in Company:'.$jobtitle.'
 //</pre>';
-    $htmlBody='<a href="www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a>';
+
+    $htmlBody='
+Dear '.$username.',<br>
+Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a><br>
+username :'.$username.'<br>
+password:'.$password.'<br>
+email :'.$Email.'<br>
+Position in Company:'.$jobtitle.'<br>
+phone no:'.$PhoneNo.'<br>';
     $display="";
-    $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+    $display=serverSendMessage($Email,$username,"Confirmation of Account",$htmlBody);
     if($display!="")
     {
         echo  "<span class='alert-danger'>Check Email :".$display."</span>";
@@ -206,10 +212,16 @@ username :'.$username.'
 password:'.$password.'
 email :'.$Email.'
 </pre>';*/
-    $htmlBody='<a href="www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a>';
+
+    $htmlBody='
+Dear '.$username.',<br>
+Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a><br>
+username :'.$username.'<br>
+password:'.$password.'<br>
+email :'.$Email.'<br>';
 
     $display="";
-    $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+    $display=serverSendMessage($Email,$username,"Confirmation of Account",$htmlBody);
     if($display=="")
     {
         echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email </a></p>';

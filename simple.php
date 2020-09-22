@@ -176,6 +176,21 @@ $('.showDetail').click(function ()
 
 
 
+// load a file
+$.getScript("../webdesign/JSfile/JSFunction.js");
+
+
+// load multiples file
+$.when(
+$.getScript( "../webdesign/JSfile/JSFunction.js" ),
+$.Deferred(function( deferred ){
+$( deferred.resolve );
+})
+).done(function(){
+
+//place your code here, the scripts are all loaded
+
+});
 
 
 $('.toast').toast('show');
