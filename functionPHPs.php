@@ -91,7 +91,7 @@ try {
     $mail->isHTML(true);// Set email format to HTML
    $mail->Timeout=6000;
     $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This kjb jbkbfbefef jkb bk bjbj  bjj ber berjr ebjkre bjkergbjk regbjk regbj kegr bjkgre  grjb <a>biwebhiehbilefwefwhblefwhblefwhblefwhblewfhblewfbhlfwebhlefwh ewfh ewfh efwh fhefw efhwh efwh efw hwef hwefhwew ehw ewf hefwhefw hefwefw ew ehw efw hewf hefw hffk efkw efw ehw efhw ewf hefw efwhewfhewfhefw hefw efwefjw ejw efwj efw jefw jewf jewfgjewfjewf</a>';
+    $mail->Body    = 'This kjb jbkbfbefef jkb';
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();

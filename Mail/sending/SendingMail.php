@@ -1,7 +1,7 @@
 <?php
 
-//require_once('../libraries/PHPMailer.php');
-//require_once('../libraries/SMTP.php');
+require_once('../libraries/PHPMailer.php');
+require_once('../libraries/SMTP.php');
 
 function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
 {
@@ -14,15 +14,13 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
     // Set mailer to use SMTP
     $mail->Host = 'ssl://mail.eventapna.com';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-  //  $mail->Username = 'admin@eventapna.com';                 // SMTP username
-    //$mail->Password = 'Shahzad@123';                           // SMTP password
-    $mail->Username = 'admin@introvertgym.com';                 // SMTP username
-    $mail->Password = 'ShahzadMirajdin1';                           // SMTP password
+    $mail->Username   = 'support@eventapna.com';                     // SMTP username
+    $mail->Password   = 'shhazadmirajdin1';                               // SMTP password
     $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 465;        //465                            // TCP port to connect to
     $mail->SMTPKeepAlive = true;
     $mail->XMailer=" ";
-    $mail->From = 'admin@eventapna.com';
+    $mail->From = 'support@eventapna.com';
     $mail->FromName = 'EVENT APNA';
 
     if(is_array($SenderAddress))
@@ -66,4 +64,4 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
 
 
 
-//echo serverSendMessage("shahzadmirajdin1@gmail.com","shahzad miraj","Confirmation of Email",'jkbfqbjkefbhjkfb;hfb;hfqeb; bhwef hbew fbhlewefw ewywyfqwe h ewefw hv fwvefw efw ehvw ew u uvhv v ufefw euw uv  vuewf y  efuvwuyfgy fwyevy y ew efuvw efuvw efw vu fv fewvfuw fuvw f v fvyyfouyfuvyf vwefuv uy fuvfwuvfwuvyy f uvwuvyfy y  fr <a>fejnefjberinbenrbejnorbfjnobejnrbjbjrbjr</a>i');
+echo serverSendMessage("shahzadmirajdin1@gmail.com","shahzad miraj","Confirmation of Email",'jkbfqbjkefbhjkfb;hfb;hfqeb; bhwef hbew fbhlewefw ewywyfqwe h ewefw hv fwvefw efw ehvw ew u uvhv v ufefw euw uv  vuewf y  efuvwuyfgy fwyevy y ew efuvw efuvw efw vu fv fewvfuw fuvw f v fvyyfouyfuvyf vwefuv uy fuvfwuvfwuvyy f uvwuvyfy y  fr <a>fejnefjberinbenrbejnorbfjnobejnrbjbjrbjr</a>i');
