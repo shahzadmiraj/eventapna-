@@ -149,6 +149,7 @@ include_once ("../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
+        $.getScript("../webdesign/JSfile/JSFunction.js");
 
 
         $('#login').click(function ()
@@ -158,11 +159,11 @@ include_once ("../webdesign/footer/footer.php");
             var state=false;
             if(validateEmailByString("Email","Please enter valid Email"))
                 state=true;
-            if(password("password","please enter 4 to 8 digits password",4,8))
-                state=true;
-            if(validationWithString("PhoneNo","please enter phone no "))
+            if(password("password","please enter 4 to 15 letters password",4,8))
                 state=true;
 
+            if(validatePakistaniNumberByString("PhoneNo"))
+                state=true;
             if(validationWithString("username","please enter username "))
                 state=true;
 
@@ -192,12 +193,12 @@ include_once ("../webdesign/footer/footer.php");
                     $("#preloader").hide();
                     if(data!="")
                     {
-                        //$("#formLogin")[0].reset();
                         $("#error").html(data);
                     }
                     else
                     {
                         alert("Please check Email for verification");
+                        $("#formLogin")[0].reset();
                     }
 
                 }

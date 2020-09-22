@@ -11,6 +11,21 @@ include_once ("../connection/connect.php");
 include_once ("../Mail/sending/SendingMail.php");
 require_once('../Mail/libraries/PHPMailer.php');
 require_once('../Mail/libraries/SMTP.php');
+
+function uniqueTokenForOnlyUserSession($tableName)
+{
+    while(1)
+    {
+        $token=base64url_encodeLength();
+        $sql='SELECT id FROM '.$tableName.' WHERE senderId="'.$token.'"';
+        $result=queryReceive($sql);
+        if(count($result)==0)
+        {
+            return $token;
+            break;
+        }
+    }
+}
 function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$image,$CurrentUserid)
 {
     global $timestamp;
@@ -84,16 +99,16 @@ function UserLogin($username,$password)
 
 if($_POST['option']=="RegisterCompanyWithUserAlso")
 {
-$CompanyName=$_POST['CompanyName'];
-$username=$_POST['username'];
-$Email=$_POST['Email'];
+    $CompanyName=$_POST['CompanyName'];
+    $username=$_POST['username'];
+    $Email=$_POST['Email'];
     $UserExist=CheckUserExist($username,$Email);
     if($UserExist)
     {
         echo "<span class='alert-danger'>User has already available</span> ";
         exit();
     }
-$PhoneNo=$_POST['PhoneNo'];
+    $PhoneNo=$_POST['PhoneNo'];
     $image="";
     if(!empty($_FILES['image']["name"]))
     {
@@ -106,16 +121,16 @@ $PhoneNo=$_POST['PhoneNo'];
         $image =$_FILES['image']['name'];
     }
 
-$password=$_POST['password'];
+    $password=$_POST['password'];
 
-$string=base64url_encodeLength();
- $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid` ) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'","'.$CompanyName.'","'.$image.'","Owner","'.$Email.'","'.$PhoneNo.'",1,NULL)';
-querySend($sql);
-$last=  mysqli_insert_id($connect);
+    $string=uniqueTokenForOnlyUserSession("userSession");
+    $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid` ) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'","'.$CompanyName.'","'.$image.'","Owner","'.$Email.'","'.$PhoneNo.'",1,NULL)';
+    querySend($sql);
+    $last=  mysqli_insert_id($connect);
 
-$htmlBody='
+    $htmlBody='
 Dear '.$username.',<br>
-Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a><br>
+Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confirm='.$string.'">clich here</a><br>
 username :'.$username.'<br>
 password:'.$password.'<br>
 email :'.$Email.'<br>
@@ -123,10 +138,9 @@ company name:'.$CompanyName.'<br>
 phone no:'.$PhoneNo.'<br>';
 
     $display="";
-   $display=serverSendMessage(trim($Email),trim($username),"Confirmation of Account",$htmlBody);
+    $display=serverSendMessage(trim($Email),trim($username),"Confirmation of Account",$htmlBody,"support@eventapna.com");
     if($display!="")
     {
-        //echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email</a></p>';
         echo  "<span class='alert-danger'>Check Email :".$display."</span>";
     }
 
@@ -158,13 +172,11 @@ else if($_POST['option']=="RegisterUserofCompany")
     }
 
     $password=$_POST['password'];
-    $string=base64url_encodeLength();
+    $string=uniqueTokenForOnlyUserSession("userSession");
     $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid` ) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'",NULL,"'.$image.'","'.$jobtitle.'","'.$Email.'","'.$PhoneNo.'",0,'.$Companyid.')';
     querySend($sql);
 
-
-
-    $last=  mysqli_insert_id($connect);
+    $last=mysqli_insert_id($connect);
 
 //    $htmlBody='<pre>
 //Dear '.$username.',
@@ -178,14 +190,14 @@ else if($_POST['option']=="RegisterUserofCompany")
 
     $htmlBody='
 Dear '.$username.',<br>
-Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a><br>
+Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confirm='.$string.'">clich here</a><br>
 username :'.$username.'<br>
 password:'.$password.'<br>
 email :'.$Email.'<br>
 Position in Company:'.$jobtitle.'<br>
 phone no:'.$PhoneNo.'<br>';
     $display="";
-    $display=serverSendMessage($Email,$username,"Confirmation of Account",$htmlBody);
+    $display=serverSendMessage($Email,$username,"Confirmation of Account",$htmlBody,"support@eventapna.com");
     if($display!="")
     {
         echo  "<span class='alert-danger'>Check Email :".$display."</span>";
@@ -197,7 +209,7 @@ else if($_POST['option']=="LocatUserRegisters")
     $username=$_POST['username'];
     $Email=$_POST['Email'];
     $password=$_POST['password'];
-    $string=base64url_encodeLength();
+    $string=uniqueTokenForOnlyUserSession("userSession");
     $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid`) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'",NULL,NULL,"User","'.$Email.'",NULL,0,NULL)';
 
     querySend($sql);
@@ -215,7 +227,7 @@ email :'.$Email.'
 
     $htmlBody='
 Dear '.$username.',<br>
-Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confim='.$string.'">clich here</a><br>
+Please click this link for confirmation of Event Apna Account:<a href="https://www.eventapna.com/user/userLogin.php?id='.$last.'&confirm='.$string.'">clich here</a><br>
 username :'.$username.'<br>
 password:'.$password.'<br>
 email :'.$Email.'<br>';
@@ -315,7 +327,7 @@ Position in Company: '.$jobtitle.'
 </pre>';
 
     $display="";
-    // $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+    $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
 
 
 }
@@ -343,7 +355,7 @@ else if($_POST['option']=="ResetPassword")
 
 
     $Oldpassword=$_POST['Oldpassword'];
-   $password1=$_POST['password1'];
+    $password1=$_POST['password1'];
     $userid=$_POST['userid'];
 
     $sql='SELECT  `password` FROM `user` WHERE (id='.$userid.')AND(password="'.$Oldpassword.'")';

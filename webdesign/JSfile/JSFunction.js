@@ -44,7 +44,7 @@ window.validatePakistaniNumberByString= function (Element)
     }
     else
     {
-        alert("your number is invalid So, these are example 03231234567 | 0345-1234567 | +923211234567 | +92324-1234567 | +92-3331234567 | +92-333-1234567 | 00923331234567 | 0092333-1234567 | 0092-3331234567 | 0092-333-1234567");
+        alert("your number is invalid So, these are example 03231234567 | 0345-1234567 | +923211234567 | +92324-1234567 | +92-3331234567 | +92-333-1234567 | 0923331234567 | 092333-1234567 | 092-3331234567 | 092-333-1234567");
         if(!(Element.hasClass("btn-danger")))
             Element.addClass("btn-danger");
     }

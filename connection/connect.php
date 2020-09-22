@@ -66,6 +66,7 @@ function uniqueToken($tableName)
     }
 }
 
+
 function base64url_decodeLength($dammy)
 {
     return base64_decode( strtr( $dammy, '-_', '+/') . str_repeat('=', 3 - ( 3 + strlen( $dammy )) % 4 ));

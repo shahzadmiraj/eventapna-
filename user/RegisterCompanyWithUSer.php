@@ -90,7 +90,7 @@ include_once ("../webdesign/header/header.php");
 
 
                 <div class="form-group row" >
-                    <label class="col-form-label">Phone No</label>
+                    <label class="col-form-label">Phone No:<small>03XXXXXXXXX | 03XX-XXXXXXXXX | +92XXXXXXXX </small></label>
                     <div class="input-group mb-3 input-group-lg">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -162,7 +162,7 @@ include_once ("../webdesign/footer/footer.php");
 
             if(validateEmailByString("Email","Please enter valid Email"))
                 state=true;
-            if(password("password1","please enter 4 to 8 digits password",4,8))
+            if(password("password1","please enter 4 to 15 letters password",4,15))
                 state=true;
 
             if(validationWithString("username","please enter username "))
@@ -203,7 +203,7 @@ include_once ("../webdesign/footer/footer.php");
                     }
                     else
                     {
-                       //location.replace("");
+                       location.replace("userLogin.php?Wait=Ok");
                     }
 
                 }

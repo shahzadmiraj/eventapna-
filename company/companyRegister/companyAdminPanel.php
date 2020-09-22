@@ -85,7 +85,7 @@ include_once ("../../webdesign/header/header.php");
                 {
                     echo 'disabled';
                 } ?>
-             "><i class="fas fa-clipboard-list fa-3x"></i> <h6> Hall Packages Manage</h6></a>
+             "><i class="fas fa-clipboard-list fa-3x"></i> <h6>Manage Hall Packages </h6></a>
                 <a href="../hallBranches/hallRegister.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-place-of-worship fa-3x "></i> <h6> + Add Hall</h6></a>
                 <a href="../cateringBranches/catering.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-utensils fa-3x"></i> <h6> + Add Food & Catering</h6></a>
                 <a href="../../user/RegisterCompanyUser.php" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center"><i class="fas fa-user-plus fa-3x"></i> <h6> + Add User</h6></a>
@@ -98,11 +98,14 @@ include_once ("../../webdesign/header/header.php");
                     echo 'disabled';
                 } ?>
 "><i class="fas fa-hamburger fa-3x"></i><h6>Catering Dishes Mangement system</h6></a>
+
+
+
                 <a href="../hallBranches/extraItems/Hallitem.php?" class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2  badge-light text-center
 <?php if(count($halls)==0)
                 {
                     echo 'disabled';
-                } ?>"><i class="fas fa-guitar fa-3x"></i> <h6>Hall Extra items Mangement</h6></a>
+                } ?>"><i class="fas fa-guitar fa-3x"></i> <h6>Hall Extra items Management</h6></a>
             </div>
         </div>
 
@@ -200,7 +203,7 @@ include_once ("../../webdesign/header/header.php");
 
     if((count($halls)==0)&&(onlyAccessUsersWho("Owner")))
     {
-        echo '<a  href="../hallBranches/hallRegister.php"  class="text-muted col-12 text-center">Add Hall branches</a>
+        echo '<a  href="../hallBranches/hallRegister.php"  class="alert-info">Add Halls : So you can manage Hall orders ,Hall Extra items Management ,Manage Hall Packages</a>
 ';
     }
     ?>
@@ -221,7 +224,7 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="container mt-2 mb-2 alert-primary " >
-        <h4  class="float-left">  <i class="fas fa-utensils"></i>Food & Caterings Management system</h4>
+        <h4  class="float-left">  <i class="fas fa-utensils"></i> Foods & Caterings Management System</h4>
     </div>
 
     <div class="row container">
@@ -294,7 +297,7 @@ include_once ("../../webdesign/header/header.php");
 
     if((count($caterings)==0)&&(onlyAccessUsersWho("Owner")))
     {
-        echo '<a  href="../cateringBranches/catering.php"  class="text-muted col-12 text-center">Add Catering branches</a>
+        echo '<a  href="../cateringBranches/catering.php"  class="alert-info">Add Caterings : So you can manage Food orders ,Catering Dishes Management System</a>
 ';
     }
     ?>

@@ -3,7 +3,7 @@
 //require_once('../libraries/PHPMailer.php');
 //require_once('../libraries/SMTP.php');
 
-function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
+function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddress)
 {
     $display='';
     $mail = new PHPMailer(true);
@@ -35,6 +35,21 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
     {
         $mail->addAddress($SenderAddress, $SenderName);     // Add a recipient
     }
+
+
+    if(is_array($ReplyAddress))
+    {
+        //if array $SenderAddress
+        for($i=0;$i<count($ReplyAddress);$i++)
+        {
+            $mail->addReplyTo($ReplyAddress[$i]);
+        }
+    }
+    else
+    {
+        $mail->addReplyTo($ReplyAddress);     // Add a recipient
+    }
+
 //$mail->addAddress('ellen@example.com');               // Name is optional
 //$mail->addReplyTo('info@example.com', 'Information');
 //$mail->addCC('cc@example.com');
@@ -55,7 +70,7 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html)
         $display.= 'Message could not be sent.';
         $display.= 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-        echo 'Message has been sent';
+        //message successully sent
     }
  //   $mail->smtpClose();
 

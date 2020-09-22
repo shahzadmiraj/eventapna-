@@ -6,6 +6,10 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
+if(isset($_COOKIE['userid']))
+{
+    header("location:../index.php");
+}
 
 function ISnullvalidationofuser($email)
 {
@@ -70,7 +74,8 @@ if((isset($_GET['id']))AND(isset($_GET['confirm'])))
 
 }
 
-
+if(isset($_GET['Wait']))
+    $display.='<span class="alert-success">Confirmation mail sent to your Email. Please Verify</span>';
 
 ?>
 <!DOCTYPE html>
@@ -115,12 +120,12 @@ include_once ("../webdesign/header/header.php");
         <div class="col-md-4">
         </div>
 
-        <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
+        <div class="col-md-8   " style="background-color: rgba(219,188,219,0.58) !important;">
             <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-out-alt"></i> Sign In</h1>
             <h4 id="error">
-                <h6>Demo<br>Username:demo123<br>Password:demo123</h6>
+                <h6 ><span class="alert-danger">Note:<br>This Website will be launched on 1st Oct 2020. SO, Enjoy Free Demo</span><br> Demo<br>Username:demo123<br>Password:demo123 <br></h6>
 
-                <?php echo $display; ?> </h4>
+                <?php  echo $display; ?> </h4>
             <form class="col-12" id="formLogin">
 
 
@@ -189,7 +194,7 @@ include_once ("../webdesign/footer/footer.php");
             if(validationWithString("UserName","please enter username "))
                 state=true;
 
-            if(password("password","please enter 4 to 8 digits password",4,8))
+            if(password("password","please enter 4 to 15 letters password",4,15))
                 state=true;
             if(state)
                 return false;
