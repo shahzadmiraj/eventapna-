@@ -28,6 +28,7 @@ function uniqueTokenForOnlyUserSession($tableName)
 }
 function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$image,$CurrentUserid)
 {
+    $state=false;
     global $timestamp;
     if($userPreviousDetail[0][0]!=$username)
     {
@@ -35,7 +36,7 @@ function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$
         querySend($sql);
         $sql='UPDATE user as u SET u.username="'.$username.'" WHERE u.id='.$userPreviousDetail[0][4].'';
         querySend($sql);
-
+        $state=true;
     }
     if($userPreviousDetail[0][3]!=$PhoneNo)
     {
@@ -43,6 +44,7 @@ function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$
         querySend($sql);
         $sql='UPDATE user as u SET u.number="'.$PhoneNo.'" WHERE u.id='.$userPreviousDetail[0][4].'';
         querySend($sql);
+        $state=true;
     }
     if($userPreviousDetail[0][2]!=$jobtitle)
     {
@@ -50,6 +52,7 @@ function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$
         querySend($sql);
         $sql='UPDATE user as u SET u.jobTitle="'.$jobtitle.'" WHERE u.id='.$userPreviousDetail[0][4].'';
         querySend($sql);
+        $state=true;
     }
     if(($userPreviousDetail[0][1]!=$image) AND ($image!=""))
     {
@@ -57,7 +60,9 @@ function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$
         querySend($sql);
         $sql='UPDATE user as u SET u.image="'.$image.'" WHERE u.id='.$userPreviousDetail[0][4].'';
         querySend($sql);
+        $state=true;
     }
+    return $state;
 }
 
 
@@ -271,9 +276,11 @@ else if($_POST['option']=="login")
 else if($_POST['option']=="saveandChangeLogin")
 {
 
+    $changeByCurrentlyUserName=$_POST['changeByCurrentlyUserName'];
+    $changeByCurrentlyEmail=$_POST['changeByCurrentlyEmail'];
     $CurrentUserid=$_POST['CurrentUserid'];
     $profileUserid=$_POST['profileUserid'];
-    $sql='SELECT `username`, `image`,`jobTitle`, `number`, `id`,`company_id` FROM `user` WHERE id='.$profileUserid.'';
+    $sql='SELECT `username`, `image`,`jobTitle`, `number`, `id`,`company_id`, `email` FROM `user` WHERE id='.$profileUserid.'';
     $userPreviousDetail=queryReceive($sql);
     $username=$_POST['username'];
     $PhoneNo=$_POST['PhoneNo'];
@@ -314,21 +321,25 @@ else if($_POST['option']=="saveandChangeLogin")
         }
         $image =$_FILES['image']['name'];
     }
-    checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$image,$CurrentUserid);
-
-    $htmlBody='<pre>
+    if(checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$image,$CurrentUserid))
+    {
+        $htmlBody='<pre>
 Dear '.$username.',
 new detail 
 username : '.$username.'
-password: '.$userPreviousDetail[0][0].'
-email : '.$userPreviousDetail[0][4].'
+email : '.$userPreviousDetail[0][6].'
 phone no: '.$PhoneNo.'
-Position in Company: '.$jobtitle.'
+Position in Company: '.$jobtitle.'<br>
+changing your detail by:
+username='.$changeByCurrentlyUserName.'
+Email='.$changeByCurrentlyEmail.'
+
 </pre>';
 
-    $display="";
-    $display=serverSendMessage($Email,$username,"Confirmation of Email",$htmlBody);
+        $display="";
+      $display=serverSendMessage($userPreviousDetail[0][6],$username,"Your account has been changed",$htmlBody,$changeByCurrentlyEmail);
 
+    }
 
 }
 else if($_POST['option']=="resentPAssword")

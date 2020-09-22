@@ -10,7 +10,7 @@ $hallOneD = array_column($SqlArray, Colume name or number);
 
 3 string to array
 $str= "foo,bar,baz,bat";
-$arr= explode(", ", $str);
+$arr= explode(",", $str);
 print_r ($arr) ;
 
 3: array unique

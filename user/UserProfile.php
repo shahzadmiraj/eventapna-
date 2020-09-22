@@ -70,6 +70,8 @@ include_once ("../webdesign/header/header.php");
             <h4 id="error"> </h4>
             <form class="col-12" id="formLogin">
                 <input type="hidden" name="profileUserid" value="<?php echo $userdetail[0][0];?>">
+                <input type="hidden" name="changeByCurrentlyUserName" value="<?php echo $userdetail[0][1];?>">
+                <input type="hidden" name="changeByCurrentlyEmail" value="<?php echo $userdetail[0][5];?>">
 
                 <input type="hidden" name="CurrentUserid" value="<?php echo $userid;?>">
 
@@ -124,7 +126,7 @@ include_once ("../webdesign/header/header.php");
 
 
                 <div class="form-group row" >
-                    <label class="col-form-label">Phone No;0923213315000,+92 1213315000,+9223432432432</label>
+                    <label class="col-form-label">Phone No:<small>03XXXXXXXXX | 03XX-XXXXXXXXX | +92XXXXXXXX </small></label>
                     <div class="input-group mb-3 input-group-lg">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -239,6 +241,8 @@ include_once ("../webdesign/footer/footer.php");
     $(document).ready(function ()
     {
 
+        $.getScript("../webdesign/JSfile/JSFunction.js");
+
         $("#back").click(function () {
             window.history.back();
         });
@@ -249,14 +253,13 @@ include_once ("../webdesign/footer/footer.php");
 
             var state=false;
 
-            if(validationWithString("PhoneNo","please enter phone no "))
+
+            if(validatePakistaniNumberByString("PhoneNo"))
                 state=true;
 
             if(validationWithString("username","please enter username "))
                 state=true;
 
-            if(PhoneNumberCheck("PhoneNo"))
-                state=true;
 
             if(state)
                 return false;

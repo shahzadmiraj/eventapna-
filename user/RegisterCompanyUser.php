@@ -74,7 +74,7 @@ include_once ("../webdesign/header/header.php");
 
 
                 <div class="form-group row" >
-                    <label class="col-form-label">Phone No</label>
+                    <label class="col-form-label">Phone No:<small>03XXXXXXXXX | 03XX-XXXXXXXXX | +92XXXXXXXX </small></label>
                     <div class="input-group mb-3 input-group-lg">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -169,7 +169,7 @@ include_once ("../webdesign/footer/footer.php");
 
             if($("#agree").prop("checked")==false)
             {
-                alert("please checkbox fill ");
+                alert("Please Accept Terms & Conditions");
                 state=true;
             }
 

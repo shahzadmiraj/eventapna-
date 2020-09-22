@@ -8,8 +8,8 @@
         <div class="col-12 col-md-8 col-lg-6 pb-5">
             <form id="emailsendForm">
                 <?php
-                echo '<input hidden name="SenderAddress" value="'.base64_encode(serialize($SenderAddress)).'" >'; //like for in loop $userids
-                echo '<input hidden name="SenderName" value="'.base64_encode(serialize($SenderName)).'" >'; //like for in loop $userids
+                echo '<input hidden name="SenderAddress" value="'.$SenderAddressList.'" >'; //like for in loop $userids
+                echo '<input hidden name="SenderName" value="'.$SenderNameList.'" >'; //like for in loop $userids
                 echo '<input hidden  name="ExtraInformation" value="'.$ExtraInformation.'" >';
                 ?>
 
@@ -17,7 +17,7 @@
                     <div class="card-header p-0">
                         <div class="text-white text-center py-2" style="background-color: #ff328c;">
                             <h3><i class="fa fa-envelope"></i> Contact Form</h3>
-                            <p class="m-0" id="error">message</p>
+                            <p class="m-0" id="error">HELP</p>
                         </div>
                     </div>
                     <div class="card-body p-3">
@@ -69,9 +69,9 @@
 
         $("#submitEmail").click(function ()
         {
-            if(validationWithString("username","Please enter your name"))
+            if(validationWithString("username","Please enter your Name"))
                 return false;
-            if(validateEmailByString("email","Please enter valid email"))
+            if(validateEmailByString("email","Please enter valid Email"))
                 return false;
             if(validationWithString("Message","Please type your Message"))
                 return false;

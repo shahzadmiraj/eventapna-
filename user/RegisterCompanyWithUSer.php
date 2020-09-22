@@ -175,7 +175,7 @@ include_once ("../webdesign/footer/footer.php");
                 state=true;
             if($("#agree").prop("checked")==false)
             {
-                alert("please checkbox fill ");
+                alert("Please Accept Terms & Conditions");
                 state=true;
             }
             if(state)

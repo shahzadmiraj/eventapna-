@@ -22,7 +22,7 @@ Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availabili
 Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
 EVENT APNA  provides Free Software ....... So Register NOW
 ">
-    <meta name="keywords" content="Book Wedding Hall,Catering Managment system,Hall Managment system, shadi hall software,marquee Software,Book marquee">
+    <meta name="keywords" content="Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
     <meta name="author" conte   nt="shahzad miraj">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -30,7 +30,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-
+    <script data-ad-client="ca-pub-6269313348625273" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
     <script src="jquery-3.3.1.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">

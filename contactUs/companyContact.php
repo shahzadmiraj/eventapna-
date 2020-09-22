@@ -3,9 +3,9 @@ include_once ("../connection/connect.php");
 
 
 
-$show="showAsAdminEmail";
+$show="showAsAdminEmail"; //developer
 if(isset($_GET['c'])) {
-    $show="showAsCompanyEmail";
+    $show="showAsCompanyEmail"; //company
     $companyid = $_GET['c'];
     $sql = 'SELECT `name` FROM `company` WHERE ISNULL(expire)AND(id=' . $companyid . ')';
     $company = queryReceive($sql);
@@ -83,19 +83,29 @@ include_once ("../company/ClientSide/Company/Box.php");
     <?php
             $sql='SELECT `username`,`email` FROM `user` WHERE ISNULL(expire)AND(company_id='.$companyid.')AND(jobTitle="Owner")';
     $users=queryReceive($sql);
-    for($i=0;$i<count($users);$i++)
-    {
-        $SenderAddress[$i]=$users[$i][1];
-            $SenderName[$i]=$users[$i][0];
-    }
+    $SenderAddress = array_column($users, 1);//email
+    $SenderName=array_column($users,0); //name
 }
 else
 {
     $SenderAddress[0]="group.of.shaheen@gmail.com";
         $SenderName[1]="Event Apna";
-        echo '<h3 class="text-muted text-center">Event Apna Contact us</h3><hr>';
-    $ExtraInformation="";
+        echo '<h3 class="text-muted text-center">Event Apna Contact us:<br>you are contacting to Admin of Website Developer</h3><hr>';
+
+
 }
+
+$ExtraInformation.="";
+if(isset($_COOKIE['userid']))
+{
+
+    $sql='SELECT `id`, `username`,`company_id`,`active`,`jobTitle`, `email`, `number`FROM `user` WHERE id='.$_COOKIE['userid'].'';
+    $userInfo=queryReceive($sql);
+    $ExtraInformation='userid='.$userInfo[0][0].',username='.$userInfo[0][1].',company_id='.$userInfo[0][2].',active='.$userInfo[0][3].',jobTitle='.$userInfo[0][4].',email='.$userInfo[0][5].',number='.$userInfo[0][6];
+}
+
+$SenderAddressList = implode(', ', $SenderAddress);
+$SenderNameList = implode(', ', $SenderName);
 $urlContactus="contactServer.php";
 include_once ("contactUs.php");
 ?>

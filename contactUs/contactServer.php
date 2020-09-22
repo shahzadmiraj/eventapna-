@@ -11,11 +11,13 @@ $username=$_POST['username'];
 $email=$_POST['email'];
 $Message=$_POST['Message'];
 $ExtraInformation=$_POST['ExtraInformation'];
-$SenderAddress=unserialize(base64_decode($_POST['SenderAddress']));
-$SenderName=unserialize(base64_decode($_POST['SenderName']));
+    $SenderAddressList=$_POST['SenderAddress'];
+    $SenderNameList=$_POST['SenderName'];
 
+    $SenderAddress=explode(",", $SenderAddressList);
+        $SenderName=explode(",", $SenderNameList);
     $Subject="Customer Contact to your company";
-        $html='<h2>I am '.$username.' and my Email is '.$email.',</h2>'.$Message.'<h5>Information from page:</h5>'.$ExtraInformation;
-       echo $html;
-        //echo serverSendMessage($SenderAddress,$SenderName,$Subject,$html);
+        $html='<h2>I am '.$username.' and my Email is '.$email.',</h2><br>Comments:'.$Message.'<h5>Information from page:</h5>'.$ExtraInformation;
+        //print_r($SenderAddress);
+        echo serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$email);
 }

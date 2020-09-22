@@ -52,7 +52,7 @@ include_once ("../../webdesign/header/header.php");
     <hr>
     <div class="form-group row">
         <input hidden type="number" name="userid" value="<?php echo $userdetail[0][3];?>">
-    <label class="col-form-label">Hall Branch Name:</label>
+    <label class="col-form-label">Hall Name:</label>
 <!--    <input name="hallname" class="form-control col-8" type="text">-->
 
 

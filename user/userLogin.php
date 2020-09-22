@@ -6,10 +6,6 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-if(isset($_COOKIE['userid']))
-{
-    header("location:../index.php");
-}
 
 function ISnullvalidationofuser($email)
 {
