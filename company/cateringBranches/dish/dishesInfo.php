@@ -297,11 +297,11 @@ include_once ("../../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
 
                     location.reload();
                 }
@@ -340,11 +340,11 @@ include_once ("../../../webdesign/footer/footer.php");
                 dataType:"text",
                 method:"POST",
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data!="")
                     {
                         alert(data);
@@ -372,11 +372,11 @@ include_once ("../../../webdesign/footer/footer.php");
 
                 beforeSend: function()
                 {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data!="")
                     {
                         alert(data);

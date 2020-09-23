@@ -287,11 +287,11 @@ include_once ("../webdesign/footer/footer.php");
                 dataType:"text",
                 method: "POST",
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#mynumberlist").html(data);
                 }
             });
@@ -307,11 +307,11 @@ include_once ("../webdesign/footer/footer.php");
                 method: "POST",
                 async:false,     //async:true, just give work fast not result
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
 
                     if(data!="")
                     {
@@ -343,11 +343,11 @@ include_once ("../webdesign/footer/footer.php");
                 method: "POST",
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                   //  alert(data);
                     location.replace(data);
                 }
@@ -442,12 +442,12 @@ include_once ("../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
 
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     // alert(data);
                     location.replace(data);
                 }

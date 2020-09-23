@@ -383,11 +383,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#groupofpackages").html(data);
                     $("#selectmenu").html("");
                     if($("#packageAvalable").val()=="Yes")
@@ -431,11 +431,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#selectmenu").html(data);
                     if(describe!="")
                     {
@@ -483,11 +483,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data!="")
                     {
                         alert(data);

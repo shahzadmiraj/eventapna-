@@ -232,11 +232,11 @@ include_once ("../../../webdesign/footer/footer.php");
                 dataType:"text",
                 method: "POST",
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#myAttributelist").html(data);
                 }
             });
@@ -421,12 +421,13 @@ include_once ("../../../webdesign/footer/footer.php");
               data:formdata,
               contentType: false,
               processData: false,
+
                  beforeSend: function() {
-                $("#preloader").show();
+                     $('#pleaseWaitDialog').modal();
                 },
             success:function (data)
             {
-                $("#preloader").hide();
+                $('#pleaseWaitDialog').modal('hide');
                   if(data!='')
                   {
                       alert(data);

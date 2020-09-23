@@ -113,22 +113,18 @@ include_once ("../webdesign/header/header.php");
     </div>
 
 
+
+
 </div>
-
-
-
 
 <?php
 include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
-
     $(document).ready(function ()
     {
         $("#passwordresend").click(function ()
         {
-
-
             var formdata = new FormData;
             formdata.append("option", "resentPAssword");
             formdata.append("userid", "<?php echo $userid;?>");
@@ -138,12 +134,11 @@ include_once ("../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-
                 beforeSend: function () {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success: function (data) {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#error").html(data);
                 }
             });
@@ -155,12 +150,12 @@ include_once ("../webdesign/footer/footer.php");
         {
 
             var state=false;
-            if(password("Oldpassword","please enter 4 to 8 digits password",4,8))
+            if(password("Oldpassword","please enter 4 to 15 letters password",4,15))
                 state=true;
-            if(password("password1","please enter 4 to 8 digits password",4,8))
+            if(password("password1","please enter 4 to 15 letters password",4,15))
                 state=true;
 
-            if(password("password2","please enter 4 to 8 digits password",4,8))
+            if(password("password2","please enter 4 to 15 letters password",4,15))
                 state=true;
             if(matchesTwoIdBySting("password1","password2","Please new password not match"))
                 state=true;
@@ -176,12 +171,11 @@ include_once ("../webdesign/footer/footer.php");
                 data: formdata,
                 contentType: false,
                 processData: false,
-
                 beforeSend: function () {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success: function (data) {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#formLogin")[0].reset();
                     $("#error").html(data);
                 }

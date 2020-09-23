@@ -18,7 +18,7 @@ $packageSelective=queryReceive($sql);
 $packageid=$packageSelective[0][0];
 
 $companyid=$userdetail[0][0];
-$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`,1, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`minimumAmountBooking` FROM `packages` WHERE (id='.$packageid.')AND(ISNULL(expire))';
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `expire`,1, `package_name`, `active`, `user_id`, `expireUser`, (SELECT u.username FROM user as u where u.id=packages.user_id),`MinimumGuest` FROM `packages` WHERE (id='.$packageid.')AND(ISNULL(expire))';
 $packageDetail=queryReceive($sql);
 $userid=$_COOKIE['userid'];
 
@@ -157,13 +157,13 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
     </div>
     <div class="form-group row">
-        <lable for="rate" class="col-form-label">Minimum Amount of Package Booking</lable>
+        <lable for="rate" class="col-form-label">How many minimum guest will book this packages</lable>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
             </div>
-            <input readonly id="MinimumAmount" name="MinimumAmount" class="form-control" type="number" placeholder="how much money required to book" value="<?php echo $packageDetail[0][12];?>">
+            <input readonly id="MinimumGuest" name="MinimumGuest" class="form-control" type="number"  value="<?php echo $packageDetail[0][12];?>">
         </div>
     </div>
 
@@ -327,12 +327,12 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
 
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                 }
             });
         });
@@ -346,11 +346,11 @@ include_once ("../../webdesign/footer/footer.php");
                 data:{option:"updateEdittable",Packageid:"<?php echo $packageid?>"},
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     //console.log(data);
                     $("#tableEditpackages").html(data);
                 }
@@ -377,11 +377,11 @@ include_once ("../../webdesign/footer/footer.php");
                     contentType: false,
                     processData: false,
                     beforeSend: function() {
-                        $("#preloader").show();
+                        $('#pleaseWaitDialog').modal();
                     },
                     success:function (doc)
                     {
-                        $("#preloader").hide();
+                        $('#pleaseWaitDialog').modal('hide');
                         updateTable();
                         var obj = jQuery.parseJSON(doc);
                         var events = [];
@@ -418,11 +418,11 @@ include_once ("../../webdesign/footer/footer.php");
                         data:{id:id,option:"DelectEventdate",userid:userid},
                         beforeSend: function()
                         {
-                            $("#preloader").show();
+                            $('#pleaseWaitDialog').modal();
                          },
                     success:function (data)
                     {
-                        $("#preloader").hide();
+                        $('#pleaseWaitDialog').modal('hide');
 
                         calendar.fullCalendar('refetchEvents');
                             updateTable();
@@ -441,11 +441,11 @@ include_once ("../../webdesign/footer/footer.php");
                         type:"POST",
                         data:{option:"InsertNewDate", selectedDate:selectedDate,Packageid:"<?php echo $packageid?>",userid:"<?php echo $userid;?>"},
                         beforeSend: function() {
-                            $("#preloader").show();
+                            $('#pleaseWaitDialog').modal();
                          },
                          success:function ()
                         {
-                        $("#preloader").hide();
+                            $('#pleaseWaitDialog').modal('hide');
                         calendar.fullCalendar('refetchEvents');
                             updateTable();
                           //  alert("Added Successfully");
@@ -493,12 +493,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
-
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data!='')
                     {
                         alert(data);
@@ -531,11 +530,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
 
                     if(data!='')
                     {
@@ -591,11 +590,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
 
                     if(data!='')
                     {
@@ -624,11 +623,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
 
                     if(data!='')
                     {
@@ -654,11 +653,11 @@ include_once ("../../webdesign/footer/footer.php");
                dataType:"text",
 
                beforeSend: function() {
-                   $("#preloader").show();
+                   $('#pleaseWaitDialog').modal();
                },
                success:function (data)
                {
-                   $("#preloader").hide();
+                   $('#pleaseWaitDialog').modal('hide');
                     if(data!="")
                     {
                         alert(data);
@@ -697,11 +696,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#selectmenu").html(data);
                     $("form")[1].reset();
                     $('#exampleModal').modal('toggle');
@@ -724,11 +723,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
 
                     $("#selectmenu").html(data);
                 }

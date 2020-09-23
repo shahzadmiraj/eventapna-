@@ -85,10 +85,10 @@
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data) {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data=="")
                     {
                      $("#error").html("<span class='btn-success'>You have sent message </span>");

@@ -287,11 +287,11 @@ include_once ("../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#showSelectedDishes").append(data);
                     countofdish++;
                 }
@@ -323,11 +323,11 @@ include_once ("../webdesign/footer/footer.php");
                processData: false,
 
                beforeSend: function() {
-                   $("#preloader").show();
+                   $('#pleaseWaitDialog').modal();
                },
                success:function (data)
                {
-                   $("#preloader").hide();
+                   $('#pleaseWaitDialog').modal('hide');
                    $("#AddDishDetail").html(data);
                }
 
@@ -406,11 +406,11 @@ include_once ("../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data!="")
                     {
                         $("#selectmenu").html('<br><h4 align="center" class=\'col-12\'>Package Menu</h4>');

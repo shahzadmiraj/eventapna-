@@ -256,11 +256,11 @@ include_once ("../webdesign/footer/footer.php");
                   method:"POST",
 
                   beforeSend: function() {
-                      $("#preloader").show();
+                      $('#pleaseWaitDialog').modal();
                   },
                   success:function (data)
                   {
-                      $("#preloader").hide();
+                      $('#pleaseWaitDialog').modal('hide');
                         if(data!='')
                         {
                             alert(data);

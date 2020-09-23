@@ -156,13 +156,13 @@ AND(p.dayTime '.$daytime.')AND(pd.selectedDate >= CAST("'.$date.'" AS DATE ))  A
 
         $MaxGuestMaxPartition=hallOrderExist($AllHalls[$i][5], $AllHalls[$i][0], $AllHalls[$i][8]);
 
-        if($MaxGuestMaxPartition[0]<=0)
+        if($MaxGuestMaxPartition[0]<0)
         {
-            exit();
+            continue;
         }
-        if($MaxGuestMaxPartition[1]<=0)
+        if($MaxGuestMaxPartition[1]<0)
         {
-            exit();
+            continue;
         }
         /*  $display.='
 

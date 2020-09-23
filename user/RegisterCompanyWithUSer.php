@@ -192,11 +192,11 @@ include_once ("../webdesign/footer/footer.php");
 
                 beforeSend: function ()
                 {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success: function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data!="")
                     {
                         $("#error").html(data);

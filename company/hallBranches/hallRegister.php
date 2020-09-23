@@ -53,9 +53,6 @@ include_once ("../../webdesign/header/header.php");
     <div class="form-group row">
         <input hidden type="number" name="userid" value="<?php echo $userdetail[0][3];?>">
     <label class="col-form-label">Hall Name:</label>
-<!--    <input name="hallname" class="form-control col-8" type="text">-->
-
-
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -85,12 +82,12 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="form-group row">
-        <label class="col-form-label ">Advance  Online booking %</label>
+        <label class="col-form-label ">Advance  Online booking in percentage%</label>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
             </div>
-            <input id="AdvanceAmount" value="0" name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance">
+            <input id="AdvanceAmount"  name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance">
         </div>
     </div>
 
@@ -148,13 +145,13 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
     <div class="form-group row">
-        <label class="col-form-label">No of Partition in Hall:</label>
+        <label class="col-form-label">No. of Partition in Hall:</label>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-columns"></i></span>
             </div>
-            <input id="partitions" value="1" name="partition" type="number" class="form-control" placeholder="No of Partition in Hall">
+            <input id="partitions" name="partition" type="number" class="form-control" placeholder="No. of Partition in Hall etc 0 ,1,2">
         </div>
 
     </div>
@@ -240,7 +237,7 @@ include_once ("../../webdesign/footer/footer.php");
         {
             e.preventDefault();
             var state=false;
-            if(NumberRange("partitions","Please Enter Valid Patition min 1 and max 4",1,4))
+            if(NumberRange("partitions","Please Enter Valid Patition min 0 and max 4",0,4))
             {
                 state=true;
             }
@@ -274,11 +271,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data!="")
                     {
                         alert(data);

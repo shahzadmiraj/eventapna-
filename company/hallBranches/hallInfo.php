@@ -343,7 +343,7 @@ include_once ("../../webdesign/footer/footer.php");
         {
             e.preventDefault();
             var state=false;
-            if(NumberRange("partitions","Please Enter Valid Patition 1 -4 ",1,4))
+            if(NumberRange("partitions","Please Enter Valid Patition 0-4 ",0,4))
             {
                 state=true;
             }
@@ -377,11 +377,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide();
+                    $('#pleaseWaitDialog').modal('hide');
                     if(data!='')
                     {
                         alert(data);

@@ -344,6 +344,8 @@ Email='.$changeByCurrentlyEmail.'
 }
 else if($_POST['option']=="resentPAssword")
 {
+
+
     $userid=$_POST['userid'];
     $sql='SELECT  `username`, `jobTitle`,`email` , `number`,`password` FROM `user` WHERE id='.$userid.'';
     $userdetail=queryReceive($sql);
@@ -358,11 +360,15 @@ Position in Company: '.$userdetail[0][1].'
 </pre>';
 
     $display="";
-    $display=serverSendMessage($userdetail[0][2],$userdetail[0][0],"Detail  of password","password:".$userdetail[0][4]);
-    echo "<span class='alert-success'>Your pasword and other detail has been sent to your email :".$userdetail[0][2]."</span>";
+    $display=serverSendMessage($userdetail[0][2],$userdetail[0][0],"Detail of Your EVENT APNA Account",$htmlBody,"group.of.shaheen@gmail.com");
+    if($display=="")
+    {
+        echo "<span class='alert-success'>Your Account Password and other detail has been sent to your email :".$userdetail[0][2]."</span>";
+    }
 }
 else if($_POST['option']=="ResetPassword")
 {
+
 
 
     $Oldpassword=$_POST['Oldpassword'];

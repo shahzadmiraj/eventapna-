@@ -214,13 +214,13 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
         <div class="form-group row">
-            <lable for="rate" class="col-form-label">Minimum Amount of Package Booking</lable>
+            <lable for="rate" class="col-form-label">How many minimum guest will book this packages</lable>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                 </div>
-                <input id="MinimumAmount" name="MinimumAmount" class="form-control" type="number" placeholder="how much money required to book">
+                <input id="MinimumGuest" name="MinimumGuest" class="form-control" type="number" placeholder="Minimum Guest required for booking">
             </div>
         </div>
 
@@ -433,11 +433,11 @@ $(document).ready(function ()
                processData: false,
 
                beforeSend: function() {
-                   $("#preloader").show();
+                   $('#pleaseWaitDialog').modal();
                },
                success:function (data)
                {
-
+                   $('#pleaseWaitDialog').modal('hide');
                    $("#selectedmenu").html("");
                    var text;
                   var obj=JSON.parse(data);
@@ -452,7 +452,6 @@ $(document).ready(function ()
                    });
 
 
-                  $("#preloader").hide();
                }
            });
 
@@ -496,10 +495,12 @@ $(document).ready(function ()
    $("#btnsubmit").click(function ()
    {
        var state=false;
-       if(validationWithString("MinimumAmount","Pleas enter minimum Amount to book this package for online customer"))
+
+       if(NumberRange("MinimumGuest","Pleas enter Minimum Guest ",1,3000))
        {
            state=true;
        }
+
        if(validationWithString("selectedValues","Please Enter dates of packages"))
        {
            state=true;
@@ -528,11 +529,11 @@ $(document).ready(function ()
            processData: false,
 
            beforeSend: function() {
-               $("#preloader").show();
+               $('#pleaseWaitDialog').modal();
            },
            success:function (data)
            {
-               $("#preloader").hide();
+               $('#pleaseWaitDialog').modal('hide');
               if(data!='')
               {
                   alert(data);
@@ -562,11 +563,11 @@ $(document).ready(function ()
             processData: false,
 
             beforeSend: function() {
-                $("#preloader").show();
+                $('#pleaseWaitDialog').modal();
             },
             success:function (data)
             {
-                $("#preloader").hide();
+                $('#pleaseWaitDialog').modal('hide');
                 $("#selectmenu").html(data);
                 $("form")[1].reset();
                 $('#exampleModal').modal('toggle');
@@ -590,11 +591,11 @@ $(document).ready(function ()
             contentType: false,
             processData: false,
             beforeSend: function() {
-                $("#preloader").show();
+                $('#pleaseWaitDialog').modal();
             },
             success:function (data)
             {
-                $("#preloader").hide();
+                $('#pleaseWaitDialog').modal('hide');
                 $("#selectmenu").html(data);
             }
         });

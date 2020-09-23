@@ -139,10 +139,11 @@ include_once ("../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function () {
-                    $("#preloader").show();
+                    $('#pleaseWaitDialog').modal();
                 },
                 success: function (data)
                 {
+                    $('#pleaseWaitDialog').modal('hide');
 
                     if(data!="")
                     {

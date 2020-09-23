@@ -26,7 +26,7 @@ if(count($PackageDate)==0)
 $sql='SELECT  `hall_id` FROM `packageControl` WHERE ISNULL(expire)AND(package_id='.$PackageDate[0][0].')';
 $PackageOrignal=queryReceive($sql);
 
-$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`,'.$PackageOrignal[0][0].', `package_name`, `active`,`minimumAmountBooking` FROM `packages` WHERE id='.$PackageDate[0][0].'';
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`,'.$PackageOrignal[0][0].', `package_name`, `active`,`MinimumGuest`  FROM `packages` WHERE id='.$PackageDate[0][0].'';
 $PackageDetail=queryReceive($sql);
 
 $sql='SELECT `id`, `dishname`, `image` FROM `menu` WHERE (package_id='.$PackageDetail[0][0].')AND(ISNULL(expire))';
@@ -99,9 +99,6 @@ $SenderName=array();
 <body>
 <?php
 include_once ("../../../webdesign/header/header.php");
-
-
-
 ?>
 
 
@@ -261,9 +258,9 @@ include_once ("../Company/Box.php");
 
 <?php
 $isbook=false;
-if($MaxGuestMaxPartition[0]<=0)
+if($MaxGuestMaxPartition[3]<0)
     $isbook=true;
-if($MaxGuestMaxPartition[0]<=0)
+if($MaxGuestMaxPartition[2]<0)
     $isbook=true;
 
 if($isbook)

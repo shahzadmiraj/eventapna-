@@ -65,7 +65,7 @@ AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")AND(od.id!='.$
     $isShowButton=true;
 
 
-    $sql='SELECT distinct p.id,p.package_name,p.price,p.describe,p.isFood,p.minimumAmountBooking,pd.id,pd.selectedDate FROM packages as p INNER join 	packageDate as pd
+    $sql='SELECT distinct p.id,p.package_name,p.price,p.describe,p.isFood,p.MinimumGuest,pd.id,pd.selectedDate FROM packages as p INNER join 	packageDate as pd
 on (p.id=pd.package_id) inner join packageControl as pc 
 on (pc.package_id=p.id)
 WHERE 
@@ -77,10 +77,10 @@ AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perhea
     $display='<h3 align="center">Packages Detail </h3>';
     for ($i=0;$i<count($detailpackage);$i++)
     {
-        $display.=' <div class="checkclasshas custom-control custom-radio form-group  ">
+        $display.='<div class="checkclasshas custom-control custom-radio form-group  ">
                 <input type="radio" data-describe="'.$detailpackage[$i][0].'" value="'.$detailpackage[$i][6].'" class="changeradio custom-control-input" id="defaultUnchecked'.$i.'" name="defaultExampleRadios">
-                <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with price='.$detailpackage[$i][2].'and minimum amount must be '.$detailpackage[$i][5].'</label>
-                    </div> 
+                <label class="custom-control-label" for="defaultUnchecked'.$i.'">'.$detailpackage[$i][1].'  package with price='.$detailpackage[$i][2].'and Minimum Guest must be ='.$detailpackage[$i][5].'</label>
+                    </div>
                 <input hidden id="selectpricefix'.$detailpackage[$i][6].'" type="number" value="'.$detailpackage[$i][2].'">
                 <input hidden id="describe'.$detailpackage[$i][6].'" type="text" value="'.$detailpackage[$i][3].'">';
     }
@@ -128,7 +128,7 @@ AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perhea
         $display.='<p class="btn-danger col-12">Note:- Hall Total Arrangement : '.$MaxGuestMaxPartition["TotalGuest"].' / Remaining Arrangement : '.$MaxGuestMaxPartition["RemainingGuest"].' Now you are booking arrangement  of  '.$guests.' guest So Over Arrangement is not allow...   </p>';
         $isShowButton=false;
     }
-    if($MaxGuestMaxPartition["RemainingPatition"]<=0)
+    if($MaxGuestMaxPartition["RemainingPatition"]<0)
     {
         $display.='<p class="btn-danger col-12">Hall Total Patition  : '.$MaxGuestMaxPartition["TotalPatition"].' / Already Booked Patition : '.$MaxGuestMaxPartition["RemainingPatition"].'  ,So Over Patition is not allow...   </p>';
         $isShowButton=false;

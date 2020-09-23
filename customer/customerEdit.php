@@ -313,11 +313,11 @@ p.id='.$customerId.'';
              method: "POST",
              async:false,     //async:true, just give work fast not result
              beforeSend: function() {
-                 $("#preloader").show();
+                 $('#pleaseWaitDialog').modal();
              },
              success:function (data)
              {
-                 $("#preloader").hide();
+                 $('#pleaseWaitDialog').modal('hide');
 
                  if(data!="")
                  {
@@ -361,11 +361,11 @@ p.id='.$customerId.'';
              method:"POST",
 
              beforeSend: function() {
-                 $("#preloader").show();
+                 $('#pleaseWaitDialog').modal();
              },
              success:function (data)
              {
-                 $("#preloader").hide();
+                 $('#pleaseWaitDialog').modal('hide');
                  if(data!='')
                  {
                      alert(data);
@@ -390,11 +390,11 @@ p.id='.$customerId.'';
              method:"POST",
 
              beforeSend: function() {
-                 $("#preloader").show();
+                 $('#pleaseWaitDialog').modal();
              },
              success:function (data)
              {
-                 $("#preloader").hide();
+                 $('#pleaseWaitDialog').modal('hide');
                  if(data!='')
                  {
                      alert(data);
@@ -418,11 +418,11 @@ p.id='.$customerId.'';
              processData: false,
 
              beforeSend: function() {
-                 $("#preloader").show();
+                 $('#pleaseWaitDialog').modal();
              },
              success:function (data)
              {
-                 $("#preloader").hide();
+                 $('#pleaseWaitDialog').modal('hide');
                  if(data!='')
                  {
                      alert(data);

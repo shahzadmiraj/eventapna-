@@ -9,7 +9,7 @@ if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
     $userdetail=queryReceive($sql);
     $companyid=$userdetail[0][0];
     if($companyid!="")
-    header("location:company/companyRegister/companyAdminPanel.php");
+        header("location:company/companyRegister/companyAdminPanel.php");
 }
 ?>
 
@@ -318,7 +318,7 @@ include_once ("webdesign/header/header.php");
                         }
                         ?>"
 
-                     name="latitude"    id="latitude" type="number" step="any" class="latitude"></label>
+                        name="latitude"    id="latitude" type="number" step="any" class="latitude"></label>
             <label  for="">Long: <input
 
                         value="<?php
@@ -329,7 +329,7 @@ include_once ("webdesign/header/header.php");
                         }
                         ?>"
 
-                name="longitude"                         id="longitude" type="number"  step="any" class="longitude"></label>
+                        name="longitude"                         id="longitude" type="number"  step="any" class="longitude"></label>
             <label  for="">City <input
 
 
@@ -341,7 +341,7 @@ include_once ("webdesign/header/header.php");
                         }
                         ?>"
 
-                         name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+                        name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
             <label  for="">country
 
 
@@ -410,16 +410,17 @@ include_once ("webdesign/header/header.php");
 </div>
 -->
 
-<?php
-
-if(isset($_GET['daytime']))
-    echo '<script src="map/constantMap.js"></script>';
-else
-    echo '<script src="map/javascript.js"></script>';
-?>
 
 <script>
 
+
+    <?php
+
+    if(isset($_GET['daytime']))
+        echo '$.getScript("map/constantMap.js");';
+    else
+        echo '$.getScript("map/javascript.js");';
+    ?>
     $(document).ready(function ()
     {
         $('.carousel').carousel({
@@ -467,11 +468,10 @@ else
                 processData: false,
 
                 beforeSend: function() {
-                    $("#preloader").show('slow');
                 },
                 success:function (data)
                 {
-                    $("#preloader").hide('slow');
+
                     $("#showHall").html(data);
                 }
             });
@@ -491,7 +491,14 @@ else
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
             dataType: "script",
-            cache: false
+            cache: false,
+            beforeSend: function() {
+                $('#pleaseWaitDialog').modal();
+            },
+            success:function (data)
+            {
+                $('#pleaseWaitDialog').modal('hide');
+            }
         });
     });
 
