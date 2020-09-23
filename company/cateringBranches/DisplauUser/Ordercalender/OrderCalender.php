@@ -159,12 +159,8 @@ include_once ("../../../../webdesign/footer/footer.php");
                     data:formdata,
                     contentType: false,
                     processData: false,
-                    beforeSend: function() {
-                        $('#pleaseWaitDialog').modal();
-                    },
                     success: function(doc)
                     {
-                        $('#pleaseWaitDialog').modal('hide');
                         console.log(doc);
                         var obj = jQuery.parseJSON(doc);
                         var events = [];
@@ -195,12 +191,9 @@ include_once ("../../../../webdesign/footer/footer.php");
                     url:"orderServer.php",
                     type:"POST",
                     data:{id:id,option:"orderCustomerGo"},
-                    beforeSend: function() {
-                        $('#pleaseWaitDialog').modal();
-                    },
+
                     success:function(data)
                     {
-                        $('#pleaseWaitDialog').modal('hide');
                         location.href="../../../../order/PreviewOrder.php"+data;
                     }
                 });

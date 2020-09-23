@@ -182,13 +182,8 @@ include_once ("../../webdesign/footer/footer.php");
                     url:"../../calender/fulcalender/pacakageOption.php",
                     type:"POST",
                     data:{"option":"PackagesShowsOnTable","PackID":packids},
-
-                    beforeSend: function() {
-                        $('#pleaseWaitDialog').modal();
-                    },
                     success:function(data)
                     {
-                        $('#pleaseWaitDialog').modal('hide');
                         $("#TableCalender").html(data);
 
                     }
@@ -241,13 +236,8 @@ include_once ("../../webdesign/footer/footer.php");
                         data:formdata,
                         contentType: false,
                         processData: false,
-
-                        beforeSend: function() {
-                        $('#pleaseWaitDialog').modal();
-                             },
                         success: function(doc)
                         {
-                            $('#pleaseWaitDialog').modal('hide');
                             var obj = jQuery.parseJSON(doc);
                             var events = [];
                             var packids=[];
@@ -280,13 +270,8 @@ include_once ("../../webdesign/footer/footer.php");
                         url:"../../calender/fulcalender/pacakageOption.php",
                         type:"POST",
                         data:{id:id,option:"encordpackage"},
-
-                        beforeSend: function() {
-                            $('#pleaseWaitDialog').modal();
-                        },
                         success:function(data)
                         {
-                            $('#pleaseWaitDialog').modal('hide');
                             location.href='Editpackage.php?'+data;
                         }
                     });

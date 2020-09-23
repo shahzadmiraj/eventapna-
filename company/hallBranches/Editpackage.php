@@ -327,12 +327,11 @@ include_once ("../../webdesign/footer/footer.php");
                 processData: false,
 
                 beforeSend: function() {
-                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
+                window.history.back();
 
-                    $('#pleaseWaitDialog').modal('hide');
                 }
             });
         });
@@ -345,13 +344,9 @@ include_once ("../../webdesign/footer/footer.php");
                 type:"POST",
                 data:{option:"updateEdittable",Packageid:"<?php echo $packageid?>"},
 
-                beforeSend: function() {
-                    $('#pleaseWaitDialog').modal();
-                },
                 success:function (data)
                 {
-                    $('#pleaseWaitDialog').modal('hide');
-                    //console.log(data);
+
                     $("#tableEditpackages").html(data);
                 }
             })
@@ -376,12 +371,8 @@ include_once ("../../webdesign/footer/footer.php");
                     data:Editformdata,
                     contentType: false,
                     processData: false,
-                    beforeSend: function() {
-                        $('#pleaseWaitDialog').modal();
-                    },
                     success:function (doc)
                     {
-                        $('#pleaseWaitDialog').modal('hide');
                         updateTable();
                         var obj = jQuery.parseJSON(doc);
                         var events = [];
@@ -416,13 +407,8 @@ include_once ("../../webdesign/footer/footer.php");
                         url:"../../calender/fulcalender/pacakageOption.php",
                         type:"POST",
                         data:{id:id,option:"DelectEventdate",userid:userid},
-                        beforeSend: function()
-                        {
-                            $('#pleaseWaitDialog').modal();
-                         },
                     success:function (data)
                     {
-                        $('#pleaseWaitDialog').modal('hide');
 
                         calendar.fullCalendar('refetchEvents');
                             updateTable();
@@ -440,12 +426,8 @@ include_once ("../../webdesign/footer/footer.php");
                         url:"../../calender/fulcalender/pacakageOption.php",
                         type:"POST",
                         data:{option:"InsertNewDate", selectedDate:selectedDate,Packageid:"<?php echo $packageid?>",userid:"<?php echo $userid;?>"},
-                        beforeSend: function() {
-                            $('#pleaseWaitDialog').modal();
-                         },
                          success:function ()
                         {
-                            $('#pleaseWaitDialog').modal('hide');
                         calendar.fullCalendar('refetchEvents');
                             updateTable();
                           //  alert("Added Successfully");

@@ -51,11 +51,7 @@ echo date_format($date,"Y-m-d H:i:s");*/
                         data:formdata,
                         contentType: false,
                         processData: false,
-                        beforeSend: function() {
-                            $('#pleaseWaitDialog').modal();
-                        },
                         success: function(doc) {
-                            $('#pleaseWaitDialog').modal('hide');
                             var obj = jQuery.parseJSON(doc);
                             var events = [];
                             $.each(obj, function(index, value) {
@@ -87,12 +83,8 @@ echo date_format($date,"Y-m-d H:i:s");*/
                             url:"delete.php",
                             type:"POST",
                             data:{id:id},
-                            beforeSend: function() {
-                                $('#pleaseWaitDialog').modal();
-                            },
                             success:function()
                             {
-                                $('#pleaseWaitDialog').modal('hide');
                                 calendar.fullCalendar('refetchEvents');
                                 alert("Event Removed");
                             }

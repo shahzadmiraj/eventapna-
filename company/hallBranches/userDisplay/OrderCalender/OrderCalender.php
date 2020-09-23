@@ -240,12 +240,7 @@ include_once ("../../../../webdesign/footer/footer.php");
                     data:formdata,
                     contentType: false,
                     processData: false,
-                    beforeSend: function()
-                    {
-                        $('#pleaseWaitDialog').modal();
-                    },
                     success: function(doc) {
-                        $('#pleaseWaitDialog').modal('hide');
                         var text='';
                       //  console.log(doc);
                         var obj = jQuery.parseJSON(doc);
@@ -290,13 +285,9 @@ include_once ("../../../../webdesign/footer/footer.php");
                     url:"CalenderServer.php",
                     type:"POST",
                     data:{id:id,option:"orderCustomerGo"},
-                    beforeSend: function()
-                    {
-                        $('#pleaseWaitDialog').modal();
-                    },
                     success:function(data)
                     {
-                        $('#pleaseWaitDialog').modal('hide');
+
                         location.href="../../../../order/PreviewOrder.php"+data;
                     }
                 });
