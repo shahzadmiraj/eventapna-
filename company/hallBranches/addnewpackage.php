@@ -166,7 +166,7 @@ include_once ("../ClientSide/Company/Box.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
                 </div>
-                <input id="packagename" name="packagename" class="form-control" type="text" placeholder="chicken menu,mutton menu">
+                <input id="packagename" name="packagename" class="form-control" type="text" placeholder="Menu number or name ,menu_1,menu_2 ">
 
             </div>
         </div>
@@ -264,7 +264,77 @@ include_once ("../ClientSide/Company/Box.php");
     <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Your Package</h3>
 
 
-    <div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 60vh">
+
+
+
+
+    <div class="form-group row">
+
+
+        
+        <lable for="describe" class="col-form-label">Add new choices of items in package</lable>
+        <div class="input-group mb-3 input-group-lg">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+            </div>
+            <input id="itemChoice" type="text" class="form-control" placeholder="Name of items type">
+            <button id="submitItemType" class="btn btn-primary"> + Choice type</button>
+        </div>
+
+        <div id="ItemType_1"  class="container mt-5">
+
+            <div class="form-group row">
+                <div class="input-group mb-3 input-group-lg">
+                    <button  data-itemtypedelete="1" class="DeleteItemType btn btn-danger"> - </button>
+                    <input  class="form-control changeItemType" value="" placeholder="Please Enter Choice type">
+                    <button  data-addnewitem="1" class="AddNewItem btn btn-primary"> + items </button>
+                </div>
+            </div>
+
+            <div id="ItemTypeMenus_1" class="row">
+
+
+
+                <div id="deleteSingleItem_11" class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="../../gmail.png" alt="Card image cap">
+                    <div class="container">
+                        <label>Item: <input type="text" style="border:none" readonly name="itemsName[]" value="item"></label>
+                        <label>Item charges: <input type="text" style="border:none" readonly name="itemsPrice[]" value="item type"></label>
+                        <label>Item type: <input type="text" style="border:none" readonly name="itemsType[]" value="item type"></label>
+                        <button data-deletesingleitem="11" class="deleteSingleItem  btn btn-danger form-control"> - Delete item</button>
+                    </div>
+                </div>
+
+                <div id="deleteSingleItem_11" class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="../../gmail.png" alt="Card image cap">
+                    <div class="container">
+                        <label>Item: <input type="text" style="border:none" readonly name="itemsName[]" value="item"></label>
+                        <label>Item charges: <input type="text" style="border:none" readonly name="itemsPrice[]" value="item type"></label>
+                        <label>Item type: <input type="text" style="border:none" readonly name="itemsType[]" value="item type"></label>
+                        <button data-deletesingleitem="11" class="deleteSingleItem  btn btn-danger form-control"> - Delete item</button>
+                    </div>
+                </div>
+
+
+                <div id="deleteSingleItem_11" class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="../../gmail.png" alt="Card image cap">
+                    <div class="container">
+                        <label>Item: <input type="text" style="border:none" readonly name="itemsName[]" value="item"></label>
+                        <label>Item charges: <input type="text" style="border:none" readonly name="itemsPrice[]" value="item type"></label>
+                        <label>Item type: <input type="text" style="border:none" readonly name="itemsType[]" value="item type"></label>
+                        <button data-deletesingleitem="11" class="deleteSingleItem  btn btn-danger form-control"> - Delete item</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
 
 
 
