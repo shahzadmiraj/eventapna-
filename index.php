@@ -15,6 +15,7 @@ if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
 
 <!DOCTYPE html>
 <head>
+    <link rel = "icon" href ="gmail.png"  type = "image/x-icon">
     <meta charset="UTF-8">
     <title>Wedding Hall Deals! , Catering Deals!</title>
     <meta name="description" content="

@@ -258,28 +258,97 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
+    </div>
+
+    <div class="form-group row m-auto">
+        <lable for="describe" class="col-form-label">Add New  Items in package  </lable>
+        <button id="submitItemType" class="btn btn-primary form-control "> + Add item</button>
+    </div>
+
+
+
+    <div class="container">
+
+
+        <div class="form-group row">
+            <lable for="describe" class="col-form-label">Name Items :</lable>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+            <input type="text" name="NameOfItem" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <lable for="describe" class="col-form-label">Items Type :</lable>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+                <select class="form-control" name="NameOfItemType">
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <lable for="describe" class="col-form-label">Other item type:New Row</lable>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+                <input id="itemChoice" type="text" class="form-control" placeholder="Name of items type">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <lable for="describe" class="col-form-label">Is this item include in this Package or Extra charges?</lable>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+                <select class="form-control" name="NameOfItemType">
+                    <option value="YesIncludeItem">Yes,Include items So, No Extra charges</option>
+                    <option value="NoIncludeItem">Take Extra Charges</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <lable for="describe" class="col-form-label">Exter Charges </lable>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+                <input id="itemChoice" type="text" class="form-control" placeholder="Extra Charges ">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <lable for="describe" class="col-form-label"> Image </lable>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+                <input id="itemChoice" type="image" class="form-control">
+            </div>
+        </div>
+
+
+
 
     </div>
 
-    <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Your Package</h3>
 
 
 
 
+    <div>
 
 
-    <div class="form-group row">
 
-
-        
-        <lable for="describe" class="col-form-label">Add new choices of items in package</lable>
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-comments"></i></span>
-            </div>
-            <input id="itemChoice" type="text" class="form-control" placeholder="Name of items type">
-            <button id="submitItemType" class="btn btn-primary"> + Choice type</button>
-        </div>
 
         <div id="ItemType_1"  class="container mt-5">
 
@@ -336,9 +405,11 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-
-
     </div>
+
+
+
+
 
 
 
@@ -376,8 +447,7 @@ include_once ("../ClientSide/Company/Box.php");
 
         <?php
         $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.')';
-       echo dishesOfPakage($sql);
-
+        echo dishesOfPakage($sql);
         ?>
     </div>
 
