@@ -211,7 +211,23 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     </div>
 
-    <div id="selectmenu" class="alert-info  m-2 form-group row shadow" >
+    <div id="selectmenu" class="alert-info  form-group container" >
+
+<!--        <div class="form-group row">-->
+<!--            <label class="col-form-label">Per Head With</label>-->
+<!---->
+<!--            <div class="input-group mb-3 input-group-lg">-->
+<!--                <div class="input-group-prepend">-->
+<!--                    <span class="input-group-text"><i class="fas fa-utensils"></i></span>-->
+<!--                </div>-->
+<!--                <select  name="perheadwith" class="checkpackage form-control">-->
+<!--                    <option value="0">Only seating</option>-->
+<!--                    <option value="1">Food + Seating</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
 
 
     </div>

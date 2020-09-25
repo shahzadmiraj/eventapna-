@@ -176,25 +176,53 @@ WHERE
             exit();
 
 
-        $sql='SELECT `dishname`, `image` FROM `menu` WHERE (package_id='.$packagedetail[0][0].') AND ISNULL(expire)';
-        $menu=queryReceive($sql);
-        $display='<h4 align="center" class="col-12">Menu</h4>';
-        for ($i=0;$i<count($menu);$i++)
-        {
-            $img='../../images/systemImage/imageNotFound.png';
 
-            if((file_exists('../images/dishImages/'.$menu[$i][1]))&&($menu[$i][1]!=""))
-                $img='../../images/dishImages/'.$menu[$i][1];
+
+//
+        $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].') GROUP BY itemtype';
+        $MenuType=queryReceive($sql);
+
+
+        $display='';
+
+        if(count($MenuType)>0)
+            $display="<h3 class='text-center'>Choices of items in package</h3>";
+        for($i=0;$i<count($MenuType);$i++)
+        {
+
+
 
             $display.='
-            <div  class="col-md-4 card" >
-                <img src="'.$img.'" class="card-img-top" style="height: 15vh">
-                <div class="card-header">
-                Item Name:'.$menu[$i][0].'
-                    </div>
-            </div>';
+                                     
+         <div class="form-group row">
+            <label class="col-form-label">Select One <span>'.$MenuType[$i][2].'</span> Item type  </label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-utensils"></i></span>
+                </div>
+                <select  name="'.$MenuType[$i][2].'" class="form-control">
+                                     
+                                     ';
+
+            $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
+            $MenuName=queryReceive($sql);
+            for($k=0;$k<count($MenuName);$k++)
+            {
+                $display.='  <option value="'.$MenuName[$k][0].'">'.$MenuName[$k][1].'</option>';
+            }
+
+            $display.='</select>
+            </div>
+        </div>';
         }
+
         echo $display;
+
+        //
+
+
+
+
     }
     else if($_POST['option']=="createOrderofHall")
     {
