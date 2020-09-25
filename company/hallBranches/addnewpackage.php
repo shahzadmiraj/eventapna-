@@ -572,7 +572,10 @@ $(document).ready(function ()
 
         $("#NameOfItem").val("");
         $("#itemChoice").val("");
+
+        $('#exampleModal').modal('hide');
     });
+
 
     $(document).on("click",".RemoveRow",function () {
       var row=$(this).data("rownumber");
@@ -664,7 +667,6 @@ $(document).ready(function ()
               }
            }
        });
-
    });
 
 

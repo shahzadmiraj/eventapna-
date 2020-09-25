@@ -24,6 +24,9 @@ $userid=$_COOKIE['userid'];
 
 $sql='SELECT `name` FROM `company` WHERE id='.$companyid.' AND ISNULL(expire)';
 $CompanyInfo=queryReceive($sql);
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -188,6 +191,80 @@ include_once ("../ClientSide/Company/Box.php");
     </div>
 
 
+        <div class="container mt-5 border border-dark" id="RowsColumns">
+
+
+            <?php
+
+            $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packageDetail[0][0].') GROUP BY itemtype';
+            $MenuType=queryReceive($sql);
+
+
+            $display='';
+
+            if(count($MenuType)>0)
+                $display="<h3 class='text-center'>Choices of items</h3>";
+            for($i=0;$i<count($MenuType);$i++)
+            {
+
+
+
+                $display.=' <div class="row" id="RowNumber">
+                                   <div class="col-12">
+                                    <div class="input-group mb-3 input-group-lg">
+
+                                            <input readonly  type="text" class="form-control text-center" placeholder="Name of items type"   style="border:none" value="'.($i+1).' Item Type: '.$MenuType[$i][2].'">
+
+                                        </div>
+                                     </div>';
+
+                $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packageDetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
+                $MenuName=queryReceive($sql);
+                for($k=0;$k<count($MenuName);$k++)
+                {
+                    $display.='  <div class="card" style="width: 25rem;" id="columnno-\'+ColumnNumber+\'">
+                                    <div class="card-body">
+                                            <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'.$MenuName[$k][1].'"  style="border:none"> </h5>
+                                            <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="itemsType[]" readonly value="'.$MenuType[$i][2].'"  style="border:none"></h6>
+                                        </div>
+                               </div>';
+                }
+
+                $display.='
+                                    </div>';
+            }
+
+            echo $display;
+
+            ?>
+
+<!--            <div class="row" id="RowNumber'">-->
+<!--                                   <div class="col-12">-->
+<!--                                    <div class="input-group mb-3 input-group-lg">-->
+<!---->
+<!--                                            <input readonly  type="text" class="form-control text-center" placeholder="Name of items type"   style="border:none" value="'+ItemType+'">-->
+<!---->
+<!--                                        </div>-->
+<!--                                     </div>-->
+<!---->
+<!--                            <div class="card" style="width: 25rem;" id="columnno-'+ColumnNumber+'">-->
+<!--                                    <div class="card-body">-->
+<!--                                            <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'+ItemName+'"  style="border:none"> </h5>-->
+<!--                                            <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="itemsType[]" readonly value="'+ItemType+'"  style="border:none"></h6>-->
+<!--                                        </div>-->
+<!--                               </div>-->
+<!---->
+<!---->
+<!---->
+<!---->
+<!--            </div>-->
+
+
+
+
+
+        </div>
+
     <div class="form-group card">
 
 
@@ -247,36 +324,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 <form id="submitpackage">
-        <?php
-        $sql='SELECT `id`, `dishname`, `image`, `expire`, `package_id` FROM `menu` WHERE (package_id='.$packageid.') AND ISNULL(expire)';
-        $menuDetail=queryReceive($sql);
-        if(count($menuDetail)>0)
-        {
-            echo '
-    <h3  align="center"><i class="fas fa-thumbs-up"></i> Selected Menu of Package</h3>
-<div id="selectedmenu" class="row form-group m-0" style="overflow:auto;width: 100% ;height: 50vh">
-';
-        }
 
-        for($i=0;$i<count($menuDetail);$i++)
-        {
-
-            echo '
-        <div id="alreadydishid'.$menuDetail[$i][0].'" class="col-4 border m-2 form-group p-0 card shadow " style="height: 30vh;" >
-            <img src="../../images/dishImages/'.$menuDetail[$i][2].'" class="col-12" style="height: 15vh">
-            <p class="col-form-label" class="form-control col-12">'.$menuDetail[$i][1].'</p>
-            <input  hidden data-dishid="'.$menuDetail[$i][0].'" type="button" value="Remove" class="form-control alreadydishid col-12  btn btn-success">
-        </div>';
-
-
-        }
-
-
-        if(count($menuDetail)>0)
-        {
-            echo '</div>';
-        }
-        ?>
 
 <h2>Packages all detail</h2>
 <div style="overflow:auto;height: 40vh">
@@ -331,7 +379,6 @@ include_once ("../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                 window.history.back();
-
                 }
             });
         });
@@ -590,6 +637,8 @@ include_once ("../../webdesign/footer/footer.php");
             });
 
         });
+
+
         $("#btncancel").click(function (e)
         {  e.preventDefault();
             var value=$(this).val();
@@ -659,65 +708,6 @@ include_once ("../../webdesign/footer/footer.php");
         $('#myModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
         });
-
-        $("#submitformDishadd").click(function (e)
-        {
-            e.preventDefault();
-            if($.trim($("#dishnameadd").val()).length==0)
-            {
-                alert("please enter dish name");
-                return false;
-            }
-            var formdata = new FormData($("form")[1]);
-            formdata.append("option","formDishadd");
-            $.ajax({
-                url:"../companyServer.php",
-                method:"POST",
-                data:formdata,
-                contentType: false,
-                processData: false,
-
-                beforeSend: function() {
-                    $('#pleaseWaitDialog').modal();
-                },
-                success:function (data)
-                {
-                    $('#pleaseWaitDialog').modal('hide');
-                    $("#selectmenu").html(data);
-                    $("form")[1].reset();
-                    $('#exampleModal').modal('toggle');
-
-                }
-            });
-        });
-
-        $("#searchdish").keyup(function () {
-            var dishname=$(this).val();
-
-            var formdata=new FormData();
-            formdata.append("option","dishpredict");
-            formdata.append("dishname",dishname);
-            $.ajax({
-                url:"../companyServer.php",
-                method:"POST",
-                data:formdata,
-                contentType: false,
-                processData: false,
-
-                beforeSend: function() {
-                    $('#pleaseWaitDialog').modal();
-                },
-                success:function (data)
-                {
-                    $('#pleaseWaitDialog').modal('hide');
-
-                    $("#selectmenu").html(data);
-                }
-            });
-
-
-        });
-
 
 
 

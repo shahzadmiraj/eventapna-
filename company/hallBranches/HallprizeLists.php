@@ -3,7 +3,6 @@ include_once ('../../connection/connect.php');
 include  ("../../access/userAccess.php");
 RedirectOtherwiseOnlyAccessUsersWho("Owner","../../index.php");
 
-include_once('packages/packagesServerfunction.php');
 
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';

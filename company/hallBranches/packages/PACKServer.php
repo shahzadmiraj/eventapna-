@@ -37,17 +37,17 @@ if(isset($_POST['option']))
             $sql = 'INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`, `token`) VALUES (NULL,"' . $timestamp . '",NULL,' . $id . ',' . $userid . ',NULL,"' .$date.'","'.$token.'")';
             querySend($sql);
         }
-        $dishnames=array();
-        $image=array();
-        if(isset($_POST['dishesname']))
+        $itemsName=array();
+        $itemsType=array();
+        if(isset($_POST['itemsName']))
         {
 
-            $dishnames=$_POST['dishesname'];
-            $image=$_POST['dishimages'];
+            $itemsName=$_POST['itemsName'];
+            $itemsType=$_POST['itemsType'];
         }
-        for ($i=0;($i<count($dishnames))&&($PackagesType==1);$i++)
+        for ($i=0;($i<count($itemsName));$i++)
         {
-            $sql='INSERT INTO `menu`(`id`, `dishname`, `image`, `expire`, `package_id`) VALUES (NULL,"'.trim($dishnames[$i]).'","'.trim($image[$i]).'",NULL,'.$id.')';
+            $sql='INSERT INTO `menu`(`id`, `itemname`, `expire`, `package_id`, `active`, `itemtype`, `companyid`, `userActive`) VALUES (NULL,"'.$itemsName[$i].'",NULL,'.$id.',"' . $timestamp . '","'.$itemsType[$i].'",'.$companyid.','.$userid.')';
             querySend($sql);
         }
 
