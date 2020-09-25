@@ -218,3 +218,6 @@ INNER join packages as p
 on (p.id=pd.package_id)
 where
 (od.id=1)
+
+//show model
+$('#exampleModalCenter').modal();

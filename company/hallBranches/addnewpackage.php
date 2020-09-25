@@ -4,7 +4,6 @@ include_once ("../../connection/connect.php");
 include  ("../../access/userAccess.php");
 RedirectOtherwiseOnlyAccessUsersWho("Owner","../../index.php");
 
-include_once ("packages/packagesServerfunction.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
@@ -262,145 +261,21 @@ include_once ("../ClientSide/Company/Box.php");
 
     <div class="form-group row m-auto">
         <lable for="describe" class="col-form-label">Add New  Items in package  </lable>
-        <button id="submitItemType" class="btn btn-primary form-control "> + Add item</button>
-    </div>
-
-
-
-    <div class="container">
-
-
-        <div class="form-group row">
-            <lable for="describe" class="col-form-label">Name Items :</lable>
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                </div>
-            <input type="text" name="NameOfItem" class="form-control">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <lable for="describe" class="col-form-label">Items Type :</lable>
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                </div>
-                <select class="form-control" name="NameOfItemType">
-                    <option value="other">Other</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <lable for="describe" class="col-form-label">Other item type:New Row</lable>
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                </div>
-                <input id="itemChoice" type="text" class="form-control" placeholder="Name of items type">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <lable for="describe" class="col-form-label">Is this item include in this Package or Extra charges?</lable>
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                </div>
-                <select class="form-control" name="NameOfItemType">
-                    <option value="YesIncludeItem">Yes,Include items So, No Extra charges</option>
-                    <option value="NoIncludeItem">Take Extra Charges</option>
-                </select>
-            </div>
-        </div>
-
-
-        <div class="form-group row">
-            <lable for="describe" class="col-form-label">Exter Charges </lable>
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                </div>
-                <input id="itemChoice" type="text" class="form-control" placeholder="Extra Charges ">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <lable for="describe" class="col-form-label"> Image </lable>
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                </div>
-                <input id="itemChoice" type="image" class="form-control">
-            </div>
-        </div>
-
-
-
-
+        <button type="button" class="btn btn-primary form-control " data-toggle="modal" data-target="#exampleModal">
+            + Add item
+        </button>
     </div>
 
 
 
 
 
-    <div>
+
+
+    <div class="container mt-5 border border-dark" id="RowsColumns">
 
 
 
-
-        <div id="ItemType_1"  class="container mt-5">
-
-            <div class="form-group row">
-                <div class="input-group mb-3 input-group-lg">
-                    <button  data-itemtypedelete="1" class="DeleteItemType btn btn-danger"> - </button>
-                    <input  class="form-control changeItemType" value="" placeholder="Please Enter Choice type">
-                    <button  data-addnewitem="1" class="AddNewItem btn btn-primary"> + items </button>
-                </div>
-            </div>
-
-            <div id="ItemTypeMenus_1" class="row">
-
-
-
-                <div id="deleteSingleItem_11" class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="../../gmail.png" alt="Card image cap">
-                    <div class="container">
-                        <label>Item: <input type="text" style="border:none" readonly name="itemsName[]" value="item"></label>
-                        <label>Item charges: <input type="text" style="border:none" readonly name="itemsPrice[]" value="item type"></label>
-                        <label>Item type: <input type="text" style="border:none" readonly name="itemsType[]" value="item type"></label>
-                        <button data-deletesingleitem="11" class="deleteSingleItem  btn btn-danger form-control"> - Delete item</button>
-                    </div>
-                </div>
-
-                <div id="deleteSingleItem_11" class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="../../gmail.png" alt="Card image cap">
-                    <div class="container">
-                        <label>Item: <input type="text" style="border:none" readonly name="itemsName[]" value="item"></label>
-                        <label>Item charges: <input type="text" style="border:none" readonly name="itemsPrice[]" value="item type"></label>
-                        <label>Item type: <input type="text" style="border:none" readonly name="itemsType[]" value="item type"></label>
-                        <button data-deletesingleitem="11" class="deleteSingleItem  btn btn-danger form-control"> - Delete item</button>
-                    </div>
-                </div>
-
-
-                <div id="deleteSingleItem_11" class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="../../gmail.png" alt="Card image cap">
-                    <div class="container">
-                        <label>Item: <input type="text" style="border:none" readonly name="itemsName[]" value="item"></label>
-                        <label>Item charges: <input type="text" style="border:none" readonly name="itemsPrice[]" value="item type"></label>
-                        <label>Item type: <input type="text" style="border:none" readonly name="itemsType[]" value="item type"></label>
-                        <button data-deletesingleitem="11" class="deleteSingleItem  btn btn-danger form-control"> - Delete item</button>
-                    </div>
-                </div>
-
-
-            </div>
-
-
-
-        </div>
 
 
 
@@ -418,39 +293,10 @@ include_once ("../ClientSide/Company/Box.php");
         <button id="btnsubmit" type="button" value="Submit" class="btn btn-primary col-6 "><i class="fas fa-check "></i>Submit</button>
     </div>
 </form>
+
 </div>
 
 <div class="container " id="selectingmenu">
-
-    <hr class="border">
-    <h3  align="center" class="mt-5"><i class="far fa-hand-pointer mr-2"></i>Select items</h3>
-
-
-
-    <!-- Button trigger modal -->
-
-
-
-    <div class="form-group row">
-        <div class="input-group mb-3 input-group-lg">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-            </div>
-            <input id="searchdish" class="form-control" type="text" placeholder="Search items">
-            <button id="modelselect" type="button" class="btn btn-primary float-right col-4" data-toggle="modal" data-target="#exampleModal">
-                ADD Items
-            </button>
-        </div>
-    </div>
-
-    <div id="selectmenu" class="border m-2 p-0  row"  style="overflow:auto;width: 100% ;height: 50vh" >
-
-        <?php
-        $sql='SELECT  `name`,`id`, `image` FROM `systemItem` WHERE (ISNULL(expire))AND(company_id='.$companyid.')';
-        echo dishesOfPakage($sql);
-        ?>
-    </div>
-
 
 
     <!-- Modal -->
@@ -458,43 +304,114 @@ include_once ("../ClientSide/Company/Box.php");
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Item in Company</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Item </h5>
                     <button   type="button" class="close closemodel" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formDishaddss">
-                        <input hidden value="<?php echo $userid; ?>" name="userid">
-                        <input hidden value="<?php echo $companyid; ?>" name="companyid">
+                    <form>
 
-                        <div class="form-group row">
-                            <div class="input-group mb-3 input-group-lg">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
+                        <div class="container">
+
+
+                            <div class="form-group row">
+                                <lable for="describe" class="col-form-label">Items Name:</lable>
+                                <div class="input-group mb-3 input-group-lg">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                    </div>
+                                    <input  id="NameOfItem" type="text"  class="form-control" placeholder="Name of item">
                                 </div>
-                                <input id="dishnameadd" name="dishname" class="form-control" type="text" placeholder="Item Name Type">
                             </div>
 
-                        </div>
-                        <div class="form-group row">
-                            <div class="input-group mb-3 input-group-lg">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                            <div class="form-group row" id="DisplayNameOfItemType">
+                                <lable for="describe" class="col-form-label">Items Type :</lable>
+                                <div class="input-group mb-3 input-group-lg">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                    </div>
+                                    <select id="NameOfItemType" class="form-control">
+                                    </select>
                                 </div>
-                                <input  name="image" class="form-control" type="file">
                             </div>
+
+                            <div class="form-group row" id="NewItemTypeAdd">
+                                <lable for="describe" class="col-form-label">Other item type:New Row</lable>
+                                <div class="input-group mb-3 input-group-lg">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                    </div>
+                                    <input  id="itemChoice" type="text" class="form-control" placeholder="Name of Item Type">
+                                </div>
+                            </div>
+
+
+
+
+
                         </div>
+
+
+
 
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
-                    <button type="button" id="submitformDishadd" class="btn btn-primary float-right">Save changes</button>
+                    <button type="button" id="AddItemInForm" class="btn btn-primary float-right">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <lable for="describe" class="col-form-label">Items Name:</lable>
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                            </div>
+                            <input  id="NameOfItemExtra" type="text"  class="form-control" placeholder="Name of item">
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="NewItemTypeAdd">
+                        <lable for="describe" class="col-form-label">Other item type:New Row</lable>
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                            </div>
+                            <input  readonly id="itemChoiceExtra" type="text" class="form-control" placeholder="Name of Item Type">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="SubmitExtraColumn" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 
@@ -514,124 +431,187 @@ include_once ("../../webdesign/footer/footer.php");
 $(document).ready(function ()
 {
 
-    var numbers=0;
+    var RowNumber=0;
+    var ColumnNumber=0;
+    var VarItemsType = {
+        itemtypeNumber: 1,
+        itemtype: "Other",
+    };
+    var arrayOfItemType= [];
+    arrayOfItemType.push(VarItemsType);
+    function  TextItemTypeOptions()
+    {
+        var text="";
+        arrayOfItemType.forEach(myFunction);
+        function myFunction(item, index, arr)
+        {
+            text+='<option value="'+arr[index].itemtype+'">'+arr[index].itemtype+'</option>';
+        }
+        $("#NameOfItemType").html(text);
+    }
+
+    TextItemTypeOptions();
+
+
+    function TypeControl()
+    {
+        var value=$("#NameOfItemType").val();
+        if(value==="Other")
+        {
+            $("#NewItemTypeAdd").show();
+        }
+        else
+        {
+            $("#NewItemTypeAdd").hide();
+        }
+    }
+
+    TypeControl();
+
+    $("#NameOfItemType").change(TypeControl);
+
+    function findIndex(itemtype)
+    {
+        var indexGloble=-1;
+        arrayOfItemType.forEach(myFunction);
+        function myFunction(item, index, arr)
+        {
+            if(arr[index].itemtype===itemtype)
+            {
+                indexGloble=index;
+            }
+        }
+        return indexGloble;
+    }
+
+
+    function GetColumn(ItemName,ItemType,RowNumber,ColumnNumber)
+    {
+        var text=' <div class="card" style="width: 25rem;" id="columnno-'+ColumnNumber+'">\n' +
+            '                <div class="card-body">\n' +
+            '                    <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'+ItemName+'"  style="border:none"> </h5>\n' +
+            '                    <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="itemsType[]" readonly value="'+ItemType+'"  style="border:none"></h6>\n' +
+            '                    <button data-columnno="'+ColumnNumber+'" class="RemoveColumn btn btn-danger form-control"> Delete item</button>\n' +
+            '                </div>\n' +
+            '            </div>';
+        return text;
+    }
+
+    function GetRowColumn(ItemName,ItemType,RowNumber,ColumnNumber)
+    {
+        var text='<div class="row" id="RowNumber-'+RowNumber+'">\n' +
+            '            <div class="col-12">\n' +
+            '                <div class="input-group mb-3 input-group-lg">\n' +
+            '                    <button type="button" data-rownumber="'+RowNumber+'" class="RemoveRow btn btn-danger">- Type </button>\n' +
+            '                    <input readonly id="RowName-'+RowNumber+'" type="text" class="form-control text-center" placeholder="Name of items type"   style="border:none" value="'+ItemType+'">\n' +
+            '                    <button type="button" data-rownumber="'+RowNumber+'"  class="btn btn-primary AddColumn"  >+ Item</button>\n' +
+            '                </div>\n' +
+            '            </div>\n' ;
+
+        text+=GetColumn(ItemName,ItemType,RowNumber,ColumnNumber);
+
+        text+='</div>';
+        return text;
+    }
+
+    $("#NameOfItemType").change(function () {
+            var ItemsTypes=$(this).val();
+    });
+
+
+    $("#AddItemInForm").click(function (e)
+    {
+        e.preventDefault();
+        var NameOfItem=$("#NameOfItem").val();
+        var TypeOfItem=$("#NameOfItemType").val();
+        var TypeString="";
+        if(NameOfItem=="")
+        {
+            alert("Enter Name of item");
+            return  false;
+        }
+        if(TypeOfItem==="Other")
+        {
+            //other type user select
+            TypeString=$("#itemChoice").val();
+
+            if(TypeString=="")
+            {
+                alert("Please Enter type of item");
+                return  false;
+            }
+
+            if(findIndex(TypeString)!=-1)
+            {
+                alert("You Have already insert same Type of item");
+                return false;
+            }
+            var VarItemsType = {
+                itemtypeNumber: RowNumber,
+                itemtype: TypeString,
+            };
+            arrayOfItemType.push(VarItemsType);
+            TextItemTypeOptions();
+            var text=GetRowColumn(NameOfItem,TypeString,RowNumber,ColumnNumber);
+            $("#RowsColumns").append(text);
+            RowNumber++;
+            ColumnNumber++;
+        }
+        else
+        {
+            // not other select
+            TypeString= TypeOfItem;
+           var index=findIndex(TypeString);
+           var AlreadyRowNumber=arrayOfItemType[index].itemtypeNumber;
+           var text= GetColumn(NameOfItem,TypeString,AlreadyRowNumber,ColumnNumber);
+           $("#RowNumber-"+AlreadyRowNumber).append(text);
+            ColumnNumber++;
+        }
+
+
+
+        $("#NameOfItem").val("");
+        $("#itemChoice").val("");
+    });
+
+    $(document).on("click",".RemoveRow",function () {
+      var row=$(this).data("rownumber");
+      var typeitem=$("#RowName-"+row).val();
+      var index=findIndex(typeitem);
+      delete arrayOfItemType[index];
+        $("#RowNumber-"+row).remove();
+
+        TextItemTypeOptions();
+    });
+
+    $(document).on("click",".RemoveColumn",function () {
+      var col=$(this).data("columnno");
+      $("#columnno-"+col).remove();
+    });
+
+    var rowExtraNumber=-1;
+    $(document).on("click",".AddColumn",function () {
+
+        rowExtraNumber=$(this).data("rownumber");
+        var itemType=$("#RowName-"+rowExtraNumber).val();
+        $("#exampleModalLongTitle").html(itemType);
+        $('#exampleModalCenter').modal();
+        $("#NameOfItemExtra").val("");
+        $("#itemChoiceExtra").val(itemType);
+    });
+
+     $(document).on("click","#SubmitExtraColumn",function () {
+            var NameOfItemExtra=$("#NameOfItemExtra").val();
+            var itemChoiceExtra=$("#itemChoiceExtra").val();
+            var text=GetColumn(NameOfItemExtra,itemChoiceExtra,rowExtraNumber,ColumnNumber)
+            $("#RowNumber-"+rowExtraNumber).append(text);
+            ColumnNumber++;
+         $('#exampleModalCenter').modal("hide");
+     });
 
     $("#btncancel").click(function () {
         window.history.back();
     });
-
-
-    function Addmenu(dishname,image,basimage)
-    {
-       var text="<div id=\"dishtempid"+numbers+"\" class=\"col-md-4 card border\" style=\"height: 30vh;\" >\n" +
-            "            <img src=\""+image+"\" class=\"card-img-top\" style=\"height: 15vh\">\n" +
-            "            <p class=\"col-form-label\">"+dishname+"</p>\n" +
-            "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"touchdish btn btn-danger\">\n" +
-            "            <input hidden  type=\"text\"  name=\"dishesname[]\"  value=\""+dishname+"\">\n" +
-           "            <input hidden  type=\"text\"  name=\"dishimages[]\"  value=\""+basimage+"\">\n" +
-            "        </div>";
-        numbers++;
-        return text;
-    }
-
-   $(document).on("click",".touchdish",function ()
-   {
-       var text='';
-       var value=$(this).val();
-       var image=$(this).data("image");
-       var dishname=$(this).data("dishname");
-       if(value=="Remove")
-       {
-
-           var number=$(this).data("dishid");
-           $("#dishtempid"+number).remove();
-       }
-       else
-       {
-           var basimage=$(this).data("basimage");
-           text=Addmenu(dishname,image,basimage);
-           $("#selectedmenu").append(text);
-
-       }
-
-   });
-   $("#perivious").change(function ()
-   {
-       var  packagename=$("#packagename");
-       var rate=$("#rate");
-       var describe=$("#describe");
-       var formdata=new FormData;
-       if($(this).val()!="none")
-       {
-           formdata.append("option","jsonPackagesDetail");
-           formdata.append("packagesid",$(this).val());
-           $.ajax({
-               url:"packages/PACKServer.php",
-               method:"POST",
-               data:formdata,
-               contentType: false,
-               processData: false,
-
-               beforeSend: function() {
-                   $('#pleaseWaitDialog').modal();
-               },
-               success:function (data)
-               {
-                   $('#pleaseWaitDialog').modal('hide');
-                   $("#selectedmenu").html("");
-                   var text;
-                  var obj=JSON.parse(data);
-                   packagename.val(obj[0][0].package_name);
-                   rate.val(obj[0][0].price);
-                   describe.val(obj[0][0].describe);
-                   $.each( obj[1], function( key, value )
-                   {
-                     //  console.log(value.id);
-                        text=Addmenu(value.dishname,value.image);
-                       $("#selectedmenu").append(text);
-                   });
-
-
-               }
-           });
-
-
-           //$("#shownonperivious").hide('slow');
-       }
-       else
-       {
-           packagename.val("");
-           rate.val("");
-           describe.val("");
-           $("#selectedmenu").html("");
-
-        //   $("#shownonperivious").show('slow');
-       }
-
-   });
-
-   function checkpaktype()
-   {
-       var PackagesType=$("#PackagesType").val();
-       if(PackagesType==0)
-       {
-           $("#selectedmenu").hide('slow');
-           $("#selectingmenu").hide('slow');
-       }
-       else
-       {
-           $("#selectedmenu").show('slow');
-           $("#selectingmenu").show('slow');
-       }
-   }
-
-   $("#PackagesType").change(function ()
-   {
-       checkpaktype();
-   });
-
-    checkpaktype();
-
    $("#btnsubmit").click(function ()
    {
        var state=false;
@@ -641,16 +621,16 @@ $(document).ready(function ()
            state=true;
        }
 
-       if(validationWithString("selectedValues","Please Enter dates of packages"))
+       if(validationWithString("selectedValues","Please Enter Dates of packages"))
        {
            state=true;
        }
 
-       if(validationWithString("packagename","Please Enter name of packages"))
+       if(validationWithString("packagename","Please Enter Name of packages"))
        {
            state=true;
        }
-       if(validationWithString("rate","Please Enter rate of packages"))
+       if(validationWithString("rate","Please Enter Rate of packages"))
        {
            state=true;
        }
@@ -689,61 +669,7 @@ $(document).ready(function ()
 
 
 
-    $("#submitformDishadd").click(function (e)
-    {
-        e.preventDefault();
 
-        var formdata = new FormData($("form")[1]);
-        formdata.append("option","formDishadd");
-        $.ajax({
-            url:"packages/PACKServer.php",
-            method:"POST",
-            data:formdata,
-            contentType: false,
-            processData: false,
-
-            beforeSend: function() {
-                $('#pleaseWaitDialog').modal();
-            },
-            success:function (data)
-            {
-                $('#pleaseWaitDialog').modal('hide');
-                $("#selectmenu").html(data);
-                $("form")[1].reset();
-                $('#exampleModal').modal('toggle');
-                $("#searchdish").val("");
-            }
-        });
-    });
-
-    $("#searchdish").keyup(function ()
-    {
-        var companyid="<?php echo $companyid;?>";
-       var dishname=$(this).val();
-        var formdata=new FormData();
-        formdata.append("option","dishpredict");
-        formdata.append("companyid",companyid);
-        formdata.append("dishname",dishname);
-        $.ajax({
-            url:"packages/PACKServer.php",
-            method:"POST",
-            data:formdata,
-            contentType: false,
-            processData: false,
-            beforeSend: function() {
-                $('#pleaseWaitDialog').modal();
-            },
-            success:function (data)
-            {
-                $('#pleaseWaitDialog').modal('hide');
-                $("#selectmenu").html(data);
-            }
-        });
-
-
-
-
-    });
 
 
 
