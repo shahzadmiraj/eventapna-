@@ -348,6 +348,31 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
+                            <div class="form-group row" id="IncludeItem">
+                                <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
+                                <div class="input-group mb-3 input-group-lg">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                    </div>
+                                    <select id="IncludeItemOption" class="form-control">
+                                        <option value="includeItem">No Extra Chages .this Item include in this package</option>
+                                        <option value="NoItemNot include">Extra charges of this item</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="ExtrachargeOfitem" style="display: none">
+                                <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
+                                <div class="input-group mb-3 input-group-lg">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                    </div>
+                                    <input  id="ExtrachargeOfitemAmount" type="number" class="form-control" placeholder="How much Extra charge ?">
+                                </div>
+                            </div>
+
+
+
 
 
                         </div>
@@ -384,6 +409,7 @@ include_once ("../ClientSide/Company/Box.php");
                     </button>
                 </div>
                 <div class="modal-body">
+
                     <div class="form-group row">
                         <lable for="describe" class="col-form-label">Items Name:</lable>
                         <div class="input-group mb-3 input-group-lg">
@@ -403,6 +429,32 @@ include_once ("../ClientSide/Company/Box.php");
                             <input  readonly id="itemChoiceExtra" type="text" class="form-control" placeholder="Name of Item Type">
                         </div>
                     </div>
+
+
+
+                    <div class="form-group row" id="IncludeItemExtra">
+                        <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                            </div>
+                            <select id="IncludeItemOptionExtra" class="form-control">
+                                <option value="includeItem">No Extra Chages .this Item include in this package</option>
+                                <option value="NoItemNot include">Extra charges of this item</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="ExtrachargeOfitemExtra" style="display:none">
+                        <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                            </div>
+                            <input  id="ExtrachargeOfitemAmountExtra" type="number" class="form-control" placeholder="How much Extra charge ?">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -430,6 +482,30 @@ include_once ("../../webdesign/footer/footer.php");
 <script type="text/javascript">
 $(document).ready(function ()
 {
+
+
+    function ExtraItemControl(Main,Secondary)
+    {
+        var value=$("#"+Main).val();
+        if(value==="includeItem")
+        {
+            $("#"+Secondary).hide();
+        }
+        else
+        {
+            $("#"+Secondary).show();
+        }
+    }
+
+    $("#IncludeItemOption").change(function () {
+
+        ExtraItemControl("IncludeItemOption","ExtrachargeOfitem");
+    });
+
+    $("#IncludeItemOptionExtra").change(function () {
+        ExtraItemControl("IncludeItemOptionExtra","ExtrachargeOfitemExtra");
+    });
+
 
     var RowNumber=0;
     var ColumnNumber=0;
@@ -485,19 +561,20 @@ $(document).ready(function ()
     }
 
 
-    function GetColumn(ItemName,ItemType,RowNumber,ColumnNumber)
+    function GetColumn(ItemName,ItemType,RowNumber,ColumnNumber,ItemPrice)
     {
         var text=' <div class="card" style="width: 25rem;" id="columnno-'+ColumnNumber+'">\n' +
             '                <div class="card-body">\n' +
             '                    <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'+ItemName+'"  style="border:none"> </h5>\n' +
             '                    <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="itemsType[]" readonly value="'+ItemType+'"  style="border:none"></h6>\n' +
+            '                    <h6 class="card-subtitle mb-2 text-muted form-inline">Item Price: <input type="text" name="PriceItem[]" readonly value="'+ItemPrice+'"  style="border:none"></h6>\n' +
             '                    <button data-columnno="'+ColumnNumber+'" class="RemoveColumn btn btn-danger form-control"> Delete item</button>\n' +
             '                </div>\n' +
             '            </div>';
         return text;
     }
 
-    function GetRowColumn(ItemName,ItemType,RowNumber,ColumnNumber)
+    function GetRowColumn(ItemName,ItemType,RowNumber,ColumnNumber,ItemPrice)
     {
         var text='<div class="row" id="RowNumber-'+RowNumber+'">\n' +
             '            <div class="col-12">\n' +
@@ -508,7 +585,7 @@ $(document).ready(function ()
             '                </div>\n' +
             '            </div>\n' ;
 
-        text+=GetColumn(ItemName,ItemType,RowNumber,ColumnNumber);
+        text+=GetColumn(ItemName,ItemType,RowNumber,ColumnNumber,ItemPrice);
 
         text+='</div>';
         return text;
@@ -524,6 +601,12 @@ $(document).ready(function ()
         e.preventDefault();
         var NameOfItem=$("#NameOfItem").val();
         var TypeOfItem=$("#NameOfItemType").val();
+        var ExtraItemType=$("#IncludeItemOption").val();
+        var valueOfExtraCharge=$("#ExtrachargeOfitemAmount").val();
+        if(ExtraItemType=="includeItem")
+        {
+            valueOfExtraCharge=0;
+        }
         var TypeString="";
         if(NameOfItem=="")
         {
@@ -552,7 +635,7 @@ $(document).ready(function ()
             };
             arrayOfItemType.push(VarItemsType);
             TextItemTypeOptions();
-            var text=GetRowColumn(NameOfItem,TypeString,RowNumber,ColumnNumber);
+            var text=GetRowColumn(NameOfItem,TypeString,RowNumber,ColumnNumber,valueOfExtraCharge);
             $("#RowsColumns").append(text);
             RowNumber++;
             ColumnNumber++;
@@ -563,7 +646,7 @@ $(document).ready(function ()
             TypeString= TypeOfItem;
            var index=findIndex(TypeString);
            var AlreadyRowNumber=arrayOfItemType[index].itemtypeNumber;
-           var text= GetColumn(NameOfItem,TypeString,AlreadyRowNumber,ColumnNumber);
+           var text= GetColumn(NameOfItem,TypeString,AlreadyRowNumber,ColumnNumber,valueOfExtraCharge);
            $("#RowNumber-"+AlreadyRowNumber).append(text);
             ColumnNumber++;
         }
@@ -572,6 +655,7 @@ $(document).ready(function ()
 
         $("#NameOfItem").val("");
         $("#itemChoice").val("");
+        $("#ExtrachargeOfitem").val("");
 
         $('#exampleModal').modal('hide');
     });
@@ -606,7 +690,14 @@ $(document).ready(function ()
      $(document).on("click","#SubmitExtraColumn",function () {
             var NameOfItemExtra=$("#NameOfItemExtra").val();
             var itemChoiceExtra=$("#itemChoiceExtra").val();
-            var text=GetColumn(NameOfItemExtra,itemChoiceExtra,rowExtraNumber,ColumnNumber)
+            var ExtraItemType=$("#IncludeItemOptionExtra").val();
+            var valueOfExtraCharge=$("#ExtrachargeOfitemAmountExtra").val();
+                 if(ExtraItemType==="includeItem")
+                 {
+                     valueOfExtraCharge=0;
+                 }
+
+            var text=GetColumn(NameOfItemExtra,itemChoiceExtra,rowExtraNumber,ColumnNumber,valueOfExtraCharge)
             $("#RowNumber-"+rowExtraNumber).append(text);
             ColumnNumber++;
          $('#exampleModalCenter').modal("hide");

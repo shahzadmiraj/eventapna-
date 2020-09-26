@@ -39,15 +39,17 @@ if(isset($_POST['option']))
         }
         $itemsName=array();
         $itemsType=array();
+        $PriceItem=array();
         if(isset($_POST['itemsName']))
         {
 
             $itemsName=$_POST['itemsName'];
             $itemsType=$_POST['itemsType'];
+            $PriceItem=$_POST['PriceItem'];
         }
         for ($i=0;($i<count($itemsName));$i++)
         {
-            $sql='INSERT INTO `menu`(`id`, `itemname`, `expire`, `package_id`, `active`, `itemtype`, `companyid`, `userActive`) VALUES (NULL,"'.$itemsName[$i].'",NULL,'.$id.',"' . $timestamp . '","'.$itemsType[$i].'",'.$companyid.','.$userid.')';
+            $sql='INSERT INTO `menu`(`id`, `itemname`, `expire`, `package_id`, `active`, `itemtype`, `companyid`, `userActive`,`price`) VALUES (NULL,"'.$itemsName[$i].'",NULL,'.$id.',"' . $timestamp . '","'.$itemsType[$i].'",'.$companyid.','.$userid.','.$PriceItem[$i].')';
             querySend($sql);
         }
 

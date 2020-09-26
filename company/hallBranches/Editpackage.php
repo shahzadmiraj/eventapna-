@@ -218,13 +218,19 @@ include_once ("../ClientSide/Company/Box.php");
                                         </div>
                                      </div>';
 
-                $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packageDetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
+                $sql='SELECT `id`, `itemname`,`itemtype`,`price`	 FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packageDetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
                 $MenuName=queryReceive($sql);
                 for($k=0;$k<count($MenuName);$k++)
                 {
                     $display.='  <div class="card" style="width: 25rem;" id="columnno-\'+ColumnNumber+\'">
                                     <div class="card-body">
-                                            <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'.$MenuName[$k][1].'"  style="border:none"> </h5>
+                                            <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'.$MenuName[$k][1].'"  style="border:none"> </h5>';
+
+                    $priceShow="hidden";
+                    if($MenuName[$k][3]!=0)
+                        $priceShow="";
+
+                                         $display.= '<h6 '.$priceShow.'  class="card-subtitle mb-2 text-muted form-inline">Item price: <input type="number" name="PriceItem[]" readonly value="'.$MenuName[$k][3].'"  style="border:none"></h6>
                                             <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="itemsType[]" readonly value="'.$MenuType[$i][2].'"  style="border:none"></h6>
                                         </div>
                                </div>';
