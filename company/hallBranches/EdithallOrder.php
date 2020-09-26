@@ -7,6 +7,7 @@
  */
 include  ("../../connection/connect.php");
 include  ("../../access/userAccess.php");
+include_once ("packages/EditPackageFunction.php");
 RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../../index.php");
 
 
@@ -24,7 +25,7 @@ $companyid=$userdetail[0][0];
 $hallid=$processInformation[0][3];
 $orderid=$processInformation[0][5];
 
-$sql='select od.id,od.hall_id,od.catering_id,p.isFood,od.user_id,1,1,1,1,1,od.person_id,od.total_amount,od.total_person,od.status_hall,od.destination_date,od.booking_date,od.destination_time,od.status_catering,1,od.describe,p.describe,p.id,p.price,od.discount,od.extracharges FROM orderDetail as od  INNER join packageDate as pd
+$sql='select od.id,od.hall_id,od.catering_id,p.isFood,od.user_id,1,1,1,1,1,od.person_id,od.total_amount,od.total_person,od.status_hall,od.destination_date,od.booking_date,od.destination_time,od.status_catering,1,od.describe,p.describe,p.id,p.price,od.discount,od.extracharges,od.packageDate_id FROM orderDetail as od  INNER join packageDate as pd
 on (od.packageDate_id=pd.id)
 INNER join packages as p 
 on (p.id=pd.package_id)
@@ -302,6 +303,17 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
     <div id="selectmenu" class="alert-info  form-group container" >
+        <?php
+        echo '<input  id="selectpricefix'.$detailorder[0][25].'" type="number" value="'.$detailorder[0][22].'">
+        <input type="radio" checked value="'.$detailorder[0][25].'"  name="defaultExampleRadios">
+        
+        
+        ';
+
+         ShowFirstSelectedChoice($orderid,$detailorder[0][25]);
+
+         echo "<h5>Detail of packages:".$detailorder[0][20]." <br> <span class=''>Per head without Extra Charges : ".$detailorder[0][22]."</span></h5>";
+        ?>
 
 
     </div>
@@ -665,7 +677,6 @@ include_once ("../../webdesign/footer/footer.php");
             var formdata = new FormData;
             formdata.append("packageid", packageid);
             formdata.append("option", "viewmenu");
-
             $.ajax({
                 url: "../companyServer.php",
                 method: "POST",
@@ -690,13 +701,16 @@ include_once ("../../webdesign/footer/footer.php");
             });
         }
 
-        menushow(<?php  echo $detailorder[0][21]; ?>,"<?php echo $detailorder[0][20]; ?>"+"<span class='btn-danger'> ....    with price is <?php echo $detailorder[0][22]; ?></span>");
+/*
+        //menushow(<?php // echo $detailorder[0][21]; ?>,"<?php //echo $detailorder[0][20]; ?>"+"<span class='btn-danger'> ....    with price is <?php //echo $detailorder[0][22]; ?></span>");
+*/
 
         function AllChoiceItemAmounCalculate()
         {
             var amount=0;
             if( $('#MenuTypeInpackages').length )         // use this if you are using id to check
             {
+
                 var textMenuType=$('#MenuTypeInpackages').val();
                 var arrayofitemType=textMenuType.split(',');
                 for (var i = 0; i < arrayofitemType.length; i++)

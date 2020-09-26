@@ -200,9 +200,8 @@ WHERE
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-utensils"></i></span>
                 </div>
-                <select id="'.$MenuType[$i][2].'"   name="SelectOptionFromItem'.$MenuType[$i][2].'" class="form-control MenuTypeOptionChanges">
-                                     
-                                     ';
+                <select id="'.$MenuType[$i][2].'"   name="SelectOptionFromItem'.$MenuType[$i][2].'" class="form-control MenuTypeOptionChanges">';
+
 
             $sql='SELECT `id`, `itemname`,`itemtype`,`price` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
             $MenuName=queryReceive($sql);
