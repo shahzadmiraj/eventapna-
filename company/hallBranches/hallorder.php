@@ -319,12 +319,14 @@ include_once ("../../webdesign/footer/footer.php");
         {
             var guests=$("#guests").val();
             var packageid;
-            var amount;
+            var amount=0;
+            var MenuChoicePrice=AllChoiceItemAmounCalculate();
+
             if($("input[name='defaultExampleRadios']:checked"))
             {
                 packageid=$("input[name='defaultExampleRadios']:checked").val();
                 amount=$("#selectpricefix"+packageid).val();
-                $("#totalamount").val(parseInt(amount)*parseInt(guests));
+                $("#totalamount").val((Number(amount)+Number(MenuChoicePrice))*Number(guests));
             }
         }
         function RemainingAmount()
@@ -424,11 +426,33 @@ include_once ("../../webdesign/footer/footer.php");
         $(".checkpackage").change(function ()
         {
             PackageAvailableCheckLimit();
-
         });
 
 
+        function AllChoiceItemAmounCalculate()
+        {
+            var amount=0;
+            if( $('#MenuTypeInpackages').length )         // use this if you are using id to check
+            {
+               var textMenuType=$('#MenuTypeInpackages').val();
+               var arrayofitemType=textMenuType.split(',');
+                for (var i = 0; i < arrayofitemType.length; i++)
+                {
+                    var EachPrice=Number($("#"+arrayofitemType[i]).children('option:selected').data('price'));
+                    amount=EachPrice;
+                }
 
+            }
+            return amount;
+
+        }
+
+        // $(".MenuTypeOptionChanges").change(function () {
+        //
+        // });
+        $(document).on("change",".MenuTypeOptionChanges",function () {
+            valueChangeAuto();
+        });
 
         $(document).on("click","input[type=radio]",function ()
         {
@@ -457,6 +481,7 @@ include_once ("../../webdesign/footer/footer.php");
                     {
                         $("#selectmenu").append("<h3 align='center' class='col-12'>package Description</h3><p class='col-12'>" + describe + "</p>");
                     }
+                    valueChangeAuto();
                 }
             });
         });

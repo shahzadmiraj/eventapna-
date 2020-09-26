@@ -176,17 +176,21 @@ WHERE
             exit();
 
 
-
-
-//
         $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].') GROUP BY itemtype';
         $MenuType=queryReceive($sql);
+        $OneD = array_column($MenuType, 2);
+        $List = implode(', ', $OneD);
 
 
         $display='';
 
         if(count($MenuType)>0)
-            $display="<h3 class='text-center'>Choices of items in package</h3>";
+        {
+            $display = "<h3 class='text-center'>Choices of items in package</h3>
+                    <input type='text'  hidden name='MenuTypeInpackages' id='MenuTypeInpackages' value='".$List."'>
+                    ";
+
+        }
         for($i=0;$i<count($MenuType);$i++)
         {
 
@@ -200,15 +204,15 @@ WHERE
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-utensils"></i></span>
                 </div>
-                <select  name="'.$MenuType[$i][2].'" class="form-control">
+                <select id="'.$MenuType[$i][2].'"   name="'.$MenuType[$i][2].'" class="form-control MenuTypeOptionChanges">
                                      
                                      ';
 
-            $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
+            $sql='SELECT `id`, `itemname`,`itemtype`,`price` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
             $MenuName=queryReceive($sql);
             for($k=0;$k<count($MenuName);$k++)
             {
-                $display.='  <option value="'.$MenuName[$k][0].'">'.$MenuName[$k][1].'</option>';
+                $display.='  <option data-price="'.$MenuName[$k][3].'"  value="'.$MenuName[$k][0].'">Item Name:'.$MenuName[$k][1].' with Price: '.$MenuName[$k][3].'    </option>';
             }
 
             $display.='</select>
@@ -217,12 +221,6 @@ WHERE
         }
 
         echo $display;
-
-        //
-
-
-
-
     }
     else if($_POST['option']=="createOrderofHall")
     {
