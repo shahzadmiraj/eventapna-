@@ -189,13 +189,9 @@ WHERE
             $display = "<h3 class='text-center'>Choices of items in package</h3>
                     <input type='text'  hidden name='MenuTypeInpackages' id='MenuTypeInpackages' value='".$List."'>
                     ";
-
         }
         for($i=0;$i<count($MenuType);$i++)
         {
-
-
-
             $display.='
                                      
          <div class="form-group row">
@@ -204,7 +200,7 @@ WHERE
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-utensils"></i></span>
                 </div>
-                <select id="'.$MenuType[$i][2].'"   name="'.$MenuType[$i][2].'" class="form-control MenuTypeOptionChanges">
+                <select id="'.$MenuType[$i][2].'"   name="SelectOptionFromItem'.$MenuType[$i][2].'" class="form-control MenuTypeOptionChanges">
                                      
                                      ';
 
@@ -239,6 +235,9 @@ WHERE
             $currentdate=date('Y-m-d');
             $Discount=chechIsEmpty($_POST['Discount']);
             $Charges=chechIsEmpty($_POST['Charges']);
+        $timestamp = date('Y-m-d H:i:s');
+        $MenuTypeInpackages=$_POST['MenuTypeInpackages'];
+        $MenuTypeInpackagesArray=explode(",", $MenuTypeInpackages);
             if($time=="Morning")
             {
                 $time="09:00:00";
@@ -270,8 +269,21 @@ WHERE
             $pid=$_POST['pid'];
             $token=$_POST['token'];
             $last=mysqli_insert_id($connect);
-$sql='UPDATE BookingProcess as bp SET bp.orderDetail_id='.$last.'  WHERE (bp.id='.$pid.')AND(bp.token="'.$token.'")';
-querySend($sql);
+
+
+
+            for($i=0;$i<count($MenuTypeInpackagesArray);$i++)
+            {
+                if(isset($_POST["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]]))
+                {
+                    $sql='INSERT INTO `hallChoiceSelect`(`id`, `expire`, `active`, `ActiveUser`, `ExpireUser`, `menu_id`, `orderDetail_id`) VALUES (NULL,NULL,"'.$timestamp.'",'.$userid.',NULL,'.$_POST["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]].','.$last.')';
+                    querySend($sql);
+                }
+
+            }
+
+            $sql='UPDATE BookingProcess as bp SET bp.orderDetail_id='.$last.'  WHERE (bp.id='.$pid.')AND(bp.token="'.$token.'")';
+            querySend($sql);
 
     }
     else if($_POST['option']=="Edithallorder")

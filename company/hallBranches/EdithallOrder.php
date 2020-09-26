@@ -301,7 +301,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     </div>
 
-    <div id="selectmenu" class="alert-info  m-2 form-group row shadow" >
+    <div id="selectmenu" class="alert-info  form-group container" >
 
 
     </div>
@@ -522,17 +522,20 @@ include_once ("../../webdesign/footer/footer.php");
            // var extraAmount=$("#extraamount").val();
             var guests=$("#guests").val();
             var packageid;
-            var amount;
+            var amount=0;
+            var MenuChoicePrice=AllChoiceItemAmounCalculate();
             var AutoTotalAmount=0;
             if($("input[name='defaultExampleRadios']:checked"))
             {
                 packageid=$("input[name='defaultExampleRadios']:checked").val();
                 amount=$("#selectpricefix"+packageid).val();
-                AutoTotalAmount=Number(amount)*Number(guests);
+                AutoTotalAmount=(Number(amount)+Number(MenuChoicePrice))*Number(guests);
             }
             AutoTotalAmount=AutoTotalAmount+Number($("#extraamount").val());
             $("#totalamount").val(AutoTotalAmount);
         }
+
+
         function RemainingAmount()
         {
             var totalamount= Number($("#totalamount").val());
@@ -681,12 +684,34 @@ include_once ("../../webdesign/footer/footer.php");
                     {
                         $("#selectmenu").append("<h3 align='center' class='col-12'>package Description</h3><p class='col-12'>" + describe + "</p>");
                     }
+                    valueChangeAuto();
 
                 }
             });
         }
 
         menushow(<?php  echo $detailorder[0][21]; ?>,"<?php echo $detailorder[0][20]; ?>"+"<span class='btn-danger'> ....    with price is <?php echo $detailorder[0][22]; ?></span>");
+
+        function AllChoiceItemAmounCalculate()
+        {
+            var amount=0;
+            if( $('#MenuTypeInpackages').length )         // use this if you are using id to check
+            {
+                var textMenuType=$('#MenuTypeInpackages').val();
+                var arrayofitemType=textMenuType.split(',');
+                for (var i = 0; i < arrayofitemType.length; i++)
+                {
+                    var EachPrice=Number($("#"+arrayofitemType[i]).children('option:selected').data('price'));
+                    amount=EachPrice;
+                }
+
+            }
+            return amount;
+
+        }
+        $(document).on("change",".MenuTypeOptionChanges",function () {
+            valueChangeAuto();
+        });
 
         $(document).on("click","input[type=radio]",function ()
         {
