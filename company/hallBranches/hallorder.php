@@ -318,14 +318,16 @@ include_once ("../../webdesign/footer/footer.php");
         function valueChangeAuto()
         {
             var guests=$("#guests").val();
-            var packageid;
+            var packageDated;
             var amount=0;
             var MenuChoicePrice=AllChoiceItemAmounCalculate();
 
+
             if($("input[name='defaultExampleRadios']:checked"))
             {
-                packageid=$("input[name='defaultExampleRadios']:checked").val();
-                amount=$("#selectpricefix"+packageid).val();
+                packageDated=$("input[name='defaultExampleRadios']:checked").val();
+                amount=$("#selectpricefix"+packageDated).val();
+                alert("Amount perhead ="+amount+"Menu="+MenuChoicePrice+"guest="+guests);
                 $("#totalamount").val((Number(amount)+Number(MenuChoicePrice))*Number(guests));
             }
             RemainingAmount();
@@ -440,7 +442,7 @@ include_once ("../../webdesign/footer/footer.php");
                 for (var i = 0; i < arrayofitemType.length; i++)
                 {
                     var EachPrice=Number($("#"+arrayofitemType[i]).children('option:selected').data('price'));
-                    amount=EachPrice;
+                    amount+=EachPrice;
                 }
 
             }
@@ -448,21 +450,20 @@ include_once ("../../webdesign/footer/footer.php");
 
         }
 
-        // $(".MenuTypeOptionChanges").change(function () {
-        //
-        // });
-        $(document).on("change",".MenuTypeOptionChanges",function () {
+        $(document).on("change",".MenuTypeOptionChanges",function ()
+        {
+
             valueChangeAuto();
         });
 
         $(document).on("click","input[type=radio]",function ()
         {
 
-            var packageid=$("input[name='defaultExampleRadios']:checked").val();
+            var packageDateid=$("input[name='defaultExampleRadios']:checked").val();
             valueChangeAuto();
-            var describe=$("#describe"+packageid).val();
+            var describe=$("#describe"+packageDateid).val();
             var formdata = new FormData;
-            formdata.append("packageid", packageid);
+            formdata.append("packageDateid", packageDateid);
             formdata.append("option", "viewmenu");
             $.ajax({
                 url: "../companyServer.php",
@@ -490,11 +491,11 @@ include_once ("../../webdesign/footer/footer.php");
         {
             var direction=$(this).data("href");
 
-            var packageid='';
+            var packageDateid='';
             if($(".checkclasshas")[0])
             {
-                packageid=$("input[name='defaultExampleRadios']:checked").val();
-                if(!packageid)
+                packageDateid=$("input[name='defaultExampleRadios']:checked").val();
+                if(!packageDateid)
                 {
                     alert("please select Package From Package Detail");
                     return false;
@@ -514,7 +515,7 @@ include_once ("../../webdesign/footer/footer.php");
                 state=true;
             }*/
             var formdata = new FormData($("form")[0]);
-            formdata.append("packageid", packageid);
+            formdata.append("packageDateid", packageDateid);
             formdata.append("option", "createOrderofHall");
 
             $.ajax({

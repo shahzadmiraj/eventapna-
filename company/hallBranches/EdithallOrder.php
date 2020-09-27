@@ -528,14 +528,14 @@ include_once ("../../webdesign/footer/footer.php");
         {
            // var extraAmount=$("#extraamount").val();
             var guests=$("#guests").val();
-            var packageid;
+            var packageDated;
             var amount=0;
             var MenuChoicePrice=AllChoiceItemAmounCalculate();
             var AutoTotalAmount=0;
             if($("input[name='defaultExampleRadios']:checked"))
             {
-                packageid=$("input[name='defaultExampleRadios']:checked").val();
-                amount=$("#selectpricefix"+packageid).val();
+                packageDated=$("input[name='defaultExampleRadios']:checked").val();
+                amount=$("#selectpricefix"+packageDated).val();
                 AutoTotalAmount=(Number(amount)+Number(MenuChoicePrice))*Number(guests);
             }
             AutoTotalAmount=AutoTotalAmount+Number($("#extraamount").val());
@@ -712,7 +712,7 @@ include_once ("../../webdesign/footer/footer.php");
                 for (var i = 0; i < arrayofitemType.length; i++)
                 {
                     var EachPrice=Number($("#"+arrayofitemType[i]).children('option:selected').data('price'));
-                    amount=EachPrice;
+                    amount+=EachPrice;
                 }
 
             }

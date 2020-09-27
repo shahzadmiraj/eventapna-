@@ -16,7 +16,7 @@ where
 
     $timestamp = date('Y-m-d H:i:s');
     $userid=$post['userid'];
-    $sql='SELECT `package_id FROM `packageDate` WHERE  id='.$packageDateid;
+    $sql='SELECT `package_id FROM `packageDate` WHERE  `id`='.$packageDateid;
     $packageid=queryReceive($sql);
 
 

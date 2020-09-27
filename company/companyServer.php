@@ -219,9 +219,9 @@ WHERE
     }
     else if($_POST['option']=="createOrderofHall")
     {
-        $packageid='';
-            if(isset($_POST['packageid']))
-                $packageid=$_POST['packageid'];
+        $packageDateid='';
+            if(isset($_POST['packageDateid']))
+                $packageDateid=$_POST['packageDateid'];
             $hallid=$_POST['hallid'];
             $userid=$_POST['userid'];
             $personid=$_POST['personid'];
@@ -262,7 +262,7 @@ WHERE
             $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `packageDate_id`, `user_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
         `status_catering`,`describe`, `address`, `location_id`, `discount`, `extracharges`) 
-        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
+        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageDateid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
         "'.$time.'",'.$catering.',"'.$describe.'",NULL,NULL,'.$Discount.','.$Charges.')';
             querySend($sql);
             $pid=$_POST['pid'];
