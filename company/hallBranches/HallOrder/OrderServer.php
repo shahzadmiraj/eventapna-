@@ -51,12 +51,11 @@ AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")AND(od.id!='.$
 
  if($_POST['option']=="checkpackages1")
 {
-    $orderid= "No";
+    $orderid="No";
     if(isset($_POST['orderid']))
     {
         $orderid=$_POST['orderid'];
     }
-
     $guests=$_POST['guests'];
     $date=$_POST['date'];
     $time=$_POST['time'];

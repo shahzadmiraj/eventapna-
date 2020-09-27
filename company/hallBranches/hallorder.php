@@ -328,6 +328,7 @@ include_once ("../../webdesign/footer/footer.php");
                 amount=$("#selectpricefix"+packageid).val();
                 $("#totalamount").val((Number(amount)+Number(MenuChoicePrice))*Number(guests));
             }
+            RemainingAmount();
         }
         function RemainingAmount()
         {

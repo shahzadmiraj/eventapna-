@@ -2,7 +2,6 @@
 
 function ShowFirstSelectedChoice($orderDetail_id,$packageDateid)
 {
-    //$packageDateid=$_POST['packageid'];
     $sql='SELECT p.id FROM packageDate as pd INNER join packages as p
 on (p.id=pd.package_id)
 WHERE
@@ -21,10 +20,10 @@ WHERE
         $sql='SELECT `menu_id` FROM `hallChoiceSelect` WHERE (orderDetail_id='.$orderDetail_id.') AND (ISNULL(expire))';
         $MenuIdArray=queryReceive($sql);
         $MenuSelectedIds = array_column($MenuIdArray, 0);
-        $MenuSelectedIdsList=implode(', ', $MenuSelectedIds);
+        $MenuSelectedIdsList=implode(',', $MenuSelectedIds);
         $arraySingleMerge=array_merge($MenuSelectedIds,$MenuExistNowIds);
         $arraySingleMergeUnique=array_unique($arraySingleMerge);
-        $ListOfIdz = implode(', ', $arraySingleMergeUnique);
+        $ListOfIdz = implode(',', $arraySingleMergeUnique);
 
         $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE id in ('.$ListOfIdz.') GROUP BY itemtype';
         $MenuType=queryReceive($sql);
@@ -32,7 +31,7 @@ WHERE
 
 
     $OneD = array_column($MenuType, 2);
-    $List = implode(', ', $OneD);
+    $List = implode(',', $OneD);
 
 
     $display='';

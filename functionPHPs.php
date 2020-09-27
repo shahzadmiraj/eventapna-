@@ -6,7 +6,7 @@ $hallOneD = array_column($SqlArray, Colume name or number);
 
 
 2:convert 1 d array into seperator
-        $List = implode(', ', $hallOneD);
+        $List = implode(',', $hallOneD);
 
 3 string to array
 $str= "foo,bar,baz,bat";

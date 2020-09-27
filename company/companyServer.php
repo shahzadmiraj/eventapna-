@@ -6,7 +6,7 @@
  * Time: 17:20
  */
 include_once ("../connection/connect.php");
-
+include_once ("hallBranches/HallOrder/orderCheckMenu.php");
 
 function createOnlyAllSeating($hallid,$daytime)
 {
@@ -166,7 +166,7 @@ if(isset($_POST['option']))
 
     else if($_POST['option']=="viewmenu")
     {
-        $packageDateid=$_POST['packageid'];
+        $packageDateid=$_POST['packageDateid'];
         $sql='SELECT p.id FROM packageDate as pd INNER join packages as p
 on (p.id=pd.package_id)
 WHERE
@@ -179,7 +179,7 @@ WHERE
         $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].') GROUP BY itemtype';
         $MenuType=queryReceive($sql);
         $OneD = array_column($MenuType, 2);
-        $List = implode(', ', $OneD);
+        $List = implode(',', $OneD);
 
 
         $display='';
@@ -270,7 +270,6 @@ WHERE
             $last=mysqli_insert_id($connect);
 
 
-
             for($i=0;$i<count($MenuTypeInpackagesArray);$i++)
             {
                 if(isset($_POST["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]]))
@@ -288,9 +287,9 @@ WHERE
     else if($_POST['option']=="Edithallorder")
     {
         $order=$_POST['order'];
-        $packageid='';
-        if(isset($_POST['packageid']))
-            $packageid=$_POST['packageid'];
+        $packageDateid='';
+        if(isset($_POST['packageDateid']))  //packageDateid
+            $packageDateid=$_POST['packageDateid'];
         $guests=chechIsEmpty($_POST['guests']);
         $date=$_POST['date'];
         $time=$_POST['time'];
@@ -337,10 +336,13 @@ WHERE
 
         $timestamp = date('Y-m-d H:i:s');
 
+        $post=$_POST;
+        checkChangeOfMenuOfPackages($post);
 
-        if(checkChangeHallOrder($order,$packageid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$branchOrder,$describe,$catering,$timestamp,NULL,$Charges,$Discount))
+
+        if(checkChangeHallOrder($order,$packageDateid,$cateringid,$date,$time,$perheadwith,$guests,$orderStatus,$totalamount,$branchOrder,$describe,$catering,$timestamp,NULL,$Charges,$Discount))
         {
-            $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`packageDate_id`='.$packageid.',
+            $sql='UPDATE `orderDetail` SET `catering_id`='.$cateringid.',`packageDate_id`='.$packageDateid.',
 `total_amount`='.$totalamount.',`total_person`='.$guests.',`status_hall`
 ="'.$orderStatus.'",`destination_date`="'.$date.'",`destination_time`="'.$time.'",
 `status_catering`="'.$catering.'",`describe`="'.$describe.'" , `hall_id`='.$branchOrder.',`user_id`='.$userid.',`discount`='.$Discount.',`extracharges`='.$Charges.'

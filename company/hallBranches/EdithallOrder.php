@@ -7,9 +7,8 @@
  */
 include  ("../../connection/connect.php");
 include  ("../../access/userAccess.php");
-include_once ("packages/EditPackageFunction.php");
 RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../../index.php");
-
+include_once ("packages/EditPackageFunction.php");
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
@@ -74,7 +73,7 @@ $PaidAmount=queryReceive($sql);
 <body>
 <?php
 
-include_once ("../../webdesign/header/header.php");
+//include_once ("../../webdesign/header/header.php");
 if($processInformation[0][4]==0)
 {
     ?>
@@ -274,8 +273,6 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
             }
         }
-
-
         $display .= '     
 
 
@@ -304,10 +301,8 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     <div id="selectmenu" class="alert-info  form-group container" >
         <?php
-        echo '<input  id="selectpricefix'.$detailorder[0][25].'" type="number" value="'.$detailorder[0][22].'">
-        <input type="radio" checked value="'.$detailorder[0][25].'"  name="defaultExampleRadios">
-        
-        
+        echo '<input  hidden id="selectpricefix'.$detailorder[0][25].'" type="number" value="'.$detailorder[0][22].'">
+        <input hidden type="radio" checked value="'.$detailorder[0][25].'"  name="defaultExampleRadios">
         ';
 
          ShowFirstSelectedChoice($orderid,$detailorder[0][25]);
@@ -545,6 +540,7 @@ include_once ("../../webdesign/footer/footer.php");
             }
             AutoTotalAmount=AutoTotalAmount+Number($("#extraamount").val());
             $("#totalamount").val(AutoTotalAmount);
+            RemainingAmount();
         }
 
 
@@ -672,10 +668,10 @@ include_once ("../../webdesign/footer/footer.php");
 
         });
 
-        function menushow(packageid,describe)
+        function menushow(packageDateid,describe)
         {
             var formdata = new FormData;
-            formdata.append("packageid", packageid);
+            formdata.append("packageDateid", packageDateid);
             formdata.append("option", "viewmenu");
             $.ajax({
                 url: "../companyServer.php",
@@ -730,14 +726,14 @@ include_once ("../../webdesign/footer/footer.php");
         $(document).on("click","input[type=radio]",function ()
         {
 
-            var packageid=$("input[name='defaultExampleRadios']:checked").val();
-            var describe=$("#describe"+packageid).val();
+            var packageDateid=$("input[name='defaultExampleRadios']:checked").val();
+            var describe=$("#describe"+packageDateid).val();
             valueChangeAuto();
             RemainingAmount();
-            menushow(packageid,describe);
+            menushow(packageDateid,describe);
         });
 
-        var packageid=<?php echo $detailorder[0][21]; ?>;
+        var packageDateid=<?php echo $detailorder[0][25]; ?>;
 
         $("#submitform").click(function ()
         {
@@ -751,8 +747,8 @@ include_once ("../../webdesign/footer/footer.php");
             }
             if($(".checkclasshas")[0])
             {
-                packageid=$("input[name='defaultExampleRadios']:checked").val();
-                if(!packageid)
+                packageDateid=$("input[name='defaultExampleRadios']:checked").val();
+                if(!packageDateid)
                 {
                     alert("Please select Package From Package Detail");
                     return false;
@@ -760,7 +756,7 @@ include_once ("../../webdesign/footer/footer.php");
             }
             var formdata = new FormData($("form")[0]);
             formdata.append("perheadwith",perheadwith);
-            formdata.append("packageid", packageid);
+            formdata.append("packageDateid", packageDateid);
             formdata.append("order",<?php echo $orderid;  ?>);
             formdata.append("option", "Edithallorder");
             $.ajax({
