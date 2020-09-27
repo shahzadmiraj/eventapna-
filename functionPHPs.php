@@ -27,9 +27,12 @@ foreach ($array as $key => $value) {
 
 }
 
-
-
-
+$array1 = array(1,2,3,4,5,6,7,8);
+$array2 = array(1,2,3,4);
+remove duplication in array equals (5,6,7,8)
+$clean1 = array_diff($array1, $array2);
+$clean2 = array_diff($array2, $array1);
+$final_output = array_merge($clean1, $clean2);
 
 
 

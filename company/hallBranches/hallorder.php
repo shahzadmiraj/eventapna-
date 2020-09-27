@@ -327,7 +327,6 @@ include_once ("../../webdesign/footer/footer.php");
             {
                 packageDated=$("input[name='defaultExampleRadios']:checked").val();
                 amount=$("#selectpricefix"+packageDated).val();
-                alert("Amount perhead ="+amount+"Menu="+MenuChoicePrice+"guest="+guests);
                 $("#totalamount").val((Number(amount)+Number(MenuChoicePrice))*Number(guests));
             }
             RemainingAmount();

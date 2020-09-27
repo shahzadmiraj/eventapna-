@@ -16,7 +16,7 @@ where
 
     $timestamp = date('Y-m-d H:i:s');
     $userid=$post['userid'];
-    $sql='SELECT `package_id FROM `packageDate` WHERE  `id`='.$packageDateid;
+    $sql='SELECT `package_id` FROM `packageDate` WHERE  `id`='.$packageDateid;
     $packageid=queryReceive($sql);
 
 
@@ -48,8 +48,13 @@ where
 
 
         //unique menu id remove
-        $diffarrayMenuids=array_diff($PrevoiusMenuIdsOneD,$currentMenuids);
 
+        $clean1 = array_diff($PrevoiusMenuIdsOneD, $currentMenuids);
+        $clean2 = array_diff($currentMenuids, $PrevoiusMenuIdsOneD);
+        $diffarrayMenuids = array_merge($clean1, $clean2);
+
+       // $diffarrayMenuids=array_diff($arrayMerge);
+        print_r($diffarrayMenuids);
 
         //check if arrayinterceptmenuid exist in current then insert current menu id
         for($i=0;$i<count($diffarrayMenuids);$i++)
