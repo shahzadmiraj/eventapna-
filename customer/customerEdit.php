@@ -235,27 +235,6 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-        <div class="col-12 shadow">
-            <h4 align="center"><i class="fas fa-user-tag mr-2"></i>Customer personality</h4>
-            <?php
-            $sql='SELECT py.personality,py.rating FROM person as p INNER join orderDetail as od
-on p.id=od.person_id
-INNER JOIN payment as py
-on od.id=py.orderDetail_id
-WHERE
-p.id='.$customerId.'';
-            $personalitydetails=queryReceive($sql);
-            for ($k=0;$k<count($personalitydetails);$k++)
-            {
-                echo '
-            <p class=" mb-3 form-control">'.$personalitydetails[$k][0].' <span class="float-right border-danger border font-weight-bold">Rating: '.$personalitydetails[$k][1].' </span> </p>';
-            }
-
-
-
-            ?>
-
-        </div>
         <div class="form-group row ">
 
             <?php
@@ -290,6 +269,31 @@ p.id='.$customerId.'';
             ?>
 
         </div>
+
+
+
+    <div class="col-12 shadow">
+        <h4 align="center"><i class="fas fa-user-tag mr-2"></i>Customer personality</h4>
+        <?php
+        $sql='SELECT py.personality,py.rating FROM person as p INNER join orderDetail as od
+on p.id=od.person_id
+INNER JOIN payment as py
+on od.id=py.orderDetail_id
+WHERE
+p.id='.$customerId.'';
+        $personalitydetails=queryReceive($sql);
+        for ($k=0;$k<count($personalitydetails);$k++)
+        {
+            echo '
+            <p class=" mb-3 form-control">'.$personalitydetails[$k][0].' <span class="float-right border-danger border font-weight-bold">Rating: '.$personalitydetails[$k][1].' </span> </p>';
+        }
+
+
+
+        ?>
+
+    </div>
+
 </div>
 </form>
 
@@ -301,6 +305,7 @@ p.id='.$customerId.'';
 <script>
  $(document).ready(function ()
  {
+     $.getScript("../webdesign/JSfile/JSFunction.js");
 
     var customerid=$("#customerId").val();
      function numberAddValidation()
@@ -344,7 +349,7 @@ p.id='.$customerId.'';
 
          var state=false;
 
-         if(validationWithString("newNumber","Please Enter Customer NewNumber"))
+         if(validatePakistaniNumberByString("newNumber"))
              state=true;
 
          if(numberAddValidation().responseText==1)

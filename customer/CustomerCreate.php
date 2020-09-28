@@ -271,7 +271,7 @@ include_once ("../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
-
+        $.getScript("../webdesign/JSfile/JSFunction.js");
 
         $(document).on("keyup","#number",function (e)
         {
@@ -373,7 +373,7 @@ include_once ("../webdesign/footer/footer.php");
                 alert("no of numbers not more then 3");
                 return false;
             }
-            if(PhoneNumberCheck("number"))
+            if(validatePakistaniNumberByString("number"))
             {
                 return  false;
             }
@@ -412,7 +412,7 @@ include_once ("../webdesign/footer/footer.php");
             if(number==0)
             {
 
-                if(PhoneNumberCheck("number"))
+                if(validatePakistaniNumberByString("number"))
                 {
                     return  false;
                 }
