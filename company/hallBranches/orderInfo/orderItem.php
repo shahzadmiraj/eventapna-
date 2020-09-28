@@ -54,11 +54,11 @@ function ExtraItemShow($sql,$IsAlreadyBooked)
 
     $orignalImage='';
     $imagespath='';
-    $display.='<div class="row">';
+    $display.='<div class="row m-auto">';
     for ($i = 0; $i < count($kinds); $i++)
     {
 
-        $img='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png';
+        $img='../../../images/systemImage/imageNotFound.png';
         if( file_exists('../../../images/hallExtra/'.$kinds[$i][3]) AND($kinds[$i][3]!=""))
         {
             $img='../../../images/hallExtra/'.$kinds[$i][3];
@@ -66,7 +66,7 @@ function ExtraItemShow($sql,$IsAlreadyBooked)
 
 
         $display.='
-        <div id="'.$id.$kinds[$i][0].'"  class="card col-md-4">
+        <div id="'.$id.$kinds[$i][0].'"  class="card " style="width: 18rem;" >
         
         
               <img  class="card-img-top " src="'.$img.'" alt="Card image cap" style="height: 30vh">
@@ -74,13 +74,25 @@ function ExtraItemShow($sql,$IsAlreadyBooked)
 
 
         $display.=$imagespath;
-        $display.='   <div class="card-body ">
+        $display.='   <div class="card-body">
               
                 <h5 >'.$kinds[$i][1].'</h5>
-                <h6 >ID#'.$kinds[$i][0].'</h6>
-              <span class="text-danger "><i class="far fa-money-bill-alt"></i>Amount '.$kinds[$i][2].'</span>
-            
-                <button data-name="'.$kinds[$i][1].'" data-image="'.$img.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'"   class="'.$ActionClass.' btn  col-12">'.$ButtonValue.'</button>
+                <h6 >ID # '.$kinds[$i][0];
+
+
+            if($IsAlreadyBooked=="Yes")
+            {
+                 $display.='<br>Already Selected';
+            }
+
+
+        $display.='</h6>
+              <span class="text-danger "><i class="far fa-money-bill-alt"></i>Amount '.$kinds[$i][2].'</span>';
+            if($IsAlreadyBooked=="Yes")
+            {
+                 $display.='<input type="number" hidden name="AlreadyExtraItemChargesIds[]" value="'.$kinds[$i][0].'">';
+            }
+        $display.=' <button data-name="'.$kinds[$i][1].'" data-image="'.$img.'" data-amount="'.$kinds[$i][2].'" data-itemsid="'.$kinds[$i][0].'"   class="'.$ActionClass.' btn  col-12">'.$ButtonValue.'</button>
             </div>
             
         </div>
@@ -156,7 +168,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
     <input hidden id="orderid"  type="text" name="order" value="<?php echo $order;?>">
     <input hidden type="number" name="userid" value="<?php echo $userid;?>" >
     <div class="container">
-        <h4 class="row form-inline">Total   <span class="text-primary ml-5"> <input  name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
+        <h4 class="row form-inline ">Total   <span class="text-primary ml-5"> <input  style="border: none" name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
           if(empty($priceDetailOfExtraItem[0][0]))
           {
               echo 0;
@@ -168,10 +180,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
             ?>"</span></h4>
 
         <hr>
-        <div class="row col-12 " id="additems">
-
-
-
+        <div class="container m-auto row alert-warning" id="additems">
 
             <?php
             $sql='SELECT hei.id,(SELECT ei.name from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.price from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.image from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),hei.active FROM hall_extra_items as hei  WHERE (ISNULL(hei.expire)) AND (hei.orderDetail_id='.$order.')';
@@ -249,7 +258,7 @@ GROUP by (EIT.id)';
 
         $Category=queryReceive($sql);
         $Display='';
-        $display='<div class="row ">';
+        $display='<div class="container">';
         for($j=0;$j<count($Category);$j++)
         {
 
@@ -296,7 +305,7 @@ include_once ("../../../webdesign/footer/footer.php");
     {
         function SetAmount(settype,getamount)
         {
-            var amount=parseInt($("#AmountSet").val());
+            var amount=Number($("#AmountSet").val());
             if(settype=="ADD")
             {
                 $("#AmountSet").val(amount+getamount);
@@ -317,7 +326,7 @@ include_once ("../../../webdesign/footer/footer.php");
                 var id=$(this).data("itemsid");
                 var name=$(this).data("name");
                 var image=$(this).data("image");
-            var text='<div id="jsid'+javaid+'" class="card col-md-4">\n' +
+            var text='<div id="jsid'+javaid+'" class="card" style="width: 18rem;">\n' +
             '                <img class="card-img-top" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
             '                <div class="card-body ">\n' +
 
@@ -367,39 +376,8 @@ include_once ("../../../webdesign/footer/footer.php");
             var id=$(this).data("itemsid");
             var amount=$(this).data("amount");
             SetAmount("Minus",amount);
-            var orderid="<?php echo $order;?>";
-
-            var CurrentAmount=parseInt($("#AmountSet").val());
-            var formdata=new FormData;
-            formdata.append("option","deletedSelecteditems");
-            formdata.append("CurrentAmount",CurrentAmount);
-            formdata.append("orderid",orderid);
-            formdata.append("id",id);
-            $.ajax({
-                url:"orderitemServer.php",
-                method:"POST",
-                data:formdata,
-                contentType: false,
-                processData: false,
-
-                beforeSend: function() {
-                    $('#pleaseWaitDialog').modal();
-                },
-                success:function (data)
-                {
-                    $('#pleaseWaitDialog').modal('hide');
-
-                    if(data!='')
-                    {
-                        alert(data);
-                    }
-                    else
-                    {
-                       $("#Selected"+id).remove();
-                    }
-                }
-            });
-
+            var CurrentAmount=Number($("#AmountSet").val());
+            $("#Selected"+id).remove();
         });
         $("#btnsubmit").click(function (e)
         {

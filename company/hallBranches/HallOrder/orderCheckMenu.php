@@ -54,7 +54,7 @@ where
         $diffarrayMenuids = array_merge($clean1, $clean2);
 
        // $diffarrayMenuids=array_diff($arrayMerge);
-        print_r($diffarrayMenuids);
+
 
         //check if arrayinterceptmenuid exist in current then insert current menu id
         for($i=0;$i<count($diffarrayMenuids);$i++)

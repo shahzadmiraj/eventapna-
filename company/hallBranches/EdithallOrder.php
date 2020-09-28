@@ -73,7 +73,7 @@ $PaidAmount=queryReceive($sql);
 <body>
 <?php
 
-//include_once ("../../webdesign/header/header.php");
+include_once ("../../webdesign/header/header.php");
 if($processInformation[0][4]==0)
 {
     ?>
