@@ -44,16 +44,26 @@ $timestamp = date('Y-m-d H:i:s');
 
         if($processInformation[0][3]=="")
         {
-            $sql='UPDATE `orderDetail` SET `total_amount`=(SELECT sum(price) FROM `dish_detail` WHERE orderDetail_id='.$orderId.' limit 1) WHERE id='.$orderId;
+            $sql='SELECT sum(price) FROM `dish_detail` WHERE (orderDetail_id='.$orderId.')AND(ISNULL(expire))';
+            $total=queryReceive($sql);
+            $sql='UPDATE `orderDetail` SET `total_amount`='.(int)($total[0][0]).' WHERE id='.$orderId;
             querySend($sql);
         }
     }
 
 
-if(!isset($_POST['dishesid']))
-{
-    header("location:../payment/getPayment.php?pid=$pid&token=$token");
-}
+
+    if((!isset($_POST['dishesid'])&&($processInformation[0][4]==0)))
+    {
+        header("location:../payment/getPayment.php?pid=$pid&token=$token");
+        exit();
+    }
+    else
+    {
+     echo   '<script>  window.history.back();</script>';
+        exit();
+    }
+
 $dishesName=$_POST['dishesName'];
 $dishesid=$_POST['dishesid'];
 $prices=$_POST['prices'];
@@ -424,7 +434,8 @@ include_once ("../webdesign/footer/footer.php");
            redirect();
        });
 
-    });
+    })
+
 
 </script>
 </body>

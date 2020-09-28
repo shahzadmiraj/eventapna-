@@ -287,9 +287,6 @@ p.id='.$customerId.'';
             echo '
             <p class=" mb-3 form-control">'.$personalitydetails[$k][0].' <span class="float-right border-danger border font-weight-bold">Rating: '.$personalitydetails[$k][1].' </span> </p>';
         }
-
-
-
         ?>
 
     </div>
