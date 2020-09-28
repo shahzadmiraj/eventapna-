@@ -55,20 +55,26 @@ if($_POST['option']=="showPriceofAllDishes")
                     <li class="text-danger"> Price: '.$dishWithAttribute[$j][3].'</li>
                     </ul>
  
-                    </div>
-                    <table class="table table-striped">
+                    </div>';
+
+
+        $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishWithAttribute[$j][0].')';
+        $AttributeDetail=queryReceive($sql);
+
+        if (count($AttributeDetail)>0) {
+
+
+            $display .= ' <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Attribute</th>
+      <th scope="col">Item name</th>
       <th scope="col">Quantity</th>
     </tr>
   </thead>
   <tbody>';
 
-
-        $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishWithAttribute[$j][0].')';
-        $AttributeDetail=queryReceive($sql);
+        }
 
         // special dish with attribute and quantity
         for($i=0;$i<count($AttributeDetail);$i++)
@@ -85,9 +91,11 @@ if($_POST['option']=="showPriceofAllDishes")
 
 
 
-        $display.=  '</tbody>
-</table>
-                    <div class="card-footer m-auto">
+        if (count($AttributeDetail)>0) {
+            $display .= '</tbody>
+</table>';
+        }
+        $display.=  ' <div class="card-footer m-auto">
                         <button    data-$image="'.$image.'"  data-price="'.$dishWithAttribute[$j][3].'" data-dishname="'.$dishName.'"  data-dishid="'.$dishWithAttribute[$j][0].'"  class="btn btn-success  DishAddOnform "><i class=" far fa-check-circle"></i>Select</button>
                     </div>
                 </div>';
@@ -134,25 +142,29 @@ Where  (dwa.id='.$dishid.')';
                     <li> Dish Price Id : '.$dishid.'</li>
                      <li> Dish  id : '.$DishDetail[0][0].'</li>
                     <li> <i class="fas fa-money-bill-alt text-danger float-right">Price : '.$price.'</i></li>
-                    </ul>
+                    </ul>';
 
-             
-                    <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Attribute Name</th>
-      <th scope="col">Quantity</th>
-    </tr>
-  </thead>
-  <tbody>
+
     
-  ';
+
 
 
     $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishid.')';
     $AttributeDetail=queryReceive($sql);
+    if (count($AttributeDetail)>0) {
 
+
+        $display .= ' <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>';
+
+    }
     // special dish with attribute and quantity
     for($i=0;$i<count($AttributeDetail);$i++)
     {
@@ -168,9 +180,11 @@ Where  (dwa.id='.$dishid.')';
 
 
 
-    $display.=  '</tbody>
-</table>
-                    <div class="card-footer m-auto">
+    if (count($AttributeDetail)>0) {
+        $display .= '</tbody>
+</table>';
+    }
+    $display .= '<div class="card-footer m-auto">
                                 <input type="text" hidden  name="dishesName[]" value="'.$dishName.'"> 
                               <input type="number" hidden  name="dishesid[]" value="'.$dishid.'"> 
                                <input type="number" hidden  name="prices[]" value="'.$price.'">

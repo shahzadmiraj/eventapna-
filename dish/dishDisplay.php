@@ -22,12 +22,8 @@ $sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orde
 $processInformation=queryReceive($sql);
 
 $order=$processInformation[0][5];
-/*
- $sql='SELECT od.hallprice_id,(SELECT hp.describe from hallprice as hp WHERE hp.id=od.hallprice_id),(SELECT hp.isFood from hallprice as hp WHERE hp.id=od.hallprice_id),od.catering_id FROM orderDetail as od
-WHERE od.id='.$order.'';
 
 
-*/
 $sql='SELECT p.id,p.describe,p.isFood,od.catering_id FROM orderDetail as od INNER join packageDate as pd
 on (od.packageDate_id=pd.id)
 INNER join packages as p
@@ -102,11 +98,19 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
 
 
+<?php
+if(count($hallpackage)>0)
+{
+    //show hall packages
+    if ($hallpackage[0][2] == 1) {
+        echo '<div id="selectmenu" class="container"  >
+                  
+                  </div>';
+    }
+}
+?>
 
-<div id="selectmenu" class="form-inline badge-light "  >
 
-
-</div>
 
 
     <form  id="formid" method="post" action="<?php echo 'dishCreate.php?pid='.$pid.'&token='.$token.'' ?>" class="container alert-light ">
@@ -126,7 +130,77 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         <div id="showSelectedDishes" class="form-inline badge-light "  >
 
+            <?php
+            $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),dd.token  FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND (dd.orderDetail_id='.$order.')';
+            $detailDishes=queryReceive($sql);
+            $display="";
 
+            for($i=0;$i<count($detailDishes);$i++)
+            {
+
+
+                $sql = 'SELECT d.id FROM dish as d   INNER JOIN dishWithAttribute as dwa
+on (d.id=dwa.dish_id)
+Where  (dwa.id=' . $detailDishes[$i][6] . ')';
+                $DishDetail = queryReceive($sql);
+
+
+                $display .= '<div id="RemoveAlreadySelected'.$detailDishes[$i][0].'" class="card col-md-4" >
+
+                    <ul>
+                    <li class="text-center h4 font-weight-bold"> <i class="fas fa-concierge-bell mr-1"></i>' . $detailDishes[$i][10] . '</li>
+                   
+                    <li> Dish Price Id : ' . $detailDishes[$i][6] . '</li>
+                     <li> Dish  id : ' . $DishDetail[0][0] . '</li>
+                       <li> Already booked with ' . $detailDishes[$i][3] . ' Quantity</li>
+                    <li> <i class="fas fa-money-bill-alt text-danger float-right">Price : ' . $detailDishes[$i][8] . '</i><br></li>
+                   
+                    </ul>';
+
+
+                $sql = 'SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id=' . $detailDishes[$i][6] . ')';
+                $AttributeDetail = queryReceive($sql);
+                if (count($AttributeDetail) > 0) {
+
+
+                    $display .= ' <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>';
+
+                }
+                // special dish with attribute and quantity
+                for ($k = 0; $k < count($AttributeDetail); $k++) {
+                    $display .= ' 
+    <tr>
+      <th scope="row">' . ($k + 1) . '</th>
+      <td>' . $AttributeDetail[$k][0] . '</td>
+      <td>' . $AttributeDetail[$k][1] . '</td>
+   </tr>';
+
+                }
+
+
+                if (count($AttributeDetail) > 0) {
+                    $display .= '</tbody>
+</table>';
+                }
+                $display .= '<div class="card-footer m-auto">
+                              <input type="number" hidden  name="AlreadyDishes[]" value="' . $detailDishes[$i][0] . '"> 
+                           
+                          <button type="button"  data-dishdetailid="' . $detailDishes[$i][0] . '" class="btn btn-danger AlreadyDishes "><i class="far fa-trash-alt"></i>Delete</button>
+                    </div>
+                </div>';
+            }
+            echo $display;
+
+
+            ?>
         </div>
 
 
@@ -232,7 +306,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" >
 
 
 
@@ -260,6 +334,11 @@ include_once ("../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
+
+        $(document).on("click",".AlreadyDishes",function () {
+            var dishdetailid=$(this).data("dishdetailid");
+            $("#RemoveAlreadySelected"+dishdetailid).remove();
+        });
 
 
 
@@ -392,12 +471,11 @@ include_once ("../webdesign/footer/footer.php");
         });
 
 
-        function menushow(packageid,describe)
+        function menushow(Orderid,PackageDescribe)
         {
             var formdata = new FormData;
-            formdata.append("packageid", packageid);
+            formdata.append("Orderid", Orderid);
             formdata.append("option", "viewmenu");
-
             $.ajax({
                 url: "dishServer.php",
                 method: "POST",
@@ -415,11 +493,9 @@ include_once ("../webdesign/footer/footer.php");
                     {
                         $("#selectmenu").html('<br><h4 align="center" class=\'col-12\'>Package Menu</h4>');
                         $("#selectmenu").append(data);
-                        $("#selectmenu").append("<h5 align='center' class='col-12'>Menu Description</h5><p class='col-12'>" + describe + "</p>");
+                        $("#selectmenu").append("<p  class='col-12'>Menu Description:" + PackageDescribe + "</p>");
                     }
                 }
-
-
             });
         }
 
@@ -428,7 +504,7 @@ include_once ("../webdesign/footer/footer.php");
             if(count($hallpackage)>0)
             {
                 if ($hallpackage[0][2] == 1) {
-                    echo 'menushow(' . $hallpackage[0][0] . ',"' . $hallpackage[0][1] . '");';
+                    echo 'menushow(' . $order. ',"' . $hallpackage[0][1] . '");';
                 }
             }
 

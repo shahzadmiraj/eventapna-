@@ -86,24 +86,37 @@ else if($_POST['option']=='deleteDish')
 }
 else if($_POST['option']=="viewmenu")
 {
-    $packageid=$_POST['packageid'];
-    $sql='SELECT `dishname`, `image` FROM `menu` WHERE (package_id='.$packageid.') AND ISNULL(expire)';
-    $menu=queryReceive($sql);
-    $display='';
-    for ($i=0;$i<count($menu);$i++)
-    {
-        $img='../images/systemImage/imageNotFound.png';
+    $Orderid=$_POST['Orderid'];
 
-        if((file_exists('../images/dishImages/'.$menu[$i][1]))&&($menu[$i][1]!=""))
-            $img='../images/dishImages/'.$menu[$i][1];
-        $display.='
-<div class="card" style="width: 10rem;">
-  <img class="card-img-top" src="'.$img.'" alt="Card image cap" style="height: 20vh">
-  <div class="card-body">
-    <p class="card-text">'.$menu[$i][0].'</p>
-  </div>
-</div>
-     ';
+    $sql='SELECT m.itemname,m.price,m.itemtype FROM hallChoiceSelect as hcs INNER join menu as m
+on (hcs.menu_id=m.id)
+
+WHERE (hcs.orderDetail_id='.$Orderid.')AND (ISNULL(hcs.expire))'; //menu Prices
+    $menu=queryReceive($sql);
+    $display='<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item Name</th>
+      <th scope="col">Type Type</th>
+    </tr>
+  </thead>
+  <tbody>';
+
+    for($i=0;$i<count($menu);$i++)
+    {
+            $display.='<tr>
+      <th scope="row">'.($i+1).'</th>
+      <td>'.$menu[$i][0].'</td>
+      <td>'.$menu[$i][2].'</td>
+    </tr>';
     }
+    $display.='
+  </tbody>
+</table>';
+    $sql='SELECT `describe` FROM `orderDetail` WHERE id='.$Orderid;
+    $orderDescription=queryReceive($sql);
+    $display.='<p class="col-12">Order Description:'.$orderDescription[0][0].'</p>';
+
     echo $display;
 }

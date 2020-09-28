@@ -18,17 +18,46 @@ $token=$_GET['token'];
 $sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';
 $processInformation=queryReceive($sql);
 
+
+
+$orderId=$processInformation[0][5];
+
+$userid=$_COOKIE['userid'];
+$timestamp = date('Y-m-d H:i:s');
+
+//expired if alreaady exist
+    $AlreadyDishesDishDetail=array();
+    if(isset($_POST['AlreadyDishes']))
+    $AlreadyDishesDishDetail=$_POST['AlreadyDishes'];
+    $sql='SELECT  dd.id  FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND (dd.orderDetail_id='.$orderId.')';
+    $detailDishes=queryReceive($sql);
+    $PreviousDishDetailIds=array_column($detailDishes, 0);
+    $clean1 = array_diff($AlreadyDishesDishDetail, $PreviousDishDetailIds);
+    $clean2 = array_diff($PreviousDishDetailIds, $AlreadyDishesDishDetail);
+    $final_output = array_merge($clean1, $clean2);
+    if(count($final_output)>0)
+    {
+        $List = implode(',', $final_output);
+        $sql='UPDATE `dish_detail` SET `expire`="'.$timestamp.'",`expireUser`='.$userid.' WHERE id in ('.$List.')';
+        querySend($sql);
+
+
+        if($processInformation[0][3]=="")
+        {
+            $sql='UPDATE `orderDetail` SET `total_amount`=(SELECT sum(price) FROM `dish_detail` WHERE orderDetail_id='.$orderId.' limit 1) WHERE id='.$orderId;
+            querySend($sql);
+        }
+    }
+
+
 if(!isset($_POST['dishesid']))
 {
     header("location:../payment/getPayment.php?pid=$pid&token=$token");
 }
-
-$orderId=$processInformation[0][5];
 $dishesName=$_POST['dishesName'];
 $dishesid=$_POST['dishesid'];
 $prices=$_POST['prices'];
 $images=$_POST['images'];
-$userid=$_COOKIE['userid'];
 
 ?>
 
@@ -164,18 +193,25 @@ dwa.id='.$dishesid[$j].'';
 
                 <div class="form-group row">
 
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Attribute </th>
-                            <th scope="col">Quantity</th>
-                        </tr>
-                        </thead>
-                        <tbody>
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishesid[$j].')';
                 $AttributeDetail=queryReceive($sql);
+
+
+                if (count($AttributeDetail) > 0) {
+
+
+                    $display .= ' <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>';
+
+                }
 
                 // special dish with attribute and quantity
                 for($k=0;$k<count($AttributeDetail);$k++)
@@ -188,9 +224,12 @@ dwa.id='.$dishesid[$j].'';
    </tr>';
 
                 }
+
+                if (count($AttributeDetail) > 0) {
+                    $display .= '</tbody>
+</table>';
+                }
                 ?>
-                        </tbody>
-                    </table>
 
 
                 </div>

@@ -656,7 +656,7 @@ $(document).ready(function ()
         $("#NameOfItem").val("");
         $("#itemChoice").val("");
         $("#ExtrachargeOfitem").val("");
-
+        $("#ExtrachargeOfitemAmount").val("");
         $('#exampleModal').modal('hide');
     });
 

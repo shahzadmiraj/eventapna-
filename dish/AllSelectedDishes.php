@@ -109,19 +109,25 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
             <div class="card-header">
                 <h5><?php echo $i+1;?> <i class="fas fa-concierge-bell "></i>Dish Name :<?php echo $detailDishes[$i][10];?></h5>
             </div>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Attribute</th>
-                    <th scope="col">Quantity</th>
-                </tr>
-                </thead>
-                <tbody>
 
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$detailDishes[$i][6].')';
                 $AttributeDetail=queryReceive($sql);
+
+                if (count($AttributeDetail)>0) {
+
+
+                    echo  ' <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>';
+
+                }
 
                 // special dish with attribute and quantity
                 for($j=0;$j<count($AttributeDetail);$j++)
@@ -134,9 +140,12 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
    </tr>';
                     //echo ' <li class="list-group-item">'.($i+1).' <i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name :'.$AttributeDetail[$i][0].' // Attribute quantity :'.$AttributeDetail[$i][1].'</li>';
                 }
+
+                if (count($AttributeDetail)>0) {
+                    echo  '</tbody>
+                                </table>';
+                }
                 ?>
-                </tbody>
-            </table>
 
             <ul class="list-group">
                 <li class="list-group-item">Detail:<?php echo $detailDishes[$i][1];?></li>

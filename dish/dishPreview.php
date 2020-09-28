@@ -118,19 +118,24 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Attribute </th>
-                    <th scope="col">Quantity</th>
-                </tr>
-                </thead>
-                <tbody>
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishDetailOfDetai[0][6].')';
                 $AttributeDetail=queryReceive($sql);
 
+                if (count($AttributeDetail)>0) {
+
+
+                    echo  ' <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>';
+
+                }
                 // special dish with attribute and quantity
                 for($k=0;$k<count($AttributeDetail);$k++)
                 {
@@ -142,9 +147,14 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
    </tr>';
 
                 }
+
+
+                if (count($AttributeDetail)>0) {
+                    echo  '</tbody>
+                                </table>';
+                }
                 ?>
-                </tbody>
-            </table>
+
 
 
         </div>
