@@ -1,5 +1,7 @@
 <?php
 
+
+
 function calculationOfHallOrder($order)
 {
     $CurrentAmount=0;

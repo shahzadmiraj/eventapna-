@@ -53,10 +53,12 @@ class PDF extends FPDF
 
         $this->Cell(189,0,"",1,1);
 
-        $this->Image('../gmail.png', 5, $this->GetY(), 12);
+        //$this->Image('../gmail.png', 5, $this->GetY(), 12);
 
 
         $this->Cell(0,10,"EVENT APNA (website:www.eventapna.com) , (Gmail:group.of.shaheen@gmail.com) , (whatsapp:0923350498004)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
+
+
     }
 
 
@@ -233,10 +235,10 @@ class PDF extends FPDF
         {
             $Eventtime="Evening";
         }
-        $perHead="Sitting Only";
+        $perHead="Seatting Only";
         if($detailorder[0][3]==1)
         {
-            $perHead="Food +Sitting";
+            $perHead="Food +Seatting";
         }
         $this->Cell(45,10,$Eventtime,0,0);
         $this->Cell(45,10,"per Head  : ",0,0);
@@ -249,19 +251,52 @@ class PDF extends FPDF
         $this->Cell(45,10,$detailorder[0][15],0,1);
 
         $this->Cell(45,10,"Order no # : ",0,0);
-        $this->Cell(45,10,$detailorder[0][0],0,1);
-
-
+        $this->Cell(45,10,$detailorder[0][0],0,0);
+        $this->Cell(45,10,"Rate per head  : ",0,0);
+        $this->Cell(45,10,(int)$detailorder[0][22],0,1);
 
         if($detailorder[0][19]!="")
         {
 
-            $text='Description : '.$detailorder[0][19];
+            $text='Order Description: '.$detailorder[0][19];
             $nb=$this->WordWrap($text,189);
             $this->Write(10,$text);
 
             $this->Cell(189,10,"",0,1);
         }
+        $MenuPrice=0;
+
+        if(count($menu)>0)
+        {
+            //menu if per head with food
+
+            $this->Cell(189,10,"Package Detail ",1,1,"C");
+            $x=0;
+            for($i=0;$i<count($menu);$i++)
+            {
+
+                if((($i+1)%2)==0)
+                {
+                    $x=1;
+                }
+                else
+                {
+                    $x=0;
+                }
+                $this->Cell(45,10,"Name : ".$menu[$i][0],0,0);
+                $this->Cell(45,10,"Price : ".$menu[$i][1],0,$x);
+                $MenuPrice+=$menu[$i][1];
+            }
+            $this->Cell(45,10,"Total Amount in Package: ",0,0);
+            $this->Cell(45,10,$MenuPrice,0,1);
+            //$this->Cell(189,10,"",0,1);
+            $this->Cell(189,10,"Packages Description: ".$detailorder[0][20],0,1);
+
+
+        }
+
+
+
         $AmountExtraItems=0;
 
         if(count($DetailExtraItems)>0)
@@ -283,7 +318,7 @@ class PDF extends FPDF
                 $this->Cell(45,10,$DetailExtraItems[$i][1],0,$isNewRow);
             }
 
-            $this->Cell(45,10,"Total Amount : ",0,0);
+            $this->Cell(45,10,"Extra Items Amount : ",0,0);
             $this->Cell(45,10,$AmountExtraItems,0,1);
         }
 
@@ -303,50 +338,28 @@ class PDF extends FPDF
         $this->Cell(45,10,(int)$detailorder[0][24],1,1);
 
         $this->Cell(144,10,"Per Head Rate :",1,0);
-        if($detailorder[0][12]==0)
+        if($detailorder[0][12]==0) //guest
             $detailorder[0][12]=1;
         $this->Cell(45,10,($detailorder[0][11]/$detailorder[0][12]),1,1);
 
-        $AutoAmount=(int)($detailorder[0][11])+(int)($detailorder[0][25])-(int)($detailorder[0][24]);
+        //$AutoAmount=(int)($detailorder[0][11])+(int)($detailorder[0][25])-(int)($detailorder[0][24]);
 
         $this->Cell(144,10,"Total Amount ",1,0);
-        $this->Cell(45,10,(int)$AutoAmount,1,1);
+        $this->Cell(45,10,(int)$detailorder[0][11],1,1);
 
 
         $this->Cell(144,10,"Paid Amount  ",1,0);
         $this->Cell(45,10,(int)$totalReceivedPayment[0][0],1,1);
 
 
-        $AutoAmount-=(int)($totalReceivedPayment[0][0]);
+       // $AutoAmount-=(int)($totalReceivedPayment[0][0]);
+        $AutoAmount=$detailorder[0][11]-$totalReceivedPayment[0][0];
         $this->Cell(144,10,"Remaining Amount ",1,0);
         $this->Cell(45,10,(int)$AutoAmount,1,1);
 
 
 
-        if($detailorder[0][3]==1)
-        {
-            //menu if per head with food
 
-            $this->Cell(189,10,"Package Detail ",1,1,"C");
-            $x=0;
-            for($i=0;$i<count($menu);$i++)
-            {
-
-                if((($i+1)%4)==0)
-                {
-                    $x=1;
-                }
-                else
-                {
-                    $x=0;
-                }
-                $this->Cell(45,10,$menu[$i][0],0,$x);
-            }
-            $this->Cell(189,10,"",0,1);
-            $this->Cell(189,10,"Description : ".$detailorder[0][20],0,1);
-
-
-        }
 
 
 
@@ -389,6 +402,7 @@ on (p.id=pd.package_id)
 WHERE
 (od.id=orderDetail.id)),`address`,`discount`, `extracharges`  FROM `orderDetail` WHERE id='.$orderId.'';
         $detailorder = queryReceive($sql);
+
 
 
         $sql='SELECT sum(py.amount) FROM payment as py WHERE (py.IsReturn=0)AND(py.orderDetail_id='.$orderId.')';
@@ -442,7 +456,7 @@ WHERE (p.id='".$person[0][2]."')AND(ISNULL(n.expire)) order BY n.id";
 
 
 
-            $this->cateringorderPrint($detailorder,$person,$numbers,$dishDetail,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate);
+           $this->cateringorderPrint($detailorder,$person,$numbers,$dishDetail,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate);
 
         }
         else
@@ -466,14 +480,15 @@ WHERE (p.id='".$person[0][2]."')AND(ISNULL(n.expire)) order BY n.id";
 
             $owerinfo=$Owners;
 
-            $menu=array();
-            if($detailorder[0][3]==1)
-            {
-
                 //with menu
-                $sql = 'SELECT `dishname`, `image` FROM `menu` WHERE (package_id='.$detailorder[0][21] . ') AND ISNULL(expire)';
-                $menu = queryReceive($sql);
-            }
+
+            $sql='SELECT m.itemname,m.price FROM hallChoiceSelect as hcs INNER join menu as m
+on (hcs.menu_id=m.id)
+
+WHERE (hcs.orderDetail_id='.$detailorder[0][0].')AND (ISNULL(hcs.expire))'; //menu Prices
+            $menu=queryReceive($sql);
+
+
             $sql='SELECT (SELECT ei.name FROM Extra_Item as ei WHERE ei.id=hei.Extra_Item_id), (SELECT ei.price FROM Extra_Item as ei WHERE ei.id=hei.Extra_Item_id) from hall_extra_items as hei
 WHERE (hei.orderDetail_id='.$orderId.')AND(ISNULL(hei.expire))';
             $DetailExtraItems=queryReceive($sql);

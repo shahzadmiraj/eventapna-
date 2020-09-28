@@ -54,7 +54,7 @@ function ExtraItemShow($sql,$IsAlreadyBooked)
 
     $orignalImage='';
     $imagespath='';
-    $display.='<div class="row m-auto">';
+    $display.='<div class="row">';
     for ($i = 0; $i < count($kinds); $i++)
     {
 
@@ -168,7 +168,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
     <input hidden id="orderid"  type="text" name="order" value="<?php echo $order;?>">
     <input hidden type="number" name="userid" value="<?php echo $userid;?>" >
     <div class="container">
-        <h4 class="row form-inline ">Total   <span class="text-primary ml-5"> <input  style="border: none" name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
+        <h4 class="row form-inline">Total   <span class="text-primary ml-5"> <input  style="border: none" name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
           if(empty($priceDetailOfExtraItem[0][0]))
           {
               echo 0;
@@ -180,7 +180,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
             ?>"</span></h4>
 
         <hr>
-        <div class="container m-auto row alert-warning" id="additems">
+        <div class="badge-warning row" id="additems">
 
             <?php
             $sql='SELECT hei.id,(SELECT ei.name from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.price from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.image from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),hei.active FROM hall_extra_items as hei  WHERE (ISNULL(hei.expire)) AND (hei.orderDetail_id='.$order.')';
@@ -326,7 +326,7 @@ include_once ("../../../webdesign/footer/footer.php");
                 var id=$(this).data("itemsid");
                 var name=$(this).data("name");
                 var image=$(this).data("image");
-            var text='<div id="jsid'+javaid+'" class="card" style="width: 18rem;">\n' +
+            var text='<div id="jsid'+javaid+'" class="card">\n' +
             '                <img class="card-img-top" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
             '                <div class="card-body ">\n' +
 
