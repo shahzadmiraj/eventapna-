@@ -146,18 +146,19 @@ if(isset($_POST['option']))
         $addAttributes=array();
         $quantity=array();
         $countAttribute=0;
-        if(isset($_POST['attribute']))
+        if(isset($_POST['attributeNamesInModel']))
         {
-            $addAttributes = $_POST['attribute'];
+            $addAttributes = $_POST['attributeNamesInModel'];
             $countAttribute=count($addAttributes);
-            $quantity=$_POST['quantity'];
+            $quantity=$_POST['quantityInModel'];
         }
+
         $dishid=$_POST['dishid'];
 
         $price=checknumberOtherNull($_POST['price']);
 
-
-            $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`) VALUES (NULL,"'.$timestamp.'",NULL,'.$price.','.$dishid.','.$userid.')';
+            $token=uniqueToken("dishWithAttribute");
+            $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$price.','.$dishid.','.$userid.',"'.$token.'")';
             querySend($sql);
             $dishWithAttributeid=mysqli_insert_id($connect);
             for($j=0;$j<$countAttribute;$j++)

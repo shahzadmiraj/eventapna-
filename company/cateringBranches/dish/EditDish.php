@@ -32,7 +32,7 @@ $companyid=$userdetail[0][0];
 <!DOCTYPE html>
 <head>
     <?php
-    include('../../../../webdesign/header/InsertHeaderTag.php');
+    include('../../../webdesign/header/InsertHeaderTag.php');
     ?>
     <title>Edit Dish </title>
     <meta name="description" content="Edit Dish ,Edit food,change dish only company user can used this
@@ -232,14 +232,14 @@ GROUP by name';
                              
                                
                                             <div class="form-group row">
-                <label class="col-form-label">Attribute name: '.$TypeOfAttribute[$i][0].' :</label>
+                <label class="col-form-label">Item : '.$TypeOfAttribute[$i][0].' :</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text">  <i class="fa fa-calculator" aria-hidden="true"></i> </span>
                     </div>
                      
-                                    <input hidden type="number" name="attribute[]" value="'.$TypeOfAttribute[$i][0].'">
-                                    <input   type="number" name="quantity[]" class="Quantity form-control" placeholder="Quantity of product">
+                                    <input hidden type="text" name="attributeNamesInModel[]" value="'.$TypeOfAttribute[$i][0].'">
+                                    <input   type="number" name="quantityInModel[]" class="Quantity form-control" placeholder="Quantity of product">
                 </div>
             </div>
                                
@@ -294,16 +294,41 @@ GROUP by name';
                 <div class="card-header text-danger">
                    <i class="fas fa-money-bill-alt"></i>Total price: '.$dishWithAttribute[$j][3].'
                 </div>
-                   <ul class="list-group list-group-flush">
+                <ul class="list-group">
+              
                 ';
                         $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishWithAttribute[$j][0].')';
                         $AttributeDetail=queryReceive($sql);
 
+                        if (count($AttributeDetail) > 0) {
 
-                        for($i=0;$i<count($AttributeDetail);$i++)
-                        {
-                            $display.=' <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i>Attribute Name : '.$AttributeDetail[$i][0].'  , Quantity : '.$AttributeDetail[$i][1].'</li>';
+
+                            $display .= ' <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>';
+
                         }
+                        for($k=0;$k<count($AttributeDetail);$k++)
+                        {
+                            $display .= ' 
+    <tr>
+      <th scope="row">'.($k+1).'</th>
+      <td>'.$AttributeDetail[$k][0].'</td>
+      <td>'.$AttributeDetail[$k][2].'</td>
+   </tr>';
+
+                        }
+                        if (count($AttributeDetail) > 0) {
+                            $display .= '</tbody>
+</table>';
+                        }
+
 
                         $display.='  
                      <li class="list-group-item"><i class="fas fa-user-plus"></i>'.$dishWithAttribute[$j][5].'</li>
@@ -498,7 +523,6 @@ include_once ("../../../webdesign/footer/footer.php");
                 state=true;
             if(validationClass("Quantity","Please Enter Quantity of Attribute"))
                 state=true;
-
             if(state)
                 return false;
             var formdata=new FormData($("#formaddprice")[0]);

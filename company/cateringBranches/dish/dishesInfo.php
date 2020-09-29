@@ -50,7 +50,7 @@ $companyid=$userdetail[0][0];
 <!DOCTYPE html>
 <head>
     <?php
-    include('../../../../webdesign/header/InsertHeaderTag.php');
+    include('../../../webdesign/header/InsertHeaderTag.php');
     ?>
     <title>Dish Management </title>
     <meta name="description" content="Management  Dish ,Management  food,Management  dish only company user can used this
@@ -225,8 +225,8 @@ GROUP by (dt.id)';
             $display.='<img class="card-img-top " src="'.$image.'" alt="Card image" style="height: 100px" >
 
 <div class="card-body">
-<h5 ><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</h5>
-Amount=' . $dishDetail[$j][3] . '/Dish id# '.$dishDetail[$j][1].' /
+<h5 ><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '</h5><br>
+Dish id# '.$dishDetail[$j][1].' <br>
 
 
 
@@ -269,8 +269,7 @@ Amount=' . $dishDetail[$j][3] . '/Dish id# '.$dishDetail[$j][1].' /
                     <a href="EditDish.php?Did='.$dishDetail[$j][1].'&Dtoken='.$dishDetail[$j][4].'"  class="btn btn-primary ">Manage >></a>
         </div>
        
-       
-       
+    
        
        
         </div>';

@@ -25,7 +25,7 @@ $List = implode(', ', $listOfCatering);
 <!DOCTYPE html>
 <head>
     <?php
-    include('../../../../webdesign/header/InsertHeaderTag.php');
+    include('../../../webdesign/header/InsertHeaderTag.php');
     ?>
     <title>Add Dish </title>
     <meta name="description" content="Add Dish ,Add food,new dish only company user can used this
@@ -315,7 +315,7 @@ include_once ("../../../webdesign/footer/footer.php");
 
 
             $(".nameofattribute").each( function() {
-                text+=' <th scope="col"><i class="fa fa-calculator" aria-hidden="true">Attribute : </i>'+$(this).val()+'</th>\n';
+                text+=' <th scope="col"><i class="fa fa-calculator" aria-hidden="true">Item : </i>'+$(this).val()+'</th>\n';
             });
 
             text+=   ' <th scope="col"><i class="fas fa-money-bill-alt"></i>Total Price </th>\n' +
@@ -365,11 +365,11 @@ include_once ("../../../webdesign/footer/footer.php");
         $("#addAttribute").click(function ()
         {
             var text=$("#attributetext").val();
-            if(validation($("#attributetext"),"Please Enter Attribute Name"))
+            if(validation($("#attributetext"),"Please Enter item Name"))
                 return false;
 
             $("#attributeHere").append('<div class="form-group row" id="removeid_'+rows+'">\n' +
-                '               <label class="col-4 col-form-label">Attribute Name</label>\n' +
+                '               <label class="col-4 col-form-label">Item Name</label>\n' +
                 '               <input readonly data-removeid="'+rows+'" value="'+text+'" name="attribute[]" class="col-6 form-control nameofattribute" type="text">\n' +
                 '               <input data-removeid="'+rows+'" type="button" class="col-2 form-control btn-danger removeattribute" value="-">\n' +
                 '           </div>');
