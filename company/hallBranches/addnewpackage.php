@@ -14,10 +14,20 @@ $CompanyInfo=queryReceive($sql);
 
 <!DOCTYPE html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <?php
+    include('../../webdesign/header/InsertHeaderTag.php');
+    ?>
+    <title>Add Hall Package</title>
+    <meta name="description" content="Add Hall Package page,Add Hall Package Deal ,Add Detail packages Marquee,Add Detail Marquee Deal,insert Detail New Dera Packages only company user can used this
+Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
+Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
+EVENT APNA  provides Free Software ....... So Register NOW
+">
+    <meta name="keywords" content="Add Hall Package page,Insert Package,New Package  Marquee,New Add Package  Marquee,New Package  Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
+
     <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
-    <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

@@ -35,7 +35,7 @@ $customerID=$orderDetailPerson[0][1];
     include('../webdesign/header/InsertHeaderTag.php');
     ?>
     <title>Payment Transfer</title>
-    <meta name="description" content="Payment Transfer to  only company user can used this to get payment
+    <meta name="description" content="Payment Transfer to  only company user can used this
 Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
 Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
 EVENT APNA  provides Free Software ....... So Register NOW
