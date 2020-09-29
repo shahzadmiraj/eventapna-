@@ -12,7 +12,6 @@ include_once ("CCServer/clientCateringServer.php");
 
 <!DOCTYPE html>
 <head>
-    Halwa poori
     <title>Catering Deals!</title>
     <?php
     include('../../../webdesign/header/InsertHeaderTag.php');

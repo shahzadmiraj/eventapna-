@@ -112,15 +112,20 @@ WHERE (a.dishWithAttribute_id='.$AllDishes[$i][3].')AND
 
     <div class="bottom">
         <div class="info">
-        <table class="table table-striped">
+      ';
+
+        if(count($Attributes)>0)
+        {
+            $display.='  <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Attribute </th>
+                            <th scope="col">Item Name </th>
                             <th scope="col">Quantity</th>
                         </tr>
                         </thead>
                         <tbody>';
+        }
 
 
 
@@ -136,18 +141,20 @@ for($j=0;$j<count($Attributes);$j++)
    </tr>';
 
 }
+        if(count($Attributes)>0)
+        {
+            $display.= ' </tbody>
+                    </table>';
+        }
 
         $display.= '
 
-
-                        </tbody>
-                    </table>
 </div>
 <ul class="list-group">
 <li class="list-group-item"><i class="fas fa-concierge-bell"></i> Dish name : '.$AllDishes[$i][0].'</li>
 <li class="list-group-item">id#'.$AllDishes[$i][3].'</li>
 <li class="list-group-item">Branch Name:'.$cateringname.'</li>
-<li class="list-group-item price"><i class="far fa-money-bill-alt"></i>Price :'.$AllDishes[$i][2].' <span class="old-price ml-3">'.($AllDishes[$i][2]+200).'</span></li>
+<li class="list-group-item price"><i class="far fa-money-bill-alt"></i>Price :'.$AllDishes[$i][2].' <span class="old-price ml-3">'.((int)$AllDishes[$i][2]+20).'</span></li>
 </ul>
       
     </div>
