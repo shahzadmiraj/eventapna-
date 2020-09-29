@@ -12,18 +12,19 @@ include_once ("CCServer/clientCateringServer.php");
 
 <!DOCTYPE html>
 <head>
+    Halwa poori
     <title>Catering Deals!</title>
-    <meta name="description" content="
-
+    <?php
+    include('../../../webdesign/header/InsertHeaderTag.php');
+    ?>
+    <title>Catering Deals!</title>
+    <meta name="description" content="Catering Deals Catering Services ,Services Company Services page, Order Manage Extra Item Hall,Manage Extra Item Marquee, Order Manage Extra Item Add Marquee,Manage Extra Item New Dera only company user can used this
 Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
 Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
-EVENT APNA  provides Free Software ....... So Register NOW
+EVENT APNA  provides Free Software ....... So Register NOW ,Halwa poori,Sajji,zarda,Seekh kabab is a delicious, juicy Pakistani kebab variety made with a combination of minced meat (typically lamb), onions, garlic, ginger, coriander, lemon juice, yogurt, and garam masala. The spices used in the dish can be modified according to personal preferences,A specialty of Pashtun cuisine, this spicy meat patty is prepared with a combination of minced beef or mutton. The unique taste of chapli kabab comes from spices such as dried coriander and pomegranate seeds, green chillis, and mint. Its name is derived from a Pashto word chaprikh, meaning flat, and even though chapli kabab is often said to have originated in Peshawar, today it stands as a favorite throughout Pakistan, Afghanistan, and India,Chicken karahi is a poultry dish that is popular in Pakistan and North India. The word karahi in its name refers to a thick and deep cooking-pot similar to a wok in which the dish is prepared. Apart from chicken, the dish is made with red chili powder, cumin, garam masala, ginger, allspice, cardamom, tomatoes, and garlic.,Chaat is a term signifying a variety of Indian street foods which usually combine salty, spicy, sweet, and sour flavors. The name chaat is derived from a Hindi verb chaatna, meaning to lick, possibly referring to the finger-licking good quality of the dishes.
 ">
-    <meta name="keywords" content="Book Wedding Hall,Catering Managment system,Hall Managment system, shadi hall software,marquee Software,Book marquee">
-    <meta name="author" content="shahzad miraj">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta http-equiv="refresh" content="120">
+    <meta name="keywords" content="Halwa poori,Sajji,zarda,Seekh kabab is a delicious, juicy Pakistani kebab ,iryani,Kolfa,ICream,Qorma,korma,Kaleem,BBQ,Salat,Catering Deals ,Food Deal,biryaniCatering Services,Food Services Company Management,Manage Extra Item Hall Marquee,Marquee,Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
+
     <script src="../../../jquery-3.3.1.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
     <script type="text/javascript" src="../../../bootstrap.min.js"></script>
