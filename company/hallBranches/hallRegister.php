@@ -52,7 +52,7 @@ include_once ("../../webdesign/header/header.php");
     <hr>
     <div class="form-group row">
         <input hidden type="number" name="userid" value="<?php echo $userdetail[0][3];?>">
-    <label class="col-form-label">Hall Name:</label>
+        <label class="col-form-label">Hall Name:</label>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -87,7 +87,7 @@ include_once ("../../webdesign/header/header.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
             </div>
-            <input id="AdvanceAmount"  name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance">
+            <input id="AdvanceAmount" value="0" name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance">
         </div>
     </div>
 
@@ -145,13 +145,13 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
     <div class="form-group row">
-        <label class="col-form-label">No. of Partition in Hall:</label>
+        <label class="col-form-label">How Many function manage on same date and  same time (1 to 4):</label>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-columns"></i></span>
             </div>
-            <input id="partitions" name="partition" type="number" class="form-control" placeholder="No. of Partition in Hall etc 0 ,1,2">
+            <input id="partitions" name="partition" type="number" class="form-control" placeholder="No.of manage functions in Hall etc  1,2">
         </div>
 
     </div>
@@ -176,7 +176,7 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-        <h4   class="text-center"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</h4>
+    <h4   class="text-center"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</h4>
     <hr>
 
 
@@ -237,7 +237,7 @@ include_once ("../../webdesign/footer/footer.php");
         {
             e.preventDefault();
             var state=false;
-            if(NumberRange("partitions","Please Enter Valid Patition min 0 and max 4",0,4))
+            if(NumberRange("partitions","How Many function manage on same date and  same time (1 to 4)",1,4))
             {
                 state=true;
             }

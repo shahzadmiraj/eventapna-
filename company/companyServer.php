@@ -156,14 +156,6 @@ if(isset($_POST['option']))
 
 
     }
-    else if($_POST['option']=="alreadydishremove")
-    {
-        $id=$_POST['id'];
-        $dayAndTime=date('Y-m-d H:i:s');
-        $sql='UPDATE `menu` SET expire="'.$dayAndTime.'" WHERE id='.$id.'';
-        querySend($sql);
-    }
-
     else if($_POST['option']=="viewmenu")
     {
         $packageDateid=$_POST['packageDateid'];
@@ -468,8 +460,6 @@ WHERE  id='.$order.'';
     }
 
 
-
-
-
 }
 ?>
+

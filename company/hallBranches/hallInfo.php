@@ -158,7 +158,7 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
 
         <div class="form-group row">
-            <label class="col-form-label ">No of Partition in Hall:</label>
+            <label class="col-form-label ">How Many function manage on same date and  same time (1 to 4):</label>
             <!--        <input name="partition" class="form-control col-4" type="number" value="--><?php //echo $halldetail[0][2]; ?><!--">-->
 
 
@@ -343,7 +343,7 @@ include_once ("../../webdesign/footer/footer.php");
         {
             e.preventDefault();
             var state=false;
-            if(NumberRange("partitions","Please Enter Valid Patition 0-4 ",0,4))
+            if(NumberRange("partitions","How Many function manage on same date and  same time (1 to 4)",0,4))
             {
                 state=true;
             }

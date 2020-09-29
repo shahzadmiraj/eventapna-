@@ -14,8 +14,6 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="CreatePackage")
     {
-
-
         $companyid=$_POST['companyid'];
         $selectedDatesString=$_POST['selectedDates'];
         $selectedDates=explode (",", $selectedDatesString);
@@ -49,7 +47,7 @@ if(isset($_POST['option']))
         }
         for ($i=0;($i<count($itemsName));$i++)
         {
-            $sql='INSERT INTO `menu`(`id`, `itemname`, `expire`, `package_id`, `active`, `itemtype`, `companyid`, `userActive`,`price`) VALUES (NULL,"'.$itemsName[$i].'",NULL,'.$id.',"' . $timestamp . '","'.$itemsType[$i].'",'.$companyid.','.$userid.','.$PriceItem[$i].')';
+            $sql='INSERT INTO `menu`(`id`, `itemname`, `expire`, `package_id`, `active`, `itemtype`, `companyid`, `userActive`,`price`,`ExpireUserId`) VALUES (NULL,"'.$itemsName[$i].'",NULL,'.$id.',"' . $timestamp . '","'.$itemsType[$i].'",'.$companyid.','.$userid.','.$PriceItem[$i].',NULL)';
             querySend($sql);
         }
 
@@ -95,6 +93,42 @@ if(isset($_POST['option']))
                 $sql='INSERT INTO `packageControl`(`id`, `package_id`, `hall_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$packageid.','.$hallactive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
                 querySend($sql);
             }
+        }
+
+        $SelecteditemIds=array();
+        if(isset($_POST['SelecteditemIds']))
+        {
+            $SelecteditemIds=$_POST['SelecteditemIds'];
+        }
+        $sql='SELECT `id` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packageid.')';
+        $Previousmenuid=queryReceive($sql);
+        $OneD = array_column($Previousmenuid, 0);
+        $clean1 = array_diff($OneD, $SelecteditemIds);
+        $clean2 = array_diff($SelecteditemIds, $OneD);
+        $final_output = array_merge($clean1, $clean2);
+        if(count($final_output)>0)
+        {
+            $List = implode(',', $final_output);
+            $sql='UPDATE `menu` SET `expire`="'.$timestamp.'",`ExpireUserId`='.$userid.' WHERE id in ('.$List.')';
+            querySend($sql);
+        }
+
+
+
+        $itemsName=array();
+        $itemsType=array();
+        $PriceItem=array();
+        if(isset($_POST['itemsName']))
+        {
+
+            $itemsName=$_POST['itemsName'];
+            $itemsType=$_POST['itemsType'];
+            $PriceItem=$_POST['PriceItem'];
+        }
+        for ($i=0;($i<count($itemsName));$i++)
+        {
+            $sql='INSERT INTO `menu`(`id`, `itemname`, `expire`, `package_id`, `active`, `itemtype`, `companyid`, `userActive`,`price`,`ExpireUserId`) VALUES (NULL,"'.$itemsName[$i].'",NULL,'.$packageid.',"' . $timestamp . '","'.$itemsType[$i].'",'.$companyid.','.$userid.','.$PriceItem[$i].',NULL)';
+            querySend($sql);
         }
 
 

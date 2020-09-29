@@ -32,20 +32,20 @@ $CompanyInfo=queryReceive($sql);
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <link rel="stylesheet" href="../../webdesign/css/comment.css">
@@ -190,80 +190,73 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
     </div>
 
+        <div class="form-group row m-auto">
+            <lable for="describe" class="col-form-label">Add New  Items in package  </lable>
+            <button type="button" class="btn btn-primary form-control " data-toggle="modal" data-target="#exampleModal">
+                + Add item
+            </button>
+        </div>
+
 
         <div class="container mt-5 border border-dark" id="RowsColumns">
 
 
             <?php
+            $RowPhp=1;
+            $ColumnPhp=1;
 
             $sql='SELECT `id`, `itemname`,`itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packageDetail[0][0].') GROUP BY itemtype';
             $MenuType=queryReceive($sql);
 
-
+            $arrayDisplay='';
             $display='';
 
             if(count($MenuType)>0)
-                $display="<h3 class='text-center'>Choices of items</h3>";
+                $display="<h3 class='text-center col-12'>Choices of items</h3>";
             for($i=0;$i<count($MenuType);$i++)
             {
-
-
-
-                $display.=' <div class="row" id="RowNumber">
-                                   <div class="col-12">
+                $arrayDisplay.='arrayOfItemType.push({
+                                            itemtypeNumber: '.($i+1).',
+                                            itemtype: "'.$MenuType[$i][2].'",
+                                                  });';
+                $RowPhp++;
+                $display.=' <div class="row" id="RowNumber-'.($i+1).'">
+                                   
                                     <div class="input-group mb-3 input-group-lg">
-
-                                            <input readonly  type="text" class="form-control text-center" placeholder="Name of items type"   style="border:none" value="'.($i+1).' Item Type: '.$MenuType[$i][2].'">
-
-                                        </div>
+                                            <button type="button" data-rownumber="'.($i+1).'" class="RemoveRow btn btn-danger">- Type </button>
+                                            <input readonly id="RowName-'.($i+1).'" type="text" class="form-control text-center" placeholder="Name of items type"   style="border:none" value="'.$MenuType[$i][2].'">
+                                            <button type="button" data-rownumber="'.($i+1).'"  class="btn btn-primary AddColumn"  >+ Item</button>
                                      </div>';
 
                 $sql='SELECT `id`, `itemname`,`itemtype`,`price`	 FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packageDetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
                 $MenuName=queryReceive($sql);
                 for($k=0;$k<count($MenuName);$k++)
                 {
-                    $display.='  <div class="card" style="width: 25rem;" id="columnno-\'+ColumnNumber+\'">
+                    $display.='  <div class="card" style="width: 25rem;" id="columnno-'.$k.'">
                                     <div class="card-body">
-                                            <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'.$MenuName[$k][1].'"  style="border:none"> </h5>';
+                                            <h5 class="card-title form-inline">Item Name: <input type="text" name="SelecteditemsName[]"  value="'.$MenuName[$k][1].'"  style="border:none"> </h5>
+                                            <input hidden type="number" name="SelecteditemIds[]"  value="'.$MenuName[$k][0].'"  >
+                                            ';
+                                    $priceShow="hidden";
+                                    if($MenuName[$k][3]!=0)
+                                        $priceShow="";
 
-                    $priceShow="hidden";
-                    if($MenuName[$k][3]!=0)
-                        $priceShow="";
-
-                                         $display.= '<h6 '.$priceShow.'  class="card-subtitle mb-2 text-muted form-inline">Item price: <input type="number" name="PriceItem[]" readonly value="'.$MenuName[$k][3].'"  style="border:none"></h6>
-                                            <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="itemsType[]" readonly value="'.$MenuType[$i][2].'"  style="border:none"></h6>
+                                         $display.= '<h6 '.$priceShow.'  class="card-subtitle mb-2 text-muted form-inline">Item price: <input type="number" name="SelectedPriceItem[]" readonly value="'.$MenuName[$k][3].'"  style="border:none"></h6>
+                                            <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="SelecteditemsType[]" readonly value="'.$MenuType[$i][2].'"  style="border:none"></h6>
+                                             <button data-columnno="'.$k.'" class="RemoveColumn btn btn-danger form-control"> Delete item</button>
                                         </div>
                                </div>';
+
+                    $ColumnPhp++;
                 }
 
-                $display.='
-                                    </div>';
+                $display.='</div>';
             }
 
             echo $display;
 
             ?>
 
-<!--            <div class="row" id="RowNumber'">-->
-<!--                                   <div class="col-12">-->
-<!--                                    <div class="input-group mb-3 input-group-lg">-->
-<!---->
-<!--                                            <input readonly  type="text" class="form-control text-center" placeholder="Name of items type"   style="border:none" value="'+ItemType+'">-->
-<!---->
-<!--                                        </div>-->
-<!--                                     </div>-->
-<!---->
-<!--                            <div class="card" style="width: 25rem;" id="columnno-'+ColumnNumber+'">-->
-<!--                                    <div class="card-body">-->
-<!--                                            <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'+ItemName+'"  style="border:none"> </h5>-->
-<!--                                            <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="itemsType[]" readonly value="'+ItemType+'"  style="border:none"></h6>-->
-<!--                                        </div>-->
-<!--                               </div>-->
-<!---->
-<!---->
-<!---->
-<!---->
-<!--            </div>-->
 
 
 
@@ -318,6 +311,8 @@ include_once ("../ClientSide/Company/Box.php");
 
 
     </form>
+
+
     <h2>Calender </h2>
     <hr>
     <div id="calendar" ></div>
@@ -357,19 +352,417 @@ include_once ("../ClientSide/Company/Box.php");
 
 <div class="col-12 mt-2 row" >
         <button id="deletePackage"  type="button"  class="btn btn-danger col-6 m-auto"><i class="fas fa-trash-alt"></i>Delect Package</button>
-    <button id="SubmitFormPackage"  type="button"  class="btn btn-primary col-6 m-auto">Submit</button>
+        <button id="SubmitFormPackage"  type="button"  class="btn btn-primary col-6 m-auto">Submit</button>
     </div>
 
 </form>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Item </h5>
+                        <button   type="button" class="close closemodel" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+
+                            <div class="container">
+
+
+                                <div class="form-group row">
+                                    <lable for="describe" class="col-form-label">Items Name:</lable>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        </div>
+                                        <input  id="NameOfItem" type="text"  class="form-control" placeholder="Name of item">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" id="DisplayNameOfItemType">
+                                    <lable for="describe" class="col-form-label">Items Type :</lable>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        </div>
+                                        <select id="NameOfItemType" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" id="NewItemTypeAdd">
+                                    <lable for="describe" class="col-form-label">Other item type:New Row</lable>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        </div>
+                                        <input  id="itemChoice" type="text" class="form-control" placeholder="Name of Item Type">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row" id="IncludeItem">
+                                    <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        </div>
+                                        <select id="IncludeItemOption" class="form-control">
+                                            <option value="includeItem">No Extra Chages .this Item include in this package</option>
+                                            <option value="NoItemNot include">Extra charges of this item</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" id="ExtrachargeOfitem" style="display: none">
+                                    <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        </div>
+                                        <input  id="ExtrachargeOfitemAmount" type="number" class="form-control" placeholder="How much Extra charge ?">
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                        <button type="button" id="AddItemInForm" class="btn btn-primary float-right">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <lable for="describe" class="col-form-label">Items Name:</lable>
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                            </div>
+                            <input  id="NameOfItemExtra" type="text"  class="form-control" placeholder="Name of item">
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="NewItemTypeAdd">
+                        <lable for="describe" class="col-form-label">Other item type:New Row</lable>
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                            </div>
+                            <input  readonly id="itemChoiceExtra" type="text" class="form-control" placeholder="Name of Item Type">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row" id="IncludeItemExtra">
+                        <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                            </div>
+                            <select id="IncludeItemOptionExtra" class="form-control">
+                                <option value="includeItem">No Extra Chages .this Item include in this package</option>
+                                <option value="NoItemNot include">Extra charges of this item</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="ExtrachargeOfitemExtra" style="display:none">
+                        <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                            </div>
+                            <input  id="ExtrachargeOfitemAmountExtra" type="number" class="form-control" placeholder="How much Extra charge ?">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="SubmitExtraColumn" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 <?php
 include_once ("../../webdesign/footer/footer.php");
 ?>
 <script>
+
     $(document).ready(function ()
     {
 
-        $("#SubmitFormPackage").click(function () {
+
+
+        function ExtraItemControl(Main,Secondary)
+        {
+            var value=$("#"+Main).val();
+            if(value==="includeItem")
+            {
+                $("#"+Secondary).hide();
+            }
+            else
+            {
+                $("#"+Secondary).show();
+            }
+        }
+
+        $("#IncludeItemOption").change(function ()
+        {
+            ExtraItemControl("IncludeItemOption","ExtrachargeOfitem");
+        });
+
+        $("#IncludeItemOptionExtra").change(function ()
+        {
+            ExtraItemControl("IncludeItemOptionExtra","ExtrachargeOfitemExtra");
+        });
+
+
+        var RowNumber=Number("<?php echo $RowPhp;?>");
+        var ColumnNumber=Number("<?php echo $ColumnPhp;?>");
+        var VarItemsType = {
+            itemtypeNumber: 1,
+            itemtype: "Other",
+        };
+        var arrayOfItemType= [];
+        arrayOfItemType.push(VarItemsType);
+        <?php
+        echo $arrayDisplay;
+        ?>
+        function  TextItemTypeOptions()
+        {
+            var text="";
+            arrayOfItemType.forEach(myFunction);
+            function myFunction(item, index, arr)
+            {
+                text+='<option value="'+arr[index].itemtype+'">'+arr[index].itemtype+'</option>';
+            }
+            $("#NameOfItemType").html(text);
+        }
+
+        TextItemTypeOptions();
+
+
+        function TypeControl()
+        {
+            var value=$("#NameOfItemType").val();
+            if(value==="Other")
+            {
+                $("#NewItemTypeAdd").show();
+            }
+            else
+            {
+                $("#NewItemTypeAdd").hide();
+            }
+        }
+
+        TypeControl();
+
+        $("#NameOfItemType").change(TypeControl);
+
+        function findIndex(itemtype)
+        {
+            var indexGloble=-1;
+            arrayOfItemType.forEach(myFunction);
+            function myFunction(item, index, arr)
+            {
+                if(arr[index].itemtype===itemtype)
+                {
+                    indexGloble=index;
+                }
+            }
+            return indexGloble;
+        }
+
+
+        function GetColumn(ItemName,ItemType,RowNumber,ColumnNumber,ItemPrice)
+        {
+            var text=' <div class="card" style="width: 25rem;" id="columnno-'+ColumnNumber+'">\n' +
+                '                <div class="card-body">\n' +
+                '                    <h5 class="card-title form-inline">Item Name: <input type="text" name="itemsName[]"  value="'+ItemName+'"  style="border:none"> </h5>\n' +
+                '                    <h6 class="card-subtitle mb-2 text-muted form-inline">Item type: <input type="text" name="itemsType[]" readonly value="'+ItemType+'"  style="border:none"></h6>\n' +
+                '                    <h6 class="card-subtitle mb-2 text-muted form-inline">Item Price: <input type="text" name="PriceItem[]" readonly value="'+ItemPrice+'"  style="border:none"></h6>\n' +
+                '                    <button data-columnno="'+ColumnNumber+'" class="RemoveColumn btn btn-danger form-control"> Delete item</button>\n' +
+                '                </div>\n' +
+                '            </div>';
+            return text;
+        }
+
+        function GetRowColumn(ItemName,ItemType,RowNumber,ColumnNumber,ItemPrice)
+        {
+            var text='<div class="row" id="RowNumber-'+RowNumber+'">\n' +
+                '            <div class="col-12">\n' +
+                '                <div class="input-group mb-3 input-group-lg">\n' +
+                '                    <button type="button" data-rownumber="'+RowNumber+'" class="RemoveRow btn btn-danger">- Type </button>\n' +
+                '                    <input readonly id="RowName-'+RowNumber+'" type="text" class="form-control text-center" placeholder="Name of items type"   style="border:none" value="'+ItemType+'">\n' +
+                '                    <button type="button" data-rownumber="'+RowNumber+'"  class="btn btn-primary AddColumn"  >+ Item</button>\n' +
+                '                </div>\n' +
+                '            </div>\n' ;
+
+            text+=GetColumn(ItemName,ItemType,RowNumber,ColumnNumber,ItemPrice);
+
+            text+='</div>';
+            return text;
+        }
+
+        $("#NameOfItemType").change(function () {
+            var ItemsTypes=$(this).val();
+        });
+
+
+        $("#AddItemInForm").click(function (e)
+        {
+            e.preventDefault();
+            var NameOfItem=$("#NameOfItem").val();
+            var TypeOfItem=$("#NameOfItemType").val();
+            var ExtraItemType=$("#IncludeItemOption").val();
+            var valueOfExtraCharge=$("#ExtrachargeOfitemAmount").val();
+            if(ExtraItemType=="includeItem")
+            {
+                valueOfExtraCharge=0;
+            }
+            var TypeString="";
+            if(NameOfItem=="")
+            {
+                alert("Enter Name of item");
+                return  false;
+            }
+            if(TypeOfItem==="Other")
+            {
+                //other type user select
+                TypeString=$("#itemChoice").val();
+
+                if(TypeString=="")
+                {
+                    alert("Please Enter type of item");
+                    return  false;
+                }
+
+                if(findIndex(TypeString)!=-1)
+                {
+                    alert("You Have already insert same Type of item");
+                    return false;
+                }
+                var VarItemsType = {
+                    itemtypeNumber: RowNumber,
+                    itemtype: TypeString,
+                };
+                arrayOfItemType.push(VarItemsType);
+                TextItemTypeOptions();
+                var text=GetRowColumn(NameOfItem,TypeString,RowNumber,ColumnNumber,valueOfExtraCharge);
+                $("#RowsColumns").append(text);
+                RowNumber++;
+                ColumnNumber++;
+            }
+            else
+            {
+                // not other select
+                TypeString= TypeOfItem;
+                var index=findIndex(TypeString);
+                var AlreadyRowNumber=arrayOfItemType[index].itemtypeNumber;
+                var text= GetColumn(NameOfItem,TypeString,AlreadyRowNumber,ColumnNumber,valueOfExtraCharge);
+                $("#RowNumber-"+AlreadyRowNumber).append(text);
+                ColumnNumber++;
+            }
+
+
+
+            $("#NameOfItem").val("");
+            $("#itemChoice").val("");
+            $("#ExtrachargeOfitem").val("");
+            $("#ExtrachargeOfitemAmount").val("");
+            $('#exampleModal').modal('hide');
+        });
+
+
+        $(document).on("click",".RemoveRow",function () {
+            var row=$(this).data("rownumber");
+            var typeitem=$("#RowName-"+row).val();
+            var index=findIndex(typeitem);
+            delete arrayOfItemType[index];
+            $("#RowNumber-"+row).remove();
+
+            TextItemTypeOptions();
+        });
+
+        $(document).on("click",".RemoveColumn",function () {
+            var col=$(this).data("columnno");
+            $("#columnno-"+col).remove();
+        });
+
+        var rowExtraNumber=-1;
+        $(document).on("click",".AddColumn",function () {
+
+            rowExtraNumber=$(this).data("rownumber");
+            var itemType=$("#RowName-"+rowExtraNumber).val();
+            $("#exampleModalLongTitle").html(itemType);
+            $('#exampleModalCenter').modal();
+            $("#NameOfItemExtra").val("");
+            $("#itemChoiceExtra").val(itemType);
+        });
+
+        $(document).on("click","#SubmitExtraColumn",function () {
+            var NameOfItemExtra=$("#NameOfItemExtra").val();
+            var itemChoiceExtra=$("#itemChoiceExtra").val();
+            var ExtraItemType=$("#IncludeItemOptionExtra").val();
+            var valueOfExtraCharge=$("#ExtrachargeOfitemAmountExtra").val();
+            if(ExtraItemType==="includeItem")
+            {
+                valueOfExtraCharge=0;
+            }
+
+            var text=GetColumn(NameOfItemExtra,itemChoiceExtra,rowExtraNumber,ColumnNumber,valueOfExtraCharge)
+            $("#RowNumber-"+rowExtraNumber).append(text);
+            ColumnNumber++;
+            $('#exampleModalCenter').modal("hide");
+        });
+
+
+
+        $("#SubmitFormPackage").click(function ()
+        {
 
             var formdata = new FormData($("#EditPackageForm")[0]);
             formdata.append("option","SubmitPackagesSave");
@@ -384,7 +777,10 @@ include_once ("../../webdesign/footer/footer.php");
                 },
                 success:function (data)
                 {
-                window.history.back();
+                    if(data!="")
+                        alert(data);
+                    else
+                    window.history.back();
                 }
             });
         });
@@ -491,26 +887,12 @@ include_once ("../../webdesign/footer/footer.php");
 
         });
 
-        function checkpaktype()
-        {
-            var PackagesType=$("#PackagesType").val();
-            if(PackagesType==0)
-            {
-                $("#selectedmenu").hide('slow');
-                $("#selectingmenu").hide('slow');
-            }
-            else
-            {
-                $("#selectedmenu").show('slow');
-                $("#selectingmenu").show('slow');
-            }
-        }
+
 
         $("#PackagesType").change(function ()
         {
             checkpaktype();
         });
-        checkpaktype();
         $("#deletePackage").click(function (e)
         {
             e.preventDefault();
@@ -549,104 +931,16 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 
-        $(".packagechange").change(function () {
-            var columnname=$(this).data("columnname");
-            var value=$(this).val();
-            var formdata=new FormData;
-            formdata.append("option","packagechange");
-            formdata.append("packageid",<?php echo $packageid;?>);
-            formdata.append("value",value);
-            formdata.append("columnname",columnname);
-            $.ajax({
-                url:"../companyServer.php",
-                method:"POST",
-                data:formdata,
-                contentType: false,
-                processData: false,
-
-                beforeSend: function() {
-                    $('#pleaseWaitDialog').modal();
-                },
-                success:function (data)
-                {
-                    $('#pleaseWaitDialog').modal('hide');
-
-                    if(data!='')
-                    {
-                        alert(data);
-                    }
-                }
-            });
-
-
-        });
-
 
 
         var numbers=0;
-        $(document).on("click",".touchdish",function ()
-        {
-            var text='';
-            var value=$(this).val();
-            var id=$(this).data("dishid");
-            var image=$(this).data("image");
-            var dishname=$(this).data("dishname");
-            if(value=="Remove")
-            {
 
-                $("#dishtempid"+id).remove();
-            }
-            else
-            {
 
-                text="<div id=\"dishtempid"+numbers+"\" class=\"col-4 alert-danger border m-1 form-group p-0\" style=\"height: 30vh;\" >\n" +
-                    "            <img src=\""+image+"\" class=\"col-12\" style=\"height: 15vh\">\n" +
-                    "            <p class=\"col-form-label\" class=\"form-control col-12\">"+dishname+"</p>\n" +
-                    "            <input    data-dishid=\""+numbers+"\" type=\"button\" value=\"Remove\" class=\"form-control col-12 touchdish btn btn-danger\">\n" +
-                    "            <input hidden type=\"text\"  name=\"dishname[]\"  value=\""+dishname+"\">\n" +
-                    "             <input hidden type=\"text\"  name=\"image[]\"  value=\""+image+"\">\n" +
-                    "        </div>";
-                numbers++;
-                $("#selectedmenu").append(text);
-
-            }
-
-        });
-        $("#btnsubmit").click(function ()
-        {
-            var formdata=new FormData($('#submitpackage')[0]);
-            formdata.append("option","Extendmenu");
-            formdata.append("packageid",<?php echo $packageid;?>)
-            $.ajax({
-                url:"../companyServer.php",
-                method:"POST",
-                data:formdata,
-                contentType: false,
-                processData: false,
-
-                beforeSend: function() {
-                    $('#pleaseWaitDialog').modal();
-                },
-                success:function (data)
-                {
-                    $('#pleaseWaitDialog').modal('hide');
-
-                    if(data!='')
-                    {
-                        alert(data);
-                    }
-                    else
-                    {
-                        window.history.back();
-                    }
-                }
-            });
-
-        });
 
 
         $("#btncancel").click(function (e)
-        {  e.preventDefault();
+        {
+            e.preventDefault();
             var value=$(this).val();
             var formdata=new FormData;
             formdata.append("option","ExpireBtn");
@@ -678,37 +972,6 @@ include_once ("../../webdesign/footer/footer.php");
             });
         });
 
-        $(".alreadydishid").click(function ()
-        {
-           var id= $(this).data("dishid");
-
-           $.ajax({
-
-               url:"../companyServer.php",
-               method:"POST",
-               data:{option:"alreadydishremove",id:id},
-               dataType:"text",
-
-               beforeSend: function() {
-                   $('#pleaseWaitDialog').modal();
-               },
-               success:function (data)
-               {
-                   $('#pleaseWaitDialog').modal('hide');
-                    if(data!="")
-                    {
-                        alert(data);
-                    }
-                    else
-                    {
-                            $("#alreadydishid"+id).remove();
-                    }
-               }
-
-           });
-
-
-        });
 
 
         $('#myModal').on('shown.bs.modal', function () {

@@ -710,16 +710,14 @@ $(document).ready(function ()
    {
        var state=false;
 
-       if(NumberRange("MinimumGuest","Pleas enter Minimum Guest ",1,3000))
+       if(NumberRange("MinimumGuest","Pleas enter Minimum Guest (1 to 3000) ",1,3000))
        {
            state=true;
        }
-
        if(validationWithString("selectedValues","Please Enter Dates of packages"))
        {
            state=true;
        }
-
        if(validationWithString("packagename","Please Enter Name of packages"))
        {
            state=true;
