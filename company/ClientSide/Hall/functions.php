@@ -259,7 +259,7 @@ function HallSearching($latitude,$longitude,$country,$hallname,$daytime,$date,$p
     $result=ShowAllHallPackages($latitude,$longitude,$country,$hallname,$daytime,$date,$perhead);
     if($result=="")
     {
-        echo '<h1 class="btn-danger m-5 ">Not Found</h1>';
+        echo '';
     }
     else
     {

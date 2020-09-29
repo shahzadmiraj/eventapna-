@@ -50,6 +50,7 @@
                                 <a href="#" class="pull-left">
                                     <img src="';
                             //userimage
+
                             if((file_exists($destinatiosUser.$commentresult[$i][7])) &&($commentresult[$i][7]!=""))
                             {
                                 $display.=$destinatiosUser.$commentresult[$i][7];

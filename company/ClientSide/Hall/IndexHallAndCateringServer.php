@@ -15,7 +15,7 @@ if($_POST['option']=="ShowDishes")
      $result=ShowAllHallPackages($latitude,$longitude,$country,$hallname,$daytime,$date,$perhead);
      if($result=="")
      {
-         echo '<h1 class="col-12 alert-danger  ">Not Found</h1>';
+         echo '';
      }
      else
      {

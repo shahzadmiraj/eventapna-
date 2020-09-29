@@ -87,7 +87,8 @@
                 beforeSend: function() {
                     $('#pleaseWaitDialog').modal();
                 },
-                success:function (data) {
+                success:function (data)
+                {
                     $('#pleaseWaitDialog').modal('hide');
                     if(data=="")
                     {

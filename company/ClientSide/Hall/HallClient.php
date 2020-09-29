@@ -405,8 +405,8 @@ $Owners=queryReceive($sql);
     {
 
         $SenderAddress[$i]=$Owners[$i][3];
-        $SenderName[$i]=$Owners[$i][1];
-        $imageUser='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+        $SenderName[$i]=$Owners[$i][0];
+        $imageUser='../../../images/systemImage/imageNotFound.png';
         if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))
         {
             $imageUser= '../../../images/users/'.$Owners[$i][1];

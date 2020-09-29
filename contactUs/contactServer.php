@@ -18,6 +18,6 @@ $ExtraInformation=$_POST['ExtraInformation'];
         $SenderName=explode(",", $SenderNameList);
     $Subject="Customer Contact to your company";
         $html='<h2>I am '.$username.' and my Email is '.$email.',</h2><br>Comments:'.$Message.'<h5>Information from page:</h5>'.$ExtraInformation;
-        //print_r($SenderAddress);
+
         echo serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$email);
 }

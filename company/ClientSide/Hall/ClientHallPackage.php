@@ -531,7 +531,7 @@ else
         for($i=0;$i<count($Owners);$i++)
         {
             $SenderAddress[$i]=$Owners[$i][3];
-            $SenderName[$i]=$Owners[$i][1];
+            $SenderName[$i]=$Owners[$i][0];
 
             $imageUser='../../../images/systemImage/imageNotFound.png';
             if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))

@@ -303,17 +303,21 @@ if(isset($_POST['option']))
                  
                     </ul>
                  
-                    </div>
-                    <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Attribute</th>
-      <th scope="col">Quantity</th>
-    </tr>
-  </thead>
-  <tbody>
-                    ';
+                    </div>';
+
+            if(count($dishWithAttribute)>0) {
+
+
+                $display .= ' <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Item Name</th>
+                  <th scope="col">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>  ';
+            }
 
 
             $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishWithAttribute[$j][0].')';
@@ -331,11 +335,16 @@ if(isset($_POST['option']))
    </tr>';
             }
 
+            if(count($dishWithAttribute)>0) {
+
+
+                $display .= ' </tbody>
+                </table> ';
+            }
 
 
 
-            $display.=  '</tbody>
-</table>
+            $display.=  '
                     <div class="card-footer m-auto">
                     <h6 class="text-danger">Price: <i class="fas fa-money-bill-alt"></i>  '.$dishWithAttribute[$j][3].'</h6>
                     </div>

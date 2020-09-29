@@ -322,7 +322,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
 
 
         <!-- Modal content-->
-        <div class="modal-content"  id="AddDishDetail"  >
+        <div class="modal-content"  id="AddDishDetail"  style="height: 100vh;overflow: auto">
 
         </div>
 
@@ -339,6 +339,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
 include_once ("../webdesign/footer/footer.php");
 ?>
 <script>
+
 
 
     $(document).ready(function ()
