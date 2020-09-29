@@ -26,11 +26,21 @@ $customer=$processInformation[0][7];
 ?>
 <!DOCTYPE html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <?php
+    include('../webdesign/header/InsertHeaderTag.php');
+    ?>
+    <title>Add Food Order </title>
+    <meta name="description" content="Add Food Order,Book new Food order, only company user can used this to get payment
+Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
+Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
+EVENT APNA  provides Free Software ....... So Register NOW
+">
+    <meta name="keywords" content="Add Food Order  Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
+
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

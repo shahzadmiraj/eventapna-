@@ -15,23 +15,19 @@ if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
 
 <!DOCTYPE html>
 <head>
-    <link rel = "icon" href ="gmail.png"  type = "image/x-icon">
-    <meta charset="UTF-8">
-    <title>Wedding Hall Deals! , Catering Deals!</title>
-    <meta name="description" content="
+
+    <?php
+    include('webdesign/header/InsertHeaderTag.php');
+
+    ?>
+    <title>Wedding Hall Deals</title>
+    <meta name="description" content="Home Page Event apna
 Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
 Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
 EVENT APNA  provides Free Software ....... So Register NOW
 ">
-    <meta name="keywords" content="Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
-    <meta name="author" conte   nt="shahzad miraj">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta http-equiv="refresh" content="4000000">
+    <meta name="keywords" content="Home page Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-
-
-    <script data-ad-client="ca-pub-6269313348625273" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
     <script src="jquery-3.3.1.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
@@ -42,9 +38,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <link rel="stylesheet" href="webdesign/css/loader.css">
-
     <link rel="stylesheet" href="webdesign/css/complete.css">
     <link rel="stylesheet" href="map/style.css">
     <link rel="stylesheet" href="webdesign/css/card.css">
