@@ -314,12 +314,10 @@ WHERE (p.id='" . $person[0][2] . "')AND(ISNULL(n.expire)) order BY n.id";
                 {
                 //hall order
                 $menu = array();
-                if ($detailorder[0][3] == 1)
-                {
                     //with menu
-                    $sql = 'SELECT `dishname`, `image` FROM `menu` WHERE (package_id=' . $detailorder[0][21] . ') AND ISNULL(expire)';
+                    $sql = 'SELECT `itemname`, `itemtype`,`price` FROM `menu` WHERE (package_id=' . $detailorder[0][21] . ') AND ISNULL(expire)';
                     $menu = queryReceive($sql);
-                }
+
                 $sql = 'SELECT (SELECT ei.name FROM Extra_Item as ei WHERE ei.id=hei.Extra_Item_id), (SELECT ei.price FROM Extra_Item as ei WHERE ei.id=hei.Extra_Item_id) from hall_extra_items as hei
 WHERE (hei.orderDetail_id=' . $orderIds[$i] . ')AND(ISNULL(hei.expire))';
                 $DetailExtraItems = queryReceive($sql);
