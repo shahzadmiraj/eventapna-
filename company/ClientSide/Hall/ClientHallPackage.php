@@ -29,8 +29,10 @@ $PackageOrignal=queryReceive($sql);
 $sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`,'.$PackageOrignal[0][0].', `package_name`, `active`,`MinimumGuest`  FROM `packages` WHERE id='.$PackageDate[0][0].'';
 $PackageDetail=queryReceive($sql);
 
-$sql='SELECT `id`, `dishname`, `image` FROM `menu` WHERE (package_id='.$PackageDetail[0][0].')AND(ISNULL(expire))';
-$Menu=queryReceive($sql);
+//$sql='SELECT `id`, `dishname`, `image` FROM `menu` WHERE (package_id='.$PackageDetail[0][0].')AND(ISNULL(expire))';
+
+$sql='SELECT `itemname`, `itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$PackageDetail[0][0].') GROUP by itemtype';
+$MenuType=queryReceive($sql);
 
 
 
@@ -109,7 +111,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 </head>
 <body>
 <?php
-include_once ("../../../webdesign/header/header.php");
+//include_once ("../../../webdesign/header/header.php");
 ?>
 
 
@@ -269,9 +271,9 @@ include_once ("../Company/Box.php");
 
 <?php
 $isbook=false;
-if($MaxGuestMaxPartition[3]<0)
+if($MaxGuestMaxPartition[3]<=0)
     $isbook=true;
-if($MaxGuestMaxPartition[2]<0)
+if($MaxGuestMaxPartition[2]<=0)
     $isbook=true;
 
 if($isbook)
@@ -310,35 +312,41 @@ else
 
 
 
-    <div class="row">
+    <div class="row container">
+
+
+
 
         <?php
+
+
+        $sql='SELECT `itemname`, `itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$PackageDetail[0][0].') GROUP by itemtype';
+        $MenuType=queryReceive($sql);
         $display='';
-        $image="";
-        for ($i=0;$i<count($Menu);$i++)
+
+        for($i=0;$i<count($MenuType);$i++)
         {
-            $image=$Menu[$i][2];
-            if((file_exists('../../images/dishImages/'.$image))&&($image!=""))
-                $image='../../images/dishImages/'.$image;
-            else
-                $image='https://static1.bigstockphoto.com/3/1/1/large1500/113342513.jpg';
+            $display.='<ul class="list-group">
+            <li class="list-group-item">Item Type : '.$MenuType[$i][1].' Choose One out of these</li>';
+            $sql='SELECT `itemname`, `itemtype`,`price` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$PackageDetail[0][0].') AND(itemtype="'.$MenuType[$i][1].'")';
+            $MenuName=queryReceive($sql);
+            for($k=0;$k<count($MenuName);$k++)
+            {
+                $display.='<li class="list-group-item">Name : '.$MenuName[$k][0];
 
-            $display.='
-            
-            <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <img src="'.$image.'" class="card-img-top" src="" alt="Image">
-                <div class="card-body">
-                    <h4 class="card-title">'.$Menu[$i][1].'</h4>
-                </div>
-            </div>
-        </div>
-            
-            ';
+                if($MenuName[$k][2]!=0)
+                {
+                    $display.=' <span class="float-right btn btn-info"> Price :'.$MenuName[$k][2].'</span>';
+                }
+                $display.='</li>';
+            }
+             $display.='</ul>';
         }
-
         echo $display;
+
         ?>
+
+
 
 
 
@@ -397,8 +405,6 @@ else
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         <?php
                         $halltype=array("Marquee","Hall","Deera /Open area");
-
-
                         echo $halltype[$hallInformation[0][7]];?>
                     </div>
 
@@ -479,10 +485,10 @@ else
                 $display .= '
             
             <div class="col-md-4 mb-5 ">
-            <div class="card h-100">
+            <div class="card">
                 <img src="' . $image . '" class="card-img-top" src="" alt="Image" style="height: 20vh">
                 <div class="card-body">
-                    <h6 class="card-title">' . $Extraitem[$i][1] . '<span class="float-right text-danger">Amount ' . $Extraitem[$i][2] . '</span></h6>
+                    <p class="card-title">' . $Extraitem[$i][1] . '<span class="float-right text-danger">Amount ' . $Extraitem[$i][2] . '</span></p>
                 </div>
             </div>
             </div>
@@ -516,6 +522,8 @@ else
         $Owners=queryReceive($sql);
 
 
+
+
         $count=count($Owners);
         if(count($users)>0)
             $Owners[$count]=$users[0];
@@ -524,7 +532,7 @@ else
             $SenderAddress[$i]=$Owners[$i][3];
             $SenderName[$i]=$Owners[$i][1];
 
-            $imageUser='https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png';
+            $imageUser='../../../images/systemImage/imageNotFound.png';
             if(file_exists('../../../images/users/'.$Owners[$i][1])&&($Owners[$i][1]!=""))
             {
                 $imageUser= '../../../images/users/'.$Owners[$i][1];
@@ -548,6 +556,10 @@ else
 
     </div>';
         }
+        $SenderAddressUnique=array_unique($SenderAddress);
+        $SenderNameUnique=array_unique($SenderName);
+        $SenderAddressList= implode(',', $SenderAddressUnique);
+        $SenderNameList=implode(',',$SenderNameUnique)
 
 
 

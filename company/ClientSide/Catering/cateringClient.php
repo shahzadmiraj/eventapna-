@@ -324,6 +324,12 @@ include_once ("../Company/Box.php");
     </div>';
         }
 
+        $SenderAddressUnique=array_unique($SenderAddress);
+        $SenderNameUnique=array_unique($SenderName);
+        $SenderAddressList= implode(',', $SenderAddressUnique);
+        $SenderNameList=implode(',',$SenderNameUnique)
+
+
 
 
         ?>
