@@ -23,7 +23,7 @@
                                 </div>
                                 <input name="image" type="file" class="btn-outline-secondary   btn col-5 ">
                                 <?php
-                                if($userid=="NoUser")
+                                if(!isset($_COOKIE['userid']))
                                 {
                                     echo '<a href="'.$Root.'user/userLogin.php" class="btn btn-info pull-right float-right col-5">Post ( only user) </a>';
                                 }

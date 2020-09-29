@@ -11,7 +11,8 @@ $userid="NoUser";
 $PackageDateid=$_GET['pdid'];
 $PackageToken=$_GET['pdtoken'];
 
-
+if(isset($_COOKIE['userid']))
+    $userid=$_COOKIE['userid'];
 
 
 $sql='SELECT pd.package_id,pd.selectedDate FROM packageDate as pd 
@@ -111,7 +112,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 </head>
 <body>
 <?php
-//include_once ("../../../webdesign/header/header.php");
+include_once ("../../../webdesign/header/header.php");
 ?>
 
 
@@ -672,6 +673,7 @@ include_once "../All/Comments.php"
 
 
 <script src="../../../map/constantMap.js"></script>
+
 <script>
 
     $(document).ready(function()
