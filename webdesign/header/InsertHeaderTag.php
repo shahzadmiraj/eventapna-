@@ -1,6 +1,6 @@
 <?php
 echo '
- <link rel = "icon" href ="'.$Root.'.gmail.png"  type = "image/x-icon">
+ <link rel = "icon" href ="'.$Root.'gmail.png"  type = "image/x-icon">
     <meta charset="UTF-8">
  <meta name="author" content="shahzad miraj">
     <meta name="viewport" content="width=device-width, initial-scale=1">

@@ -281,7 +281,7 @@ include_once ("../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $('#pleaseWaitDialog').modal('hide');
-                    if(data!="")
+                    if($.trim(data)!="")
                     {
                         alert(data);
                         return false;
