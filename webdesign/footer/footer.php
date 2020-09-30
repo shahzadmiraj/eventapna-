@@ -32,25 +32,32 @@
                 <div class="col-md-6 col-lg-7 text-center text-md-right">
 
                     <!-- Facebook -->
-                    <a class="fb-ic">
-                        <i class="fab fa-facebook-f white-text mr-4"> </i>
+                    <a href="https://www.facebook.com/EventApnaPlanner" class="fb-ic ">
+                        <i class="fab fa-facebook-f  mr-4 hover" style="font-size:32px;color:blue;"> </i>
                     </a>
-                    <!-- Twitter -->
-                    <a class="tw-ic">
-                        <i class="fab fa-twitter white-text mr-4"> </i>
+                    <a href="https://www.youtube.com/channel/UCC0PR__7MZiSIiVlxD2Cfkg" class="fb-ic ">
+                        <i class="fab fa-youtube  mr-4" aria-hidden="true" style="font-size:32px;color:rgba(165,0,0,0.82);"></i>
                     </a>
                     <!-- Google +-->
-                    <a class="gplus-ic">
-                        <i class="fab fa-google-plus-g white-text mr-4"> </i>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=support@eventapna.com" target="_blank" class="gplus-ic ">
+                        <i class="fab fa-google-plus-g  mr-4" style="font-size:32px;color:#ffffff;"> </i>
                     </a>
+
+
+                    <!-- Twitter -->
+                    <!--                    <a class="tw-ic">-->
+                    <!--                        <i class="fab fa-twitter white-text mr-4"> </i>-->
+                    <!--                    </a>-->
+
+
                     <!--Linkedin -->
-                    <a class="li-ic">
-                        <i class="fab fa-linkedin-in white-text mr-4"> </i>
-                    </a>
+                    <!--                    <a class="li-ic">-->
+                    <!--                        <i class="fab fa-linkedin-in white-text mr-4"> </i>-->
+                    <!--                    </a>-->
                     <!--Instagram-->
-                    <a class="ins-ic">
-                        <i class="fab fa-instagram white-text"> </i>
-                    </a>
+                    <!--                    <a class="ins-ic">-->
+                    <!--                        <i class="fab fa-instagram white-text"> </i>-->
+                    <!--                    </a>-->
 
                 </div>
                 <!-- Grid column -->
@@ -108,7 +115,7 @@
                 <h6 class="text-uppercase font-weight-bold">Contact</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <i class="fas fa-envelope m-1"></i> group.of.shaheen@gmail.com</p>
+                    <i class="fas fa-envelope m-1"></i> support@eventapna.com</p>
                 <p>
                     <i class="fas fa-phone mr-3"></i> + 092 335 049 8004</p>
                 <p>
@@ -120,7 +127,7 @@
 
 
 
-                <!-- Default inline form -->
+            <!-- Default inline form -->
 
 
 
@@ -139,7 +146,7 @@
                     </div>
                 </form>
             -->
-                <!-- Default inline form -->
+            <!-- Default inline form -->
 
 
 

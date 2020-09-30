@@ -122,14 +122,14 @@ AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perhea
         }
     }
 
-    if($MaxGuestMaxPartition["RemainingGuest"]<$guests)
+    if($MaxGuestMaxPartition["RemainingGuest"]<=$guests)
     {
         $display.='<p class="btn-danger col-12">Note:- Hall Total Arrangement : '.$MaxGuestMaxPartition["TotalGuest"].' / Remaining Arrangement : '.$MaxGuestMaxPartition["RemainingGuest"].' Now you are booking arrangement  of  '.$guests.' guest So Over Arrangement is not allow...   </p>';
         $isShowButton=false;
     }
-    if($MaxGuestMaxPartition["RemainingPatition"]<0)
+    if($MaxGuestMaxPartition["RemainingPatition"]<=0)
     {
-        $display.='<p class="btn-danger col-12">Hall Total Patition  : '.$MaxGuestMaxPartition["TotalPatition"].' / Already Booked Patition : '.$MaxGuestMaxPartition["RemainingPatition"].'  ,So Over Patition is not allow...   </p>';
+        $display.='<p class="btn-danger col-12">Hall Total Function Arrangement  : '.$MaxGuestMaxPartition["TotalPatition"].' / Remainning Fuction arrangement : '.$MaxGuestMaxPartition["RemainingPatition"].'  ,So Over Patition is not allow...   </p>';
         $isShowButton=false;
     }
     if(count($detailpackage)==0)

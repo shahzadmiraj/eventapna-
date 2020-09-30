@@ -329,12 +329,13 @@ include_once ("../../webdesign/footer/footer.php");
             var packageDated;
             var amount=0;
             var MenuChoicePrice=AllChoiceItemAmounCalculate();
-
-
             if($("input[name='defaultExampleRadios']:checked"))
             {
                 packageDated=$("input[name='defaultExampleRadios']:checked").val();
-                amount=$("#selectpricefix"+packageDated).val();
+                if( $('#selectpricefix'+packageDated).length )         // use this if you are using id to check
+                {
+                    amount=$("#selectpricefix"+packageDated).val();
+                }
                 $("#totalamount").val((Number(amount)+Number(MenuChoicePrice))*Number(guests));
             }
             RemainingAmount();
@@ -538,7 +539,7 @@ include_once ("../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $('#pleaseWaitDialog').modal('hide');
-                    if(data!="")
+                    if($.trim(data)!="")
                     {
                         alert(data);
                     }

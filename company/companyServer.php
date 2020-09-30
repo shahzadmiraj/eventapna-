@@ -227,8 +227,7 @@ WHERE
             $Discount=chechIsEmpty($_POST['Discount']);
             $Charges=chechIsEmpty($_POST['Charges']);
         $timestamp = date('Y-m-d H:i:s');
-        $MenuTypeInpackages=$_POST['MenuTypeInpackages'];
-        $MenuTypeInpackagesArray=explode(",", $MenuTypeInpackages);
+
             if($time=="Morning")
             {
                 $time="09:00:00";
@@ -261,15 +260,17 @@ WHERE
             $token=$_POST['token'];
             $last=mysqli_insert_id($connect);
 
-
-            for($i=0;$i<count($MenuTypeInpackagesArray);$i++)
+            if(isset($_POST['MenuTypeInpackages']))
             {
-                if(isset($_POST["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]]))
-                {
-                    $sql='INSERT INTO `hallChoiceSelect`(`id`, `expire`, `active`, `ActiveUser`, `ExpireUser`, `menu_id`, `orderDetail_id`) VALUES (NULL,NULL,"'.$timestamp.'",'.$userid.',NULL,'.$_POST["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]].','.$last.')';
-                    querySend($sql);
-                }
+                $MenuTypeInpackages = $_POST['MenuTypeInpackages'];
+                $MenuTypeInpackagesArray = explode(",", $MenuTypeInpackages);
+                for ($i = 0; $i < count($MenuTypeInpackagesArray); $i++) {
+                    if (isset($_POST["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]])) {
+                        $sql = 'INSERT INTO `hallChoiceSelect`(`id`, `expire`, `active`, `ActiveUser`, `ExpireUser`, `menu_id`, `orderDetail_id`) VALUES (NULL,NULL,"' . $timestamp . '",' . $userid . ',NULL,' . $_POST["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]] . ',' . $last . ')';
+                        querySend($sql);
+                    }
 
+                }
             }
 
             $sql='UPDATE BookingProcess as bp SET bp.orderDetail_id='.$last.'  WHERE (bp.id='.$pid.')AND(bp.token="'.$token.'")';

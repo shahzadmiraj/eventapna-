@@ -195,7 +195,6 @@ include_once ("../../webdesign/footer/footer.php");
                     success:function(data)
                     {
                         $("#TableCalender").html(data);
-
                     }
                 });
             }
@@ -248,20 +247,24 @@ include_once ("../../webdesign/footer/footer.php");
                         processData: false,
                         success: function(doc)
                         {
-                            var obj = jQuery.parseJSON(doc);
                             var events = [];
-                            var packids=[];
-                            $.each(obj, function(index, value) {
-                                events.push({
-                                    end: value['end'],
-                                    id: value['id'],
-                                    start: value['start'],
-                                    title: value['title'],
-                                });
-                                packids.push(parseInt(value['id']));
-                            });
-                            tabel(packids);
+                            var packids = [];
 
+
+                            if(isNaN(doc))
+                            {
+                                var obj = jQuery.parseJSON(doc);
+                                $.each(obj, function (index, value) {
+                                    events.push({
+                                        end: value['end'],
+                                        id: value['id'],
+                                        start: value['start'],
+                                        title: value['title'],
+                                    });
+                                    packids.push(parseInt(value['id']));
+                                });
+                            }
+                            tabel(packids);
                             callback(events);
                         },
                         error: function(e, x, y) {

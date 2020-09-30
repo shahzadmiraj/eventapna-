@@ -16,7 +16,7 @@ if($_POST['option']=="ViewPackages")
 
         $AllHalls=queryReceive($sql);
         $hallOneD = array_column($AllHalls, 0);
-        $List = implode(', ', $hallOneD);
+        $List = implode(',', $hallOneD);
 
     }
     else
@@ -56,8 +56,19 @@ if($_POST['option']=="ViewPackages")
 
     $sql='SELECT  `package_id`  FROM `packageControl` WHERE ISNULL(expire)AND(company_id='.$companyid.')AND(hall_id IN('.$List.'))';
     $packagesSql=queryReceive($sql);
+    //echo $sql;
     $packagesList = array_column($packagesSql, 0);
-    $packagesStringList = implode(', ', $packagesList);
+
+    $listOfPackageSql='';
+    $packagesStringList = implode(',', $packagesList);
+    if(count($packagesSql)==0)
+    {
+        exit();
+    }
+    else
+    {
+        $listOfPackageSql='AND(p.id in ('.$packagesStringList.') )';
+    }
 
 
 
@@ -65,14 +76,14 @@ if($_POST['option']=="ViewPackages")
     $sql = 'SELECT p.id,p.isFood,package_name,pd.selectedDate,p.dayTime,pd.id FROM packages as p INNER JOIN packageDate as pd
 on p.id=pd.package_id
 WHERE
-(ISNULL(p.expire)) AND (ISNULL(pd.expire))
-AND(p.id IN ('.$packagesStringList.') )
-'.$daytime.' '.$packagetype.'
+(ISNULL(p.expire)) AND (ISNULL(pd.expire)) '.$listOfPackageSql.'
+'.$daytime.' '.$packagetype.' 
 ';
     $ViewPackages = queryReceive($sql);
 
 
-    for ($i = 0; $i < count($ViewPackages); $i++) {
+    for ($i = 0; $i < count($ViewPackages); $i++)
+    {
         $packagename = 'Seating';
         if ($ViewPackages[$i][1] == 1)
             $packagename = $ViewPackages[$i][2];
