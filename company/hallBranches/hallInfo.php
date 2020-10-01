@@ -351,6 +351,7 @@ include_once ("../../webdesign/footer/footer.php");
 
         $("#submitedithall").click(function (e)
         {
+
             e.preventDefault();
             var state=false;
             if(NumberRange("partitions","How Many function manage on same date and  same time (1 to 4)",0,4))
@@ -376,7 +377,8 @@ include_once ("../../webdesign/footer/footer.php");
             }
             if(state)
                 return false;
-
+            if (!confirm('Are you sure you want to Save Hall information ?'))
+                return  false;
             var formdata=new FormData($("#formhall")[0]);
             formdata.append("option","halledit");
             $.ajax({

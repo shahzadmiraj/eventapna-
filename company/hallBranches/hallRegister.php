@@ -240,6 +240,7 @@ include_once ("../../webdesign/footer/footer.php");
 
         $('#submit').click(function (e)
         {
+
             e.preventDefault();
             var state=false;
             if(NumberRange("partitions","How Many function manage on same date and  same time (1 to 4)",1,4))
@@ -264,6 +265,8 @@ include_once ("../../webdesign/footer/footer.php");
             }
             if(state)
                 return false;
+            if (!confirm('Are you sure you want to Add this Hall in company ?'))
+                return  false;
 
             var formdata = new FormData($("form")[0]);
             formdata.append("option", "CreateHall");

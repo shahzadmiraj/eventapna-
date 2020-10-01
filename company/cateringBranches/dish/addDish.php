@@ -422,6 +422,8 @@ include_once ("../../../webdesign/footer/footer.php");
 
             if(state)
                 return false;
+            if (!confirm('Are you sure you want to Add  food dish in Food & Catering  Branches?'))
+                return  false;
            var formdata=new FormData($("form")[0]);
             formdata.append("option","addDishsystem");//addDishsystem
              $.ajax({

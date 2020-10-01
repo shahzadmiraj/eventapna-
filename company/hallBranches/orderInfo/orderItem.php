@@ -391,6 +391,9 @@ include_once ("../../../webdesign/footer/footer.php");
         });
         $("#btnsubmit").click(function (e)
         {
+            if (!confirm('Are you sure you want to Save items?'))
+                return  false;
+
             e.preventDefault();
             var orderid=$("#orderid").val();
             var formdata=new FormData($('#formitems')[0]);

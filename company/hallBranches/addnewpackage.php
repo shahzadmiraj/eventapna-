@@ -718,6 +718,8 @@ $(document).ready(function ()
     });
    $("#btnsubmit").click(function ()
    {
+
+
        var state=false;
 
        if(NumberRange("MinimumGuest","Pleas enter Minimum Guest (1 to 3000) ",1,3000))
@@ -740,6 +742,10 @@ $(document).ready(function ()
        {
            return false;
        }
+
+       if (!confirm('Are you sure you want to Add Package in halls?'))
+           return  false;
+
        var formdata=new FormData($('#submitpackage')[0]);
        formdata.append("option","CreatePackage");
        formdata.append("selectedDates",selectedDates);

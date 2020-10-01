@@ -416,6 +416,7 @@ include_once ("../webdesign/footer/footer.php");
 
         $("#submit").click(function (e)
         {
+
             e.preventDefault();
             var state=false;
 

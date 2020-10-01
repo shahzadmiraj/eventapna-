@@ -39,6 +39,8 @@
     {
         $("#submitMultiples").click(function (e)
         {
+            if (!confirm('Are you sure you want to Save Picture /video?'))
+                return  false;
             e.preventDefault();
             var formData=new FormData($("#multiplesimages")[0]);
             formData.append("option","hallmutiplesimages");

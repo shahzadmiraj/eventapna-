@@ -294,7 +294,6 @@ include_once ("../../../webdesign/footer/footer.php");
         $(".SubmitFormActivationDishes").change(function ()
         {
             var formid=$(this).data("formid");
-
             var formdata = new FormData($("#FormActivationDish"+formid)[0]);
             formdata.append("option","SubmitPackagesSave");
             $.ajax({
@@ -338,6 +337,8 @@ include_once ("../../../webdesign/footer/footer.php");
 
         $(document).on("change",".changeDishType",function ()
         {
+            if (!confirm('Are you sure you want to change  food dish Type in Food & Catering  Branches?'))
+                return  false;
             var id=$(this).data("dishtypeid");
             if(validation($(this),"Please Enter Dish Type"))
             return false;
@@ -370,6 +371,8 @@ include_once ("../../../webdesign/footer/footer.php");
 
         $(document).on("click",".Delele_Dish_Type",function ()
         {
+            if (!confirm('Are you sure you want to DELETE  food dish in Food & Catering  Branches?'))
+                return  false;
             var id=$(this).data("dishtypeid");
             var value=$(this).val();
             $.ajax({

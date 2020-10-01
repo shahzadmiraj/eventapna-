@@ -386,6 +386,8 @@ include_once ("../webdesign/footer/footer.php");
         $(document).on('click', '#submit', function (e) {
             e.preventDefault();
 
+
+
             var state=false;
 
 
@@ -400,6 +402,8 @@ include_once ("../webdesign/footer/footer.php");
 
             if(state)
                 return false;
+            if (!confirm('Are you sure you want to Save this order ?'))
+                return  false;
             var href = "'" + $(this).data("href") + "'";
             var formdata = new FormData($('#editorder')[0]);
             formdata.append("function", "orderSaveAfterChange");

@@ -172,6 +172,8 @@ include_once ("../../webdesign/footer/footer.php");
     {
         $("#submitMultiples").click(function (e)
         {
+            if (!confirm('Are you sure you want to Add picture/video ?'))
+                return  false;
             e.preventDefault();
             var formData=new FormData($("#multiplesimages")[0]);
             formData.append("option","hallmutiplesimages");
@@ -206,6 +208,8 @@ include_once ("../../webdesign/footer/footer.php");
 
         $(".deleteButtonGallery").click(function (e)
         {
+            if (!confirm('Are you sure you want to Delete picture/video ?'))
+                return  false;
             e.preventDefault();
 
             var id=$(this).data("deletegallery");

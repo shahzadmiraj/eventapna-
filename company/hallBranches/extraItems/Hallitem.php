@@ -346,6 +346,8 @@ include_once ("../../../webdesign/footer/footer.php");
         {
             if(validation($(this),"Please enter Catergory Name"))
                 return false;
+            if (!confirm('Are you sure you want to change information of items category?'))
+                return  false;
 
             var id=$(this).data("id");
             var value=$(this).val();
@@ -378,6 +380,8 @@ include_once ("../../../webdesign/footer/footer.php");
 
         $(document).on("click",".actionDelete",function ()
         {
+            if (!confirm('Are you sure you want to Delete information of items in hall?'))
+                return  false;
             var id=$(this).data("id");
             var action=$(this).data("option");
             $.ajax({

@@ -497,6 +497,8 @@ include_once ("../../webdesign/footer/footer.php");
         });
         $("#submitform").click(function ()
         {
+            if (!confirm('Are you sure you want to Save order information ?'))
+                return  false;
             var direction=$(this).data("href");
 
             var packageDateid='';

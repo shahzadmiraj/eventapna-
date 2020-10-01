@@ -134,6 +134,7 @@ include_once ("../webdesign/footer/footer.php");
     {
         $("#passwordresend").click(function ()
         {
+
             var formdata = new FormData;
             formdata.append("option", "resentPAssword");
             formdata.append("userid", "<?php echo $userid;?>");

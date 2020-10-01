@@ -231,6 +231,7 @@ include_once ("../../webdesign/footer/footer.php");
     {
         $("#submitform").click(function ()
         {
+
             state=false;
             if(validationWithString("namecatering","Please Enter Branch Name"))
                 state=true;
@@ -244,7 +245,8 @@ include_once ("../../webdesign/footer/footer.php");
             if(state)
                 return false;
 
-
+            if (!confirm('Are you sure you want to Add Food & Catering Branch in company ?'))
+                return  false;
             var formdata=new FormData($("#cateringform")[0]);
             formdata.append("option","createCatering");
             $.ajax({

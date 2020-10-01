@@ -393,6 +393,8 @@ p.id='.$customerId.'';
 
      $(document).on("click",".remove_number",function ()
      {
+         if (!confirm('Are you sure you want to Delete this number ?'))
+             return  false;
          var userid=$(this).data("userid");
          var id=$(this).data("removenumber");
          $.ajax({
@@ -420,6 +422,8 @@ p.id='.$customerId.'';
      });
      $("#formcustomer").click(function ()
      {
+         if (!confirm('Are you sure you want to Save this Information ?'))
+             return  false;
         var formData=new  FormData($("#formEditCustomer")[0]);
         formData.append("option","EditCustomerform");
          $.ajax({

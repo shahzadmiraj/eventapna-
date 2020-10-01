@@ -746,6 +746,7 @@ include_once ("../../webdesign/footer/footer.php");
 
         $("#submitform").click(function ()
         {
+
             var date = $("#date").val();
             var time = $("#time").val();
             var perheadwith = $("#perheadwith").val();
@@ -763,6 +764,8 @@ include_once ("../../webdesign/footer/footer.php");
                     return false;
                 }
             }
+            if (!confirm('Are you sure you want to Save Hall Order informatiom ?'))
+                return  false;
             var formdata = new FormData($("form")[0]);
             formdata.append("perheadwith",perheadwith);
             formdata.append("packageDateid", packageDateid);

@@ -215,6 +215,8 @@ include_once ("../../../webdesign/footer/footer.php");
 
         $("#submit").click(function (e)
         {
+
+
             e.preventDefault();
             var state=false;
 
@@ -234,7 +236,8 @@ include_once ("../../../webdesign/footer/footer.php");
 
             if(state)
                 return false;
-
+            if (!confirm('Are you sure you want to Save information of items?'))
+                return  false;
             var formdata=new FormData($('form')[0]);
             formdata.append('option',"addItem");
             $.ajax({

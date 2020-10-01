@@ -207,7 +207,10 @@ include_once ("../../webdesign/footer/footer.php");
 
         $(".deleteButtonGallery").click(function (e)
         {
+
             e.preventDefault();
+            if (!confirm('Are you sure you want to Delete Picture or Video  ?'))
+                return  false;
 
             var id=$(this).data("deletegallery");
 

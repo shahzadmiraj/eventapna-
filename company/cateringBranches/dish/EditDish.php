@@ -408,6 +408,8 @@ include_once ("../../../webdesign/footer/footer.php");
 
         $("#SubmitFormPackage").click(function ()
         {
+            if (!confirm('Are you sure you want to this Save food Dishes information (Overall) ?'))
+                return  false;
             var formdata = new FormData($("#EditPackageForm")[0]);
             formdata.append("option","SubmitPackagesSave");
             $.ajax({
@@ -434,6 +436,9 @@ include_once ("../../../webdesign/footer/footer.php");
         $(".deleteprice").click(function (e)
         {
             e.preventDefault();
+
+            if (!confirm('Are you sure you want to this Delete food dish ?'))
+                return  false;
 
             var dishid=$(this).data("deleteid");
             $.ajax({
@@ -464,6 +469,9 @@ include_once ("../../../webdesign/footer/footer.php");
 
         $("#deletedish").click(function (e)
         {
+
+            if (!confirm('Are you sure you want to this DELETE food Dishes (Overall) ?'))
+                return  false;
             e.preventDefault();
             var dishid=$(this).data("dishid");
             $.ajax({

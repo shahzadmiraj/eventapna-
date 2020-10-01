@@ -195,6 +195,7 @@ include_once ("../webdesign/footer/footer.php");
         $('#login').click(function ()
         {
 
+
             var state=false;
 
             if(validationWithString("UserName","please enter username "))

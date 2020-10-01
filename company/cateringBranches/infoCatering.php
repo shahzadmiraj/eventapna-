@@ -281,6 +281,8 @@ include_once ("../../webdesign/footer/footer.php");
 
         $("#Expire").click(function ()
         {
+            if (!confirm('Are you sure you want to Delete Food & Catering Branch in you company  ?'))
+                return  false;
             var formdata = new FormData;
 
             formdata.append("option","DeleteCatering");
@@ -314,6 +316,7 @@ include_once ("../../webdesign/footer/footer.php");
         $("#submiteditcatering").click(function ()
         {
 
+
             state=false;
             if(validationWithString("cateringname","Please Enter Branch Name"))
                 state=true;
@@ -325,7 +328,8 @@ include_once ("../../webdesign/footer/footer.php");
             }
             if(state)
                 return false;
-
+            if (!confirm('Are you sure you want to Save Food & Catering Branch information  ?'))
+                return  false;
             var formdata = new FormData($("#formcatering")[0]);
 
             formdata.append("option","EditCatering");

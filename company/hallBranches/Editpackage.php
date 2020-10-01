@@ -775,6 +775,8 @@ include_once ("../../webdesign/footer/footer.php");
 
         $("#SubmitFormPackage").click(function ()
         {
+            if (!confirm('Are you sure you want to Save Package informatiom ?'))
+                return  false;
 
             var formdata = new FormData($("#EditPackageForm")[0]);
             formdata.append("option","SubmitPackagesSave");
@@ -908,7 +910,8 @@ include_once ("../../webdesign/footer/footer.php");
         $("#deletePackage").click(function (e)
         {
             e.preventDefault();
-
+            if (!confirm('Are you sure you want to Delete Package Overall ?'))
+                return  false;
             var userid="<?php echo $userid;?>";
             var formdata=new FormData;
             formdata.append("option","PackDelete");
@@ -953,6 +956,9 @@ include_once ("../../webdesign/footer/footer.php");
         $("#btncancel").click(function (e)
         {
             e.preventDefault();
+
+            if (!confirm('Are you sure you want to Delete Package Overall ?'))
+                return  false;
             var value=$(this).val();
             var formdata=new FormData;
             formdata.append("option","ExpireBtn");
