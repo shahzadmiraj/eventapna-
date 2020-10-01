@@ -98,7 +98,7 @@ include_once ("../webdesign/header/header.php");
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-camera-retro"></i></span>
                         </div>
-                        <input id="Image" type="file" class="form-control" name="Image" >
+                        <input id="Image" type="file" class="form-control" name="image" >
                     </div>
                 </div>
 

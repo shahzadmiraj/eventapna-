@@ -36,7 +36,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-envelope text-info"></i></div>
                                 </div>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Eventapna@gmail.com" >
+                                <input type="email" class="form-control" id="email" name="email" placeholder="support@eventapna.com" >
                             </div>
                         </div>
 

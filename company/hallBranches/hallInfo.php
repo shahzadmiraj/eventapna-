@@ -222,12 +222,12 @@ include_once ("../ClientSide/Company/Box.php");
 
 
         <div class="form-group row">
-            <label class="col-form-label ">Advance  Online booking %</label>
+            <label class="col-form-label ">Advance  Online booking in percentage%</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
                 </div>
-                <input id="AdvanceAmount" value="0" name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance" value="<?php echo $cateringdetail[0][11]; ?>">
+                <input id="AdvanceAmount" value="<?php echo $halldetail[0][8]; ?>" name="AdvanceAmount" type="number" class="form-control" placeholder="Percentage of advance" >
             </div>
         </div>
 

@@ -329,7 +329,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 <lable for="describe" class="col-form-label">Items Name:</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-concierge-bell"></i></span>
                                     </div>
                                     <input  id="NameOfItem" type="text"  class="form-control" placeholder="Name of item">
                                 </div>
@@ -339,7 +339,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 <lable for="describe" class="col-form-label">Items Type :</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        <span class="input-group-text"><i class="fa fa-list-ol" aria-hidden="true"></i></span>
                                     </div>
                                     <select id="NameOfItemType" class="form-control">
                                     </select>
@@ -350,7 +350,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 <lable for="describe" class="col-form-label">Other item type:New Row</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        <span class="input-group-text"><i class="fa fa-list-ol" aria-hidden="true"></i></span>
                                     </div>
                                     <input  id="itemChoice" type="text" class="form-control" placeholder="Name of Item Type">
                                 </div>
@@ -362,7 +362,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        <span class="input-group-text"><i class="far fa-money-bill-alt"></i> </span>
                                     </div>
                                     <select id="IncludeItemOption" class="form-control">
                                         <option value="includeItem">No Extra Chages .this Item include in this package</option>
@@ -375,7 +375,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                        <span class="input-group-text"><i class="far fa-money-bill-alt"></i> </span>
                                     </div>
                                     <input  id="ExtrachargeOfitemAmount" type="number" class="form-control" placeholder="How much Extra charge ?">
                                 </div>
@@ -424,7 +424,7 @@ include_once ("../ClientSide/Company/Box.php");
                         <lable for="describe" class="col-form-label">Items Name:</lable>
                         <div class="input-group mb-3 input-group-lg">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                <span class="input-group-text"><i class="fas fa-concierge-bell"></i></span>
                             </div>
                             <input  id="NameOfItemExtra" type="text"  class="form-control" placeholder="Name of item">
                         </div>
@@ -434,7 +434,7 @@ include_once ("../ClientSide/Company/Box.php");
                         <lable for="describe" class="col-form-label">Other item type:New Row</lable>
                         <div class="input-group mb-3 input-group-lg">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                <span class="input-group-text"><i class="fa fa-list-ol" aria-hidden="true"></i></span>
                             </div>
                             <input  readonly id="itemChoiceExtra" type="text" class="form-control" placeholder="Name of Item Type">
                         </div>
@@ -446,7 +446,7 @@ include_once ("../ClientSide/Company/Box.php");
                         <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
                         <div class="input-group mb-3 input-group-lg">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                <span class="input-group-text"><i class="far fa-money-bill-alt"></i> </span>
                             </div>
                             <select id="IncludeItemOptionExtra" class="form-control">
                                 <option value="includeItem">No Extra Chages .this Item include in this package</option>
@@ -459,7 +459,7 @@ include_once ("../ClientSide/Company/Box.php");
                         <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
                         <div class="input-group mb-3 input-group-lg">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                                <span class="input-group-text"><i class="far fa-money-bill-alt"></i> </span>
                             </div>
                             <input  id="ExtrachargeOfitemAmountExtra" type="number" class="form-control" placeholder="How much Extra charge ?">
                         </div>
@@ -711,6 +711,7 @@ $(document).ready(function ()
             $("#RowNumber-"+rowExtraNumber).append(text);
             ColumnNumber++;
          $('#exampleModalCenter').modal("hide");
+         $("#ExtrachargeOfitemAmount").val('');
      });
 
     $("#btncancel").click(function () {
