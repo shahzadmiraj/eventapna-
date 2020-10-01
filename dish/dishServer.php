@@ -120,3 +120,5 @@ WHERE (hcs.orderDetail_id='.$Orderid.')AND (ISNULL(hcs.expire))'; //menu Prices
 
     echo $display;
 }
+
+include_once("../webdesign/footer/EndOfPage.php");

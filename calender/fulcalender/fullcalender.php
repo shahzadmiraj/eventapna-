@@ -109,3 +109,6 @@ echo date_format($date,"Y-m-d H:i:s");*/
 </div>
 </body>
 </html>
+<?php
+include_once ("../../webdesign/footer/EndOfPage.php");
+?>

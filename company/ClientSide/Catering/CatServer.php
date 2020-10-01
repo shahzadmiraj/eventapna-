@@ -12,3 +12,5 @@ if($_POST['option']=="ShowDishes")
     $country=$_POST['country'];
   echo ShowAllCateringDishes(trim($latitude),trim($longitude),trim($country),trim($Dishname),trim($cateringname));
 }
+
+include_once("../../../webdesign/footer/EndOfPage.php");

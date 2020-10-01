@@ -141,3 +141,6 @@ WHERE
 
 
 ?>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

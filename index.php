@@ -466,7 +466,6 @@ include_once ("webdesign/header/header.php");
                 },
                 success:function (data)
                 {
-
                     $("#showHall").html(data);
                 }
             });
@@ -486,14 +485,7 @@ include_once ("webdesign/header/header.php");
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
             dataType: "script",
-            cache: false,
-            beforeSend: function() {
-                $('#pleaseWaitDialog').modal();
-            },
-            success:function (data)
-            {
-                $('#pleaseWaitDialog').modal('hide');
-            }
+            cache: false
         });
     });
 
@@ -506,4 +498,8 @@ include_once ("webdesign/footer/footer.php");
 ?>
 </body>
 </html>
+
+<?php
+include_once ("webdesign/footer/EndOfPage.php");
+?>
 

@@ -21,3 +21,5 @@ $ExtraInformation=$_POST['ExtraInformation'];
 
         echo serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$email);
 }
+
+include_once("../webdesign/footer/EndOfPage.php");

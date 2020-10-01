@@ -464,3 +464,6 @@ WHERE  id='.$order.'';
 }
 ?>
 
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

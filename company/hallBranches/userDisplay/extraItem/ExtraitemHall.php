@@ -153,3 +153,6 @@ $(document).ready(function () {
 </script>
 </body>
 </html>
+<?php
+include_once ("../../../../webdesign/footer/EndOfPage.php");
+?>

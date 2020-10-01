@@ -55,3 +55,6 @@ if(isset($_POST['option']))
         }
     }
 }
+
+
+include_once("../webdesign/footer/EndOfPage.php");

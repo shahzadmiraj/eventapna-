@@ -40,3 +40,8 @@ if($_POST['option']=="additemsInOrder")
 
 }
 
+?>
+
+<?php
+include_once ("../../../webdesign/footer/EndOfPage.php");
+?>

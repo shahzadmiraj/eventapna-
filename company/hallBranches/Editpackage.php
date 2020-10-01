@@ -789,7 +789,7 @@ include_once ("../../webdesign/footer/footer.php");
                 },
                 success:function (data)
                 {
-                    if(data!="")
+                    if($.trim(data)!='')
                         alert(data);
                     else
                     window.history.back();
@@ -927,7 +927,7 @@ include_once ("../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $('#pleaseWaitDialog').modal('hide');
-                    if(data!='')
+                    if($.trim(data)!='')
                     {
                         alert(data);
                     }
@@ -972,7 +972,7 @@ include_once ("../../webdesign/footer/footer.php");
                 {
                     $('#pleaseWaitDialog').modal('hide');
 
-                    if(data!='')
+                    if($.trim(data)!='')
                     {
                         alert(data);
                     }
@@ -1011,3 +1011,6 @@ include_once ("../../webdesign/footer/footer.php");
 </script>
 </body>
 </html>
+<?php
+include_once ("../../webdesign/footer/EndOfPage.php");
+?>

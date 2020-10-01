@@ -195,3 +195,5 @@ Where  (dwa.id='.$dishid.')';
     echo $display;
 }
 
+
+include_once("../webdesign/footer/EndOfPage.php");

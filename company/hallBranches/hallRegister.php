@@ -314,3 +314,6 @@ include_once ("../../webdesign/footer/footer.php");
 
 </body>
 </html>
+<?php
+include_once ("../../webdesign/footer/EndOfPage.php");
+?>

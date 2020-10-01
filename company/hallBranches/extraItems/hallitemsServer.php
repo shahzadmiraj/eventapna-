@@ -108,3 +108,6 @@ else if($_POST['option']=="SubmitExtraItemHallSave")
 }
 
 ?>
+<?php
+include_once ("../../../webdesign/footer/EndOfPage.php");
+?>

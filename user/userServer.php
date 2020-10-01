@@ -265,7 +265,7 @@ else if($_POST['option']=="login")
         {
             echo 'companyUser';
         }
-        setcookie('userid',$user[0][2] , time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
+       // setcookie('userid',$user[0][2] , time() + (86400 * 30), "/",$_SERVER["SERVER_NAME"]);
     }
     else
     {
@@ -386,4 +386,9 @@ else if($_POST['option']=="ResetPassword")
     querySend($sql);
     echo "<span class='alert-success'>Your password has succesfully updated</span>";
 }
+?>
+
+
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
 ?>

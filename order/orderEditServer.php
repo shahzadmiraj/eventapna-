@@ -28,3 +28,6 @@ else if($_POST['option']=="addressChange")
 }
 
 ?>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

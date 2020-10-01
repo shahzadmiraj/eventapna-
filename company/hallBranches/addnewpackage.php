@@ -756,7 +756,7 @@ $(document).ready(function ()
            success:function (data)
            {
                $('#pleaseWaitDialog').modal('hide');
-              if(data!='')
+               if($.trim(data)!='')
               {
                   alert(data);
               }
@@ -830,3 +830,6 @@ $(document).ready(function () {
 </script>
 </body>
 </html>
+<?php
+include_once ("../../webdesign/footer/EndOfPage.php");
+?>

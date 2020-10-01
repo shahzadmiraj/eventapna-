@@ -331,7 +331,7 @@ p.id='.$customerId.'';
              {
                  $('#pleaseWaitDialog').modal('hide');
 
-                 if(data!="")
+                 if($.trim(data)!='')
                  {
                      alert(value+"number is also exist so you cant add");
                      //$("#numberexterorNot").val(1);
@@ -378,7 +378,7 @@ p.id='.$customerId.'';
              success:function (data)
              {
                  $('#pleaseWaitDialog').modal('hide');
-                 if(data!='')
+                 if($.trim(data)!='')
                  {
                      alert(data);
                  }
@@ -407,7 +407,7 @@ p.id='.$customerId.'';
              success:function (data)
              {
                  $('#pleaseWaitDialog').modal('hide');
-                 if(data!='')
+                 if($.trim(data)!='')
                  {
                      alert(data);
                  }
@@ -435,7 +435,7 @@ p.id='.$customerId.'';
              success:function (data)
              {
                  $('#pleaseWaitDialog').modal('hide');
-                 if(data!='')
+                 if($.trim(data)!='')
                  {
                      alert(data);
                  }
@@ -542,3 +542,6 @@ p.id='.$customerId.'';
 </script>
 </body>
 </html>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

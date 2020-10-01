@@ -46,3 +46,6 @@ else if($_POST['option']="deleteButtonGallery")
 
 
 ?>
+<?php
+include_once ("../../../webdesign/footer/EndOfPage.php");
+?>

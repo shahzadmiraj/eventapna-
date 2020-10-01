@@ -324,7 +324,7 @@ include_once ("../webdesign/footer/footer.php");
                 {
                     $('#pleaseWaitDialog').modal('hide');
 
-                    if(data!="")
+                    if($.trim(data)!='')
                     {
                         alert(value+"number is also exist so you cant add");
                         //$("#numberexterorNot").val(1);
@@ -471,3 +471,6 @@ include_once ("../webdesign/footer/footer.php");
 
 </body>
 </html>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

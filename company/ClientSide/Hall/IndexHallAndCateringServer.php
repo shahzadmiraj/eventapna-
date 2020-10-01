@@ -22,3 +22,5 @@ if($_POST['option']=="ShowDishes")
          echo $result;
      }
 }
+
+include_once("../../../webdesign/footer/EndOfPage.php");

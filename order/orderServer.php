@@ -200,3 +200,6 @@ else if($_POST['function']=="orderSaveAfterChange")
 
 
 ?>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

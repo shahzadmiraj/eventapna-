@@ -123,3 +123,7 @@ WHERE orderDetail_id=
 
     echo '?pid='.$customerdetail[0][0].'&token='.$customerdetail[0][1];
 }
+?>
+<?php
+include_once ("../../../../webdesign/footer/EndOfPage.php");
+?>

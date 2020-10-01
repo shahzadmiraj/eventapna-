@@ -143,3 +143,5 @@ AND(p.dayTime="'.$time.'")AND(pd.selectedDate="'.$date.'")AND(p.isFood='.$perhea
 
 
 }
+
+include_once("../../../webdesign/footer/EndOfPage.php");

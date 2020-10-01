@@ -90,7 +90,7 @@
                 success:function (data)
                 {
                     $('#pleaseWaitDialog').modal('hide');
-                    if(data=="")
+                    if($.trim(data)!='')
                     {
                      $("#error").html("<span class='btn-success'>You have sent message </span>");
                         $('#emailsendForm').trigger("reset");

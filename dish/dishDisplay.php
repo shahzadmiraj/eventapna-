@@ -499,7 +499,7 @@ include_once ("../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $('#pleaseWaitDialog').modal('hide');
-                    if(data!="")
+                    if($.trim(data)!='')
                     {
                         $("#selectmenu").html('<br><h4 align="center" class=\'col-12\'>Package Menu</h4>');
                         $("#selectmenu").append(data);
@@ -534,3 +534,6 @@ include_once ("../webdesign/footer/footer.php");
 </script>
 </body>
 </html>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

@@ -138,3 +138,8 @@ if(isset($_POST['option']))
 
 
 }
+
+?>
+<?php
+include_once ("../../../webdesign/footer/EndOfPage.php");
+?>

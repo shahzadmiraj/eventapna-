@@ -567,3 +567,6 @@ where u.id=comments.user_id), `PackOrDishId`, `expireUser`,`rating`,`image` FROM
 ?>
 </body>
 </html>
+<?php
+include_once ("../../webdesign/footer/EndOfPage.php");
+?>

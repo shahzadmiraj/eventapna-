@@ -288,7 +288,8 @@ include_once ("../webdesign/footer/footer.php");
                 success: function (data) {
              $('#pleaseWaitDialog').modal('hide');
 
-                    if (data != '') {
+                    if($.trim(data)!='')
+                    {
                         alert(data);
                     }
                     location.reload();
@@ -306,6 +307,8 @@ include_once ("../webdesign/footer/footer.php");
 </html>
 
 
-
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>
 
 

@@ -172,3 +172,6 @@ function showHalls($sql,$Distance)
 
 
 ?>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

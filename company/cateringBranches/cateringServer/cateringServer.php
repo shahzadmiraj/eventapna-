@@ -133,3 +133,5 @@ else if($_POST['option']=="DeleteCatering")
     querySend($sql);
 
 }
+
+include_once("../../../webdesign/footer/EndOfPage.php");

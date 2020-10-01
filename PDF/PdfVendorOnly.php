@@ -424,3 +424,7 @@ if(isset($_POST['PrintedOrders']))
 }
 
 ?>
+
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

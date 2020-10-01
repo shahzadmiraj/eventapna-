@@ -86,3 +86,6 @@ py.receive  DESC';
 </script>
 </body>
 </html>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

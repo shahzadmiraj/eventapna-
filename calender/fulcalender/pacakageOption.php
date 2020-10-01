@@ -278,3 +278,6 @@ WHERE
     echo $display;
 }
 ?>
+<?php
+include_once ("../../webdesign/footer/EndOfPage.php");
+?>

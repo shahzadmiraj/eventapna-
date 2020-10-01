@@ -217,22 +217,23 @@ include_once ("../webdesign/footer/footer.php");
                 beforeSend: function () {
                     $('#pleaseWaitDialog').modal();
                 },
-                success: function (data) {
+                success: function (data)
+                {
                     $('#pleaseWaitDialog').modal('hide');
 
-                 if(data=="back")
+                 if($.trim(data)==="back")
                  {
                      window.history.back();
                  }
-                 else if(data=="companyUser")
+                 else if($.trim(data)==="companyUser")
                  {
                      location.replace("../company/companyRegister/companyAdminPanel.php");
                  }
                  else
                  {
+
                      $("#error").html(data);
                  }
-
 
                 }
             });
@@ -245,3 +246,7 @@ include_once ("../webdesign/footer/footer.php");
 </script>
 </body>
 </html>
+
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

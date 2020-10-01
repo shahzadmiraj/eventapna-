@@ -588,3 +588,6 @@ function action($userName,$printDate,$orderid,$action)
 }
 
 ?>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>

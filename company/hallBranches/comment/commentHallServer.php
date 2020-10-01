@@ -40,3 +40,5 @@ else if($_POST['option']=="deletecomment")
     $sql='UPDATE `comments` SET `expireUser`="'.$userid.'",expire="'.$timestamp.'" WHERE id='.$id.'';
     querySend($sql);
 }
+
+include_once("../../../webdesign/footer/EndOfPage.php");
