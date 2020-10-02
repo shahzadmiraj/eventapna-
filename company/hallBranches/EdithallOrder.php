@@ -133,7 +133,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     </div>
     <div class="form-group row">
-        <label class="col-form-label">Date</label>
+        <label class="col-form-label">Booked Date (Year,Month,Day)</label>
 
 
 
@@ -324,7 +324,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
     <div class="form-group row">
-        <label class="col-form-label">Total Extra items amount:</label>
+        <label class="col-form-label">Extra items Charges :</label>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -490,7 +490,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
     <div class="form-group row">
-        <label class="col-form-label">Visited Date</label>
+        <label class="col-form-label">Visited Date (Year,Month,Day)</label>
 
 
 

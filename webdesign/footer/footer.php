@@ -14,17 +14,17 @@
 </head>
 <body >-->
 <!---->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
 <!-- EventPlanner -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6603312527939032"
-     data-ad-slot="9387226278"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<!--<ins class="adsbygoogle"-->
+<!--     style="display:block"-->
+<!--     data-ad-client="ca-pub-6603312527939032"-->
+<!--     data-ad-slot="9387226278"-->
+<!--     data-ad-format="auto"-->
+<!--     data-full-width-responsive="true"></ins>-->
+<!--<script>-->
+<!--    (adsbygoogle = window.adsbygoogle || []).push({});-->
+<!--</script>-->
 
 
 <footer class="page-footer font-small btn-dark mt-5">

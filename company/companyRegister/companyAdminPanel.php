@@ -61,13 +61,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
     <style>
-        a.disabled {
-            pointer-events: none;
-            cursor: default;
-            border: solid;
-            border-color: white;
-            background-color: #eee2e2;
-        }
+
 
     </style>
 </head>
@@ -166,8 +160,8 @@ include_once ("../../webdesign/header/header.php");
             $Query='h='.$hallEncorded.'&token='.$token;
             ?>
 
-            <div class="col-md-4 mb-5">
-                <img src="<?php echo $img;?>" class="img-thumbnail" style="width: 100%;height: 100%">
+            <div class="col-md-4 mb-5 m-auto">
+                <img src="<?php echo $img;?>" class="embed-responsive embed-responsive-16by9">
             </div>
 
 
@@ -265,8 +259,8 @@ include_once ("../../webdesign/header/header.php");
             $Query='c='.$id.'&token='.$token;
             ?>
 
-            <div class="col-md-4 mb-5">
-                <img src="<?php echo $img;?>" class="img-thumbnail" style="width: 100%;height: 100%">
+            <div class="col-md-4 mb-5 m-auto">
+                <img src="<?php echo $img;?>" class="embed-responsive embed-responsive-16by9" >
             </div>
 
 
@@ -365,8 +359,8 @@ include_once ("../../webdesign/header/header.php");
 
             ?>
 
-            <div class="col-md-4 mb-5">
-                <img src="<?php echo $img;?>" class="img-thumbnail" style="width: 100%;height: 20vh">
+            <div class="col-md-4 mb-5 m-auto">
+                <img src="<?php echo $img;?>" class="img-thumbnail" class="embed-responsive embed-responsive-16by9">
             </div>
 
 

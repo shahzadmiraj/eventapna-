@@ -457,12 +457,11 @@ else
 
 
         <?php
-        $display='';
         for ($j=0;$j<count($ExtraType);$j++)
         {
 
 
-            $display = '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes badge-info">'.$ExtraType[$j][1].' </h4>
+            $display.= '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes badge-info">'.$ExtraType[$j][1].' </h4>
     <div id="dishtype'.$j.'"  class="row   " style="display: none">
 
 
@@ -472,21 +471,22 @@ else
  INNER join
  ExtraItemControl as EIC
  on(EIC.Extra_Item_id=ex.id)
- WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$ExtraType[$j][0].')AND(ISNULL(EIC.expire))AND(EIC.hall_id in('.$hallInformation[0][0].'))';
+ WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$ExtraType[$j][0].')AND(ISNULL(EIC.expire))AND(EIC.hall_id =('.$hallInformation[0][0].'))';
 
             $Extraitem=queryReceive($sql);
             $image = "";
-            for ($i = 0; $i < count($Extraitem); $i++) {
+            for ($i = 0; $i < count($Extraitem); $i++)
+            {
                 $image = $Extraitem[$i][3];
-                if ((file_exists('../../images/hallExtra/' . $image)) && ($image != ""))
-                    $image = '../../images/hallExtra/' . $image;
+                if ((file_exists('../../../images/hallExtra/' . $image)) && ($image != ""))
+                    $image = '../../../images/hallExtra/' . $image;
                 else
-                    $image = 'https://static1.bigstockphoto.com/3/1/1/large1500/113342513.jpg';
+                    $image = '../../../images/systemImage/imageNotFound.png';
 
                 $display .= '
             
             <div class="col-md-4 mb-5 ">
-            <div class="card">
+            <div class="card" style="width: 18rem;">
                 <img src="' . $image . '" class="card-img-top" src="" alt="Image" style="height: 20vh">
                 <div class="card-body">
                     <p class="card-title">' . $Extraitem[$i][1] . '<span class="float-right text-danger">Amount ' . $Extraitem[$i][2] . '</span></p>

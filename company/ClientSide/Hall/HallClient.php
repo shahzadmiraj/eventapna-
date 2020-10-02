@@ -335,7 +335,7 @@ include_once ("../Company/Box.php");
         {
 
 
-            $display = '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes badge-info">'.$ExtraType[$j][1].' </h4>
+            $display .= '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes badge-info">'.$ExtraType[$j][1].' </h4>
     <div id="dishtype'.$j.'"  class="row   " style="display: none">
 
 
@@ -351,15 +351,15 @@ include_once ("../Company/Box.php");
             $image = "";
             for ($i = 0; $i < count($Extraitem); $i++) {
                 $image = $Extraitem[$i][3];
-                if ((file_exists('../../images/hallExtra/' . $image)) && ($image != ""))
-                    $image = '../../images/hallExtra/' . $image;
+                if ((file_exists('../../../images/hallExtra/' . $image)) && ($image != ""))
+                    $image = '../../../images/hallExtra/' . $image;
                 else
-                    $image = 'https://static1.bigstockphoto.com/3/1/1/large1500/113342513.jpg';
+                    $image = '../../../images/systemImage/imageNotFound.png';
 
                 $display .= '
             
             <div class="col-md-4 mb-5">
-            <div class="card h-100">
+            <div class="card h-100" style="width: 18rem;">
                 <img src="' . $image . '" class="card-img-top" src="" alt="Image" style="height: 20vh">
                 <div class="card-body">
                     <h6 class="card-title">' . $Extraitem[$i][1] . '<span class="float-right text-danger">Amount ' . $Extraitem[$i][2] . '</span></h6>

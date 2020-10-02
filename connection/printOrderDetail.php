@@ -1,5 +1,4 @@
 <?php
-include_once ('connect.php');
 
 require('../fpdf182/fpdf.php');
 
@@ -56,7 +55,7 @@ class PDF extends FPDF
         //$this->Image('../gmail.png', 5, $this->GetY(), 12);
 
 
-        $this->Cell(0,10,"EVENT APNA (website:www.eventapna.com) , (Gmail:group.of.shaheen@gmail.com) , (whatsapp:0923350498004)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
+        $this->Cell(0,10,"EVENT APNA (website:www.eventapna.com) , (Gmail:support@eventapna.com) , (whatsapp:+923227300538)   ".'Page '.$this->PageNo().'/{nb}',0,1,'R');
 
 
     }
@@ -584,10 +583,8 @@ function action($userName,$printDate,$orderid,$action)
     $pdf->Cell(45,20,"Customer signature",0,0,"C");
     $pdf->Cell(45,20,"",1,1);
 
-    $pdf->Output($action,"orderid".$orderid."date".$printDate.".pdf");
+    $pdf->Output($action,"orderid".$orderid.".pdf");
 }
 
 ?>
-<?php
-include_once ("../webdesign/footer/EndOfPage.php");
-?>
+

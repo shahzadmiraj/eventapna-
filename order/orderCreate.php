@@ -126,7 +126,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
         <div class="form-group row">
-            <label for="date" class="col-form-label">Delivery Date</label>
+            <label for="date" class="col-form-label">Delivery Date (Year,Month,day)</label>
 
 
 

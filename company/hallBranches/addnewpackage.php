@@ -613,26 +613,26 @@ $(document).ready(function ()
         var TypeOfItem=$("#NameOfItemType").val();
         var ExtraItemType=$("#IncludeItemOption").val();
         var valueOfExtraCharge=$("#ExtrachargeOfitemAmount").val();
-        if(ExtraItemType=="includeItem")
+        if(validationWithString("NameOfItem","Please Enter Name of item"))
+            return false;
+        if(ExtraItemType==="includeItem")
         {
             valueOfExtraCharge=0;
         }
-        var TypeString="";
-        if(NameOfItem=="")
+        else
         {
-            alert("Enter Name of item");
-            return  false;
+            if(validationWithString("ExtrachargeOfitemAmount","Please Enter amount of item"))
+                return false;
         }
+        var TypeString="";
+
         if(TypeOfItem==="Other")
         {
             //other type user select
             TypeString=$("#itemChoice").val();
 
-            if(TypeString=="")
-            {
-                alert("Please Enter type of item");
-                return  false;
-            }
+            if(validationWithString("itemChoice","Please Enter type of item"))
+                return false;
 
             if(findIndex(TypeString)!=-1)
             {
@@ -653,6 +653,8 @@ $(document).ready(function ()
         else
         {
             // not other select
+            if(validationWithString("NameOfItemType","Please Enter Type of item"))
+                return false;
             TypeString= TypeOfItem;
            var index=findIndex(TypeString);
            var AlreadyRowNumber=arrayOfItemType[index].itemtypeNumber;
@@ -677,7 +679,6 @@ $(document).ready(function ()
       var index=findIndex(typeitem);
       delete arrayOfItemType[index];
         $("#RowNumber-"+row).remove();
-
         TextItemTypeOptions();
     });
 
@@ -702,11 +703,17 @@ $(document).ready(function ()
             var itemChoiceExtra=$("#itemChoiceExtra").val();
             var ExtraItemType=$("#IncludeItemOptionExtra").val();
             var valueOfExtraCharge=$("#ExtrachargeOfitemAmountExtra").val();
+         if(validationWithString("NameOfItemExtra","Please Enter Name of item"))
+             return false;
                  if(ExtraItemType==="includeItem")
                  {
                      valueOfExtraCharge=0;
                  }
-
+                 else
+                 {
+                     if(validationWithString("ExtrachargeOfitemAmountExtra","Please Enter amount of item"))
+                         return false;
+                 }
             var text=GetColumn(NameOfItemExtra,itemChoiceExtra,rowExtraNumber,ColumnNumber,valueOfExtraCharge)
             $("#RowNumber-"+rowExtraNumber).append(text);
             ColumnNumber++;

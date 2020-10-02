@@ -42,13 +42,13 @@ else
 {
 
     $listOfCatering=array_column($HallName, 0);
-    $List = implode(', ', $listOfCatering);
+    $List = implode(',', $listOfCatering);
 }
 ?>
 <!DOCTYPE html>
 <head>
     <?php
-    include('../../../../webdesign/header/InsertHeaderTag.php');
+    include('../../../webdesign/header/InsertHeaderTag.php');
     ?>
     <title>Order Manage Extra Item Hall</title>
     <meta name="description" content="Order Hall Manage Extra Item page, Order Manage Extra Item Hall,Manage Extra Item Marquee, Order Manage Extra Item Add Marquee,Manage Extra Item New Dera only company user can used this
@@ -195,7 +195,7 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
 
 
     $display.='
-        <div class="col-md-4 col-xl-3 m-2 card">
+        <div class="col-md-4 col-xl-3 m-2 card" >
        
         ';
 
@@ -208,7 +208,7 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
         {
 
             $display.='
-            <img class="card-img-top img-fluid" src="https://scx1.b-cdn.net/csz/news/800/2019/virtuallyrea.jpg" alt="Card image cap" style="height: 20vh">';
+            <img class="card-img-top img-fluid" src="../../../images/systemImage/imageNotFound.png" alt="Card image cap" style="height: 20vh">';
         }
 
 
@@ -244,7 +244,7 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
                 </div>';
                 }
                 $SelectiveHalls = array_column($SelectiveHalls, 0);
-                $List = implode(', ', $SelectiveHalls);
+                $List = implode(',', $SelectiveHalls);
 
 
                 $sql = 'SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= ' . $userdetail[0][0] . ')AND( id NOT IN (' . $List . '))';
@@ -252,7 +252,7 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
                 for ($K = 0; $K < count($AllHalls); $K++) {
                     $display.= '  
               <div class="checkbox">
-                <h4><input class="changeActivationOfHall" data-formid="'.$kinds[$K][0].'" type="checkbox"   name="hallactive[]" value="' . $AllHalls[$K][0] . '"> ' . $AllHalls[$K][1] . '</h4>
+                <h4><input class="changeActivationOfHall" data-formid="'.$AllHalls[$K][0].'" type="checkbox"   name="hallactive[]" value="' . $AllHalls[$K][0] . '"> ' . $AllHalls[$K][1] . '</h4>
                 </div>';
                 }
 
@@ -315,6 +315,7 @@ include_once ("../../../webdesign/footer/footer.php");
 
         function changeActivationOfHall(formid)
         {
+
             var formdata = new FormData($("#changeActivationOfHall"+formid)[0]);
             formdata.append("option","SubmitExtraItemHallSave");
             $.ajax({
@@ -336,7 +337,11 @@ include_once ("../../../webdesign/footer/footer.php");
         }
 
 
-        $(".changeActivationOfHall").change(function () {
+        $(".changeActivationOfHall").change(function ()
+        {
+            if (!confirm('Are you sure you want to Change Access of items in hall?'))
+                return  false;
+
             var formid=$(this).data("formid");
             changeActivationOfHall(formid);
         });

@@ -118,7 +118,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 </div>
 <div class="form-group row">
-    <label class="col-form-label">Date</label>
+    <label class="col-form-label">Booking Date (Year,Month,Day)</label>
 
 
 

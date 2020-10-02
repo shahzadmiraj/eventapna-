@@ -98,7 +98,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         ?>
 
         <div class="form-group row">
-            <label for="persons" class="col-form-label"> No of guests</label>
+            <label for="persons" class="col-form-label"> No of Guests </label>
 
 
             <div class="input-group mb-3 input-group-lg">
@@ -126,7 +126,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
         <div class="form-group row">
-            <label for="date" class="col-form-label">Delivery Date</label>
+            <label for="date" class="col-form-label">Delivered Date (Year,Month,day)</label>
 
 
 
@@ -307,7 +307,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
         <div class="form-group row">
-            <label class="form-check-label" for="booking_date">Visited Date</label>
+            <label class="form-check-label" for="booking_date">Visited Date (Year,Month,day)</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">

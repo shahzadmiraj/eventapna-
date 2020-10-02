@@ -72,7 +72,7 @@ include_once ("../../../webdesign/header/header.php");
             <div class="carousel-item active ">
                 <img style="height: 80vh" src="https://www.limewoodcaterers.com/images/slide-1.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption ">
-                    <h6 class="display-4" >Catering Services</h6>
+                    <h6 class="display-4" >Food & Catering Services</h6>
                     <p>Register Catering Order and catering company and get free software</p>
                 </div>
             </div>
@@ -286,18 +286,18 @@ include_once ("../../../webdesign/header/header.php");
 </div>-->
 
 
-<?php
 
-if(isset($_GET['daytime']))
-    echo '<script src="../../../map/constantMap.js"></script>';
-else
-    echo '<script src="../../../map/javascript.js"></script>';
-?>
 
 
 <script>
 
+    <?php
 
+    if(isset($_GET['daytime']))
+        echo '$.getScript("../../../map/constantMap.js");';
+    else
+        echo '$.getScript("../../../map/javascript.js");';
+    ?>
 
 
     $(document).ready(function ()
