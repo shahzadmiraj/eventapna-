@@ -128,12 +128,14 @@
                 <h6 class="text-uppercase font-weight-bold">Contact</h6>
                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                 <p>
-                    <i class="fas fa-envelope m-1"></i> support@eventapna.com</p>
+                    <i class="fas fa-envelope m-1"></i> <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=support@eventapna.com" target="_blank" class="gplus-ic ">support@eventapna.com</a></p>
                 <p>
-                    <i class="fas fa-phone mr-3"></i> + 092 335 049 8004</p>
+                    <i class="fas fa-phone mr-3"></i>
+                    <a href="tel:+923227300538">+92 322 7300538</a></p>
                 <p>
 
-                    <i class="fab fa-whatsapp mr-3"></i> + 092 335 049 8004</p>
+                    <i class="fab fa-whatsapp mr-3"></i>
+                    <a href="whatsapp://send?text=Hello Admin!&phone= +923227300538">+92 322 7300538</a></p>
 
             </div>
 
@@ -169,6 +171,12 @@
 
         </div>
         <!-- Grid row -->
+        <ul class="form-inline ">
+            <li class="list-inline-item"><a href="<?php echo $Root;?>Policy/Disclaimer.php"> Disclaimer</a></li>
+            <li class="list-inline-item"><a href="<?php echo $Root;?>Policy/PrivacyPolicy.php"> PrivacyPolicy</a></li>
+            <li class="list-inline-item"><a href="<?php echo $Root;?>Policy/TermsConditions.php"> TermsConditions</a></li>
+        </ul>
+
 
     </div>
     <!-- Footer Links -->

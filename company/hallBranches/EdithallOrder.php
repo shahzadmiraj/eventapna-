@@ -720,8 +720,11 @@ include_once ("../../webdesign/footer/footer.php");
                 var arrayofitemType=textMenuType.split(',');
                 for (var i = 0; i < arrayofitemType.length; i++)
                 {
-                    var EachPrice=Number($("#"+arrayofitemType[i]).children('option:selected').data('price'));
-                    amount+=EachPrice;
+                    if( $('#'+arrayofitemType[i]).length )         // use this if you are using id to check
+                    {
+                        var EachPrice = Number($("#" + arrayofitemType[i]).children('option:selected').data('price'));
+                        amount += EachPrice;
+                    }
                 }
 
             }

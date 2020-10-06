@@ -482,11 +482,11 @@ include_once ("webdesign/header/header.php");
             ShowHall();';
         ?>
 
-        $.ajax({
+      /*  $.ajax({
             url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
             dataType: "script",
             cache: false
-        });
+        });*/
     });
 
 

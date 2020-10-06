@@ -106,10 +106,6 @@
 
 
 
-echo '<li class="nav-item">
-                    <a class="nav-link text-white" href="'.$Root.'Policy/Policy.php"> <i class="fas fa-balance-scale"></i> Policy</a>
-                </li>';
-
                 ?>
 
 

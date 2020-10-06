@@ -336,7 +336,7 @@ include_once ("../../../webdesign/footer/footer.php");
                 var id=$(this).data("itemsid");
                 var name=$(this).data("name");
                 var image=$(this).data("image");
-            var text='<div id="jsid'+javaid+'" class="card">\n' +
+            var text='<div id="jsid'+javaid+'" class="card" style="width: 18rem;">\n' +
             '                <img class="card-img-top" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
             '                <div class="card-body ">\n' +
 
