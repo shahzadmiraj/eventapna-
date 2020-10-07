@@ -24,13 +24,13 @@ if(isset($_POST['option']))
         $packagename=$_POST['packagename'];
         $rate=chechIsEmpty($_POST['rate']);
         $describe=$_POST['describe'];
-        $token=uniqueToken('packages');
+        $token=uniqueToken('packages',"token",'');
         $sql='INSERT INTO `packages`(`id`, `isFood`, `price`, `describe`, `dayTime`, `expire`, `package_name`, `active`, `user_id`, `expireUser`, `MinimumGuest`,`token`) VALUES (NULL,'.$PackagesType.','.$rate.',"'.$describe.'","'.$daytime.'",NULL,"'.$packagename.'","'.$timestamp.'",'.$userid.',NULL,'.$MinimumGuest.',"'.$token.'")';
         querySend($sql);
         $id=mysqli_insert_id($connect);
         for ($i=0;$i<count($selectedDates);$i++)
         {
-            $token=uniqueToken('packageDate');
+            $token=uniqueToken('packageDate',"token",'');
             $date=date('Y-m-d ',strtotime(trim($selectedDates[$i])));
             $sql = 'INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`, `token`) VALUES (NULL,"' . $timestamp . '",NULL,' . $id . ',' . $userid . ',NULL,"' .$date.'","'.$token.'")';
             querySend($sql);

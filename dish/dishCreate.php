@@ -58,11 +58,16 @@ $timestamp = date('Y-m-d H:i:s');
         header("location:../payment/getPayment.php?pid=$pid&token=$token");
         exit();
     }
-    else
+    else if(!isset($_POST['dishesid']))
     {
-     echo   '<script>  window.history.back();</script>';
+        header("location:../order/PreviewOrder.php?pid=$pid&token=$token");
         exit();
     }
+    /*else if(!isset($_POST['dishesid']))
+    {
+        echo   '<script>  window.history.back();</script>';
+        exit();
+    }*/
 
 $dishesName=$_POST['dishesName'];
 $dishesid=$_POST['dishesid'];
@@ -216,7 +221,7 @@ dwa.id='.$dishesid[$j].'';
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishesid[$j].')';
                 $AttributeDetail=queryReceive($sql);
 
-
+                $display='';
                 if (count($AttributeDetail) > 0) {
 
 
@@ -235,7 +240,7 @@ dwa.id='.$dishesid[$j].'';
                 // special dish with attribute and quantity
                 for($k=0;$k<count($AttributeDetail);$k++)
                 {
-                    echo ' 
+                    $display.= ' 
     <tr>
       <th scope="row">'.($k+1).'</th>
       <td>'.$AttributeDetail[$k][0].'</td>

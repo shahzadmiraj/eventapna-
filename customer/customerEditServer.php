@@ -74,14 +74,18 @@ if(isset($_POST['option']))
        $post['image']='';
         if(!empty($_FILES['image']['name']))
         {
+            $passbyreference=explode('.',$_FILES['image']['name']);
+            $file_ext=strtolower(end($passbyreference));
+            $tokenimages=uniqueToken("person","image",'.'.$file_ext);
+            $image =  "../images/customerimage/"  .$tokenimages;
 
-            $image = "../images/customerimage/" . $_FILES['image']['name'];
+            //$image = "../images/customerimage/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
                 exit();
             }
-            $image = $_FILES['image']['name'];
+            $image = $tokenimages;
            $post['image']=$image;
         }
         if(changeCheckCustomer($post))

@@ -36,14 +36,19 @@ if(isset($_POST['option']))
 
         if(!empty($_FILES['image']["name"]))
         {
-            $image = "../images/users/" . $_FILES['image']['name'];
+
+            $passbyreference=explode('.',$_FILES['image']['name']);
+            $file_ext=strtolower(end($passbyreference));
+            $tokenimages=uniqueToken("person","image",'.'.$file_ext);
+            $image =  "../images/users/" .$tokenimages;
+            //$image = "../images/users/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
                 exit();
             }
 
-            $image = $_FILES['image']['name'];
+            $image = $tokenimages;
 
         }
 
@@ -92,14 +97,19 @@ if(isset($_POST['option']))
         $sql='';
         if(!empty($_FILES['image']["name"]))
         {
-            $Cateringimage = "../images/catering/" . $_FILES['image']['name'];
+            $passbyreference=explode('.',$_FILES['image']['name']);
+            $file_ext=strtolower(end($passbyreference));
+            $tokenimages=uniqueToken("catering","image",'.'.$file_ext);
+            $Cateringimage =  "../images/catering/".$tokenimages;
+
+            //$Cateringimage = "../images/catering/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $Cateringimage);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
                 exit();
             }
 
-            $Cateringimage =$_FILES['image']['name'];
+            $Cateringimage =$tokenimages;
 
         }
         $sql='INSERT INTO `catering`(`id`, `name`, `expire`, `image`, `location_id`, `company_id`,`active`) VALUES (NULL,"'.$namecatering.'",NULL,"'.$Cateringimage.'",NULL,'.$companyid.',"'.$timestamp.'")';
@@ -113,7 +123,12 @@ if(isset($_POST['option']))
         $hallimage='';
         if(!empty($_FILES['image']["name"]))
         {
-            $hallimage = "../images/hall/" . $_FILES['image']['name'];
+            $passbyreference=explode('.',$_FILES['image']['name']);
+            $file_ext=strtolower(end($passbyreference));
+            $tokenimages=uniqueToken("hall","image",'.'.$file_ext);
+            $hallimage =  "../images/hall/".$tokenimages;
+
+            //$hallimage = "../images/hall/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $hallimage);//$dishimage is destination file location;
             if ($resultimage != "")
             {
@@ -121,7 +136,7 @@ if(isset($_POST['option']))
                 exit();
             }
 
-            $hallimage =$_FILES['image']['name'];
+            $hallimage =$tokenimages;
         }
         $parking=$_POST['parking'];
 
@@ -141,7 +156,7 @@ if(isset($_POST['option']))
 
         $hallManager=$_POST['hallManager'];
         $AdvanceAmount=$_POST['AdvanceAmount'];
-        $token=uniqueToken("hall");
+        $token=uniqueToken("hall","token",'');
         $userid=$_POST['userid'];
 
 
@@ -350,7 +365,11 @@ WHERE  id='.$order.'';
         $hallimage=$_POST['previousimage'];
         if(!empty($_FILES['image']["name"]))
         {
-            $hallimage = "../images/hall/" . $_FILES['image']['name'];
+            $passbyreference=explode('.',$_FILES['image']['name']);
+            $file_ext=strtolower(end($passbyreference));
+            $tokenimages=uniqueToken("hall","image",'.'.$file_ext);
+            $hallimage =  "../images/hall/".$tokenimages;
+            //$hallimage = "../images/hall/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $hallimage);//$dishimage is destination file location;
             if ($resultimage != "")
             {
@@ -358,7 +377,7 @@ WHERE  id='.$order.'';
                 exit();
             }
 
-            $hallimage =$_FILES['image']['name'];
+            $hallimage =$tokenimages;
         }
         $daytime='';
         $parking=$_POST['parking'];

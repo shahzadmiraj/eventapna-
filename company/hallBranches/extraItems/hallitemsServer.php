@@ -38,14 +38,17 @@ else if($_POST['option']=="addItem")
     $otherTypeName=$_POST['otherTypeName'];
     if(!empty($_FILES['image']["name"]))
     {
-        $image = "../../../images/hallExtra/" . $_FILES['image']['name'];
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("Extra_Item","image",'.'.$file_ext);
+        $image = "../../../images/hallExtra/" .$tokenimages;
         $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
         if ($resultimage != "")
         {
             print_r($resultimage);
             exit();
         }
-        $image =$_FILES['image']['name'];
+        $image =$tokenimages;
     }
     if($typeofitem=="other")
     {

@@ -17,17 +17,23 @@ if($_POST['option']=="createCatering")
     $Cateringimage = '';
     if (!empty($_FILES['image']["name"]))
     {
-        $Cateringimage = "../../../images/catering/" . $_FILES['image']['name'];
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("catering","image",'.'.$file_ext);
+        $Cateringimage = "../../../images/catering/".$tokenimages;
+
+
+        //$Cateringimage = "../../../images/catering/" . $_FILES['image']['name'];
         $resultimage = ImageUploaded($_FILES, $Cateringimage);//$dishimage is destination file location;
         if ($resultimage != "") {
             print_r($resultimage);
             exit();
         }
-        $Cateringimage = $_FILES['image']['name'];
+        $Cateringimage = $tokenimages;
     }
 
     $AdvanceAmount=$_POST['AdvanceAmount'];
-    $token=uniqueToken('catering');
+    $token=uniqueToken('catering',"token",'');
     $sql = 'INSERT INTO `catering`(`id`, `name`, `expire`, `image`, `company_id`,`active`, `user_id`,`expireUser`, `token`, `AdvancePercentage`) VALUES (NULL,"' . $namecatering . '",NULL,"' . $Cateringimage . '",' . $companyid . ',"' . $timestamp . '",'.$userid.',NULL,"'.$token.'",'.$AdvanceAmount.')';
     querySend($sql);
     $cateringid=mysqli_insert_id($connect);
@@ -64,13 +70,18 @@ else if($_POST['option']=="EditCatering")
     $Previouslocationid=$_POST['Previouslocationid'];
     if (!empty($_FILES['image']["name"]))
     {
-        $Cateringimage = "../../../images/catering/" . $_FILES['image']['name'];
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("catering","image",'.'.$file_ext);
+        $Cateringimage = "../../../images/catering/" .$tokenimages;
+
+        //$Cateringimage = "../../../images/catering/" . $_FILES['image']['name'];
         $resultimage = ImageUploaded($_FILES, $Cateringimage);//$dishimage is destination file location;
         if ($resultimage != "") {
             print_r($resultimage);
             exit();
         }
-        $Cateringimage = $_FILES['image']['name'];
+        $Cateringimage = $tokenimages;
     }
     if(($Previouslongitude!=$longitude)||($Previouslatitude!=$latitude)||($PreviousRadius!=$radius))
     {

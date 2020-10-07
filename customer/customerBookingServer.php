@@ -14,14 +14,18 @@ include_once ("../connection/connect.php");
 
         if(!empty($_FILES['image']["name"]))
         {
-            $image = "../images/customerimage/" . $_FILES['image']['name'];
+            $passbyreference=explode('.',$_FILES['image']['name']);
+            $file_ext=strtolower(end($passbyreference));
+            $tokenimages=uniqueToken("person","image",'.'.$file_ext);
+            $image =  "../images/customerimage/"  .$tokenimages;
+            //$image = "../images/customerimage/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
                 exit();
             }
 
-            $image =$_FILES['image']['name'];
+            $image =$tokenimages;
         }
 
         $name = trim($_POST['name']);
@@ -47,7 +51,7 @@ $sql='INSERT INTO `person`(`name`, `cnic`, `id`, `image`, `active`, `expire`, `a
         }
         $customerId = $last_id;
 
-     //  $token= uniqueToken('BookingProcess');
+     //  $token= uniqueToken('BookingProcess',"token",');
         $token=base64url_encodeLength();
         $cateringid=$_POST['cateringid'];
        $hallid=$_POST['hallid'];
@@ -114,7 +118,7 @@ WHERE
     else if($_POST['option']=="RightPerson")
     {
         $customerId = $_POST['id'];
-       // $token= uniqueToken('BookingProcess');
+       // $token= uniqueToken('BookingProcess',"token",);
         $token=base64url_encodeLength();
         $cateringid=$_POST['cateringid'];
         $hallid=$_POST['hallid'];

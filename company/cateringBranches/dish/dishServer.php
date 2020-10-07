@@ -21,14 +21,18 @@ if(isset($_POST['option']))
         $dishimage='';
         if(!empty($_FILES['image']["name"]))
         {
-            $dishimage = "../../../images/dishImages/" . $_FILES['image']['name'];
+            $passbyreference=explode('.',$_FILES['image']['name']);
+            $file_ext=strtolower(end($passbyreference));
+            $tokenimages=uniqueToken("dish","image",'.'.$file_ext);
+            $dishimage = "../../../images/dishImages/".$tokenimages;
+            //$dishimage = "../../../images/dishImages/" . $_FILES['image']['name'];
             $resultimage = ImageUploaded($_FILES, $dishimage);//$dishimage is destination file location;
             if ($resultimage != "") {
                 print_r($resultimage);
                 exit();
             }
 
-            $dishimage =$_FILES['image']['name'];
+            $dishimage =$tokenimages;
         }
         $dishtype='';
         if($_POST["dishtype"]=="others")
@@ -45,7 +49,7 @@ if(isset($_POST['option']))
             $dishtype=$_POST["dishtype"];
         }
 
-        $token=uniqueToken("dish");
+        $token=uniqueToken("dish","token",'');
         $sql='INSERT INTO `dish`(`name`, `id`, `image`, `dish_type_id`, `expire`, `active`, `user_id`,`token`) VALUES ("'.$dishname.'",NULL,"'.$dishimage.'",'.$dishtype.',NULL,"'.$timestamp.'",'.$userid.',"'.$token.'")';
         querySend($sql);
         $dishid=mysqli_insert_id($connect);
@@ -60,7 +64,7 @@ if(isset($_POST['option']))
                 $quantity=$_POST['quantity'];
                 for($i=0;$i<count($prices);$i++)
                 {
-                    $token=uniqueToken("dishWithAttribute");
+                    $token=uniqueToken("dishWithAttribute","token",'');
                     $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$prices[$i].','.$dishid.','.$userid.',"'.$token.'")';
                     querySend($sql);
                     $dishWithAttributeid=mysqli_insert_id($connect);
@@ -75,7 +79,7 @@ if(isset($_POST['option']))
             }
             else
             {
-                $token=uniqueToken("dishWithAttribute");
+                $token=uniqueToken("dishWithAttribute","token",'');
                 $dishprice=$_POST['dishprice'];
                 $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$dishprice.','.$dishid.','.$userid.',"'.$token.'")';
                 querySend($sql);
@@ -157,7 +161,7 @@ if(isset($_POST['option']))
 
         $price=checknumberOtherNull($_POST['price']);
 
-            $token=uniqueToken("dishWithAttribute");
+            $token=uniqueToken("dishWithAttribute","token",'');
             $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$price.','.$dishid.','.$userid.',"'.$token.'")';
             querySend($sql);
             $dishWithAttributeid=mysqli_insert_id($connect);
@@ -203,9 +207,12 @@ if(isset($_POST['option']))
         }
         $dishId=$_POST['dishId'];
 
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("dish","image",'.'.$file_ext);
+        $dishimage = "../../../images/dishImages/".$tokenimages;
 
-
-        $dishimage="../../../images/dishImages/".$_FILES['image']['name'];
+        //$dishimage="../../../images/dishImages/".$_FILES['image']['name'];
         $resultimage=ImageUploaded($_FILES,$dishimage);//$dishimage is destination file location;
         if($resultimage!="")
         {
@@ -213,7 +220,7 @@ if(isset($_POST['option']))
             exit();
         }
 
-        $dishimage=$_FILES['image']['name'];
+        $dishimage=$tokenimages;
         $sql='UPDATE `dish` SET image="'.$dishimage.'" WHERE id='.$dishId.'';
         querySend($sql);
 

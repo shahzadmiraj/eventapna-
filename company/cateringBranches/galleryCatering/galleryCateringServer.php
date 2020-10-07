@@ -8,14 +8,19 @@ if($_POST['option']=="cateringMutiplesImages")
 
     $cateringid=$_POST['cateringid'];
     $userid=$_POST["userid"];
-    $Distination="../../../images/Gallery/Catering/";
+    $DistinationPath="../../../images/Gallery/Catering/";
     if(isset($_FILES['userfile']))
     {
 
         $file_array=reArray($_FILES['userfile']);
         for ($i=0;$i<count($file_array);$i++)
         {
-            $Distination= $Distination.$file_array[$i]['name'];
+            $passbyreference=explode('.',$file_array[$i]['name']);
+            $file_ext=strtolower(end($passbyreference));
+            $tokenimages=uniqueToken("images","image",'.'.$file_ext);
+            $Distination =$DistinationPath.$tokenimages;
+
+            //$Distination= $Distination.$file_array[$i]['name'];
             $error=MutipleUploadFile($file_array[$i],$Distination);
             if(count($error)>0)
             {
@@ -25,7 +30,7 @@ if($_POST['option']=="cateringMutiplesImages")
             {
                 // $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`) VALUES (NULL,"'.$file_array[$i]['name'].'",NULL,NULL,'.$hallid.')';
 
-                $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`, `active`, `user_id`, `expireUser`) VALUES (NULL,"'.$file_array[$i]['name'].'",NULL,'.$cateringid.',NULL,"'.$timestamp.'",'.$userid.',NULL)';
+                $sql='INSERT INTO `images`(`id`, `image`, `expire`, `catering_id`, `hall_id`, `active`, `user_id`, `expireUser`) VALUES (NULL,"'.$tokenimages.'",NULL,'.$cateringid.',NULL,"'.$timestamp.'",'.$userid.',NULL)';
                 querySend($sql);
             }
 

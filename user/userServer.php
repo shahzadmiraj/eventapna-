@@ -12,20 +12,7 @@ include_once ("../Mail/sending/SendingMail.php");
 require_once('../Mail/libraries/PHPMailer.php');
 require_once('../Mail/libraries/SMTP.php');
 
-function uniqueTokenForOnlyUserSession($tableName)
-{
-    while(1)
-    {
-        $token=base64url_encodeLength();
-        $sql='SELECT id FROM '.$tableName.' WHERE senderId="'.$token.'"';
-        $result=queryReceive($sql);
-        if(count($result)==0)
-        {
-            return $token;
-            break;
-        }
-    }
-}
+
 function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$image,$CurrentUserid)
 {
     $state=false;
@@ -117,18 +104,22 @@ if($_POST['option']=="RegisterCompanyWithUserAlso")
     $image="";
     if(!empty($_FILES['image']["name"]))
     {
-        $image = "../images/users/" . $_FILES['image']['name'];
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("userSession","image",'.'.$file_ext);
+        $image =  "../images/users/" .$tokenimages;
+       // $image = "../images/users/" . $_FILES['image']['name'];
         $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
         if ($resultimage != "") {
             print_r($resultimage);
             exit();
         }
-        $image =$_FILES['image']['name'];
+        $image =$tokenimages;
     }
 
     $password=$_POST['password'];
 
-    $string=uniqueTokenForOnlyUserSession("userSession");
+    $string=uniqueToken("userSession","senderId","");
     $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid` ) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'","'.$CompanyName.'","'.$image.'","Owner","'.$Email.'","'.$PhoneNo.'",1,NULL)';
     querySend($sql);
     $last=  mysqli_insert_id($connect);
@@ -167,17 +158,21 @@ else if($_POST['option']=="RegisterUserofCompany")
     }
     if(!empty($_FILES['image']["name"]))
     {
-        $image = "../images/users/" . $_FILES['image']['name'];
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("userSession","image",'.'.$file_ext);
+        $image =  "../images/users/"  .$tokenimages;
+       // $image = "../images/users/" . $_FILES['image']['name'];
         $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
         if ($resultimage != "") {
             print_r($resultimage);
             exit();
         }
-        $image =$_FILES['image']['name'];
+        $image =$tokenimages;
     }
 
     $password=$_POST['password'];
-    $string=uniqueTokenForOnlyUserSession("userSession");
+    $string=uniqueToken("userSession","senderId","");
     $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid` ) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'",NULL,"'.$image.'","'.$jobtitle.'","'.$Email.'","'.$PhoneNo.'",0,'.$Companyid.')';
     querySend($sql);
 
@@ -214,7 +209,7 @@ else if($_POST['option']=="LocatUserRegisters")
     $username=$_POST['username'];
     $Email=$_POST['Email'];
     $password=$_POST['password'];
-    $string=uniqueTokenForOnlyUserSession("userSession");
+    $string=uniqueToken("userSession","senderId","");
     $sql='INSERT INTO `userSession`(`id`, `username`, `password`, `active`, `expire`, `senderId`, `companyName`, `image`, `jobTitle`, `email`, `number`,`isMakeCompany`,`Companyid`) VALUES (NULL,"'.$username.'","'.$password.'","'.$timestamp.'",NULL,"'.$string.'",NULL,NULL,"User","'.$Email.'",NULL,0,NULL)';
 
     querySend($sql);
@@ -313,13 +308,17 @@ else if($_POST['option']=="saveandChangeLogin")
     }
     if(!empty($_FILES['image']["name"]))
     {
-        $image = "../images/users/" . $_FILES['image']['name'];
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("user","image",'.'.$file_ext);
+        $image =  "../images/users/"  .$tokenimages;
+        //$image = "../images/users/" . $_FILES['image']['name'];
         $resultimage = ImageUploaded($_FILES, $image);//$dishimage is destination file location;
         if ($resultimage != "") {
             print_r($resultimage);
             exit();
         }
-        $image =$_FILES['image']['name'];
+        $image =$tokenimages;
     }
     if(checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$image,$CurrentUserid))
     {

@@ -200,7 +200,7 @@ else if($_POST['option']=="InsertNewDate")
     $getpackageDetail=queryReceive($sql);
     if(count($getpackageDetail)>0)
         exit();
-    $token=uniqueToken("packageDate");
+    $token=uniqueToken("packageDate","token",'');
     $sql='INSERT INTO `packageDate`(`id`, `active`, `expire`, `package_id`, `user_id`, `expireUser`, `selectedDate`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$Packageid.','.$userid.',NULL,"'.$selectedDate.'","'.$token.'")';
     querySend($sql);
 }

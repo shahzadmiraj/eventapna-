@@ -51,12 +51,12 @@ function base64url_encodeLength()
     return rtrim( strtr( base64_encode( $dammy), '+/', '-_'), '=');
 }
 
-function uniqueToken($tableName)
+function uniqueToken($tableName,$tokenColumnName,$AddAtTheEndWithToken)
 {
     while(1)
     {
-        $token=base64url_encodeLength();
-        $sql='SELECT id FROM '.$tableName.' WHERE token="'.$token.'"';
+        $token=base64url_encodeLength().$AddAtTheEndWithToken;
+        $sql='SELECT id FROM '.$tableName.' WHERE '.$tokenColumnName.'="'.$token.'"';
         $result=queryReceive($sql);
         if(count($result)==0)
         {
@@ -169,10 +169,10 @@ function ImageUploaded($File,$DestinationFile)
             $errors[]='File size must be excately  MB';
         }
 
-//        if (file_exists($DestinationFile))
-//        {
-//            $errors[]= "Sorry, file already exists.";
-//        }
+        if (file_exists($DestinationFile))
+        {
+            $errors[]= "Sorry, File name has already existed.";
+        }
 
         if(empty($errors)==true)
         {
@@ -228,10 +228,10 @@ function MutipleUploadFile($File,$DestinationFile)
             $errors[]='File size must be excately  MB';
         }
 
-//        if (file_exists($DestinationFile))
-//        {
-//            $errors[]= "Sorry, file already exists.";
-//        }
+            if (file_exists($DestinationFile))
+            {
+                $errors[]= "Sorry, File name has already existed.";
+            }
         if(empty($errors)==true)
         {
             move_uploaded_file($file_tmp,$DestinationFile);

@@ -14,7 +14,12 @@ if($_POST['option']=="CommentOnHall")
         }
     if(!empty($_FILES['image']["name"]))
     {
-        $hallimage = "../../../images/comment/hallComment/" . $_FILES['image']['name'];
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("catering","image",'.'.$file_ext);
+        $hallimage =  "../../../images/comment/hallComment/" .$tokenimages;
+
+        //$hallimage = "../../../images/comment/hallComment/" . $_FILES['image']['name'];
         $resultimage = ImageUploaded($_FILES, $hallimage);//$dishimage is destination file location;
         if ($resultimage != "")
         {
@@ -22,7 +27,7 @@ if($_POST['option']=="CommentOnHall")
             exit();
         }
 
-        $image =$_FILES['image']['name'];
+        $image =$tokenimages;
     }
 
     $hallid=$_POST['hallid'];
