@@ -8,7 +8,7 @@ class PDF extends FPDF
     function HeaderCompany($branchinfo,$owerinfo)
     {
         // Logo
-       // $this->Image('../gmail.png',10,6,20);
+        // $this->Image('../gmail.png',10,6,20);
         // Arial bold 15
         $this->SetFont('Arial','B',20);
         // Move to the right
@@ -351,7 +351,7 @@ class PDF extends FPDF
         $this->Cell(45,10,(int)$totalReceivedPayment[0][0],1,1);
 
 
-       // $AutoAmount-=(int)($totalReceivedPayment[0][0]);
+        // $AutoAmount-=(int)($totalReceivedPayment[0][0]);
         $AutoAmount=$detailorder[0][11]-$totalReceivedPayment[0][0];
         $this->Cell(144,10,"Remaining Amount ",1,0);
         $this->Cell(45,10,(int)$AutoAmount,1,1);
@@ -378,7 +378,7 @@ class PDF extends FPDF
 
 
         //order 9 catering hall 1
-       // $orderId=9;
+        // $orderId=9;
         $sql='SELECT `id`, `hall_id`, `catering_id`,(SELECT p.isFood FROM orderDetail as od INNER join packageDate as pd
 on (od.packageDate_id=pd.id)
 INNER join packages as p
@@ -455,7 +455,7 @@ WHERE (p.id='".$person[0][2]."')AND(ISNULL(n.expire)) order BY n.id";
 
 
 
-           $this->cateringorderPrint($detailorder,$person,$numbers,$dishDetail,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate);
+            $this->cateringorderPrint($detailorder,$person,$numbers,$dishDetail,$totalReceivedPayment,$branchinfo,$owerinfo,$userName,$printDate);
 
         }
         else
@@ -479,7 +479,7 @@ WHERE (p.id='".$person[0][2]."')AND(ISNULL(n.expire)) order BY n.id";
 
             $owerinfo=$Owners;
 
-                //with menu
+            //with menu
 
             $sql='SELECT m.itemname,m.price FROM hallChoiceSelect as hcs INNER join menu as m
 on (hcs.menu_id=m.id)
@@ -583,8 +583,7 @@ function action($userName,$printDate,$orderid,$action)
     $pdf->Cell(45,20,"Customer signature",0,0,"C");
     $pdf->Cell(45,20,"",1,1);
 
-    $pdf->Output($action,"orderid".$orderid.".pdf");
+    $pdf->Output($action,"orderid".$orderid.$printDate.".pdf");
 }
 
-?>
 

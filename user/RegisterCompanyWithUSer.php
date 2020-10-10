@@ -133,7 +133,7 @@ include_once ("../webdesign/header/header.php");
 
 
                 <p class="form-group">
-                    <input type="checkbox" name="checkbox" value="check" id="agree" class="form-check-inline" /> I have read and agree to the <a href="#">Terms and Conditions and Privacy Policy</a>
+                    <input type="checkbox" name="checkbox" value="check" id="agree" class="form-check-inline" /> I have read and agree to the <a href="../Policy/TermsConditions.php">Terms and Conditions and Privacy Policy</a>
                 </p>
 
                 <div class="row">
