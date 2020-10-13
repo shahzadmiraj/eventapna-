@@ -100,8 +100,24 @@ else
 {
     $SenderAddress[0]="group.of.shaheen@gmail.com";
         $SenderName[1]="Event Apna";
-        echo '<h3 class="text-muted text-center">Event Apna Contact us:<br>you are contacting to Admin of Website Developer</h3><hr>';
+       // echo '<h3 class="text-muted text-center">Event Apna Contact us:<br>support@eventapna.com</h3><hr>';
+echo '    <div class="col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
 
+                <!-- Links -->
+                <br>
+                <h6 class="text-uppercase font-weight-bold">Contact to Admin</h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <i class="fas fa-envelope m-1"></i> <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=support@eventapna.com" target="_blank" class="gplus-ic ">support@eventapna.com</a></p>
+                <p>
+                    <i class="fas fa-phone mr-3"></i>
+                    <a href="tel:+923227300538">+92 322 7300538</a></p>
+                <p>
+
+                    <i class="fab fa-whatsapp mr-3"></i>
+                    <a href="whatsapp://send?text=Hello Admin!&phone= +923227300538">+92 322 7300538</a></p>
+
+            </div>';
 
 }
 
@@ -114,8 +130,8 @@ if(isset($_COOKIE['userid']))
     $ExtraInformation='userid='.$userInfo[0][0].',username='.$userInfo[0][1].',company_id='.$userInfo[0][2].',active='.$userInfo[0][3].',jobTitle='.$userInfo[0][4].',email='.$userInfo[0][5].',number='.$userInfo[0][6];
 }
 
-$SenderAddressList = implode(', ', $SenderAddress);
-$SenderNameList = implode(', ', $SenderName);
+$SenderAddressList = implode(',', $SenderAddress);
+$SenderNameList = implode(',', $SenderName);
 $urlContactus="contactServer.php";
 include_once ("contactUs.php");
 ?>

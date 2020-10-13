@@ -173,8 +173,8 @@
         <!-- Grid row -->
         <ul class="form-inline ">
             <li class="list-inline-item"><a href="<?php echo $Root;?>Policy/Disclaimer.php"> Disclaimer</a></li>
-            <li class="list-inline-item"><a href="<?php echo $Root;?>Policy/PrivacyPolicy.php"> PrivacyPolicy</a></li>
-            <li class="list-inline-item"><a href="<?php echo $Root;?>Policy/TermsConditions.php"> TermsConditions</a></li>
+            <li class="list-inline-item"><a href="<?php echo $Root;?>Policy/PrivacyPolicy.php"> Privacy Policy</a></li>
+            <li class="list-inline-item"><a href="<?php echo $Root;?>Policy/TermsConditions.php"> Terms & Conditions</a></li>
         </ul>
 
 

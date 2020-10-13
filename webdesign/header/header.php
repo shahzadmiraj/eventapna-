@@ -52,7 +52,7 @@
 <nav class="navbar navbar-expand-lg  navbar-light  font-weight-bold text-white  " style="background-color: #ff328c;" >
     <div class="container">
 
-        <a class="navbar-brand  text-white" href="<?php echo $Root;?>index.php?action=home"><img src="<?php echo $Root;?>gmail.png" style="width: 50px">  <span class="navbar-text font-weight-bold text-white">EVENT APNA</span>
+        <a class="navbar-brand  text-white" href="<?php echo $Root;?>index.php?action=home"><img src="<?php echo $Root;?>gmail.png" style="width: 40px">  <span class="navbar-text font-weight-bold text-white">EVENT APNA</span>
         </a>
         <button class="navbar-toggler  badge-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon "></span>
@@ -62,8 +62,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto w-100 justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link text-white  " href="<?php echo $Root;?>index.php?action=home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="<?php echo $Root;?>index.php?action=home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
+
+                    <li><a class="nav-link text-white" href="<?php echo $Root;?>BasicPage/aboutus.php#about">ABOUT</a></li>
+                    <li><a  class="nav-link text-white" href="<?php echo $Root;?>BasicPage/aboutus.php#services">SERVICES</a></li>
+                    <li><a class="nav-link text-white" href="<?php echo $Root;?>BasicPage/aboutus.php#Tutorial">TRAINING</a></li>
+                    <!--<li><a href="#pricing">PRICING</a></li>-->
+                    <!--<li><a href="#contact">CONTACT</a></li>-->
+
                 <?php
 
                 if(!isset($_COOKIE["userid"]))

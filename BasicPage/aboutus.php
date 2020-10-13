@@ -1,3 +1,7 @@
+<?php
+include_once ("../connection/connect.php");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,22 +9,26 @@
 
     <title>About us</title>
 
-    <meta name="description" content="About us of eventapna
+    <meta name="description" content="TRAINING SERVICES VISION MISSION About us of eventapna
 Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
 Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
 EVENT APNA  provides Free Software ....... So Register NOW
 ">
-    <meta name="keywords" content="about us page Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
+    <meta name="keywords" content="TRAINING SERVICES VISION MISSION about us page Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <script src="../jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <link rel="stylesheet" href="../webdesign/css/complete.css">
-    <link rel="stylesheet" href="../map/style.css">
-    <link rel="stylesheet" href="../webdesign/css/card.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <script type="text/javascript" src="../webdesign/JSfile/JSFunction.js"></script>
+
     <style>
         body {
             font: 400 15px Lato, sans-serif;
@@ -206,28 +214,9 @@ EVENT APNA  provides Free Software ....... So Register NOW
     </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-
-<nav class="navbar navbar-default navbar-fixed-top" style="background-color: #ff328c;" >
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#myPage">Logo</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#about">ABOUT</a></li>
-                <li><a href="#services">SERVICES</a></li>
-                <li><a href="#portfolio">PORTFOLIO</a></li>
-                <li><a href="#pricing">PRICING</a></li>
-                <li><a href="#contact">CONTACT</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<?php
+include_once ("../webdesign/header/header.php");
+?>
 
 <div class="jumbotron text-center ">
     <h1 >EVENT APNA</h1>
@@ -268,16 +257,16 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 Event Apna Support Services (HELP 24/7 ) </pre></p>
             <br>
         </div>
-        <div class="col-sm-4">
-            <span class="glyphicon glyphicon-signal logo"></span>
+        <div class="col-sm-4 text-center text-danger display-4">
+            <i class="fas fa-signal fa-5x"></i>
         </div>
     </div>
 </div>
 
 <div class="container-fluid bg-grey">
     <div class="row">
-        <div class="col-sm-4">
-            <span class="glyphicon glyphicon-globe logo slideanim"></span>
+        <div class="col-sm-4  text-primary display-4"">
+            <i class="fas fa-globe-americas fa-5x"></i>
         </div>
         <div class="col-sm-8">
             <h2>Our Values</h2><br>
@@ -351,36 +340,15 @@ EVENT APNA  provides Free Software ....... So Register NOW
 </div>
 
 <!-- Container (Portfolio Section) -->
-<div id="portfolio" class="container-fluid text-center bg-grey">
-    <h2>Portfolio</h2><br>
-    <h4>What we have created</h4>
-    <div class="row text-center slideanim">
-        <div class="col-sm-4">
-            <div class="thumbnail">
-                <img src="paris.jpg" alt="Paris" width="400" height="300">
-                <p><strong>Paris</strong></p>
-                <p>Yes, we built Paris</p>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="thumbnail">
-                <img src="newyork.jpg" alt="New York" width="400" height="300">
-                <p><strong>New York</strong></p>
-                <p>We built New York</p>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="thumbnail">
-                <img src="sanfran.jpg" alt="San Francisco" width="400" height="300">
-                <p><strong>San Francisco</strong></p>
-                <p>Yes, San Fran is ours</p>
-            </div>
-        </div>
-    </div><br>
+<div id="Tutorial" class="container-fluid text-center bg-grey">
+    <?php
+    include_once ('../youtube/videoYoutube.php');
+    ?>
+
 </div>
 
 <!-- Container (Pricing Section) -->
-<div id="pricing" class="container-fluid">
+<!--<div id="pricing" class="container-fluid">
     <div class="text-center">
         <h2>Pricing</h2>
         <h4>Choose a payment plan that works for you</h4>
@@ -444,52 +412,19 @@ EVENT APNA  provides Free Software ....... So Register NOW
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
-<!-- Container (Contact Section) -->
-<div id="contact" class="container-fluid bg-grey">
-    <h2 class="text-center">CONTACT</h2>
-    <div class="row">
-        <div class="col-sm-5">
-            <p>Contact us and we'll get back to you within 24 hours.</p>
-            <p><span class="glyphicon glyphicon-map-marker"></span> Chicago, US</p>
-            <p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
-            <p><span class="glyphicon glyphicon-envelope"></span> myemail@something.com</p>
-        </div>
-        <div class="col-sm-7 slideanim">
-            <div class="row">
-                <div class="col-sm-6 form-group">
-                    <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-                </div>
-                <div class="col-sm-6 form-group">
-                    <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
-                </div>
-            </div>
-            <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-            <div class="row">
-                <div class="col-sm-12 form-group">
-                    <button class="btn btn-default pull-right" type="submit">Send</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Image of location/map -->
-<img src="/w3images/map.jpg" class="w3-image w3-greyscale-min" style="width:100%">
-
-<footer class="container-fluid text-center">
-    <a href="#myPage" title="To Top">
-        <span class="glyphicon glyphicon-chevron-up"></span>
-    </a>
-    <p>Bootstrap Theme Made By <a href="https://www.w3schools.com" title="Visit w3schools">www.w3schools.com</a></p>
-</footer>
-
+<h1 class="text-center">Location</h1>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3398.808989353502!2d74.4740596151522!3d31.58428548134846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391911c1f18448e3%3A0x1b0d2e32ae9b4365!2sEVENT%20APNA!5e0!3m2!1sen!2s!4v1602414007360!5m2!1sen!2s" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 
 <script>
     $(document).ready(function(){
         // Add smooth scrolling to all links in navbar + footer link
-        $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+        $(".navbar a, footer a[href='#myPage']").on('click', function(event)
+        {
             // Make sure this.hash has a value before overriding default behavior
             if (this.hash !== "") {
                 // Prevent default anchor click behavior
@@ -523,5 +458,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     })
 </script>
 
+<?php
+include_once ("../webdesign/footer/footer.php");
+?>
 </body>
 </html>
