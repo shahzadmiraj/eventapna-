@@ -532,7 +532,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 formdata.append("option", "createOrderofHall");
 
                 $.ajax({
-                    url: "../companyServer.php",
+                    url: "HallOrder/OrderAddOrEdit.php",
                     method: "POST",
                     data: formdata,
                     contentType: false,
@@ -544,7 +544,12 @@ EVENT APNA  provides Free Software ....... So Register NOW
                     success:function (data)
                     {
                         $('#pleaseWaitDialog').modal('hide');
-                        if($.trim(data)!="")
+                        if($.trim(data)==="SameOrderBooked")
+                        {
+                            alert("Same Order Has been booked yet");
+                            location.reload();
+                        }
+                        else if($.trim(data)!="")
                         {
                             alert(data);
                         }

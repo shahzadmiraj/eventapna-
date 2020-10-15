@@ -775,7 +775,7 @@ include_once ("../../webdesign/footer/footer.php");
             formdata.append("order",<?php echo $orderid;  ?>);
             formdata.append("option", "Edithallorder");
             $.ajax({
-                url: "../companyServer.php",
+                url: "HallOrder/OrderAddOrEdit.php",
                 method: "POST",
                 data: formdata,
                 contentType: false,
@@ -788,7 +788,12 @@ include_once ("../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $('#pleaseWaitDialog').modal('hide');
-                    if($.trim(data)!='')
+                    if($.trim(data)==="SameOrderBooked")
+                    {
+                        alert("Same Order Has been booked yet");
+                        location.reload();
+                    }
+                    else if($.trim(data)!="")
                     {
                         alert(data);
                     }

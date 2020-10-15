@@ -1,7 +1,7 @@
 <?php
 
-require_once('../libraries/PHPMailer.php');
-require_once('../libraries/SMTP.php');
+//require_once('../libraries/PHPMailer.php');
+//require_once('../libraries/SMTP.php');
 
 function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddress)
 {
@@ -70,7 +70,7 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddre
         $display.= 'Message could not be sent.';
         $display.= 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-        echo 'message successully sent';
+        //echo 'message successully sent';
     }
  //   $mail->smtpClose();
 
@@ -79,4 +79,4 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddre
 
 
 
-echo serverSendMessage("shahzadmirajdin1@gmail.com","shahzad miraj","Confirmation of Email",'jkbfqbjkefbhjkfb;hfb;hfqeb; bhwef hbew fbhlewefw ewywyfqwe h ewefw hv fwvefw efw ehvw ew u uvhv v ufefw euw uv  vuewf y  efuvwuyfgy fwyevy y ew efuvw efuvw efw vu fv fewvfuw fuvw f v fvyyfouyfuvyf vwefuv uy fuvfwuvfwuvyy f uvwuvyfy y  fr <a>fejnefjberinbenrbejnorbfjnobejnrbjbjrbjr</a>i','shahzadmirajdin1@gmail.com');
+//echo serverSendMessage("shahzadmirajdin1@gmail.com","shahzad miraj","Confirmation of Email",'jkbfqbjkefbhjkfb;hfb;hfqeb; bhwef hbew fbhlewefw ewywyfqwe h ewefw hv fwvefw efw ehvw ew u uvhv v ufefw euw uv  vuewf y  efuvwuyfgy fwyevy y ew efuvw efuvw efw vu fv fewvfuw fuvw f v fvyyfouyfuvyf vwefuv uy fuvfwuvfwuvyy f uvwuvyfy y  fr <a>fejnefjberinbenrbejnorbfjnobejnrbjbjrbjr</a>i','shahzadmirajdin1@gmail.com');

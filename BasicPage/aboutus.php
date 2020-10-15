@@ -5,7 +5,9 @@ include_once ("../connection/connect.php");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <?php
+    include('../webdesign/header/InsertHeaderTag.php');
+    ?>
 
     <title>About us</title>
 
@@ -213,11 +215,11 @@ EVENT APNA  provides Free Software ....... So Register NOW
         }
     </style>
 </head>
-<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+<body>
 <?php
 include_once ("../webdesign/header/header.php");
 ?>
-
+<div  class="container" id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60" >
 <div class="jumbotron text-center ">
     <h1 >EVENT APNA</h1>
     <h3 >Your Booking Partner</h3>
@@ -461,5 +463,9 @@ include_once ("../webdesign/header/header.php");
 <?php
 include_once ("../webdesign/footer/footer.php");
 ?>
+</div>
 </body>
 </html>
+<?php
+include_once ("../webdesign/footer/EndOfPage.php");
+?>
