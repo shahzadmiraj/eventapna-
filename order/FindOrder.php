@@ -396,13 +396,22 @@ od.destination_date ASC,od.destination_time ASC';
             $orderdetail=queryReceive($sql);
 
              $OrdersOneD = array_column($orderdetail, 0);
-            $List = implode(', ', $OrdersOneD);
-            echo '<form action="../PDF/PdfVendorOnly.php" method="post">
-
-                <input hidden name="BranchName" value="'.$detailBranch[0][0].'" >
+            $List = implode(',', $OrdersOneD);
+            echo '
+<div class="row alert-info">
+                <form action="../PDF/PdfVendorOnly.php"  method="POST" class="col-6">
+                <input hidden name="BranchName" value="' .$detailBranch[0][0].'" >
                 <input hidden type="text" name="PrintedOrders" value="'.$List.'">
-              <button type="submit" class="btn btn-primary  col-12">Clich here for View in PDF</button>
-                    </form>';
+                <input hidden type="text" name="ViewOrDownload" value="View">
+                <button type="submit" class="btn btn-primary col-12"><i class="fa fa-print" aria-hidden="true"></i> PDF View</button>
+                </form>
+                <form action="../PDF/PdfVendorOnly.php"  method="POST" class="col-6">
+                <input hidden name="BranchName" value="' .$detailBranch[0][0].'" >
+                <input hidden type="text" name="PrintedOrders" value="'.$List.'">
+                <input hidden type="text" name="ViewOrDownload" value="Download">
+                <button type="submit" class="btn btn-info col-12"><i class="fas fa-cloud-download-alt"></i> PDF Save</button>
+                </form>
+</div>';
 
 
             $display='';

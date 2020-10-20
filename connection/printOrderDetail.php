@@ -1,7 +1,13 @@
 <?php
+if(!(isset($_GET['userdetail'])&& isset($_GET['orderid']) && isset($_GET['ViewOrDownload']) ))
+    header('location:../index.php');
+$userName=$_GET['userdetail'];
+$orderid=$_GET['orderid'];
+$action=$_GET['ViewOrDownload'];
 
+include_once ("../connection/connect.php");
 require('../fpdf182/fpdf.php');
-
+//header('Content-Disposition: attachment; filename="orderid'.$orderid.'Date'.$printDate.'.pdf"');
 class PDF extends FPDF
 {
 
@@ -564,26 +570,27 @@ WHERE (hei.orderDetail_id='.$orderId.')AND(ISNULL(hei.expire))';
 }
 
 
-
-function action($userName,$printDate,$orderid,$action)
-{
-
-    // Instanciation of inherited class
-    $pdf = new PDF('P',"mm","A4");
-    $pdf->AliasNbPages();
-    $pdf->AddPage();
-    $pdf->SetFont('Times','',8);
-    $pdf->billing($userName,$printDate,$orderid);
-    //$pdf->Output($action,"orderid".$orderid."date".$printDate);
+// Instanciation of inherited class
+$pdf = new PDF('P',"mm","A4");
+$pdf->AliasNbPages();
+$pdf->AddPage();
+$pdf->SetFont('Times','',8);
+$currentdate = (string) date_create()->format('Y-m-d:H:i:s');
+$pdf->billing($userName,$currentdate,$orderid);
+//$pdf->Output($action,"orderid".$orderid."date".$printDate);
 
 
-    $pdf->Cell(189,10,"",0,1);
-    $pdf->Cell(45,20,"Company User signature",0,0,"C");
-    $pdf->Cell(45,20,"",1,0);
-    $pdf->Cell(45,20,"Customer signature",0,0,"C");
-    $pdf->Cell(45,20,"",1,1);
+$pdf->Cell(189,10,"",0,1);
+$pdf->Cell(45,20,"Company User signature",0,0,"C");
+$pdf->Cell(45,20,"",1,0);
+$pdf->Cell(45,20,"Customer signature",0,0,"C");
+$pdf->Cell(45,20,"",1,1);
+// echo $pdf->Output("S");
+if($action=="View")
+    $action='I';
+else
+    $action="D";
+$pdf->Output($action,'orderid'.$orderid.'Date'.$currentdate.'.pdf');
 
-    $pdf->Output($action,"orderid".$orderid.$printDate.".pdf");
-}
-
-
+include_once("../webdesign/footer/EndOfPage.php");
+exit();

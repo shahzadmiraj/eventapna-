@@ -1,11 +1,17 @@
 <?php
 
+if(!(isset($_POST['PrintedOrders']) && isset($_POST['BranchName']) && isset($_POST['ViewOrDownload']) ))
+    header('location:../index.php');
+
+
+
 include_once ('../connection/connect.php');
 include  ("../access/userAccess.php");
 RedirectOtherwiseOnlyAccessUsersWho("Owner,Employee,Viewer","../index.php");
 
 require('../fpdf182/fpdf.php');
 
+//header('Content-Disposition: attachment; filename="downloaded.pdf"');
 class PDF extends FPDF
 {
 
@@ -413,16 +419,18 @@ function action($userName,$printDate,$orderid,$action,$BranchName)
 
 
 
-if(isset($_POST['PrintedOrders']))
-{
     $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
     $userdetail=queryReceive($sql);
-    $currentdate = (string) date_create()->format('Y-m-d:H:i:s');
+
     $PrintedOrders=$_POST['PrintedOrders'];
-    $PrintedOrdersArray= explode(", ", $PrintedOrders);
-        action($userdetail[0][1],$currentdate,$PrintedOrdersArray,'I',$_POST['BranchName']);
-    exit();
-}
+    $PrintedOrdersArray= explode(",", $PrintedOrders);
+    $ViewOrDownload=$_POST['ViewOrDownload'];
+    if($ViewOrDownload=="View")
+        $ViewOrDownload="I";
+    else
+        $ViewOrDownload="D";
+
+    action($userdetail[0][1],$currentdate,$PrintedOrdersArray,$ViewOrDownload,$_POST['BranchName']);
 
 ?>
 

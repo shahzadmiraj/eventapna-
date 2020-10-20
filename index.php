@@ -2,8 +2,7 @@
 include_once ("connection/connect.php");
 include_once ("company/ClientSide/Hall/functions.php");
 
-
-if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
+if((isset($_COOKIE['userid']))&&(!(isset($_GET['action']))))
 {
     $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
     $userdetail=queryReceive($sql);
@@ -11,9 +10,7 @@ if((isset($_COOKIE['userid']))&&(!isset($_GET['action'])))
     if($companyid!="")
         header("location:company/companyRegister/companyAdminPanel.php");
 }
-?>
-
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <head>
 
     <?php
@@ -133,7 +130,7 @@ include_once ("webdesign/header/header.php");
 <div class="container table-light  mt-2 ">
 
 
-    <form class="container alert-info" id="formHallSeaching" method="get" action="">
+    <form class="container alert-info" id="formHallSeaching" method="POST" action="">
 
 
 
@@ -303,7 +300,7 @@ include_once ("webdesign/header/header.php");
 
 
         <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
-        <div  hidden >
+        <div>
             <label  for="">Lat: <input
                         value="<?php
 
@@ -313,7 +310,7 @@ include_once ("webdesign/header/header.php");
                         }
                         ?>"
 
-                        name="latitude"    id="latitude" type="number" step="any" class="latitude"></label>
+                        name="latitude"  readonly  id="latitude" type="number" step="any" class="latitude" style="border: none"></label>
             <label  for="">Long: <input
 
                         value="<?php
@@ -324,7 +321,7 @@ include_once ("webdesign/header/header.php");
                         }
                         ?>"
 
-                        name="longitude"                         id="longitude" type="number"  step="any" class="longitude"></label>
+                        name="longitude"           readonly              id="longitude" type="number"  step="any" class="longitude" style="border: none"></label>
             <label  for="">City <input
 
 
@@ -336,7 +333,7 @@ include_once ("webdesign/header/header.php");
                         }
                         ?>"
 
-                        name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+                        name="city" readonly id="reg-input-city" type="text" class="reg-input-city" placeholder="City" style="border: none"></label>
             <label  for="">country
 
 
@@ -349,10 +346,10 @@ include_once ("webdesign/header/header.php");
                         {
                             echo $_GET['country'];
                         }
-                        ?>"  name="country" type="text" id="reg-input-country" placeholder="country"></label>
+                        ?>"  name="country"  readonly type="text" id="reg-input-country" placeholder="country" style="border: none"></label>
         </div>
 
-        <button id="submit" class="btn btn-success col-12 form-control" type="submit">Find</button>
+        <button type="submit"  id="submit" class="btn btn-success col-12 form-control" type="submit">Find</button>
     </form>
 </div>
 
@@ -409,6 +406,7 @@ include_once ("webdesign/header/header.php");
 <script>
 
 
+
     <?php
 
     if(isset($_GET['daytime']))
@@ -418,6 +416,8 @@ include_once ("webdesign/header/header.php");
     ?>
     $(document).ready(function ()
     {
+
+
         $('.carousel').carousel({
             interval: 5000
         });
@@ -427,6 +427,31 @@ include_once ("webdesign/header/header.php");
     {
         var date = new Date();
         var currentDate = date.toISOString().slice(0,10);
+
+        <?php
+        if(! (isset($_GET['daytime'])))
+        {
+
+            echo "
+            
+            $('#date').val(currentDate);
+            $.getJSON('https://geolocation-db.com/json/')
+                .done (function(location) {
+                   $('#latitude').val(location.latitude);
+                   $('#longitude').val(location.longitude);
+                    $('#reg-input-city').val(location.city);
+                     $('#reg-input-country').val(location.country_name);
+                });";
+        }
+        ?>
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
+        });
+
+
+
 
 
 
@@ -439,12 +464,12 @@ include_once ("webdesign/header/header.php");
             var perhead=$("#perhead").val();
             var latitude=$("#latitude").val();
             var longitude=$("#longitude").val();
-            var city=$("#reg-input-city").val();
-            var country=$("#reg-input-country").val();
             if(latitude=="")
             {
                 window.setTimeout(ShowHall, 100);
             }
+            var city=$("#reg-input-city").val();
+            var country=$("#reg-input-country").val();
             var formdata=new FormData;
             formdata.append("daytime",daytime);
             formdata.append("hallname",hallname);
@@ -461,11 +486,12 @@ include_once ("webdesign/header/header.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
-
                 beforeSend: function() {
+                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
+                    $('#pleaseWaitDialog').modal('hide');
                     $("#showHall").html(data);
                 }
             });
@@ -476,17 +502,12 @@ include_once ("webdesign/header/header.php");
 
         <?php
         if(! (isset($_GET['daytime'])))
-
-            echo '
-              $("#date").val(currentDate);
-            ShowHall();';
+        {
+            echo 'ShowHall();';
+        }
         ?>
 
-       /* $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-            dataType: "script",
-            cache: false
-        });*/
+
     });
 
 

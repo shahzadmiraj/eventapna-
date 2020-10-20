@@ -79,7 +79,6 @@ lockTableForWrite('orderDetail WRITE, hallChoiceSelect WRITE,BookingProcess as b
     querySend($sql);
 
 }
-
  else if($_POST['option']=="Edithallorder")
  {
      $order=$_POST['order'];

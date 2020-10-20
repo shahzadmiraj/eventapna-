@@ -209,7 +209,7 @@ dwa.id='.$dishesid[$j].'';
                         <div class="card-body">
                            <ul>
                                <li class="h5 text-center">Dish Name :<?php echo $dishesName[$j];?></li>
-                               <li>Dish Price Id :<?php echo $dishesid[$j];?> </li>
+                               <li class="h5 text-center">Dish Price Id :<?php echo $dishesid[$j];?> </li>
                            </ul>
                         </div>
                 </div>
@@ -220,6 +220,7 @@ dwa.id='.$dishesid[$j].'';
                 <?
                 $sql='SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id='.$dishesid[$j].')';
                 $AttributeDetail=queryReceive($sql);
+
 
                 $display='';
                 if (count($AttributeDetail) > 0) {
@@ -253,6 +254,8 @@ dwa.id='.$dishesid[$j].'';
                     $display .= '</tbody>
 </table>';
                 }
+                echo $display;
+
                 ?>
 
 

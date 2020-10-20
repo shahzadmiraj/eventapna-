@@ -184,7 +184,7 @@ include_once ("../../../webdesign/header/header.php");
         </div>
 
     <div id="map-canvas" style="width:100%;height: 60vh"  ></div>
-    <div  hidden >
+    <div  >
         <label  for="">Lat: <input
                     value="<?php
 
@@ -195,7 +195,7 @@ include_once ("../../../webdesign/header/header.php");
                     ?>
 "
 
-                    name="latitude"    id="latitude" type="number" step="any" class="latitude"></label>
+                    name="latitude"    id="latitude" type="number" step="any" class="latitude" readonly style="border: none"></label>
         <label  for="">Long: <input
 
                     value="<?php
@@ -207,7 +207,7 @@ include_once ("../../../webdesign/header/header.php");
                     ?>
 "
 
-                    name="longitude"                         id="longitude" type="number"  step="any" class="longitude"></label>
+                    name="longitude"                         id="longitude" type="number"  step="any" class="longitude" readonly style="border: none"></label>
         <label  for="">City <input
 
 
@@ -220,7 +220,7 @@ include_once ("../../../webdesign/header/header.php");
                     ?>
 "
 
-                    name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City"></label>
+                    name="city" id="reg-input-city" type="text" class="reg-input-city" placeholder="City" readonly style="border: none"></label>
         <label  for="">country
 
 
@@ -233,7 +233,7 @@ include_once ("../../../webdesign/header/header.php");
                     {
                         echo $_GET['country'];
                     }
-                    ?>"  name="country" type="text" id="reg-input-country" placeholder="country"></label>
+                    ?>"  name="country" type="text" id="reg-input-country" placeholder="country" readonly style="border: none"></label>
     </div>
 
     <button id="submit" class="btn btn-success col-12 form-control" type="submit">Find</button>
@@ -303,6 +303,28 @@ include_once ("../../../webdesign/header/header.php");
     $(document).ready(function ()
     {
 
+
+        <?php
+        if(! (isset($_GET['latitude'])))
+        {
+
+            echo "
+            $.getJSON('https://geolocation-db.com/json/')
+                .done (function(location) {
+                   $('#latitude').val(location.latitude);
+                   $('#longitude').val(location.longitude);
+                    $('#reg-input-city').val(location.city);
+                     $('#reg-input-country').val(location.country_name);
+                });";
+        }
+        ?>
+
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+            dataType: "script",
+            cache: false
+        });
+
         $('.carousel').carousel({
             interval: 5000
         });
@@ -356,11 +378,6 @@ include_once ("../../../webdesign/header/header.php");
             showDishes();';
         ?>
 
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-            dataType: "script",
-            cache: false
-        });
 
     });
 

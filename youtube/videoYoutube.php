@@ -1,5 +1,4 @@
 <h1 > Video Tutorials</h1>
-<div class="container">
 
     <div class="row">
 
@@ -25,7 +24,7 @@
 
 
         ?>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-image">
                                 <div class="embed-responsive embed-responsive-16by9">
@@ -52,5 +51,3 @@
 
     </div>
 
-
-</div>
