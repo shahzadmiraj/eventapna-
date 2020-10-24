@@ -39,6 +39,13 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="webdesign/css/complete.css">
     <link rel="stylesheet" href="map/style.css">
     <link rel="stylesheet" href="webdesign/css/card.css">
+    <?php
+
+    if(isset($_GET['daytime']))
+        echo '<script src="map/constantMap.js" type="text/javascript"></script>';
+    else
+        echo '<script src="map/javascript.js" type="text/javascript"></script>';
+    ?>
     <style>
 
         .checked {
@@ -130,7 +137,7 @@ include_once ("webdesign/header/header.php");
 <div class="container table-light  mt-2 ">
 
 
-    <form class="container alert-info" id="formHallSeaching" method="POST" action="">
+    <form class="container alert-info" id="formHallSeaching" method="GET" action="">
 
 
 
@@ -405,29 +412,20 @@ include_once ("webdesign/header/header.php");
 
 <script>
 
-
+    var date = new Date();
+    var currentDate = date.toISOString().slice(0,10);
 
     <?php
 
-    if(isset($_GET['daytime']))
+    /*if(isset($_GET['daytime']))
         echo '$.getScript("map/constantMap.js");';
     else
-        echo '$.getScript("map/javascript.js");';
+        echo '$.getScript("map/javascript.js");';*/
     ?>
+
+
     $(document).ready(function ()
     {
-
-
-        $('.carousel').carousel({
-            interval: 5000
-        });
-    });
-
-    $(document).ready(function()
-    {
-        var date = new Date();
-        var currentDate = date.toISOString().slice(0,10);
-
         <?php
         if(! (isset($_GET['daytime'])))
         {
@@ -444,11 +442,18 @@ include_once ("webdesign/header/header.php");
                 });";
         }
         ?>
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
-            dataType: "script",
-            cache: false
+
+        $('.carousel').carousel({
+            interval: 5000
         });
+    });
+
+    $(document).ready(function()
+    {
+
+
+
+
 
 
 
@@ -487,11 +492,9 @@ include_once ("webdesign/header/header.php");
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
-                    $('#pleaseWaitDialog').modal('hide');
                     $("#showHall").html(data);
                 }
             });
@@ -508,6 +511,11 @@ include_once ("webdesign/header/header.php");
         ?>
 
 
+    });
+    $.ajax({
+        url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDRXK_VS0xJAkaZAPrjSjrkIbMxgpC6M2k&libraries=places&callback=initialize",
+        dataType: "script",
+        cache: false
     });
 
 

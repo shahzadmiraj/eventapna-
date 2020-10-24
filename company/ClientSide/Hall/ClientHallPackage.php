@@ -327,17 +327,17 @@ else
 
         for($i=0;$i<count($MenuType);$i++)
         {
-            $display.='<ul class="list-group">
-            <li class="list-group-item">Item Type : '.$MenuType[$i][1].' Choose One out of these</li>';
+            $display.= '<ul class="list-group mt-5 ml-2 mr-2 " style="width: 23rem;">
+            <li class="list-group-item alert-info" style="font-size: 30px;background-color: #c2bebe">' .$MenuType[$i][1].'</li>';
             $sql='SELECT `itemname`, `itemtype`,`price` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$PackageDetail[0][0].') AND(itemtype="'.$MenuType[$i][1].'")';
             $MenuName=queryReceive($sql);
             for($k=0;$k<count($MenuName);$k++)
             {
-                $display.='<li class="list-group-item">Name : '.$MenuName[$k][0];
+                $display.='<li class="list-group-item">'.$MenuName[$k][0];
 
                 if($MenuName[$k][2]!=0)
                 {
-                    $display.=' <span class="float-right btn btn-info"> Price :'.$MenuName[$k][2].'</span>';
+                    $display.=' <span class="float-right btn btn-outline-danger"> Price :'.$MenuName[$k][2].'</span>';
                 }
                 $display.='</li>';
             }
@@ -457,11 +457,12 @@ else
 
 
         <?php
+        $display='';
         for ($j=0;$j<count($ExtraType);$j++)
         {
 
 
-            $display.= '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes badge-info">'.$ExtraType[$j][1].' </h4>
+            $display.= '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes" style="font-size: 30px;background-color: #c2bebe">'.$ExtraType[$j][1].' </h4>
     <div id="dishtype'.$j.'"  class="row   " style="display: none">
 
 

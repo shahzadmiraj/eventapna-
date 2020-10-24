@@ -53,7 +53,7 @@ include_once ("../../webdesign/header/header.php");
 </div>
 
 <form class="card container">
-    <h2>Hall Registeration Form</h2>
+    <h2>Hall Registration Form</h2>
     <hr>
     <div class="form-group row">
         <input hidden type="number" name="userid" value="<?php echo $userdetail[0][3];?>">
@@ -99,7 +99,7 @@ include_once ("../../webdesign/header/header.php");
 
 
     <div class="form-group row">
-        <label class="col-form-label">Hall Manager :</label>
+        <label class="col-form-label">Hall Manager Name:</label>
 
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">

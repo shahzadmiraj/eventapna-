@@ -184,7 +184,7 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
 
         <div class="form-group row">
-            <label class="col-form-label">Hall Manager :</label>
+            <label class="col-form-label">Hall Manager Name:</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">

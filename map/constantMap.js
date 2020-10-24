@@ -1,4 +1,3 @@
-
 var x = document.getElementById("demo");
 var latitude=$("#latitude").val();
 var longitude=$("#longitude").val();

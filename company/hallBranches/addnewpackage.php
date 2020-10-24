@@ -45,26 +45,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <style>
 
-        form
-        {
-            margin: 5%;
 
-
-        }
-        #selectedmenu
-        {
-            background: #F09819;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #EDDE5D, #F09819);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #EDDE5D, #F09819); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
-        #selectmenu
-        {
-            background: #9796f0;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
     </style>
 </head>
 <body>
@@ -110,6 +91,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 <i class="fa fa-arrow-left" aria-hidden="true"></i>
                             </button>
                         </div>
+
                         <div class="card-header month-selected col-sm" id="monthAndYear">
                         </div>
                         <div class="col-sm">
@@ -122,6 +104,16 @@ include_once ("../ClientSide/Company/Box.php");
                             <button type="button" id="next" onclick="next()">
                                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
                             </button>
+                        </div>
+                        <div class="row col-12">
+
+                            <button type="button" id="next" class="col-6 btn btn-outline-primary" onclick="SelectAllDates('AddAllDates')">
+                                     Select all Dates
+                            </button>
+                            <button type="button" id="next" class="col-6 btn btn-outline-danger" onclick="SelectAllDates('RemoveAllDates')">
+                                 Remove all Dates
+                            </button>
+
                         </div>
                     </div>
                     <table id="calendar" class="container">
@@ -207,7 +199,7 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
 
         <div class="form-group row">
-            <lable for="describe" class="col-form-label">Package Daytime:</lable>
+            <lable for="describe" class="col-form-label">Package Timing:</lable>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">

@@ -50,7 +50,6 @@ function next()
         currentYear = currentMonth === 11 ? currentYear + 1 : currentYear;
         currentMonth = currentMonth + 1 % 12;
         loadControl(currentMonth, currentYear);
-
 }
 
 function previous() {
@@ -70,7 +69,6 @@ function change()
 
 function loadControl(month, year)
 {
-
 
 
         addMonths(month);
@@ -146,11 +144,14 @@ function loadControl(month, year)
     addButtonPanel(tbl);
 
     // function when the date cells are clicked
-    $("#calendarBody tr td").click(function (e) {
+    $("#calendarBody tr td").click(function (e)
+    {
+
         var id = $(this).attr('id');
         // check the if cell clicked has a date
         // those with an id, have the date
-        if (typeof id !== typeof undefined) {
+        if (typeof id !== typeof undefined)
+        {
             var classes = $(this).attr('class');
             if (typeof classes === typeof undefined || !classes.includes(highlightClass)) {
                 var selectedDate = new Date(id);
@@ -175,6 +176,8 @@ function loadControl(month, year)
     });
 
 
+
+
     var $search = $('#selectedValues');
     var $dropBox = $('#parent');
 
@@ -186,6 +189,49 @@ function loadControl(month, year)
 
 
 
+}
+
+function SelectAllDates(ActionAddOrRemove)
+{
+    $( "#calendarBody tr td" ).each(function( index, element )
+    {
+        // element == this
+        var id = $(element).attr('id');
+        if (typeof id !== typeof undefined)
+        { // id is existed
+            var classes = $(element).attr('class'); //check already selected or not
+            if (typeof classes === typeof undefined || !classes.includes(highlightClass))
+            {//not select yes
+                if(ActionAddOrRemove==="AddAllDates")
+                {
+                    var selectedDate = new Date(id);
+                    selectedDates.push((selectedDate.getMonth() + 1).toString() + '/' + selectedDate.getDate().toString() + '/' + selectedDate.getFullYear());
+                    $(element).toggleClass(highlightClass);
+                }
+            } else
+            { //already selected
+
+                if(ActionAddOrRemove==="RemoveAllDates") {
+
+                    var index = selectedDates.indexOf(id);
+                    if (index > -1) {
+                        selectedDates.splice(index, 1);
+                    }
+                    $(element).toggleClass(highlightClass);
+                }
+            }
+        }
+
+        // sort the selected dates array based on the latest date first
+        var sortedArray = selectedDates.sort((a, b) => {
+            return new Date(a) - new Date(b);
+        });
+
+        // update the selectedValues text input
+        document.getElementById('selectedValues').value = datesToString(sortedArray);
+
+
+    });
 }
 
 

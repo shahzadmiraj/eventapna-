@@ -1,33 +1,26 @@
 var x = document.getElementById("demo");
-/*
+///////////////check location is block or not
 function getLocation()
 {
-
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(showPosition);
 	} else {
 		//	x.innerHTML = "Geolocation is not supported by this browser.";
 	}
-
 }
-
 function showPosition(position)
 {
 	// x.innerHTML = "Latitude: " + position.coords.latitude +
 	// 	"<br>Longitude: " + position.coords.longitude;
-	latitude=position.coords.latitude;
-	longitude=position.coords.longitude;
-
-}*/
+	//latitude=position.coords.latitude;
+	//longitude=position.coords.longitude;
+}
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	infoWindow.setPosition(pos);
-	infoWindow.setContent(browserHasGeolocation ?
-		'Error: The Geolocation service failed.' :
-		'Error: Your browser doesn\'t support geolocation.');
+	infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : 'Error: Your browser doesnt support geolocation.');
 	infoWindow.open(map);
 }
-
 function initialize()
 {
 	var geocoder;
@@ -269,8 +262,5 @@ function initialize()
 
 
 }
-
-
-
 
 

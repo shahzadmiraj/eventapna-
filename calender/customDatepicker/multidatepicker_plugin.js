@@ -1,6 +1,7 @@
 ﻿// anonymous function to wrap around your function to avoid conflict
 (function ($) {
-
+    var d = new Date();
+    var YearCurent = d.getFullYear();
     //Attach this new method to jQuery
     $.fn.extend({
 
@@ -9,8 +10,8 @@
 
             // Set the default values, use comma to separate the settings 
             var defaults = {
-                minYear: 2011,
-                maxYear: 2020,
+                minYear: YearCurent, //2020
+                maxYear: YearCurent+2,
                 startMonth: 0,
                 endMonth: 11,
                 highlightToday: true,
@@ -46,9 +47,11 @@
 
             var options = $.extend(defaults, options);
 
-            $("#calendar-body tr td").click(function (e) {
+            $("#calendar-body tr td").click(function (e)
+            {
                 var id = $(this).attr('id');
-                if (typeof id !== typeof undefined) {
+                if (typeof id !== typeof undefined)
+                {
                     var classes = $(this).attr('class');
                     if (typeof classes === typeof undefined || !classes.includes('bg-info')) {
                         var selectedDate = new Date(id);
@@ -60,7 +63,6 @@
                             selectedDates.splice(index, 1);
                         }
                     }
-
                     $(this).toggleClass('bg-info');
                 }
 
