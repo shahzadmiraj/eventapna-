@@ -41,10 +41,10 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="webdesign/css/card.css">
     <?php
 
-    if(isset($_GET['daytime']))
-        echo '<script src="map/constantMap.js" type="text/javascript"></script>';
-    else
-        echo '<script src="map/javascript.js" type="text/javascript"></script>';
+//    if(isset($_GET['daytime']))
+//        echo '<script src="map/constantMap.js" type="text/javascript"></script>';
+//    else
+//        echo '<script src="map/javascript.js" type="text/javascript"></script>';
     ?>
     <style>
 
@@ -415,13 +415,7 @@ include_once ("webdesign/header/header.php");
     var date = new Date();
     var currentDate = date.toISOString().slice(0,10);
 
-    <?php
 
-    /*if(isset($_GET['daytime']))
-        echo '$.getScript("map/constantMap.js");';
-    else
-        echo '$.getScript("map/javascript.js");';*/
-    ?>
 
 
     $(document).ready(function ()
@@ -447,6 +441,13 @@ include_once ("webdesign/header/header.php");
             interval: 5000
         });
     });
+    <?php
+
+    if(isset($_GET['daytime']))
+        echo '$.getScript("map/constantMap.js");';
+    else
+        echo '$.getScript("map/javascript.js");';
+    ?>
 
     $(document).ready(function()
     {
