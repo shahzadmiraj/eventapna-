@@ -186,11 +186,14 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
                         $image='';
 
-                        $sql='SELECT d.image FROM dish as d INNER JOIN dishWithAttribute as dwa
+                        $sql='SELECT d.image,d.name,dish_type_id FROM dish as d INNER JOIN dishWithAttribute as dwa
 on (d.id=dwa.dish_id)
 WHERE 
 dwa.id='.$dishesid[$j].'';
                         $EachDishInfo=queryReceive($sql);
+                        echo '<input hidden type="text" name="dishImage" value="'.$EachDishInfo[0][0].'">
+                        <input hidden type="text" name="dishName" value="'.$EachDishInfo[0][1].'">
+                        <input hidden type="number" name="dishTypeId" value="'.$EachDishInfo[0][2].'">';
 
                         if(file_exists('../images/dishImages/'.$EachDishInfo[0][0])&&($EachDishInfo[0][0]!=""))
                         {
@@ -201,9 +204,6 @@ dwa.id='.$dishesid[$j].'';
                             $image='../images/systemImage/imageNotFound.png';
                         }
                         ?>
-
-
-
                         <img  class="center" src="<?php echo $image;?>" style="height: 20vh;width: 40%" >
 
                         <div class="card-body">

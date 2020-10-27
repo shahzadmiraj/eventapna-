@@ -40,7 +40,7 @@ else
 {
 
     $listOfCatering=array_column($CateringName, 0);
-    $List = implode(', ', $listOfCatering);
+    $List = implode(',', $listOfCatering);
 }
 $userid=$_COOKIE['userid'];
 $companyid=$userdetail[0][0];
@@ -194,7 +194,7 @@ GROUP by (dt.id)';
  
  
  
- WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND(ISNULL(d.expire))AND(ISNULL(dc.expire))AND(dc.catering_id in('.$List.')) ';
+ WHERE (dish_type_id=' . $dishTypeDetail[$i][0] . ')AND(ISNULL(d.expire))AND(ISNULL(dc.expire))AND(dc.catering_id in('.$List.')) Group by (d.id)';
 
         $dishDetail=queryReceive($sql);
         //print_r($dishDetail);
@@ -230,7 +230,7 @@ Dish id# '.$dishDetail[$j][1].' <br>
 
 
 
-<form id="FormActivationDish'.$dishDetail[$j][0].'" >
+    <form id="FormActivationDish'.$dishDetail[$j][0].'" >
               
                  <input hidden name="companyid" value="'.$userdetail[0][0].'">
 
@@ -250,7 +250,7 @@ Dish id# '.$dishDetail[$j][1].' <br>
                 </div>';
             }
             $Selective = array_column($Selective, 0);
-            $List = implode(', ', $Selective);
+            $List = implode(',', $Selective);
 
 
             $sql = 'SELECT `id`, `name` FROM `catering` WHERE (ISNULL(expire))AND (company_id= ' . $companyid . ')AND( id NOT IN (' . $List . '))';
@@ -295,7 +295,7 @@ include_once ("../../../webdesign/footer/footer.php");
         {
             var formid=$(this).data("formid");
             var formdata = new FormData($("#FormActivationDish"+formid)[0]);
-            formdata.append("option","SubmitPackagesSave");
+            formdata.append("option","ChangingBranches");
             $.ajax({
                 url:"dishServer.php",
                 method:"POST",
@@ -309,8 +309,12 @@ include_once ("../../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $('#pleaseWaitDialog').modal('hide');
+                    if($.trim(data)!="")
+                    {
+                        alert(data);
+                    }
 
-                    location.reload();
+                    //location.reload();
                 }
             });
         });

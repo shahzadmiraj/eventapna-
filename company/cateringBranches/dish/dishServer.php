@@ -613,6 +613,12 @@ if(isset($_POST['option']))
         checkAndInsertNewPrices($post);
         checkDishEdit($post);
     }
+    else if($_POST['option']=="ChangingBranches")
+    {
+
+        $post=$_POST;
+        checkAndUpdateDishControlInCaterings($post);
+    }
     else  if($_POST['option']=="checkAttributeExistByKeyUp")
     {
         $display='';
