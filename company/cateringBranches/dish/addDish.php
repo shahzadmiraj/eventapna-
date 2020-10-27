@@ -19,7 +19,7 @@ $companyid=$userdetail[0][0];
 $sql='SELECT `id`, `name`, `token` FROM `catering` WHERE (ISNULL(expire))AND (company_id= '.$userdetail[0][0].')';
 $CateringName=queryReceive($sql);
 $listOfCatering=array_column($CateringName, 0);
-$List = implode(', ', $listOfCatering);
+$List = implode(',', $listOfCatering);
 
 ?>
 <!DOCTYPE html>
@@ -128,16 +128,10 @@ include_once ("../../../webdesign/header/header.php");
 
         <div class="form-group row">
             <label class="col-form-label">Dish Type</label>
-
-
-
-
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-calendar-minus"></i></span>
                 </div>
-
                 <select id="dishtype" name="dishtype" class="form-control">
                     <?php
 

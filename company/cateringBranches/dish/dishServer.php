@@ -7,9 +7,167 @@
  */
 include_once ("../../../connection/connect.php");
 
+function checkAndUpdateDishControlInCaterings($post)
+{
+            global $timestamp;
+            $companyid=$post['companyid'];
+            $userid=$post['userid'];
+            $packageid=$post['dishid'];
+            $sql='SELECT `catering_id`,`id`,(SELECT catering.name from catering WHERE catering.id=dishControl.catering_id) FROM `dishControl` WHERE (ISNULL(expire))AND(dish_id='.$packageid.')';
+            $Selective=queryReceive($sql); //previous selections
+            $Selectived= array_column($Selective, 1);
+            $selectedPrevious=array();
+            if(isset($post['selected']))
+            {
+                $selectedPrevious=$post['selected'];//current selections packageControl ids
+            }
+
+            $clean1 = array_diff($Selectived, $selectedPrevious);
+            $clean2 = array_diff($selectedPrevious, $Selectived);
+            $final_output = array_merge($clean1, $clean2);
+
+            for($i=0;$i<count($final_output);$i++)//disactive different packageControl ids
+            {
+                $sql = 'UPDATE `dishControl` SET `expire`="' . $timestamp . '",`expireUserid`=' . $userid . ' WHERE id=' . $final_output[$i] . '';
+                querySend($sql);
+            }
+            if(isset($post['active']))
+            {
+                //create new
+                $createActive=$post['active'];
+                for($i=0;$i<count($createActive);$i++)
+                {
+                    $sql='INSERT INTO `dishControl`(`id`, `dish_id`, `catering_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$packageid.','.$createActive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
+                    querySend($sql);
+                }
+
+            }
 
 
 
+
+}
+function checkAndUpdateDishesPrices($post)
+{
+    global $timestamp,$connect;
+    $companyid=$post['companyid'];
+    $userid=$post['userid'];
+    $packageid=$post['dishid'];
+
+  //  $sql='SELECT `catering_id`,`id`,(SELECT catering.name from catering WHERE catering.id=dishControl.catering_id) FROM `dishControl` WHERE (ISNULL(expire))AND(dish_id='.$packageid.')';
+    $sql='SELECT dwa.id FROM dishWithAttribute as dwa WHERE (ISNULL(dwa.expire)) AND (dwa.dish_id='.$packageid.')';
+    $Selective=queryReceive($sql); //previous selections
+    $Selectived= array_column($Selective, 0);
+    $selectedPrevious=array();
+    if(isset($post['dishidswithpricesAlreadySelected']))
+    {
+        $selectedPrevious=$post['dishidswithpricesAlreadySelected'];//current selections packageControl ids
+    }
+
+     //different packageControl ids
+    $clean1 = array_diff($Selectived, $selectedPrevious);
+    $clean2 = array_diff($selectedPrevious, $Selectived);
+    $final_output = array_merge($clean1, $clean2);
+
+    for($i=0;$i<count($final_output);$i++)//disactive different packageControl ids
+    {
+
+        $sql='UPDATE dishWithAttribute SET expire="'.$timestamp.'" WHERE id='.$final_output[$i].'';
+        querySend($sql);
+    }
+
+
+}
+function checkAndInsertNewPrices($post)
+{
+    global $timestamp,$connect;
+    $countofAttributeSequence=0;
+    $userid=$post['userid'];
+    if(isset($post['NonDishprice']))
+    {
+        //create new
+        $createActive=$post['NonDishid'];
+        $NonDishprice=$post['NonDishprice'];
+        $NonDishAttributeName=array();
+        $NonDishAttributeQuantity=array();
+        if(isset($post['NonDishAttributeName']))
+        {
+            $NonDishAttributeName=$post['NonDishAttributeName'];
+            $NonDishAttributeQuantity=$post['NonDishAttributeQuantity'];
+        }
+        $countofAttribute=array_unique($NonDishAttributeName);
+        for($i=0;$i<count($createActive);$i++)
+        {
+
+            $token=uniqueToken("dishWithAttribute","token",'');
+            $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$NonDishprice[$i].','.$createActive[$i].','.$userid.',"'.$token.'")';
+            querySend($sql);
+            $dishWithAttributeid=mysqli_insert_id($connect);
+            //
+            for($j=0;$j<count($countofAttribute);$j++)
+            {
+                $sql='INSERT INTO `attribute`(`name`, `id`, `expire`, `active`, `quantity`, `dishWithAttribute_id`, `user_id`) VALUES ("'.trim($NonDishAttributeName[$countofAttributeSequence]).'",NULL,NULL,"'.$timestamp.'",'.checknumberOtherNull($NonDishAttributeQuantity[$countofAttributeSequence]).','.$dishWithAttributeid.','.$userid.')';
+                querySend($sql);
+                $countofAttributeSequence++;
+            }
+
+        }
+    }
+}
+function checkDishEdit($post)
+{
+    global $timestamp,$connect,$_FILES;
+    $dishid=$post['dishid'];
+    $sql='SELECT `name`, `dish_type_id`,`image`  FROM `dish` WHERE (ISNULL(expire))AND(id='.$dishid.')';
+    $dishDetailOnly=queryReceive($sql);
+    $userid=$post['userid'];
+    $Dishname=$post['Dishname'];
+    $dishtype=$post['dishtype'];
+    $otherdishType=$post['otherdishType'];
+    $dishimage=$dishDetailOnly[0][2];
+
+    if(!empty($_FILES['image']["name"]))
+    {
+        $passbyreference=explode('.',$_FILES['image']['name']);
+        $file_ext=strtolower(end($passbyreference));
+        $tokenimages=uniqueToken("dish","image",'.'.$file_ext);
+        $dishimage = "../../../images/dishImages/".$tokenimages;
+        //$dishimage = "../../../images/dishImages/" . $_FILES['image']['name'];
+        $resultimage = ImageUploaded($_FILES, $dishimage);//$dishimage is destination file location;
+        if ($resultimage != "") {
+            print_r($resultimage);
+            exit();
+        }
+        $dishimage=$tokenimages;
+        $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`, `primaryKeyInTable`) VALUES (NULL,"dish","image","'.$dishDetailOnly[0][2].'",'.$userid.',"'.$timestamp.'",'.$dishid.')';
+        querySend($sql);
+    }
+    if($_POST["dishtype"]=="others")
+    {
+        $dishtypename=$_POST['otherdishType'];
+
+        $sql='INSERT INTO `dish_type`(`id`, `name`, `expire`, `active`, `user_id`) VALUES (NULL,"'.$dishtypename.'",NULL,"'.$timestamp.'",'.$userid.')';
+        querySend($sql);
+        $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`, `primaryKeyInTable`) VALUES (NULL,"dish","dish_type",'.$dishDetailOnly[0][1].','.$userid.',"'.$timestamp.'",'.$dishid.')';
+        querySend($sql);
+        $dishtype=mysqli_insert_id($connect);
+    }
+    else if($dishDetailOnly[0][1]!=$dishtype)
+    {
+        //change type
+        $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`, `primaryKeyInTable`) VALUES (NULL,"dish","dish_type",'.$dishDetailOnly[0][1].','.$userid.',"'.$timestamp.'",'.$dishid.')';
+        querySend($sql);
+    }
+    if($dishDetailOnly[0][0]!=trim($Dishname))
+    {
+        //change New Name
+        $sql='INSERT INTO `HistoryGenaric`(`id`, `table`, `column`, `Value`, `user_id`, `active`, `primaryKeyInTable`) VALUES (NULL,"dish","name","'.$dishDetailOnly[0][0].'",'.$userid.',"'.$timestamp.'",'.$dishid.')';
+        querySend($sql);
+    }
+    $sql='UPDATE `dish` SET `name`="'.trim($Dishname).'",`image`="'.trim($dishimage).'",`dish_type_id`='.$dishtype.' WHERE (ISNULL(expire))AND(id='.$dishid.')';
+    querySend($sql);
+
+}
 if(isset($_POST['option']))
 {
 
@@ -111,6 +269,7 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="dishchanges")
     {
+        //change dish
         $dishid=$_POST['dishid'];
         $column=$_POST['column'];
         $text=chechIsEmpty($_POST['text']);
@@ -119,6 +278,7 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=='changeAttributes')
     {
+        ///change
         $attributeid=$_POST['attributeid'];
         $text=chechIsEmpty($_POST['text']);
         $sql='UPDATE `attribute` SET `name`="'.$text.'" WHERE id='.$attributeid.'';
@@ -146,7 +306,7 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="addnewDishprice")
     {
-        $userid=$_POST['userid'];
+
         $addAttributes=array();
         $quantity=array();
         $countAttribute=0;
@@ -160,18 +320,86 @@ if(isset($_POST['option']))
         $dishid=$_POST['dishid'];
 
         $price=checknumberOtherNull($_POST['price']);
-
-            $token=uniqueToken("dishWithAttribute","token",'');
-            $sql='INSERT INTO `dishWithAttribute`(`id`, `active`, `expire`, `price`, `dish_id`, `user_id`,`token`) VALUES (NULL,"'.$timestamp.'",NULL,'.$price.','.$dishid.','.$userid.',"'.$token.'")';
-            querySend($sql);
-            $dishWithAttributeid=mysqli_insert_id($connect);
-            for($j=0;$j<$countAttribute;$j++)
-            {
+        $NonselectivedishesCount=$_POST['NonselectivedishesCount'];
 
 
-                $sql='INSERT INTO `attribute`(`name`, `id`, `expire`, `active`, `quantity`, `dishWithAttribute_id`, `user_id`) VALUES ("'.trim($addAttributes[$j]).'",NULL,NULL,"'.$timestamp.'",'.checknumberOtherNull($quantity[$j]).','.$dishWithAttributeid.','.$userid.')';
-                querySend($sql);
+
+
+        $display='';
+
+
+
+            $display.='<div class="card m-2" id="NonselectivedishesCount'.$NonselectivedishesCount.'">
+                <div class="card-header text-danger">
+                   <i class="fas fa-money-bill-alt"></i>Total price: '.$price.'
+                </div>
+                <ul class="list-group">
+             
+                ';
+
+
+            if (count($addAttributes) > 0) {
+
+
+                $display .= ' <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>';
+
             }
+            for($k=0;$k<count($addAttributes);$k++)
+            {
+                $display .= ' 
+    <tr>
+      <th scope="row">'.($k+1).'</th>
+      <td>'.$addAttributes[$k].'</td>
+      <td>'.$quantity[$k].'</td>
+      <input hidden type="text" name="NonDishAttributeName[]" value="'.$addAttributes[$k].'">
+      <input hidden type="number" name="NonDishAttributeQuantity[]" value="'.$quantity[$k].'">
+   </tr>';
+
+            }
+            if (count($addAttributes) > 0) {
+                $display .= '</tbody>
+</table>';
+            }
+
+
+            $display.='  
+                  <li class="list-group-item">New include</li>
+                </ul>
+                <input hidden type="number" name="NonDishid[]" value="'.$dishid.'">
+                <input hidden type="number" name="NonDishprice[]" value="'.$price.'">
+                
+             
+                <div class="card-footer  m-auto">
+                    <button data-dishtypealredy="NonselectivedishesCount"  data-deleteid="'.$NonselectivedishesCount.'" class="btn btn-danger deleteprice "><i class="far fa-trash-alt"></i>Delete Price </button>
+                </div>
+            </div>';
+
+
+
+
+
+
+
+        echo $display;
+
+
+
+
+
+
+
+
+        exit();
+
+
 
 
     }
@@ -200,6 +428,7 @@ if(isset($_POST['option']))
     }
     else if ($_POST['option']=="changeImage")
     {
+        //change image
         if(empty($_FILES['image']["name"]))
         {
             exit();
@@ -375,36 +604,14 @@ if(isset($_POST['option']))
     }
     else if($_POST['option']=="SubmitPackagesSave")
     {
-        $companyid=$_POST['companyid'];
-        $userid=$_POST['userid'];
-        $packageid=$_POST['dishid'];
-        $sql='SELECT `catering_id`,`id`,(SELECT catering.name from catering WHERE catering.id=dishControl.catering_id) FROM `dishControl` WHERE (ISNULL(expire))AND(dish_id='.$packageid.')';
-        $Selective=queryReceive($sql); //previous selections
-        $Selectived= array_column($Selective, 1);
-        $selectedPrevious=array();
-        if(isset($_POST['selected']))
-        {
-            $selectedPrevious=$_POST['selected'];//current selections packageControl ids
 
-        }
-        $result=array_diff($Selectived,$selectedPrevious); //different packageControl ids
 
-        foreach ($result as $k => $v) //disactive different packageControl ids
-        {
-            $sql='UPDATE `dishControl` SET `expire`="'.$timestamp.'",`expireUserid`='.$userid.' WHERE id='.$v.'';
-            querySend($sql);
-        }
 
-        if(isset($_POST['active']))
-        {
-            //create new
-            $createActive=$_POST['active'];
-            for($i=0;$i<count($createActive);$i++)
-            {
-                $sql='INSERT INTO `dishControl`(`id`, `dish_id`, `catering_id`, `user_id`, `company_id`, `active`, `expire`, `expireUserid`) VALUES (NULL,'.$packageid.','.$createActive[$i].','.$userid.','.$companyid.',"'.$timestamp.'",NULL,NULL)';
-                querySend($sql);
-            }
-        }
+        $post=$_POST;
+        checkAndUpdateDishControlInCaterings($post);
+        checkAndUpdateDishesPrices($post);
+        checkAndInsertNewPrices($post);
+        checkDishEdit($post);
     }
     else  if($_POST['option']=="checkAttributeExistByKeyUp")
     {

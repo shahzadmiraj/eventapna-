@@ -37,7 +37,8 @@ $final_output = array_merge($clean1, $clean2);
 
 
 
-
+ $("#formaddprice").trigger("reset"); reset a form
+  $("#exampleModal").modal('toggle'); togel form
 
 
 
