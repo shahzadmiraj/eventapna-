@@ -95,24 +95,23 @@ EVENT APNA  provides Free Software ....... So Register NOW
             <input hidden name="userid" value="<?php echo $userid;?>">
 
             <input hidden name="packageid" value="<?php echo $packageDetail[0][0];?>">
-            <h6>You can just manage Dates  , Delect package and activation for halls</h6>
             <div class="form-group row">
-                <lable class="col-form-label">Packages Name</lable>
+                <lable for="package_name" class="col-form-label">Packages Name</lable>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-hamburger"></i></span>
                     </div>
-                    <input  readonly data-columnname="package_name"     class="packagechange form-control" type="text" value="<?php echo $packageDetail[0][7];?>">
+                    <input  id="package_name" name="package_name"     class="form-control" type="text" value="<?php echo $packageDetail[0][7];?>">
                 </div>
             </div>
 
             <div class="form-group row">
-                <lable class="col-form-label">Packages Rate per head</lable>
+                <lable for="price" class="col-form-label">Packages Rate per head</lable>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                     </div>
-                    <input readonly data-columnname="price" class="packagechange form-control" type="number" value="<?php echo $packageDetail[0][2];?>">
+                    <input  name="price" class="form-control" type="number" value="<?php echo $packageDetail[0][2];?>">
                 </div>
             </div>
 
@@ -127,12 +126,15 @@ EVENT APNA  provides Free Software ....... So Register NOW
                         <?php
                         if($packageDetail[0][1]==0)
                         {
-                            echo '<option value="0">per head only seating </option>';
+                            echo '<option value="0">per head only seating </option>
+                                <option value="1">per head Food and seating</option>
+                                ';
                         }
                         else
                         {
                             echo '
-                <option value="1">per head Food and seating</option>';
+                <option value="1">per head Food and seating</option>
+                <option value="0">per head only seating </option>';
                         }
 
                         ?>
@@ -141,30 +143,48 @@ EVENT APNA  provides Free Software ....... So Register NOW
             </div>
 
             <div class="form-group row">
-                <lable for="describe" class="col-form-label">Package Timing:</lable>
+                <lable for="Daytime" class="col-form-label">Package Timing:</lable>
 
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-clock"></i></span>
                     </div>
-                    <select id="Daytime" name="Daytime" class="form-control" placeholder="Daytime" >
+                    <select  id="Daytime" name="Daytime" class="form-control" >
                         <?php
-                        echo '
-                <option>'.$packageDetail[0][4].'</option>'
 
+                        if($packageDetail[0][4]=="Morning")
+                        {
+                            echo '<option value="Morning">Morning</option>
+                    <option value="Afternoon">Afternoon</option>
+                    <option value="Evening">Evening</option>';
+                        }
+                        else if($packageDetail[0][4]=="Afternoon"){
+                            echo '
+
+                    <option value="Afternoon">Afternoon</option>
+                    <option value="Morning">Morning</option>         
+                    <option value="Evening">Evening</option>';
+                        }
+                        else
+                        {
+                            echo '<option value="Evening">Evening</option>
+                             <option value="Morning">Morning</option>
+                          <option value="Afternoon">Afternoon</option>
+                    ';
+                        }
                         ?>
                     </select>
 
                 </div>
             </div>
             <div class="form-group row">
-                <lable for="rate" class="col-form-label">How many minimum guest will book this packages</lable>
+                <lable for="MinimumGuest" class="col-form-label">How many minimum guest will book this packages</lable>
 
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                     </div>
-                    <input readonly id="MinimumGuest" name="MinimumGuest" class="form-control" type="number"  value="<?php echo $packageDetail[0][12];?>">
+                    <input  id="MinimumGuest" name="MinimumGuest" class="form-control" type="number"  value="<?php echo $packageDetail[0][12];?>">
                 </div>
             </div>
 
@@ -174,7 +194,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-comments"></i></span>
                     </div>
-                    <textarea readonly data-columnname="describe"  class=" form-control" > <?php echo $packageDetail[0][3];?></textarea>
+                    <textarea  name="describe"  class=" form-control" > <?php echo $packageDetail[0][3];?></textarea>
                 </div>
             </div>
 
@@ -280,7 +300,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 </div>';
                 }
                 $SelectiveHalls=array_column($SelectiveHalls, 0);
-                $List = implode(', ', $SelectiveHalls);
+                $List = implode(',', $SelectiveHalls);
 
 
 
