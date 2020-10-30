@@ -88,16 +88,16 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<div class="container card ">
+<div class="container">
 
-    <form >
+    <form class="row" >
 
         <input  hidden name="pid" value="<?php echo $pid;?>">
         <input  hidden name="token" value="<?php echo $token;?>">
 
         <input type="number" hidden name="customer" value=<?php echo $customer;?>   >
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid;?>">
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label for="persons" class="col-form-label"> No of guests</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -109,7 +109,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="time" class="col-form-label">Delivery Time</label>
 
 
@@ -118,14 +118,13 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
                 </div>
                 <input type="time" name="time" id="time"  class="form-control">
-
             </div>
 
 
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="date" class="col-form-label">Delivery Date (Year,Month,day)</label>
 
 
@@ -142,7 +141,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="address" class="col-form-label">Address:</label>
 
 
@@ -156,12 +155,8 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12  col-12 col-md-12 col-lg-12">
             <label for="describe" class="col-form-label">Describe Order </label>
-
-
-
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-comments"></i></span>
@@ -171,7 +166,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group row justify-content-center">
+        <div class="row  col-12 justify-content-center">
 
             <a id="btnbackhistory" class="form-control col-5 btn btn-danger"><< Back</a>
             <button type="button" id="submit" class="form-control col-5 btn-primary">Next >></button>

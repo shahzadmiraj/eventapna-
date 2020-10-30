@@ -182,7 +182,7 @@ WHERE
 
         if(count($MenuType)>0)
         {
-            $display = "<h3 class='text-center'>Choices of items in package</h3>
+            $display = "<h3 class='col-12 text-center'>Choices of items in package</h3>
                     <input type='text'  hidden name='MenuTypeInpackages' id='MenuTypeInpackages' value='".$List."'>
                     ";
         }
@@ -190,7 +190,7 @@ WHERE
         {
             $display.='
                                      
-         <div class="form-group row">
+         <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Select One <span>'.$MenuType[$i][2].'</span> Item type  </label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -203,7 +203,7 @@ WHERE
             $MenuName=queryReceive($sql);
             for($k=0;$k<count($MenuName);$k++)
             {
-                $display.='  <option data-price="'.$MenuName[$k][3].'"  value="'.$MenuName[$k][0].'">Item Name:'.$MenuName[$k][1].' with Price: '.$MenuName[$k][3].'    </option>';
+                $display.='  <option data-price="'.$MenuName[$k][3].'"  value="'.$MenuName[$k][0].'">'.$MenuName[$k][1].' with Price: '.$MenuName[$k][3].'    </option>';
             }
 
             $display.='</select>

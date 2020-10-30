@@ -94,14 +94,14 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <div class="container row m-auto  alert-light">
 
 
-        <form  method="GET" action="../connection/printOrderDetail.php" class="col-6">
+        <form  method="GET" action="../connection/printOrderDetail.php" class="col-6 col-md-3">
             <input type="text" hidden name="userdetail" value="<?php echo $userdetail[0][1];?>">
             <input type="number" hidden name="orderid" value="<?php echo $processInformation[0][5];?>">
             <input type="text" hidden name="ViewOrDownload" value="View">
             <button type="submit"  class="col-12 shadow btn-info ext-center fa-3x" ><i class="fa fa-print" aria-hidden="true"></i><h6>Download PDF Bill</h6></button>
         </form>
 
-        <form  method="GET" action="../connection/printOrderDetail.php" class="col-6">
+        <form  method="GET" action="../connection/printOrderDetail.php" class="col-6  col-md-3">
             <input type="text" hidden name="userdetail" value="<?php echo $userdetail[0][1];?>">
             <input type="number" hidden name="orderid" value="<?php echo $processInformation[0][5];?>">
             <input type="text" hidden name="ViewOrDownload" value="Download">
@@ -112,32 +112,32 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         if(onlyAccessUsersWho("Owner,Employee"))
         {
-            echo '    <a href="../customer/customerEdit.php?'.$Query.'" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-user-edit "></i><h6>Customer Preview</h6></a>';
+            echo '    <a href="../customer/customerEdit.php?'.$Query.'" class="h-25 col-5  col-md-3 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-user-edit "></i><h6>Customer Preview</h6></a>';
             if ($hallid != "") {
                 //1 hall order edit                //2 make hall order to user displaye
-                echo '<a href="../company/hallBranches/EdithallOrder.php?' . $Query . '" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Hall Order</h6></a>
-                    <a href="../company/hallBranches/orderInfo/orderItem.php?' . $Query . '" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x" ><i class="far fa-money-bill-alt"></i><h6>Manage Extra Items</h6></a>       
+                echo '<a href="../company/hallBranches/EdithallOrder.php?' . $Query . '" class="h-25  col-md-3 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Hall Order</h6></a>
+                    <a href="../company/hallBranches/orderInfo/orderItem.php?' . $Query . '" class="h-25 col-5  col-md-3 shadow btn-info m-2 text-center fa-3x" ><i class="far fa-money-bill-alt"></i><h6>Manage Extra Items</h6></a>       
 
 ';
             } else {
                 //catering order editor                  //2 make catering order to user displaye
-                echo '<a href="orderEdit.php?' . $Query . '" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Catering  Order</h6></a>';
+                echo '<a href="orderEdit.php?' . $Query . '" class="h-25 col-5 shadow btn-info m-2 text-center  col-md-3 fa-3x"><i class="fas fa-cart-arrow-down "></i><h6>Catering  Order</h6></a>';
             }
 
 
             if ($result[0][1] != "") {
                 echo '
-             <a href="../dish/AllSelectedDishes.php?' . $Query . '" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>';
+             <a href="../dish/AllSelectedDishes.php?' . $Query . '" class="h-25 col-5   col-md-3 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>';
             }
 
         }
         ?>
 
-        <a href="HistoryOrder.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-eraser"></i><h6>Order Changing history </h6></a>
-        <a href="../payment/paymentHistory.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-history "></i><h6>Payment History</h6></a>
-        <a href="../payment/getPayment.php?<?php echo $Query;?>" class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"><i class="far fa-money-bill-alt"></i><h6>Get payment from customer</h6></a>
-        <a href='../payment/paymentDisplaySend.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info m-2 text-center fa-3x"> <i class="fas fa-share-alt "></i><h6>Transfer payment <p>(user to user)</p> </h6></a>
-        <a href='../payment/transferPaymentReceive.php?<?php echo $Query;?>' class="h-25 col-5 shadow btn-info  m-2 text-center fa-3x"><i class="fas fa-clipboard-check "></i><h6>Payment Receiving Request <p>(user to user)</p> </h6></a>
+        <a href="HistoryOrder.php?<?php echo $Query;?>" class="h-25 col-5   col-md-3 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-eraser"></i><h6>Order Changing history </h6></a>
+        <a href="../payment/paymentHistory.php?<?php echo $Query;?>" class="h-25  col-md-3 col-5 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-history "></i><h6>Payment History</h6></a>
+        <a href="../payment/getPayment.php?<?php echo $Query;?>" class="h-25 col-5 shadow  col-md-3 btn-info m-2 text-center fa-3x"><i class="far fa-money-bill-alt"></i><h6>Get payment from customer</h6></a>
+        <a href='../payment/paymentDisplaySend.php?<?php echo $Query;?>' class="h-25 col-5 shadow  col-md-3 btn-info m-2 text-center fa-3x"> <i class="fas fa-share-alt "></i><h6>Transfer payment <p>(user to user)</p> </h6></a>
+        <a href='../payment/transferPaymentReceive.php?<?php echo $Query;?>' class="h-25 col-5 shadow  col-md-3 btn-info  m-2 text-center fa-3x"><i class="fas fa-clipboard-check "></i><h6>Payment Receiving Request <p>(user to user)</p> </h6></a>
 
 
     </div>

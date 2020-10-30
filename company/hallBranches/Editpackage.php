@@ -106,12 +106,12 @@ EVENT APNA  provides Free Software ....... So Register NOW
             </div>
 
             <div class="form-group row">
-                <lable for="price" class="col-form-label">Packages Rate per head</lable>
+                <lable for="PriceRate" class="col-form-label">Packages Rate per head</lable>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                     </div>
-                    <input  name="price" class="form-control" type="number" value="<?php echo $packageDetail[0][2];?>">
+                    <input  name="PriceRate" class="form-control" type="number" value="<?php echo $packageDetail[0][2];?>">
                 </div>
             </div>
 
@@ -169,8 +169,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                         {
                             echo '<option value="Evening">Evening</option>
                              <option value="Morning">Morning</option>
-                          <option value="Afternoon">Afternoon</option>
-                    ';
+                          <option value="Afternoon">Afternoon</option>';
                         }
                         ?>
                     </select>
@@ -204,7 +203,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user-clock"></i></span>
                     </div>
-                    <input readonly data-columnname="price" class="packagechange form-control" type="datetime" value="<?php echo $packageDetail[0][8];?>">
+                    <input readonly  class="form-control" type="datetime" value="<?php echo $packageDetail[0][8];?>">
                 </div>
             </div>
 
@@ -601,8 +600,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
             }
 
             TextItemTypeOptions();
-
-
             function TypeControl()
             {
                 var value=$("#NameOfItemType").val();
@@ -615,11 +612,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
                     $("#NewItemTypeAdd").hide();
                 }
             }
-
             TypeControl();
-
             $("#NameOfItemType").change(TypeControl);
-
             function findIndex(itemtype)
             {
                 var indexGloble=-1;
@@ -633,8 +627,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 }
                 return indexGloble;
             }
-
-
             function GetColumn(ItemName,ItemType,RowNumber,ColumnNumber,ItemPrice)
             {
                 var text=' <div class="card" style="width: 25rem;" id="columnno-'+ColumnNumber+'">\n' +
@@ -647,7 +639,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
                     '            </div>';
                 return text;
             }
-
             function GetRowColumn(ItemName,ItemType,RowNumber,ColumnNumber,ItemPrice)
             {
                 var text='<div class="row" id="RowNumber-'+RowNumber+'">\n' +
@@ -664,12 +655,9 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 text+='</div>';
                 return text;
             }
-
             $("#NameOfItemType").change(function () {
                 var ItemsTypes=$(this).val();
             });
-
-
             $("#AddItemInForm").click(function (e)
             {
                 e.preventDefault();
@@ -736,8 +724,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 $("#ExtrachargeOfitemAmount").val("");
                 $('#exampleModal').modal('hide');
             });
-
-
             $(document).on("click",".RemoveRow",function () {
                 var row=$(this).data("rownumber");
                 var typeitem=$("#RowName-"+row).val();
@@ -747,12 +733,10 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
                 TextItemTypeOptions();
             });
-
             $(document).on("click",".RemoveColumn",function () {
                 var col=$(this).data("columnno");
                 $("#columnno-"+col).remove();
             });
-
             var rowExtraNumber=-1;
             $(document).on("click",".AddColumn",function () {
 
@@ -763,7 +747,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 $("#NameOfItemExtra").val("");
                 $("#itemChoiceExtra").val(itemType);
             });
-
             $(document).on("click","#SubmitExtraColumn",function ()
             {
                 var NameOfItemExtra=$("#NameOfItemExtra").val();
@@ -781,18 +764,21 @@ EVENT APNA  provides Free Software ....... So Register NOW
                     if(validationWithString("ExtrachargeOfitemAmountExtra","Please Enter amount of item"))
                         return false;
                 }
-
                 var text=GetColumn(NameOfItemExtra,itemChoiceExtra,rowExtraNumber,ColumnNumber,valueOfExtraCharge)
                 $("#RowNumber-"+rowExtraNumber).append(text);
                 ColumnNumber++;
                 $('#exampleModalCenter').modal("hide");
                 $("#ExtrachargeOfitemAmount").val('');
             });
-
-
-
             $("#SubmitFormPackage").click(function ()
             {
+                if(validationWithString("package_name","Please Enter Package Name"))
+                    return  false;
+
+                if(NumberRange("PriceRate","Please Enter Package Rate per Head",0,4000))
+                    return  false;
+                if(NumberRange("MinimumGuest","Please Enter Valid capacity up to 50 and maximum 3000",50,3000))
+                    return  false;
                 if (!confirm('Are you sure you want to Save Package informatiom ?'))
                     return  false;
 
@@ -804,7 +790,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
                     data:formdata,
                     contentType: false,
                     processData: false,
-
                     beforeSend: function() {
                     },
                     success:function (data)
@@ -812,7 +797,10 @@ EVENT APNA  provides Free Software ....... So Register NOW
                         if($.trim(data)!='')
                             alert(data);
                         else
+                        {
                             window.history.back();
+                        }
+
                     }
                 });
             });

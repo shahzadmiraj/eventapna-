@@ -93,7 +93,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-    <form class="form container card">
+    <form class="container row">
 
 
         <input  hidden name="pid" value="<?php echo $pid;?>">
@@ -102,7 +102,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
         <input type="number" hidden name="hallid" value="<?php echo $hallid;?>">
         <input type="number" hidden name="personid" value="<?php echo $personid;?>">
         <input type="number" hidden name="userid" value="<?php echo $userid;?>">
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">No of Guests</label>
 
 
@@ -117,7 +117,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
         </div>
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Booking Date (Year,Month,Day)</label>
 
 
@@ -131,7 +131,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 <input   id="date" name="date" type="date" class="checkpackage form-control">
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Time</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -144,7 +144,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 </select>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Per Head With</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -172,7 +172,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
             $display = '
                 
                 
-    <div class="form-group row" id="cateringid">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6" id="cateringid">
         <label class="col-form-label ">Catering Branch</label>
 
 
@@ -219,7 +219,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         </div>
 
-        <div id="selectmenu" class="alert-info  form-group container" >
+        <div id="selectmenu" class="row col-12 alert-info  form-group container" >
 
             <!--        <div class="form-group row">-->
             <!--            <label class="col-form-label">Per Head With</label>-->
@@ -240,7 +240,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         </div>
 
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Auto Total amount:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -252,7 +252,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="Discount">Discount </label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -264,7 +264,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         </div>
 
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="Charges">Extra Charges </label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -278,7 +278,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="remaining">Remaining Amount </label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -290,7 +290,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         </div>
 
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12">
             <label class="col-form-label">Describe /Comments</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -302,10 +302,10 @@ EVENT APNA  provides Free Software ....... So Register NOW
             </div>
         </div>
 
-        <div class="form-group row justify-content-center shadow">
+        <div class="form-group col-12  justify-content-center shadow">
 
-            <a id="btnbackhistory"  class=" col-5  btn btn-danger"> << Back </a>
-            <a id="submitform" data-href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" class=" col-4 btn btn-primary">  Next >> </a>
+            <a id="btnbackhistory"  class="col-5  btn btn-danger"> << Back </a>
+            <a id="submitform" data-href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" class="col-4 btn btn-primary">  Next >> </a>
         </div>
 
     </form>
