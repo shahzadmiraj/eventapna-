@@ -28,11 +28,15 @@ where
         //previous menu ids
          $sql='SELECT  `menu_id` FROM `hallChoiceSelect` WHERE (orderDetail_id='.$order.')AND (ISNULL(expire))';
          $previousMenuIdsResult=queryReceive($sql);
+        $PrevoiusMenuIdsOneD=array();
+        if(count($previousMenuIdsResult)>0)
         $PrevoiusMenuIdsOneD = array_column($previousMenuIdsResult, 0);
 
 
         //current menu ids
+        $MenuTypeInpackages=array();
 
+        if(isset($post['MenuTypeInpackages']))
         $MenuTypeInpackages=$post['MenuTypeInpackages'];
         $MenuTypeInpackagesArray=explode(",", $MenuTypeInpackages);
         $currentMenuids=array();
@@ -41,7 +45,10 @@ where
         {
             if(isset($post["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]]))
             {
-                $currentMenuids[$i]=$post["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]];
+                if($post["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]]!="Default")
+                {
+                    $currentMenuids[$i] = $post["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]];
+                }
             }
 
         }
@@ -72,11 +79,6 @@ where
                 querySend($sql);
             }
         }
-
-
-
-
-
     }
     else
     {
@@ -91,13 +93,14 @@ where
         {
             if(isset($post["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]]))
             {
-                $sql='INSERT INTO `hallChoiceSelect`(`id`, `expire`, `active`, `ActiveUser`, `ExpireUser`, `menu_id`, `orderDetail_id`) VALUES (NULL,NULL,"'.$timestamp.'",'.$userid.',NULL,'.$post["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]].','.$order.')';
-                querySend($sql);
+                if($post["SelectOptionFromItem".$MenuTypeInpackagesArray[$i]]!="Default")
+                {
+                    $sql = 'INSERT INTO `hallChoiceSelect`(`id`, `expire`, `active`, `ActiveUser`, `ExpireUser`, `menu_id`, `orderDetail_id`) VALUES (NULL,NULL,"' . $timestamp . '",' . $userid . ',NULL,' . $post["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]] . ',' . $order . ')';
+                    querySend($sql);
+                }
             }
 
         }
-
-
     }
 
 }

@@ -5,7 +5,7 @@ include_once ("orderCheckMenu.php");
 include_once ('CheckPackageForOrderValidFunction.php');
 include_once ('EditedIfHave.php');
 
-lockTableForWrite('orderDetail WRITE, hallChoiceSelect WRITE,BookingProcess as bp WRITE,packages as p WRITE,packageDate as pd WRITE,packageControl as pc WRITE ,hall as h WRITE,orderDetail as od WRITE,packageDate WRITE,HistoryOrder WRITE');
+lockTableForWrite('orderDetail WRITE, hallChoiceSelect WRITE,BookingProcess as bp WRITE,packages as p WRITE,packageDate as pd WRITE,packageControl as pc WRITE ,hall as h WRITE,orderDetail as od WRITE,packageDate WRITE,HistoryOrder WRITE,Order_Package_History WRITE,packages WRITE');
  if($_POST['option']=="createOrderofHall")
 {
 
@@ -67,9 +67,13 @@ lockTableForWrite('orderDetail WRITE, hallChoiceSelect WRITE,BookingProcess as b
         $MenuTypeInpackages = $_POST['MenuTypeInpackages'];
         $MenuTypeInpackagesArray = explode(",", $MenuTypeInpackages);
         for ($i = 0; $i < count($MenuTypeInpackagesArray); $i++) {
-            if (isset($_POST["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]])) {
-                $sql = 'INSERT INTO `hallChoiceSelect`(`id`, `expire`, `active`, `ActiveUser`, `ExpireUser`, `menu_id`, `orderDetail_id`) VALUES (NULL,NULL,"' . $timestamp . '",' . $userid . ',NULL,' . $_POST["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]] . ',' . $last . ')';
-                querySend($sql);
+            if (isset($_POST["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]]))
+            {
+                if(($_POST["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]]!="Default"))
+                {
+                    $sql = 'INSERT INTO `hallChoiceSelect`(`id`, `expire`, `active`, `ActiveUser`, `ExpireUser`, `menu_id`, `orderDetail_id`) VALUES (NULL,NULL,"' . $timestamp . '",' . $userid . ',NULL,' . $_POST["SelectOptionFromItem" . $MenuTypeInpackagesArray[$i]] . ',' . $last . ')';
+                    querySend($sql);
+                }
             }
 
         }
@@ -77,6 +81,13 @@ lockTableForWrite('orderDetail WRITE, hallChoiceSelect WRITE,BookingProcess as b
 
     $sql='UPDATE BookingProcess as bp SET bp.orderDetail_id='.$last.'  WHERE (bp.id='.$pid.')AND(bp.token="'.$token.'")';
     querySend($sql);
+
+    $sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`,`package_name`, `MinimumGuest` FROM `packages` WHERE id=(SELECT pd.package_id FROM packageDate as pd WHERE pd.id='.$packageDateid.' LIMIT 1)';
+    $packageDetails=queryReceive($sql);
+    $sql='INSERT INTO `Order_Package_History`(`id`, `isFood`, `price`, `describe`, `dayTime`, `package_name`, `MinimumGuest`, `packages_id`, `activeDate`, `ActiveUserId`, `orderDetail_id`, `ExpireUserId`, `ExpireUserDate`) 
+VALUES (NULL,'.$packageDetails[0][0].','.$packageDetails[0][1].',"'.$packageDetails[0][2].'","'.$packageDetails[0][3].'","'.$packageDetails[0][4].'",'.$packageDetails[0][5].','.$packageDetails[0][0].',"'.$timestamp.'",'.$userid.','.$last.',NULL,NULL)';
+    querySend($sql);
+
 
 }
  else if($_POST['option']=="Edithallorder")

@@ -201,9 +201,11 @@ WHERE
 
             $sql='SELECT `id`, `itemname`,`itemtype`,`price` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
             $MenuName=queryReceive($sql);
+
+            $display.=' <option data-price="0"  value="Default"> Select</option>';
             for($k=0;$k<count($MenuName);$k++)
             {
-                $display.='  <option data-price="'.$MenuName[$k][3].'"  value="'.$MenuName[$k][0].'">'.$MenuName[$k][1].' with Price: '.$MenuName[$k][3].'    </option>';
+                $display.=' <option data-price="'.$MenuName[$k][3].'"  value="'.$MenuName[$k][0].'">'.$MenuName[$k][1].' with Price: '.$MenuName[$k][3].'    </option>';
             }
 
             $display.='</select>

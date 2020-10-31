@@ -15,11 +15,18 @@ WHERE
     $MenuType=queryReceive($sql);
     //print_r($MenuType);
     $MenuSelectedIdsList='';
+    $MenuExistNowIds=array();
 
+        if(count($MenuType)>0)
         $MenuExistNowIds = array_column($MenuType, 0);
         $sql='SELECT `menu_id` FROM `hallChoiceSelect` WHERE (orderDetail_id='.$orderDetail_id.') AND (ISNULL(expire))';
-        $MenuIdArray=queryReceive($sql);
+        $MenuIdArray=queryReceive($sql); //null
+
+
+        $MenuSelectedIds=array();
+        if(count($MenuIdArray)>0)
         $MenuSelectedIds = array_column($MenuIdArray, 0);
+
         $MenuSelectedIdsList=implode(',', $MenuSelectedIds);
         $arraySingleMerge=array_merge($MenuSelectedIds,$MenuExistNowIds);
         $arraySingleMergeUnique=array_unique($arraySingleMerge);
@@ -30,9 +37,11 @@ WHERE
 
 
 
+
+    $OneD=array();
+    if(count($MenuType)>0)
     $OneD = array_column($MenuType, 2);
     $List = implode(',', $OneD);
-
 
     $display='';
 
@@ -54,8 +63,13 @@ WHERE
                 </div>
                 <select id="'.$MenuType[$i][2].'"   name="SelectOptionFromItem'.$MenuType[$i][2].'" class="form-control MenuTypeOptionChanges">';
 
-        $sql='SELECT `id`, `itemname`,`itemtype`,`price` FROM `menu` WHERE id in ('.$MenuSelectedIdsList.') AND (itemtype="'.$MenuType[$i][2].'")';
-        $MenuNameselected=queryReceive($sql);
+        $MenuNameselected=array();
+        if(count($MenuIdArray)>0)
+        {
+            $sql = 'SELECT `id`, `itemname`,`itemtype`,`price` FROM `menu` WHERE id in (' . $MenuSelectedIdsList . ') AND (itemtype="' . $MenuType[$i][2] . '")';
+            $MenuNameselected = queryReceive($sql);
+        }
+
         if(count($MenuNameselected)>0)
         {
             $display.='  <option data-price="'.$MenuNameselected[0][3].'"  value="'.$MenuNameselected[0][0].'">Item Name:'.$MenuNameselected[0][1].' with Price: '.$MenuNameselected[0][3].'    </option>';
@@ -66,6 +80,7 @@ WHERE
         {
             $sql='SELECT `id`, `itemname`,`itemtype`,`price` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'")';
         }
+        $display.='<option data-price="0"  value="Default">Select</option>';
 
         $MenuName=queryReceive($sql);
         for($k=0;$k<count($MenuName);$k++)

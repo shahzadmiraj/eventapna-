@@ -172,7 +172,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <form id="form">
+    <form id="form" class="row">
         <input hidden name="userid" value="<?php echo $userid;?>">
         <input hidden name="companyid" value="<?php echo $companyid;?>">
 
@@ -181,7 +181,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
         <input hidden name="hallid" value="<?php echo $hallid;?>">
 
         <input id="customer" hidden value="">
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12">
             <label for="number" class="col-form-label">Phone no:</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -203,7 +203,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="name" class="col-form-label">Name:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -214,7 +214,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="name" class="col-form-label">Image:</label>
 
 
@@ -232,7 +232,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="cnic" class="col-form-label">CNIC:</label>
 
 
@@ -248,7 +248,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="address" class="col-form-label">Address:</label>
 
 
@@ -264,7 +264,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
 
-        <div class="form-group row m-auto">
+        <div class="form-group row m-auto col-12">
             <button id="cancelCustomer" type="button" class="col-5 form-control btn btn-danger "><i class="fas fa-window-close"></i>Cancel</button>
             <button type="button" class="col-5 form-control btn btn-primary" id="submit">Next >> </button>
         </div>

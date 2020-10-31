@@ -313,7 +313,6 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         echo '<input  hidden id="selectpricefix'.$detailorder[0][25].'" type="number" value="'.$detailorder[0][22].'">
         <input hidden type="radio" checked value="'.$detailorder[0][25].'"  name="defaultExampleRadios">
         ';
-
          ShowFirstSelectedChoice($orderid,$detailorder[0][25]);
 
          echo "<h5>Detail of packages:".$detailorder[0][20]." <br> <span class=''>Per head without Extra Charges : ".$detailorder[0][22]."</span></h5>";
@@ -706,9 +705,7 @@ include_once ("../../webdesign/footer/footer.php");
             });
         }
 
-/*
-        //menushow(<?php // echo $detailorder[0][21]; ?>,"<?php //echo $detailorder[0][20]; ?>"+"<span class='btn-danger'> ....    with price is <?php //echo $detailorder[0][22]; ?></span>");
-*/
+
 
         function AllChoiceItemAmounCalculate()
         {

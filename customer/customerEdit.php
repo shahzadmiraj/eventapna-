@@ -125,7 +125,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 <form id="formEditCustomer">
-<div class="container card" >
+<div class="container row" >
     <input hidden type="number" value="<?php echo $userid;?>" name="userid">
 
     <?php
@@ -133,12 +133,12 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
     echo '<input id="customerId" type="number" name="customerid" hidden value="'.$customerId.'">';
     ?>
-        <div id="number_records">
+        <div id="number_records" class="col-sm-12   col-12 col-md-12 col-lg-12">
             <?php
             for($i=0;$i<count($numbers);$i++)
             {
                 echo '
-        <div class="form-group row" id="Each_number_row_'.$numbers[$i][1].'">
+        <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12" id="Each_number_row_'.$numbers[$i][1].'">
                 <label  class="col-form-label" for="number_'.$numbers[$i][1].'">Phone no:</label>
                 
                 
@@ -156,7 +156,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
             ?>
 
         </div>
-        <div class="form-group row" >
+        <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12" >
             <label for="newNumber" class="col-form-label">New Number</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -172,7 +172,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
 
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="name" class="col-form-label"> Name:</label>
 
 
@@ -189,7 +189,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label for="name" class="col-form-label">Image:</label>
 
 
@@ -206,7 +206,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
     </div>
-        <div class="form-group row">
+        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="cnic" class="col-form-label "> CNIC:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -221,7 +221,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label for="address" class="col-form-label">Address:</label>
 
 
@@ -245,16 +245,12 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-        <div class="form-group row ">
+        <div class="form-group row col-sm-12   col-12 col-md-12 col-lg-12 ">
 
             <?php
             if($Isprocessing==0)
             {
                 //order is in processing phase
-
-
-
-
                 //  not this is customer back and reprocess
                 echo '
                 <a id="btnbackhistory" class="m-auto col-4 form-control btn btn-danger">Close</a>
