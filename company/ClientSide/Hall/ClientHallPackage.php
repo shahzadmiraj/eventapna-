@@ -449,7 +449,7 @@ else
 
     <h2>What Extra Charges (optional)</h2>
     <hr>
-    <div class="row">
+    <div class="row ">
 
 
 
@@ -463,7 +463,7 @@ else
 
 
             $display.= '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes" style="font-size: 30px;background-color: #c2bebe">'.$ExtraType[$j][1].' </h4>
-    <div id="dishtype'.$j.'"  class="row   " style="display: none">
+    <div id="dishtype'.$j.'"  class="row container" >
 
 
 ';
@@ -488,9 +488,10 @@ else
             
             <div class="col-md-4 mb-5 ">
             <div class="card" style="width: 18rem;">
-                <img src="' . $image . '" class="card-img-top" src="" alt="Image" style="height: 20vh">
+                <img src="' . $image . '" class="card-img-top" src="" alt="Image" style="height: 10vh">
                 <div class="card-body">
-                    <p class="card-title">' . $Extraitem[$i][1] . '<span class="float-right text-danger">Amount ' . $Extraitem[$i][2] . '</span></p>
+                    <p class="card-title">' . $Extraitem[$i][1] . '</p>
+                    <span class="card-subtitle text-danger">Amount ' . $Extraitem[$i][2] . '</span>
                 </div>
             </div>
             </div>

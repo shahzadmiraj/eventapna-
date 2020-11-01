@@ -34,15 +34,15 @@ $sql='SELECT catering_id,status_catering FROM orderDetail WHERE id='.$order.'';
 $StatusOrder=queryReceive($sql);
 
 
-function ExtraItemShow($sql,$IsAlreadyBooked)
+function ExtraItemShow($sql,$IsAlreadyBooked,$ShowRow)
 {
     $id="No";
-    $ActionClass="AddItemOrder "." btn-primary";
+    $ActionClass="AddItemOrder "." btn-outline-primary";
     $ButtonValue="Select";
     if($IsAlreadyBooked=="Yes")
     {
         $id='Selected';
-        $ActionClass="deleteSelected ". " btn-danger";
+        $ActionClass="deleteSelected ". " btn-outline-danger";
         $ButtonValue="Delete";
     }
 
@@ -50,10 +50,13 @@ function ExtraItemShow($sql,$IsAlreadyBooked)
 
     $display='';
     $kinds = queryReceive($sql);
+    if(count($kinds)==0)
+        return false;
 
 
     $orignalImage='';
     $imagespath='';
+    if($ShowRow=="ShowRow")
     $display.='<div class="row">';
     for ($i = 0; $i < count($kinds); $i++)
     {
@@ -66,7 +69,7 @@ function ExtraItemShow($sql,$IsAlreadyBooked)
 
 
         $display.='
-        <div id="'.$id.$kinds[$i][0].'"  class="card " style="width: 18rem;" >
+        <div id="'.$id.$kinds[$i][0].'"  class="card col-sm-12   col-12 col-md-4 col-lg-3 " style="width: 18rem;" >
         
         
               <img  class="card-img-top " src="'.$img.'" alt="Card image cap" style="height: 30vh">
@@ -98,6 +101,7 @@ function ExtraItemShow($sql,$IsAlreadyBooked)
         </div>
         <div class="w-100 d-none d-sm-block d-md-none"></div>';
     }
+    if($ShowRow=="ShowRow")
     $display.='</div>';
     return $display;
 }
@@ -170,7 +174,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<form id="formitems" class="alert-light">
+<form id="formitems" >
 
 
     <input hidden id="PreviousExtraFixAmount" type="text"  value="<?php echo  $priceDetailOfExtraItem[0][0]; ?>" name="PreviousExtraFixAmount">
@@ -178,23 +182,12 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
     <input hidden id="orderid"  type="text" name="order" value="<?php echo $order;?>">
     <input hidden type="number" name="userid" value="<?php echo $userid;?>" >
     <div class="container">
-        <h4 class="row form-inline">Total   <span class="text-primary ml-5"> <input  style="border: none" name="CurrentExtraAmount" readonly class="badge-light" type="number" id="AmountSet" value="<?php
-          if(empty($priceDetailOfExtraItem[0][0]))
-          {
-              echo 0;
-          }
-          else
-              {
-                  echo $priceDetailOfExtraItem[0][0];
-          }
-            ?>"</span></h4>
 
-        <hr>
-        <div class="badge-warning row" id="additems">
+        <div class="form-inline" id="additems">
 
             <?php
             $sql='SELECT hei.id,(SELECT ei.name from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.price from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),(SELECT ei.image from Extra_Item as ei WHERE ei.id=hei.Extra_Item_id),hei.active FROM hall_extra_items as hei  WHERE (ISNULL(hei.expire)) AND (hei.orderDetail_id='.$order.')';
-            echo ExtraItemShow($sql,"Yes");
+            echo ExtraItemShow($sql,"Yes","NoShow");
             ?>
 
 
@@ -202,6 +195,22 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
+        <hr><br>
+
+            <label class="row form-inline float-right badge-warning">Total   <span class="text-primary ml-5"> <input  style="border: none" name="CurrentExtraAmount" readonly class="badge-light form-inline" type="number" id="AmountSet" value="<?php
+                    if(empty($priceDetailOfExtraItem[0][0]))
+                    {
+                        echo 0;
+                    }
+                    else
+                    {
+                        echo $priceDetailOfExtraItem[0][0];
+                    }
+                    ?>"</span>
+            </label>
+
+
+
 
 
 
@@ -253,7 +262,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <div class="container">
+    <div class="container" style="background-color: rgba(212,210,210,0.49)">
 
         <h1 class="text-center mt-3">Select Item</h1>
         <hr>
@@ -268,11 +277,11 @@ GROUP by (EIT.id)';
 
         $Category=queryReceive($sql);
         $Display='';
-        $display='<div class="container">';
+        $display='';
         for($j=0;$j<count($Category);$j++)
         {
 
-            $display.='<h4 class="col-12 " align="center">'.$Category[$j][1].'</h4>';
+            $display.= '<h4 class="col-sm-12   col-12 col-md-12 col-lg-12 " align="center" style="background-color: rgba(104,104,104,0.49)">' .$Category[$j][1].'</h4>';
 
 
 
@@ -284,11 +293,11 @@ GROUP by (EIT.id)';
  on(EIC.Extra_Item_id=ex.id)
  WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$Category[$j][0].')AND(ISNULL(EIC.expire))AND(EIC.hall_id in('.$id.'))';
 
-            $display.=ExtraItemShow($sql,"No");
+            $display.=ExtraItemShow($sql,"No","ShowRow");
 
         }
 
-        $display.='</div>';
+        $display.='';
         echo $display;
 
 
@@ -336,7 +345,7 @@ include_once ("../../../webdesign/footer/footer.php");
                 var id=$(this).data("itemsid");
                 var name=$(this).data("name");
                 var image=$(this).data("image");
-            var text='<div id="jsid'+javaid+'" class="card" style="width: 18rem;">\n' +
+            var text='<div id="jsid'+javaid+'" class="card col-sm-12   col-12 col-md-4 col-lg-3" style="width: 18rem;">\n' +
             '                <img class="card-img-top" src="'+image+'" alt="Card image cap" style="height: 30vh">\n' +
             '                <div class="card-body ">\n' +
 
@@ -345,7 +354,7 @@ include_once ("../../../webdesign/footer/footer.php");
                 '    <span class="text-danger "><i class="far fa-money-bill-alt"></i>Amount '+amount+'</span>\n' +
                 '        \n' +
             '                    <input type="hidden" name="selecteditem[]" value="'+id+'">\n' +
-                '                    <button  data-amount="'+amount+'" data-jsid="'+javaid+'" class="btn btn-danger deleteitems col-12">Delete</button>\n' +
+                '                    <button  data-amount="'+amount+'" data-jsid="'+javaid+'" class="btn btn-outline-danger deleteitems col-12">Delete</button>\n' +
             '                  </div>\n' +
 
             '            </div>';
