@@ -51,6 +51,10 @@ $Query='pid='.$pid."&token=".$token;
 $sql='SELECT sum(amount) FROM `payment` WHERE IsReturn=0 AND orderDetail_id='.$orderid;
 $PaidAmount=queryReceive($sql);
 
+$sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`, `package_name`, `MinimumGuest` FROM `Order_Package_History` WHERE (ISNULL(ExpireUserDate))AND(orderDetail_id='.$orderid.') LIMIT 1';
+$DetailOfPackages=queryReceive($sql);
+
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -113,50 +117,33 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<form class="form container card" >
+<form class="container row m-auto" >
     <input type="hidden" name="userid" value="<?php echo $userid;?>">
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">No of Guests</label>
-
-
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
             <input id="guests" name="guests" type="number" class="checkpackage form-control" value="<?php echo $detailorder[0][12]; ?>">
         </div>
-
-
-
     </div>
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Booked Date (Year,Month,Day)</label>
-
-
-
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
             </div>
             <input   id="date" name="date" type="date" class="checkpackage form-control" value="<?php echo $detailorder[0][14]; ?>">
         </div>
-
     </div>
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Time</label>
-
-
-
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-clock"></i></span>
             </div>
-
             <select id="time" name="time" class="checkpackage form-control">
                 <?php
 
@@ -194,7 +181,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             </select>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label ">Per Head With</label>
 
 
@@ -206,7 +193,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
                 <?php
 
-                if($detailorder[0][3]==0)
+                if($DetailOfPackages[0][1]==0)
                 {
                     // only seating
                     echo '
@@ -235,6 +222,8 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
+
+
     <?php
 
     if(count($cateringids)>0)
@@ -243,7 +232,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         $display = '
                 
                 
-    <div class="form-group row" id="cateringid">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6" id="cateringid">
         <label class="col-form-label ">Catereing Branch</label>
 
 
@@ -308,21 +297,22 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     </div>
 
-    <div id="selectmenu" class="alert-info  form-group container" >
+    <div id="selectmenu" class="alert-info col-12 row  form-group container  m-auto" >
+
         <?php
-        echo '<input  hidden id="selectpricefix'.$detailorder[0][25].'" type="number" value="'.$detailorder[0][22].'">
+        echo '<input  hidden id="selectpricefix'.$detailorder[0][25].'" type="number" value="'.$DetailOfPackages[0][2].'">
         <input hidden type="radio" checked value="'.$detailorder[0][25].'"  name="defaultExampleRadios">
         ';
          ShowFirstSelectedChoice($orderid,$detailorder[0][25]);
 
-         echo "<h5>Detail of packages:".$detailorder[0][20]." <br> <span class=''>Per head without Extra Charges : ".$detailorder[0][22]."</span></h5>";
+         echo "<h5>Detail of packages:".$DetailOfPackages[0][3]." <br> <span class=''>Per head without Extra Charges : ".$DetailOfPackages[0][2]."</span></h5>";
         ?>
 
 
     </div>
 
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Extra items Charges :</label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -334,7 +324,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Total amount: (Extra item charges+ Per head rate)</label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -346,7 +336,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="form-check-label" for="Discount">Discount </label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -358,7 +348,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     </div>
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="form-check-label" for="Charges">Extra Charges </label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -369,7 +359,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         </div>
 
     </div>
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="form-check-label" for="remaining">Paid Amount </label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -381,7 +371,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="form-check-label" for="remaining">Remaining Amount </label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -402,7 +392,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
         $status=array("Running","Delivered","Cancel","Clear");
         $display='
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Order status</label>
         
         
@@ -436,7 +426,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label for="branchOrder" class="col-form-label">Hall Order in branch :</label>
 
 
@@ -467,7 +457,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     </div>
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Describe /Comments</label>
 
 
@@ -488,7 +478,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <div class="form-group row">
+    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Visited Date (Year,Month,Day)</label>
 
 
@@ -502,7 +492,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
 
-    <div class="form-group row justify-content-center">
+    <div class="form-group row col-sm-12   col-12 col-md-12 col-lg-12 justify-content-center">
 
 
         <?php

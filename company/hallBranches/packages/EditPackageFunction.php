@@ -47,7 +47,7 @@ WHERE
 
     if(count($MenuType)>0)
     {
-        $display = "<h3 class='text-center'>Choices of items in package</h3>
+        $display = "<h3 class='text-center col-sm-12   col-12 col-md-12 col-lg-12' >Choices of items in package</h3>
                     <input type='text'  hidden name='MenuTypeInpackages' id='MenuTypeInpackages' value='".$List."'>
                     ";
     }
@@ -55,7 +55,7 @@ WHERE
     {
         $display.='
                                      
-         <div class="form-group row">
+         <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Select One <span>'.$MenuType[$i][2].'</span> Item type  </label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -72,7 +72,7 @@ WHERE
 
         if(count($MenuNameselected)>0)
         {
-            $display.='  <option data-price="'.$MenuNameselected[0][3].'"  value="'.$MenuNameselected[0][0].'">Item Name:'.$MenuNameselected[0][1].' with Price: '.$MenuNameselected[0][3].'    </option>';
+            $display.='  <option data-price="'.$MenuNameselected[0][3].'"  value="'.$MenuNameselected[0][0].'">'.$MenuNameselected[0][1].' with Price: '.$MenuNameselected[0][3].'    </option>';
 
             $sql='SELECT `id`, `itemname`,`itemtype`,`price` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$packagedetail[0][0].')AND (itemtype="'.$MenuType[$i][2].'") AND(id!='.$MenuNameselected[0][0].')';
         }
@@ -85,7 +85,7 @@ WHERE
         $MenuName=queryReceive($sql);
         for($k=0;$k<count($MenuName);$k++)
         {
-            $display.='  <option data-price="'.$MenuName[$k][3].'"  value="'.$MenuName[$k][0].'">Item Name:'.$MenuName[$k][1].' with Price: '.$MenuName[$k][3].'    </option>';
+            $display.='  <option data-price="'.$MenuName[$k][3].'"  value="'.$MenuName[$k][0].'">'.$MenuName[$k][1].' with Price: '.$MenuName[$k][3].'    </option>';
         }
 
         $display.='</select>
