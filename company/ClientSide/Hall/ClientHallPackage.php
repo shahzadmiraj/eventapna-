@@ -14,7 +14,6 @@ $PackageToken=$_GET['pdtoken'];
 if(isset($_COOKIE['userid']))
     $userid=$_COOKIE['userid'];
 
-
 $sql='SELECT pd.package_id,pd.selectedDate FROM packageDate as pd 
 WHERE (pd.id='.$PackageDateid.')AND(token="'.$PackageToken.'")';
 $PackageDate=queryReceive($sql);
@@ -60,7 +59,7 @@ $SenderName=array();
 
 ?>
 <!DOCTYPE html>
-<head>
+<head xmlns="http://www.w3.org/1999/html">
 
     <?php
     include('../../../webdesign/header/InsertHeaderTag.php');
@@ -92,7 +91,14 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="../../../Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
     <link rel="stylesheet" href="../../../Fractional-Star-Rating-jsRapStar/index.css" />
     <script src="../../../Fractional-Star-Rating-jsRapStar/jsRapStar.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="../../../webdesign/JSfile/JSFunction.js"></script>
+    <link rel="stylesheet" href="../HallOrderwizard/assets/css/bd-wizard.css">
+    <script  src="js/Packagesselections.js"></script>
+    <script  src="js/userLogin.js"></script>
 
     <style>
         .checked {
@@ -153,6 +159,8 @@ $HeadingImage=$hallInformation[0][6];
 $HeadingName=$hallInformation[0][1];
 $Source='../../../images/hall/';
 include_once ("../Company/Box.php");
+include_once ('extraitemHall.php');
+include_once ('includeItems.php');
 ?>
 
 
@@ -222,7 +230,7 @@ include_once ("../Company/Box.php");
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Total Patition
+                        Total Partition
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
@@ -231,7 +239,7 @@ include_once ("../Company/Box.php");
 
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
-                        Remaining Patition
+                        Remaining Partition
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
@@ -254,6 +262,7 @@ include_once ("../Company/Box.php");
 
                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 p-2">
                         <?php echo $MaxGuestMaxPartition[2];?>
+                        <input hidden value="<?php echo $MaxGuestMaxPartition[2];?>" type="number" id="Remaingseating">
                     </div>
 
 
@@ -298,54 +307,43 @@ else
 
 
 
+
     </div>
     <!-- /.row -->
 
 
+</div>
+
+<form id="SubmitFormOfPackage" class="container">
+    <?php
+    $OneD = array_column($MenuType, 1);
+    $Listofitemtypes = implode(',', $OneD);
+    ?>
+    <input hidden type="text" name="listofitemtype" value="<?php echo $Listofitemtypes;?>">
+    <input hidden type="number" name="pid" value="<?php echo $PackageDateid;?>">
+    <?php
+    include_once ("../HallOrderwizard/index.php");
+    echo $displayModelExtraItems;
+    ?>
+</form>
 
 
 
 
-
+<div class="container">
 
     <h2>What include with this Current package  Menu</h2>
     <hr>
 
 
-
     <div class="row container">
 
 
+<?php
+echo $includeitemStyleOne;
+?>
 
 
-        <?php
-
-
-        $sql='SELECT `itemname`, `itemtype` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$PackageDetail[0][0].') GROUP by itemtype';
-        $MenuType=queryReceive($sql);
-        $display='';
-
-        for($i=0;$i<count($MenuType);$i++)
-        {
-            $display.= '<ul class="list-group mt-5 ml-2 mr-2 " style="width: 23rem;">
-            <li class="list-group-item alert-info" style="font-size: 30px;background-color: #c2bebe">' .$MenuType[$i][1].'</li>';
-            $sql='SELECT `itemname`, `itemtype`,`price` FROM `menu` WHERE (ISNULL(expire))AND (package_id='.$PackageDetail[0][0].') AND(itemtype="'.$MenuType[$i][1].'")';
-            $MenuName=queryReceive($sql);
-            for($k=0;$k<count($MenuName);$k++)
-            {
-                $display.='<li class="list-group-item">'.$MenuName[$k][0];
-
-                if($MenuName[$k][2]!=0)
-                {
-                    $display.=' <span class="float-right btn btn-outline-danger"> Price :'.$MenuName[$k][2].'</span>';
-                }
-                $display.='</li>';
-            }
-             $display.='</ul>';
-        }
-        echo $display;
-
-        ?>
 
 
 
@@ -452,56 +450,11 @@ else
     <div class="row ">
 
 
+<?php
+//extra item
+echo $ExtraitemStyleOne;
+?>
 
-
-
-
-        <?php
-        $display='';
-        for ($j=0;$j<count($ExtraType);$j++)
-        {
-
-
-            $display.= '<h4  data-dishtype="'.$j.'" data-display="hide" class="col-md-12 text-center dishtypes" style="font-size: 30px;background-color: #c2bebe">'.$ExtraType[$j][1].' </h4>
-    <div id="dishtype'.$j.'"  class="row container" >
-
-
-';
-
-            $sql='SELECT ex.id,ex.name,ex.price,ex.image,ex.active FROM Extra_Item as ex
- INNER join
- ExtraItemControl as EIC
- on(EIC.Extra_Item_id=ex.id)
- WHERE (ISNULL(ex.expire)) AND (ex.Extra_item_type_id='.$ExtraType[$j][0].')AND(ISNULL(EIC.expire))AND(EIC.hall_id =('.$hallInformation[0][0].'))';
-
-            $Extraitem=queryReceive($sql);
-            $image = "";
-            for ($i = 0; $i < count($Extraitem); $i++)
-            {
-                $image = $Extraitem[$i][3];
-                if ((file_exists('../../../images/hallExtra/' . $image)) && ($image != ""))
-                    $image = '../../../images/hallExtra/' . $image;
-                else
-                    $image = '../../../images/systemImage/imageNotFound.png';
-
-                $display .= '
-            
-            <div class="col-md-4 mb-5 ">
-            <div class="card" style="width: 18rem;">
-                <img src="' . $image . '" class="card-img-top" src="" alt="Image" style="height: 10vh">
-                <div class="card-body">
-                    <p class="card-title">' . $Extraitem[$i][1] . '</p>
-                    <span class="card-subtitle text-danger">Amount ' . $Extraitem[$i][2] . '</span>
-                </div>
-            </div>
-            </div>
-            
-            ';
-            }
-            $display.=' </div>';
-        }
-        echo $display;
-        ?>
 
 
 
@@ -632,7 +585,7 @@ include_once ("../../../contactUs/contactUs.php");
 
 <?php
 $formApend= '<input hidden type="number" name="hallid" value="'.$hallInformation[0][0].'">
-<input hidden type="number" name="userid" value="'.$userid.'">
+<input hidden type="text" name="userid" value="'.$userid.'">
 <input hidden type="number" name="packageid" value="'.$PackageDetail[0][0].'">
 ';
 $sql='SELECT `hall_id`, `catering_id`, `id`, `comment`, `expire`, `active`, (SELECT u.username FROM user as u 
@@ -716,10 +669,14 @@ include_once "../All/Comments.php"
             }
 
         });
+
     });
 
 </script>
 
+
+<script src="../HallOrderwizard/assets/js/jquery.steps.min.js"></script>
+<script src="../HallOrderwizard/assets/js/bd-wizard.js"></script>
 
 
 <?php

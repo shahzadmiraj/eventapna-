@@ -281,7 +281,7 @@ GROUP by (EIT.id)';
         for($j=0;$j<count($Category);$j++)
         {
 
-            $display.= '<h4 class="col-sm-12   col-12 col-md-12 col-lg-12 " align="center" style="background-color: rgba(104,104,104,0.49)">' .$Category[$j][1].'</h4>';
+            $display.='<h4 class="col-sm-12   col-12 col-md-12 col-lg-12 " align="center" style="background-color: rgba(212,210,210,0.49)">'.$Category[$j][1].'</h4>';
 
 
 
@@ -316,6 +316,7 @@ GROUP by (EIT.id)';
 
 
 </div>
+
 <?php
 include_once ("../../../webdesign/footer/footer.php");
 ?>

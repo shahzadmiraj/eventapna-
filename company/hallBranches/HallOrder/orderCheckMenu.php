@@ -101,6 +101,15 @@ where
             }
 
         }
+        $sql='UPDATE `Order_Package_History` SET `ExpireUserId`='.$userid.',`ExpireUserDate`="'.$timestamp.'" WHERE (ISNULL(ExpireUserDate))AND(orderDetail_id='.$order.')';
+        querySend($sql);
+
+        $sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`,`package_name`, `MinimumGuest` FROM `packages` WHERE id=(SELECT pd.package_id FROM packageDate as pd WHERE pd.id='.$packageDateid.' LIMIT 1)';
+        $packageDetails=queryReceive($sql);
+        $sql='INSERT INTO `Order_Package_History`(`id`, `isFood`, `price`, `describe`, `dayTime`, `package_name`, `MinimumGuest`, `packages_id`, `activeDate`, `ActiveUserId`, `orderDetail_id`, `ExpireUserId`, `ExpireUserDate`) 
+VALUES (NULL,'.$packageDetails[0][1].','.$packageDetails[0][2].',"'.$packageDetails[0][3].'","'.$packageDetails[0][4].'","'.$packageDetails[0][5].'",'.$packageDetails[0][6].','.$packageDetails[0][0].',"'.$timestamp.'",'.$userid.','.$order.',NULL,NULL)';
+        querySend($sql);
+
     }
 
 }

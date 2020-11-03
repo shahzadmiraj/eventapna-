@@ -217,13 +217,7 @@ else if($_POST['option']=="LocatUserRegisters")
 
     $last=  mysqli_insert_id($connect);
 
-    /*$htmlBody='<pre>
-Dear '.$username.',
-Please click this link for confirmation <a href="?id='.$last.'&confim='.$string.'">www.eventapna.com?id='.$last.'&confim='.$string.'"</a>
-username :'.$username.'
-password:'.$password.'
-email :'.$Email.'
-</pre>';*/
+
 
     $htmlBody='
 Dear '.$username.',<br>
@@ -236,11 +230,11 @@ email :'.$Email.'<br>';
     $display=serverSendMessage($Email,$username,"Confirmation of Account",$htmlBody);
     if($display=="")
     {
-        echo '<p class="alert-success">We have sent an email with a confirmation link to your email address. <a href="?id='.$last.'&confim='.$string.'">resend email </a></p>';
+        echo 'We have sent an email with a confirmation link to your email address';
     }
     else
     {
-        echo  "<span class='alert-danger'>Check Email :".$display."</span>";
+        echo  "Check Email :".$display;
     }
 
 }
@@ -264,7 +258,7 @@ else if($_POST['option']=="login")
     }
     else
     {
-        echo "<span class='alert-danger'>Please enter valid Username and Password </span>";
+        echo "Please enter valid Username and Password";
     }
 
 }
@@ -384,6 +378,34 @@ else if($_POST['option']=="ResetPassword")
     $sql='UPDATE `user` SET user.password="'.$password1.'" WHERE id='.$userid.'';
     querySend($sql);
     echo "<span class='alert-success'>Your password has succesfully updated</span>";
+}
+else if($_POST['option']=="sendForgetpasswordOrUsername")
+{
+    $PreviousEmail=$_POST['PreviousEmail'];
+    $sql='SELECT  `username`, `jobTitle`,`email` , `number`,`password` FROM `user` WHERE email="'.$PreviousEmail.'"';
+    $userdetail=queryReceive($sql);
+    if(count($userdetail)==0)
+    {
+        echo "not Registered yet";
+        exit();
+    }
+    $htmlBody='<pre>
+Dear '.$userdetail[0][0].',
+new detail 
+username : '.$userdetail[0][0].'
+password: '.$userdetail[0][4].'
+email : '.$userdetail[0][2].'
+phone no: '.$userdetail[0][3].'
+Position in Company: '.$userdetail[0][1].'
+</pre>';
+
+    $display="";
+    $display=serverSendMessage($userdetail[0][2],$userdetail[0][0],"Detail of Your EVENT APNA Account",$htmlBody,"group.of.shaheen@gmail.com");
+    if($display=="")
+    {
+        echo "Your Account Password and other detail has been sent to your email :".$userdetail[0][2];
+    }
+
 }
 ?>
 

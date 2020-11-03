@@ -221,3 +221,7 @@ where
 
 //show model
 $('#exampleModalCenter').modal();
+
+
+
+e.stopImmediatePropagation();

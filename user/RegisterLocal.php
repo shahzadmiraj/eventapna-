@@ -161,8 +161,9 @@ include_once ("../webdesign/footer/footer.php");
                     }
                     else
                     {
-                        $("#error").html('<span class="alert-success">We have sent an email with a confirmation link to your email address.</span>');
-                        $("#formLogin")[0].reset();
+                        alert('We have sent an email with a confirmation link to your email address.');
+                      /*  $("#exampleModal").reset();*/
+                        $("#exampleModal").trigger("reset");
                     }
 
                 }
@@ -170,6 +171,8 @@ include_once ("../webdesign/footer/footer.php");
 
 
         });
+
+
     });
 
 
