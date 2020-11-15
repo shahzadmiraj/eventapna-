@@ -1,7 +1,8 @@
 
 $(document).ready(function () {
 
-    $("#checklogin").click(function () {
+    $("#checklogin").click(function (e) {
+        e.preventDefault();
         var state=false;
         if(validationWithString("OldUsername","please enter username "))
             state=true;
@@ -31,6 +32,7 @@ $(document).ready(function () {
                 {
                     $("#LoginDetailwrap").hide();
                     $("#isdownuserValid").val("Yes");
+                    $("#ShowRefreshHeader").load(window.location.href + " #ShowRefreshHeader" );
                 }
                 else
                 {
@@ -81,6 +83,7 @@ $(document).ready(function () {
             success: function (data)
             {
                 $('#pleaseWaitDialog').modal('hide');
+
                 alert(data);
                 $("#formLogin")[0].reset();
             }

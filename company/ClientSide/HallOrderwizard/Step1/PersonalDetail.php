@@ -3,7 +3,7 @@
         <div class="bd-wizard-step-icon"><i class="mdi mdi-account-outline"></i></div>
         <div class="media-body">
             <div class="bd-wizard-step-title">Personal Details</div>
-            <div class="bd-wizard-step-subtitle">Step 1</div>
+            <div class="bd-wizard-step-subtitle">Step 3</div>
         </div>
     </div>
 </h3>

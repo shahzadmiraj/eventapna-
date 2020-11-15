@@ -288,12 +288,11 @@ if($MaxGuestMaxPartition[2]<=0)
 
 if($isbook)
 {
-    echo '  <a class="btn btn-danger btn-lg float-right" href="#">Booking Not Available </a>';
+    echo '  <a id="BookingNotAvailablebtn" class="btn btn-danger btn-lg float-right" href="#">Booking Not Available </a>';
 }
 else
 {
-
-    echo '  <a class="btn btn-success btn-lg float-right" href="#">Booking Available >> </a>';
+    echo '  <a id="BookingAvailablebtn" class="btn btn-success btn-lg float-right" href="#">Booking Available >> </a>';
 }
 ?>
 
@@ -321,11 +320,97 @@ else
     ?>
     <input hidden type="text" name="listofitemtype" value="<?php echo $Listofitemtypes;?>">
     <input hidden type="number" name="pid" value="<?php echo $PackageDateid;?>">
+    <input hidden type="text" name="cateringid" value="No">
+    <input hidden type="number" name="hallid" value="<?php echo $PackageDetail[0][5];?>">
+    <input hidden type="date" name="date" value="<?php echo $PackageDate[0][1];?>">
+    <input hidden type="text" name="time" value="<?php echo $PackageDetail[0][4];?>">
+    <input hidden type="number" name="perheadwith" value="<?php echo $PackageDetail[0][1];?>">
+    <input hidden type="number" name="Charges" value="<?php echo '0';?>">
     <?php
     include_once ("../HallOrderwizard/index.php");
     echo $displayModelExtraItems;
     ?>
 </form>
+
+
+<div id="OrderDetailHistory" class="container">
+
+
+
+
+
+    <h2>Your Order of this hall</h2>
+    <div class="row" style="height: 60vh;overflow: auto">
+        <?php
+        $DetailofThisOrder=array();
+        $display='';
+        $sql='';
+        if(isset($_COOKIE["userid"])) {
+
+            $sql = 'SELECT od.id,p.name,od.hall_id,od.status_hall,od.destination_date,od.booking_date FROM BookingProcess as bp INNER join orderDetail as od
+on (bp.orderDetail_id=od.id)
+INNER join person as p 
+on (p.id=od.person_id)
+WHERE
+(od.hall_id=' . $hallInformation[0][0] . ')AND(od.user_id=' . $_COOKIE["userid"] . ') order by (od.destination_date)';
+
+            $DetailofThisOrder = queryReceive($sql);
+            $display = '';
+            for ($i = 0; $i < count($DetailofThisOrder); $i++) {
+                $display .= '
+              <div class="card col-md-4 m-auto" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Order id # ' . $DetailofThisOrder[$i][0] . '</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Order status :' . $DetailofThisOrder[$i][3] . '</h6>
+                
+                <p class="card-text">';
+                if ($DetailofThisOrder[$i][3] == "Not Active") {
+                    $display .= '<span class="text-danger">You must call to the owner of this hall for activation of order</span><br>';
+                }
+                $display .= '
+Visited Date: ' . $DetailofThisOrder[$i][5] . '<br>
+Booked Data: ' . $DetailofThisOrder[$i][4] . '<br>
+
+
+</p>
+
+                 <div class="row form-inline">
+   <form  method="GET" action="' . $Root . 'connection/printOrderDetail.php" class="col-6">
+            <input type="text" hidden name="userdetail" value="' . $_COOKIE["userid"] . '">
+            <input type="number" hidden name="orderid" value="' . $DetailofThisOrder[$i][0] . '">
+            <input type="text" hidden name="ViewOrDownload" value="View">
+            <button type="submit"  class="card-link btn btn-outline-primary" ><i class="fa fa-print" aria-hidden="true"></i>View Bill</button>
+        </form>
+
+        <form  method="GET" action="' . $Root . 'connection/printOrderDetail.php" class="col-6">
+            <input type="text" hidden name="userdetail" value="' . $_COOKIE["userid"] . '">
+            <input type="number" hidden name="orderid" value="' . $DetailofThisOrder[$i][0] . '">
+            <input type="text" hidden name="ViewOrDownload" value="Download">
+            <button  type="submit" class="card-link btn btn-outline-secondary" ><i class="fas fa-cloud-download-alt"></i>Save Bill</button>
+        </form>  
+    </div>
+
+            </div>
+        </div>';
+            }
+        }
+        echo $display;
+
+        ?>
+
+
+    </div>
+</div>
+<?php
+
+if(count($DetailofThisOrder)==0)
+{
+    echo '<script>
+        $("#OrderDetailHistory").hide();
+    </script>';
+}
+?>
+
 
 
 
@@ -460,6 +545,7 @@ echo $ExtraitemStyleOne;
 
 
     </div>
+
 
 
 
@@ -669,6 +755,17 @@ include_once "../All/Comments.php"
             }
 
         });
+
+     /*   setInterval(function(){
+            $("#OrderDetailHistory").load(window.location.href + " #OrderDetailHistory" );
+        }, 1000);*/
+
+        /*$("#headerCardOrders").click(function(event){
+            event.stopPropagation();
+            /!*$('#headerCardOrders').addClass('btn-primary');*!/
+            $("#showheaderCardOrders").slideToggle();
+        });
+        $("#showheaderCardOrders").slideToggle();*/
 
     });
 

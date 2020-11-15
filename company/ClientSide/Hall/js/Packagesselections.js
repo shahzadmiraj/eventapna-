@@ -96,6 +96,7 @@ $('document').ready(function () {
          TotalAmount+=TotalExtraItem;
 
          $("#wizardTotalAmountPackage").val(TotalAmount);
+         $("#wizardAmountPackage").val(TotalAmount);
     }
     $("#numberOfGuest").change(CompleteCalculation);
     $('input[type=radio]').change(function() {

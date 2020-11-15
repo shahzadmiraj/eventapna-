@@ -36,7 +36,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-envelope text-info"></i></div>
                                 </div>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="support@eventapna.com" >
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Sender Email Address" >
                             </div>
                         </div>
 
@@ -94,6 +94,7 @@
                     {
                      $("#error").html("<span class='btn-success'>You have sent message </span>");
                         $('#emailsendForm').trigger("reset");
+
                     }
                     else
                     {

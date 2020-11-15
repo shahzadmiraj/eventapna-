@@ -12,16 +12,16 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddre
     $mail->SMTPDebug = 0; //1 error or success
     // Enable verbose debug output
     // Set mailer to use SMTP
-    $mail->Host = 'ssl://mail.eventapna.com';  // Specify main and backup SMTP servers
+    $mail->Host = 'ssl://mail.beger.co.th';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username   = 'support@eventapna.com';                     // SMTP username
-    $mail->Password   = 'shhazadmirajdin1';                               // SMTP password
+    $mail->Username   = 'info@beger.co.th';                     // SMTP username
+    $mail->Password   = 'info@2019';                               // SMTP password
     $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 465;        //465     ,587                       // TCP port to connect to
     $mail->SMTPKeepAlive = true;
     $mail->XMailer=" ";
-    $mail->From = 'support@eventapna.com';
-    $mail->FromName = 'EVENT APNA';
+    $mail->From = 'info@beger.co.th';
+    $mail->FromName = 'begar';
 
     if(is_array($SenderAddress))
     {
@@ -70,7 +70,7 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddre
         $display.= 'Message could not be sent.';
         $display.= 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-        //echo 'message successully sent';
+        echo 'message successully sent';
     }
  //   $mail->smtpClose();
 
@@ -79,4 +79,8 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddre
 
 
 
-//echo serverSendMessage("hasankhanzada106@gmail.com","shahzad miraj","Confirmation of Email",'jkbfqbjkefbhjkfb;hfb;hfqeb; bhwef hbew fbhlewefw ewywyfqwe h ewefw hv fwvefw efw ehvw ew u uvhv v ufefw euw uv  vuewf y  efuvwuyfgy fwyevy y ew efuvw efuvw efw vu fv fewvfuw fuvw f v fvyyfouyfuvyf vwefuv uy fuvfwuvfwuvyy f uvwuvyfy y  fr <a>fejnefjberinbenrbejnorbfjnobejnrbjbjrbjr</a>i','shahzadmirajdin1@gmail.com');
+//echo serverSendMessage("info@beger.co.th","begar","Confirmation of Email",'here is testing again set ','shahzadmirajdin1@gmail.com');
+//  $mail->Username   = 'support@eventapna.com';                     // SMTP username
+//    $mail->Password   = 'shhazadmirajdin1';                               // SMTP password
+//    $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+//    $mail->Port = 465;        //465     ,587

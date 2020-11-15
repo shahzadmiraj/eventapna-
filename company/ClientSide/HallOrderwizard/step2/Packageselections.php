@@ -2,8 +2,8 @@
     <div class="media">
         <div class="bd-wizard-step-icon"><i class="mdi mdi-account-check-outline"></i></div>
         <div class="media-body">
-            <div class="bd-wizard-step-title">Review </div>
-            <div class="bd-wizard-step-subtitle">Step 3</div>
+            <div class="bd-wizard-step-title">Package Detail </div>
+            <div class="bd-wizard-step-subtitle">Step 1</div>
         </div>
     </div>
 </h3>
@@ -16,7 +16,7 @@
         <hr>
         <h4 class="section-heading mb-5">Deal Detail</h4>
         <?php
-        echo $SecondincludeItemStyle;
+           echo $SecondincludeItemStyle;
         ?>
         <hr>
         <h4 class="section-heading mb-5">Extra Item <button type="button" class="btn btn-outline-primary float-right"  data-toggle="modal" data-target="#ExtraitemModel">+ Add</button> </h4>
@@ -43,8 +43,8 @@
         </div>
 
         <br>
-
-        <label class="mb-5 form-inline text-danger"> Total Amount  <input readonly type="number" id="wizardTotalAmountPackage" name="wizardTotalAmountPackage" class="form-control ml-2" style="border: none" value="0"></label>
+        <hr>
+        <h6 class="section-heading mb-5">Amount <input readonly type="number" id="wizardAmountPackage" class="float-right text-danger" style="border: none" value="0"> </h6>
 
     </div>
 

@@ -15,7 +15,7 @@ $("#wizard").steps({
         }
         if (newIndex === 1 )
         {
-            if(CheckFirstStep())
+            if(CheckSecondStep())
             {
                 return  true;
             }
@@ -34,15 +34,17 @@ $("#wizard").steps({
     },
     onFinished: function (event, currentIndex)
     {
-        if(CheckSecondStep())
-        {
 
+        if(CheckFirstStep())
+        {
             SubmitFormComplete();
+            return  true;
         }
         else
         {
             return false;
         }
+
     }
 });
 
@@ -70,6 +72,10 @@ return  true;
 
 function CheckSecondStep()
 {
+    if(validationWithString("numberOfGuest","Please Enter Guests"))
+    {
+        return false;
+    }
     var Remaingseating=Number($("#Remaingseating").val());
     var numberOfGuest=Number($("#numberOfGuest").val());
     if(Remaingseating<numberOfGuest)
@@ -81,24 +87,41 @@ function CheckSecondStep()
 
 }
 
-function SubmitFormComplete() {
+function SubmitFormComplete()
+{
     var formdata = new FormData($('#SubmitFormOfPackage')[0]);
     formdata.append("option","CompleteFormSubmitByClient");
-    $.ajax({
+    $.ajax(
+        {
         url: "serverClientside.php",
         method: "POST",
         data: formdata,
         contentType: false,
         processData: false,
         async:false,
-        beforeSend: function () {
+        beforeSend: function ()
+        {
             $('#pleaseWaitDialog').modal();
         },
         success: function (data)
         {
             $('#pleaseWaitDialog').modal('hide');
-            alert(data);
+            if($.trim(data)!="")
+            {
+                alert(data);
+            }
+            else
+            {
+                alert("Your order is in Draft please call to owner for Activation this order .Your order is added in Order Cart");
+            }
+            $("#OrderDetailHistory").load(window.location.href + " #OrderDetailHistory" );
+            $("#ShowRefreshHeader").load(window.location.href + " #ShowRefreshHeader" );
+            $("#SubmitFormOfPackage").hide();
+            $("#BookingAvailablebtn").hide();
         }
+
     });
+
+
 
 }

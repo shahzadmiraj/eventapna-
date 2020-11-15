@@ -51,22 +51,19 @@ $sql='INSERT INTO `person`(`name`, `cnic`, `id`, `image`, `active`, `expire`, `a
         }
         $customerId = $last_id;
 
-     //  $token= uniqueToken('BookingProcess',"token",');
-        $token=base64url_encodeLength();
+      $token= uniqueToken('BookingProcess',"token",'');
+        //$token=base64url_encodeLength();
         $cateringid=$_POST['cateringid'];
        $hallid=$_POST['hallid'];
         $sql="";
         $redirectPage='';
        if($cateringid!='No')
        {
-
            $sql='INSERT INTO `BookingProcess`(`id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",'.$cateringid.',NULL,0,NULL,"'.$timestamp.'",'.$customerId.')';
-
            $redirectPage='../order/orderCreate.php';
        }
        else if($hallid!="No")
        {
-
            $sql='INSERT INTO `BookingProcess`(`id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",NULL,'.$hallid.',0,NULL,"'.$timestamp.'",'.$customerId.')';
            $redirectPage='../company/hallBranches/hallorder.php';
        }

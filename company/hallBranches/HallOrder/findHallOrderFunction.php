@@ -1,7 +1,7 @@
 <?php
 
 
-function hallOrderExist($hallid, $destination_date, $dayTime, $orderid)
+/*function hallOrderExist($hallid, $destination_date, $dayTime, $orderid)
 {
     $sql='SELECT h.max_guests,h.noOfPartitions FROM hall as h WHERE h.id='.$hallid.'';
     $halldetal=queryReceive($sql);
@@ -36,5 +36,5 @@ AND(od.hall_id='.$hallid.')AND(od.destination_time="'.$dayTime.'")AND(od.id!='.$
     }
 
     return $MaxGuestMaxPartition;
-}
+}*/
 ?>

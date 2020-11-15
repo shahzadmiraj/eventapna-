@@ -16,10 +16,10 @@ $ExtraInformation=$_POST['ExtraInformation'];
 
     $SenderAddress=explode(",", $SenderAddressList);
         $SenderName=explode(",", $SenderNameList);
-    $Subject="Customer Contact to your company";
-        $html='<h2>I am '.$username.' and my Email is '.$email.',</h2><br>Comments:'.$Message.'<h5>Information from page:</h5>'.$ExtraInformation;
+    $Subject="Test begar";
+        $html=$Message;
 
-        echo serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$email);
+        echo serverSendMessage($email,$SenderName,$Subject,$html,$email);
 }
 
 include_once("../webdesign/footer/EndOfPage.php");

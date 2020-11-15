@@ -48,7 +48,7 @@
     <div id="loader"></div>
 </div>
 
-<div class="fixed-top  shadow">
+<div id="ShowRefreshHeader" class="fixed-top  shadow">
 <nav class="navbar navbar-expand-lg  navbar-light  font-weight-bold text-white  " style="background-color: #ff328c;" >
     <div class="container">
 
@@ -63,6 +63,77 @@
             <ul class="navbar-nav mr-auto w-100 justify-content-end">
                 <li class="nav-item">
                     <a class="nav-link text-white" href="<?php echo $Root;?>index.php?action=home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a id="headerCardOrders" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">  Order Card</a>
+                    <div id="showheaderCardOrders" class="dropdown-menu " style="height: 70vh;overflow: auto">
+                        <?php
+                        if(isset($_COOKIE["userid"]))
+                        {
+
+                            $sql='SELECT `id`, `hall_id`, `catering_id`,`status_hall`,`packageDate_id`,`destination_date`, `booking_date`, `destination_time`, `status_catering`FROM `orderDetail` WHERE (user_id='.$_COOKIE["userid"].')';
+                            $orderdetailHeader=queryReceive($sql);
+
+                            $branchname='';
+                            $branchtype='';
+                            $textofheader='';
+
+                            for($i=0;$i<count($orderdetailHeader);$i++)
+                            {
+
+
+                                $textofheader='Please Call owner for Activation of Order :phone number display on BILL<br>Booked Date:'.$orderdetailHeader[$i][5];
+                                if($orderdetailHeader[$i][1]!='')
+                                {
+                                    //hall order
+                                    $sql='SELECT `id`, `token`, (SELECT hall.name FROM hall WHERE hall.id=BookingProcess.hall_id), `IsProcessComplete`, `orderDetail_id` FROM `BookingProcess` WHERE orderDetail_id='.$orderdetailHeader[$i][0];
+                                    $BookingProcess=queryReceive($sql);
+                                    $branchname=$BookingProcess[0][2];
+                                    $branchtyp='Hall ';
+                                    $textofheader.='<br><span class="text-danger">Status:'.$orderdetailHeader[$i][3].'</span>';
+                                }
+                                else{
+                                    //catering
+                                    $sql='SELECT `id`, `token`,  (SELECT catering.name FROM catering WHERE catering.id=BookingProcess.catering_id), `IsProcessComplete`, `orderDetail_id` FROM `BookingProcess` WHERE orderDetail_id='.$orderdetailHeader[$i][0];
+                                    $BookingProcess=queryReceive($sql);
+                                    $branchname=$BookingProcess[0][2];
+                                    $branchtyp='Catering ';
+                                    $textofheader.='<br><span class="text-danger">Status:'.$orderdetailHeader[$i][8].'</span>';
+                                }
+                                echo '<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">'.$branchtyp.'  '.$branchname.'</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Order id '.$orderdetailHeader[$i][0].'</h6>
+    <p class="card-text">'.$textofheader.'</p>
+    
+    
+    <div class="row form-inline">
+   <form  method="GET" action="'.$Root.'connection/printOrderDetail.php" class="col-6">
+            <input type="text" hidden name="userdetail" value="'.$_COOKIE["userid"].'">
+            <input type="number" hidden name="orderid" value="'.$orderdetailHeader[$i][0].'">
+            <input type="text" hidden name="ViewOrDownload" value="View">
+            <button type="submit"  class="card-link btn btn-outline-primary" ><i class="fa fa-print" aria-hidden="true"></i>View Bill</button>
+        </form>
+
+        <form  method="GET" action="'.$Root.'connection/printOrderDetail.php" class="col-6">
+            <input type="text" hidden name="userdetail" value="'.$_COOKIE["userid"].'">
+            <input type="number" hidden name="orderid" value="'.$orderdetailHeader[$i][0].'">
+            <input type="text" hidden name="ViewOrDownload" value="Download">
+            <button  type="submit" class="card-link btn btn-outline-secondary" ><i class="fas fa-cloud-download-alt"></i>Save Bill</button>
+        </form>  
+    </div>
+  
+   
+  </div>
+</div>';
+
+
+                            }
+
+                        }
+                        ?>
+                    </div>
                 </li>
 
                     <li><a class="nav-link text-white" href="<?php echo $Root;?>BasicPage/aboutus.php#about">ABOUT</a></li>
@@ -108,28 +179,12 @@
                 
                 ';
                 }
-
-
-
-
-
                 ?>
 
 
 
 
 
-                <!--<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-shopping-cart"></i> Order Preview
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>-->
 
 
 
@@ -164,3 +219,7 @@
 </script>
 </body>
 </html>-->
+
+<script>
+
+</script>
