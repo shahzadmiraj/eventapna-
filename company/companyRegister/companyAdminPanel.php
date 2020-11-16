@@ -14,9 +14,6 @@ $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
 
-
-
-
 $sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
 $companydetail=queryReceive($sql);
 
@@ -30,7 +27,6 @@ $caterings=queryReceive($sql);
 $sql='SELECT `id`, `username`,`image`, `jobTitle`,`token` FROM `user` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
 $users=queryReceive($sql);
 
-$encoded=1;
 ?>
 <!DOCTYPE html>
 <head>
@@ -59,17 +55,11 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <link rel="stylesheet" href="../../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
-    <style>
-
-
-    </style>
 </head>
 <body>
 
 <?php
-include_once ("../../webdesign/header/header.php");
-
+//include_once ("../../webdesign/header/header.php");
 ?>
 
 
@@ -129,7 +119,6 @@ include_once ("../../webdesign/header/header.php");
 
     <div class="container mt-2 mb-2  ">
         <h3  class="float-left"> <i class="fas fa-place-of-worship "></i> Halls Management System</h3>
-
     </div>
 
 
@@ -396,10 +385,10 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-
+<!---->
 <?php
-include_once ("../../webdesign/footer/footer.php");
-?>
+//include_once ("../../webdesign/footer/footer.php");
+//?>
 <script>
 
 </script>
