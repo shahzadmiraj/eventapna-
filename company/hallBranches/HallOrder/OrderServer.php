@@ -1,5 +1,6 @@
 <?php
 include_once ('../../../connection/connect.php');
+include_once('CheckPackageForOrderValidFunction.php');
 include_once('findHallOrderFunction.php');
 function ShowSubmitButton($isShowButton)
 {

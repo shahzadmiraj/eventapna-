@@ -45,12 +45,13 @@ order BY n.id";
 $numbers=queryReceive($sql);
 $userid=$_COOKIE['userid'];
 $companyid=$userdetail[0][0];
+
+
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
-    <?php
-    include('../webdesign/header/InsertHeaderTag.php');
-    ?>
+<?php
+include('../webdesign/header/InsertHeaderTag.php');
+?>
     <title>Preview Customer</title>
     <meta name="description" content="Edit Customer Order,Edit person,change customer book  for Order,Edit Client Registered, only company user can used this
 Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
@@ -59,26 +60,58 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Edit Customer for Order in Event Apna,Preview Client Book,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
     <script src="../webdesign/JSfile/JSFunction.js"></script>
-    <style>
 
-    </style>
-</head>
-<body>
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
 <?php
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
+?>
 
-include_once ("../webdesign/header/header.php");
+<?php
+if($processInformation[0][5]=="") //Not Booked Order yet
+{
+    echo '<div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Booking New Order</h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>';
+
+}
+else
+{
+    echo '<div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Order</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+        </div>
+    </div>';
+}
+
 
 if($processInformation[0][4]==0)
 {
@@ -124,8 +157,8 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<form id="formEditCustomer">
-<div class="container row" >
+<form id="formEditCustomer" class="row container-fluid">
+
     <input hidden type="number" value="<?php echo $userid;?>" name="userid">
 
     <?php
@@ -133,12 +166,12 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
     echo '<input id="customerId" type="number" name="customerid" hidden value="'.$customerId.'">';
     ?>
-        <div id="number_records" class="col-sm-12   col-12 col-md-12 col-lg-12">
+        <div id="number_records" class="row">
             <?php
             for($i=0;$i<count($numbers);$i++)
             {
                 echo '
-        <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12" id="Each_number_row_'.$numbers[$i][1].'">
+        <div class="col-sm-12   col-12 col-md-4 col-lg-4" id="Each_number_row_'.$numbers[$i][1].'">
                 <label  class="col-form-label" for="number_'.$numbers[$i][1].'">Phone no:</label>
                 
                 
@@ -147,7 +180,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 <span class="input-group-text"><i class="fas fa-phone-volume"></i></span>
             </div>
              <input readonly class=" numberchange  allnumber form-control " type="text" name="number[]" value="'.$numbers[$i][0].'" id="number_'.$numbers[$i][1].'" data-columne="number" data-columneid='.$numbers[$i][1].'>
-             <input class="form-control btn btn-danger remove_number col-3 " id="remove_numbers_'.$numbers[$i][1].'" data-removenumber="'.$numbers[$i][1].'"    data-userid="'.$userid.'" value="-">
+             <input class="form-control btn btn-danger remove_number col-2 " id="remove_numbers_'.$numbers[$i][1].'" data-removenumber="'.$numbers[$i][1].'"    data-userid="'.$userid.'" value="-">
             
             </div>
                         
@@ -156,7 +189,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
             ?>
 
         </div>
-        <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12" >
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12" >
             <label for="newNumber" class="col-form-label">New Number</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -164,7 +197,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                     <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                 </div>
                 <input type="number" id="newNumber"  name="newNumber"class="form-control" placeholder="New number 092xxxxx" >
-                <input type="button" value="+" class="col-3 btn-success form-control" id="newadd" data-userid="<?php echo $userid;?>">
+                <input type="button" value="+" class="col-2 btn-success form-control" id="newadd" data-userid="<?php echo $userid;?>">
             </div>
 
 
@@ -172,7 +205,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
 
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="name" class="col-form-label"> Name:</label>
 
 
@@ -189,7 +222,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label for="name" class="col-form-label">Image:</label>
 
 
@@ -206,7 +239,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
     </div>
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="cnic" class="col-form-label "> CNIC:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -221,7 +254,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label for="address" class="col-form-label">Address:</label>
 
 
@@ -245,7 +278,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-        <div class="form-group row col-sm-12   col-12 col-md-12 col-lg-12 ">
+        <div class="row col-sm-12   col-12 col-md-12 col-lg-12 ">
 
             <?php
             if($Isprocessing==0)
@@ -253,18 +286,18 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 //order is in processing phase
                 //  not this is customer back and reprocess
                 echo '
-                <a id="btnbackhistory" class="m-auto col-4 form-control btn btn-danger">Close</a>
-                     <a id="SkipBtn" class="m-auto col-4 form-control btn btn-success">Skip>></a>
-                <a  id="formcustomer"   class=" col-4 form-control btn btn-primary">  Next >></a>
+                <a id="btnbackhistory" class="m-auto col-4 form-control btn btn-danger text-white">Close</a>
+                     <a id="SkipBtn" class="m-auto col-4 form-control btn btn-success text-white">Skip>></a>
+                <a  id="formcustomer"   class="col-4 form-control btn btn-primary text-white">  Next >></a>
              ';
             }
             else  if($Isprocessing==1)
             {
                 // order hase been completed in order preview
                     echo '
-            <a id="btnbackhistory"  class="m-auto col-6 form-control btn btn-danger"><i class="fas fa-window-close"></i> Close</a>';
+            <a id="btnbackhistory"  class="m-auto col-6 form-control btn btn-danger text-white"><i class="fas fa-window-close"></i> Close</a>';
 
-                echo '<a  id="formcustomer"   class=" col-6 form-control btn btn-primary"><i class="fas fa-check "></i>  Save </a>   ';
+                echo '<a  id="formcustomer"   class=" col-6 form-control btn btn-primary text-white"><i class="fas fa-check "></i>  Save </a>   ';
             }
 
 
@@ -297,18 +330,13 @@ p.id='.$customerId.'';
 
     </div>
 
-</div>
 </form>
 
-
-    <?php
-   include_once ("../webdesign/footer/footer.php");
-    ?>
 
 <script>
  $(document).ready(function ()
  {
-     $.getScript("../webdesign/JSfile/JSFunction.js");
+     /*$.getScript("../webdesign/JSfile/JSFunction.js");*/
 
     var customerid=$("#customerId").val();
      function numberAddValidation()
@@ -540,8 +568,10 @@ p.id='.$customerId.'';
 
  });
 </script>
-</body>
-</html>
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
 ?>

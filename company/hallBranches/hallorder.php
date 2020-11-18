@@ -24,9 +24,8 @@ $userid=$_COOKIE['userid'];
 
 $sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$hallid.') AND (ISNULL(c.expire))';
 $cateringids=queryReceive($sql);
+include('../../companyDashboard/includes/startHeader.php'); //html
 ?>
-    <!DOCTYPE html>
-    <head>
         <?php
         include('../../webdesign/header/InsertHeaderTag.php');
         ?>
@@ -37,33 +36,45 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
         <meta name="keywords" content="Hall Order Register page,Add Hall Order,Insert Marquee Order,New Add Marquee Order,Add New Dera Order page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-        <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
-        <script src="../../jquery-3.3.1.js"></script>
-        <script type="text/javascript" src="../../bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-        <link rel="stylesheet" href="../../webdesign/css/loader.css">
-        <link rel="stylesheet" href="../../webdesign/css/complete.css">
+    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
+    <script src="../../jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../../bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="../../webdesign/JSfile/JSFunction.js"></script>
+
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
 
-        <style>
-            form
-            {
-                margin: 5%;
-                font-weight: bold;
 
 
-            }
 
-        </style>
-    </head>
-    <body>
 
     <?php
-    include_once ("../../webdesign/header/header.php");
+include('../../companyDashboard/includes/endHeader.php');
+include('../../companyDashboard/includes/navbar.php');
+
     ?>
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Booking New Order</h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>
 
     <div class="container">
 
@@ -87,13 +98,13 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <?php
     $whichActive = 2;
     $imageCustomer = "../../images/customerimage/";
-    $PageName="Hall Order info";
+    $PageName="Hall Order";
     include_once("../../webdesign/orderWizard/wizardOrder.php");
     ?>
 
 
 
-    <form class="container row">
+    <form class="container row" id="formOfNewHallOrder">
 
 
         <input  hidden name="pid" value="<?php echo $pid;?>">
@@ -102,7 +113,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
         <input type="number" hidden name="hallid" value="<?php echo $hallid;?>">
         <input type="number" hidden name="personid" value="<?php echo $personid;?>">
         <input type="number" hidden name="userid" value="<?php echo $userid;?>">
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class=" col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">No of Guests</label>
 
 
@@ -117,7 +128,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
         </div>
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class=" col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Booking Date (Year,Month,Day)</label>
 
 
@@ -131,7 +142,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 <input   id="date" name="date" type="date" class="checkpackage form-control">
             </div>
         </div>
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class=" col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Time</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -144,7 +155,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 </select>
             </div>
         </div>
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class=" col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Per Head With</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -172,7 +183,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
             $display = '
                 
                 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6" id="cateringid">
+    <div class=" col-sm-12   col-12 col-md-6 col-lg-6" id="cateringid">
         <label class="col-form-label ">Catering Branch</label>
 
 
@@ -219,9 +230,9 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         </div>
 
-        <div id="selectmenu" class="row col-12 alert-info  form-group container" >
+        <div id="selectmenu" class="row col-12 alert-info   container" >
 
-            <!--        <div class="form-group row">-->
+            <!--        <div class=" row">-->
             <!--            <label class="col-form-label">Per Head With</label>-->
             <!---->
             <!--            <div class="input-group mb-3 input-group-lg">-->
@@ -240,7 +251,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         </div>
 
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class=" col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Auto Total amount:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -252,8 +263,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
-            <label class="form-check-label" for="Discount">Discount </label>
+        <div class=" col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label" for="Discount">Discount </label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -264,8 +275,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         </div>
 
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
-            <label class="form-check-label" for="Charges">Extra Charges </label>
+        <div class=" col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label" for="Charges">Extra Charges </label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -278,8 +289,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
-            <label class="form-check-label" for="remaining">Remaining Amount </label>
+        <div class=" col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label" for="remaining">Remaining Amount </label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -290,28 +301,25 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         </div>
 
-        <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12">
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12">
             <label class="col-form-label">Describe /Comments</label>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-comments"></i></span>
                 </div>
-                <textarea  name="describe" class="form-control" placeholder="order comments /describe"></textarea>
+                <textarea  name="describe" class="form-control" placeholder="Order Comments / Describe"></textarea>
 
             </div>
         </div>
 
-        <div class="form-group col-12  justify-content-center shadow">
+        <div class=" col-12  justify-content-center ">
 
-            <a id="btnbackhistory"  class="col-5  btn btn-danger"> << Back </a>
-            <a id="submitform" data-href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" class="col-4 btn btn-primary">  Next >> </a>
+            <a id="btnbackhistory"  class="col-5  btn btn-danger text-white"> << Back </a>
+            <a id="submitform" data-href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" class="col-4 btn btn-primary text-white">  Next >> </a>
         </div>
 
     </form>
-    <?php
-    include_once ("../../webdesign/footer/footer.php");
-    ?>
     <script>
         $(document).ready(function ()
         {
@@ -492,7 +500,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                         $("#selectmenu").html(data);
                         if(describe!="")
                         {
-                            $("#selectmenu").append("<h3 align='center' class='col-12'>package Description</h3><p class='col-12'>" + describe + "</p>");
+                            $("#selectmenu").append("<h3 align='center' class='col-12'>Package Description</h3><p class='col-12'>" + describe + "</p>");
                         }
                         valueChangeAuto();
                     }
@@ -527,7 +535,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                             {
                                 state=true;
                             }*/
-                var formdata = new FormData($("form")[0]);
+                var formdata = new FormData($("#formOfNewHallOrder")[0]);
                 formdata.append("packageDateid", packageDateid);
                 formdata.append("option", "createOrderofHall");
 
@@ -572,11 +580,10 @@ EVENT APNA  provides Free Software ....... So Register NOW
         });
 
 
-
-
     </script>
-    </body>
-    </html>
+
 <?php
+include('../../companyDashboard/includes/scripts.php');
+include('../../companyDashboard/includes/footer.php');
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>

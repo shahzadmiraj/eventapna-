@@ -23,9 +23,9 @@ $processInformation=queryReceive($sql);
 $cateringid=$processInformation[0][2];
 $customer=$processInformation[0][7];
 
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
 
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
@@ -41,20 +41,27 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
     <script src="../webdesign/JSfile/JSFunction.js"></script>
-    <style>
 
-    </style>
-</head>
-<body >
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
+
 <?php
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
 include_once ("../webdesign/header/header.php");
 ?>
 
@@ -268,8 +275,10 @@ include_once ("../webdesign/footer/footer.php");
     });
 
 </script>
-</body>
-</html>
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
 ?>

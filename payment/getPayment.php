@@ -32,11 +32,10 @@ $customerID=$orderDetailPerson[0][1];
 
 $sql='SELECT catering_id,status_catering FROM orderDetail WHERE id='.$orderDetail_id.'';
 $StatusOrder=queryReceive($sql);
+include('../companyDashboard/includes/startHeader.php'); //html
 
 ?>
 
-<!DOCTYPE html>
-<head>
 
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
@@ -48,26 +47,46 @@ Do you want Management System of Hall OR Catering  for you company? Yes,This is 
 EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Payment page Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
+
+
+
+
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
     <script src="../webdesign/JSfile/JSFunction.js"></script>
-    <style>
 
-    </style>
-</head>
-<body >
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
 <?php
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
+?>
 
-include_once ("../webdesign/header/header.php");
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Order Booked</h1>
+            <a href="#" class="btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Order Preview</a>
+        </div>
+    </div>
+
+<?php
 if($processInformation[0][4]==0)
 {
     ?>
@@ -100,28 +119,15 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <form class="card container" id="from2">
+    <form class="container row" id="from2">
         <input hidden name="user_id" value="<?php
         echo $userId;
         ?>">
         <input hidden name="orderDetail_id" value="<?php
         echo $orderDetail_id;
         ?>">
-        <div class="form-group row">
-            <label class="col-form-label">Name</label>
 
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                </div>
-                <input id="name" type="text" name="name" class="form-control" placeholder="person name etc Ali,Hassan,....">
-
-            </div>
-
-
-
-        </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Amount paid</label>
 
 
@@ -137,7 +143,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Status amount</label>
 
 
@@ -157,7 +163,24 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
-        <div class="form-group row">
+
+        <h3 class="col-12"><hr>Customer behaviour </h3>
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label">Name</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input id="name" type="text" name="name" class="form-control" placeholder="person name etc Ali,Hassan,....">
+
+            </div>
+
+
+
+        </div>
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Rating Customer</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -168,29 +191,21 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 <input  id="rangeInput" step="1" type="range" max="5" min="1" value="3" name="rating" class="col-6 ">
             </div>
         </div>
-        <div class="form-group row">
-            <label class="col-form-label">personality</label>
-
-
-
+        <div class="col-sm-12  col-12 col-md-12 col-lg-12">
+            <label class="col-form-label">Personality</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-comments"></i></span>
                 </div>
-
                 <textarea type="text" name="personality" class="form-control" placeholder="comment on customer personality"></textarea>
-
             </div>
-
-
-
         </div>
 
 
 
 
 
-        <div class="form-group row ">
+        <div class="col-12 row">
 
 
 
@@ -227,10 +242,6 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
     </form>
 
 
-
-<?php
-include_once ("../webdesign/footer/footer.php");
-?>
 
 
 <script>
@@ -336,8 +347,10 @@ include_once ("../webdesign/footer/footer.php");
 
     });
 </script>
-</body>
-</html>
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
 ?>

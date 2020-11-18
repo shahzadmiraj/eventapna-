@@ -105,10 +105,8 @@ function ExtraItemShow($sql,$IsAlreadyBooked,$ShowRow)
     $display.='</div>';
     return $display;
 }
-
+include('../../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
 
     <?php
     include('../../../webdesign/header/InsertHeaderTag.php');
@@ -124,23 +122,43 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
     <script src="../../../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
 
-    <style>
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 
-    </style>
-</head>
-<body>
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 <?php
+include('../../../companyDashboard/includes/endHeader.php');
+include('../../../companyDashboard/includes/navbar.php');
 
-include_once ("../../../webdesign/header/header.php");
+?>
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Order Booked</h1>
+            <a href="#" class="btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Order Preview</a>
+        </div>
+    </div>
+
+<?php
+
+
 if($processInformation[0][4]==0)
 {
 ?>
@@ -174,7 +192,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<form id="formitems" >
+<form id="formitems" style="background-color: rgba(255,255,245,1)">
 
 
     <input hidden id="PreviousExtraFixAmount" type="text"  value="<?php echo  $priceDetailOfExtraItem[0][0]; ?>" name="PreviousExtraFixAmount">
@@ -262,7 +280,7 @@ include_once("../../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <div class="container" style="background-color: rgba(212,210,210,0.49)">
+    <div class="container" style="background-color: rgba(212,210,210,0.06)">
 
         <h1 class="text-center mt-3">Select Item</h1>
         <hr>
@@ -281,7 +299,7 @@ GROUP by (EIT.id)';
         for($j=0;$j<count($Category);$j++)
         {
 
-            $display.='<h4 class="col-sm-12   col-12 col-md-12 col-lg-12 " align="center" style="background-color: rgba(212,210,210,0.49)">'.$Category[$j][1].'</h4>';
+            $display.= '<h4 class="col-sm-12   col-12 col-md-12 col-lg-12 " align="center" style="background-color: rgba(212,210,210,0.42)">' .$Category[$j][1].'</h4>';
 
 
 
@@ -317,12 +335,13 @@ GROUP by (EIT.id)';
 
 </div>
 
-<?php
-include_once ("../../../webdesign/footer/footer.php");
-?>
+
 <script>
+
     $(document).ready(function ()
     {
+
+
         function SetAmount(settype,getamount)
         {
             var amount=Number($("#AmountSet").val());
@@ -341,6 +360,14 @@ include_once ("../../../webdesign/footer/footer.php");
         $(document).on("click",".AddItemOrder",function (e)
         {
             e.preventDefault();
+            swal({
+                html:true,
+                title: "Add item",
+                text: 'Item has been added to Hall Item Menu',
+                buttons: false,
+                icon: "success",
+                timer: 1500,
+            });
                 var amount=$(this).data("amount");
             SetAmount("ADD",amount);
                 var id=$(this).data("itemsid");
@@ -366,6 +393,15 @@ include_once ("../../../webdesign/footer/footer.php");
         $(document).on("click",".deleteitems",function (e)
         {
             e.preventDefault();
+            swal({
+                title: "Deleted",
+                text: 'Item has been Deleted from Hall Item Menu',
+                buttons: false,
+                icon: "error",
+                timer: 1500,
+                html: true
+            });
+
             var id=$(this).data("jsid");
             var amount=$(this).data("amount");
             SetAmount("Minus",amount);
@@ -390,9 +426,18 @@ include_once ("../../../webdesign/footer/footer.php");
 
         });
 
+
         $(document).on("click",".deleteSelected",function (e)
         {
             e.preventDefault();
+            swal({
+                title: "Deleted",
+                text: 'Item has been Deleted from Hall Item Menu',
+                buttons: false,
+                icon: "error",
+                timer: 1500,
+                html: true
+            });
             var id=$(this).data("itemsid");
             var amount=$(this).data("amount");
             SetAmount("Minus",amount);
@@ -403,6 +448,8 @@ include_once ("../../../webdesign/footer/footer.php");
         {
             if (!confirm('Are you sure you want to Save items?'))
                 return  false;
+
+
 
             e.preventDefault();
             var orderid=$("#orderid").val();
@@ -481,13 +528,17 @@ include_once ("../../../webdesign/footer/footer.php");
     });
 
 
+
+
+
+
+
 </script>
 
 
-</body>
-</html>
-
 
 <?php
+include('../../../companyDashboard/includes/scripts.php');
+include('../../../companyDashboard/includes/footer.php');
 include_once ("../../../webdesign/footer/EndOfPage.php");
 ?>

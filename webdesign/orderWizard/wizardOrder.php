@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-8">
                         <div class="card-body">
-                            <ul class="">
+                            <ul class="row">
                                 <li class="list-group-item d-inline-block active">Name:<?php echo $CustomerInfo[0][0];?></li>
 
                                 <?php
@@ -169,9 +169,10 @@
                         echo "disabled";
 
                     ?> ">
-                        <a class="page-link" href="#" tabindex="-1">
-                            <i class="fas fa-user-edit "></i>
-                        </a>
+                        <h4 class="page-link text-center" href="#" tabindex="-1">
+                            <i class="fas fa-user-edit "></i><br>
+                            <span class="d-none d-sm-none d-md-block d-sm-none d-md-block">Customer</span>
+                        </h4>
                     </li>
 
 
@@ -182,9 +183,11 @@
                     else
                         echo "disabled";
 
-                    ?> "><a class="page-link" href="#">
-                            <i class="fas fa-cart-arrow-down "></i>
-                        </a></li>
+                    ?> "><h4 class="page-link text-center" href="#">
+                            <i class="fas fa-cart-arrow-down "></i><br>
+                            <span class="d-none d-sm-none d-md-block d-sm-none d-md-block">Order</span>
+                        </h4>
+                    </li>
 
 
 
@@ -201,9 +204,11 @@
                     else
                         echo "disabled";
 
-                    ?>"><a class="page-link" href="#">
+                    ?>"><h4 class="page-link text-center" href="#">
                             <i class="fab fa-accusoft"></i>
-                        </a>
+                            <br>
+                            <span class="d-none d-sm-none d-md-block d-sm-none d-md-block">Extra Item</span>
+                        </h4>
                     </li>
                     <?php
                     }
@@ -213,16 +218,18 @@
                     ?>
 
 
-                    <li class="page-item <?php
+                    <li class="page-item  text-center <?php
 
                     if($whichActive==4)
                         echo "active";
                     else
                         echo "disabled";
 
-                    ?>"><a class="page-link" href="#">
+                    ?>"><h4 class="page-link" href="#">
                             <i class="fas fa-concierge-bell "></i>
-                        </a>
+                            <br>
+                            <span class="d-none d-sm-none d-md-block d-sm-none d-md-block">Dish Detail</span>
+                        </h4>
                     </li>
 
 
@@ -237,9 +244,11 @@
                     else
                         echo "disabled";
 
-                    ?>"><a class="page-link" href="#">
+                    ?>"><h4 class="page-link  text-center " href="#">
                             <i class="fab fa-amazon-pay"></i>
-                        </a>
+                            <br>
+                            <span class="d-none d-sm-none d-md-block d-sm-none d-md-block">Payment</span>
+                        </h4>
                     </li>
 
                 </ul>
