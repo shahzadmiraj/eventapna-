@@ -21,37 +21,7 @@ if($_POST['option']=="removeDish")
     $sql='UPDATE `dish_detail` SET `expire_date`="'.$timestamp.'" WHERE id='.$dishId.'';
     querySend($sql);
 }
-else if($_POST['option']=='createDish')
-{
-    $orderid=$_POST['orderid'];
-    $userid=$_POST['userid'];
-    $dishId=$_POST['dishId'];
-    $each_price=chechIsEmpty($_POST['each_price']);
-    $quantity=chechIsEmpty($_POST['quantity']);
-    $describe=$_POST['describe'];
 
-    $dishImage=$_POST['dishImage'];
-    $dishName=$_POST['dishName'];
-    $dishTypeId=$_POST['dishTypeId'];
-
-    $dishesAmount=(int)$each_price*(int)$quantity;
-
-
-
-    $CurrentDateTime=date('Y-m-d H:i:s');
-    $token=uniqueToken('dish_detail',"token",'');
-    $sql='INSERT INTO `dish_detail`(`id`, `describe`, `expire`, `quantity`, `orderDetail_id`, `user_id`, `dishWithAttribute_id`, `active`, `price`, `expireUser`,`token`,`name`, `image`, `dish_type_id`) VALUES (NULL,"'.$describe.'",NULL,'.$quantity.','.$orderid.','.$userid.','.$dishId.',"'.$timestamp.'",'.$each_price.',NULL,"'.$token.'","'.$dishName.'","'.$dishImage.'",'.$dishTypeId.')';
-    querySend($sql);
-    $sql='SELECT od.hall_id,od.total_amount FROM orderDetail as od WHERE od.id='.$orderid.'';
-    $detailhall=queryReceive($sql);
-    if(!isset($detailhall[0][0]))
-    {
-        $totalamount=$detailhall[0][1]+$dishesAmount;
-        $sql='UPDATE `orderDetail` SET `total_amount`='.$totalamount.' WHERE id='.$orderid.'';
-        querySend($sql);
-    }
-
-}
 else if($_POST["option"]=='attributeChange')
 {
     $attributeid=$_POST['attributeid'];

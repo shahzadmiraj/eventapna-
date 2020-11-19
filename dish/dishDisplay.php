@@ -6,7 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
+include_once ('dishesFunctions.php');
 include  ("../access/userAccess.php");
 RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
 
@@ -78,11 +78,21 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <!-- Custom styles for this template-->
     <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <?php
 include('../companyDashboard/includes/endHeader.php');
 include('../companyDashboard/includes/navbar.php');
 ?>
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Order Booked</h1>
+            <a href="#" class="btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Order Preview</a>
+        </div>
+    </div>
 
 <?php
 if($processInformation[0][4]==0)
@@ -111,7 +121,7 @@ if($processInformation[0][4]==0)
 
 $whichActive = 4;
 $imageCustomer = "../images/customerimage/";
-$PageName="Catering Dishes Select";
+$PageName="Catering Dishes";
 include_once("../webdesign/orderWizard/wizardOrder.php");
 
 ?>
@@ -133,19 +143,9 @@ if(count($hallpackage)>0)
 
 
     <form  id="formid" method="post" action="<?php echo 'dishCreate.php?pid='.$pid.'&token='.$token.'' ?>" class="container alert-light ">
-        <h1>Selecting Dishes </h1>
+        <h1>Selected Dishes Menu</h1>
         <hr>
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <h4 class="mr-auto">Dish Deleted</h4>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="toast-body">
-                hello,you have successfully Deleted dish
-            </div>
-        </div>
+
 
         <div id="showSelectedDishes" class="form-inline badge-light "  >
 
@@ -165,15 +165,16 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
 
 
                 $display .= '<div id="RemoveAlreadySelected'.$detailDishes[$i][0].'" class="card col-md-4" >
-
                     <ul>
                     <li class="text-center h4 font-weight-bold"> <i class="fas fa-concierge-bell mr-1"></i>' . $detailDishes[$i][10] . '</li>
                    
                     <li> Dish Price Id : ' . $detailDishes[$i][6] . '</li>
                      <li> Dish  id : ' . $DishDetail[0][0] . '</li>
-                       <li> Already booked with ' . $detailDishes[$i][3] . ' Quantity</li>
-                    <li> <i class="fas fa-money-bill-alt text-danger float-right">Price : ' . $detailDishes[$i][8] . '</i><br></li>
-                   
+                     <li> <i class="fas fa-money-bill-alt text-danger float-right">Price : ' . $detailDishes[$i][8] . '</i></li>
+                     <li> <i class="fas fa-money-bill-alt text-danger float-right">Quantity : '.$detailDishes[$i][3].'</i></li>
+                     <li> <i class="fas fa-money-bill-alt text-danger float-right">Total : '.($detailDishes[$i][8]*$detailDishes[$i][3]).'</i></li>
+                       <li> Already booked</li>
+              
                     </ul>';
 
 
@@ -234,7 +235,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
                 //processing
                 echo '
         
-            <a id="cancelDish" type="button" class="col-4 btn btn-danger form-control"><< Back </a>
+            <a id="cancelDish" type="button" class="col-4 btn btn-danger form-control text-white"><< Back </a>
              <button id="SkipBtn" class="col-4 form-control btn btn-success">Skip>></button>
             <button id="submit" type="submit" class="btn-primary form-control btn col-4"> Next >></button>';
 
@@ -244,7 +245,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
 
                 echo '
         
-            <a id="cancelDish" type="button" class="col-6 btn btn-danger form-control"><i class="fas fa-arrow-left"></i>Edit order</a>
+            <a id="cancelDish" type="button" class="col-6 btn btn-danger form-control text-white"><i class="fas fa-arrow-left"></i>Edit order</a>
             <button id="submit" type="submit" class="btn-primary form-control btn col-6"><i class="fas fa-check "></i>Submit</button>';
             }
             ?>
@@ -261,6 +262,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
     <hr>
     <?php
 
+    $DisplayModelOfDishes="";
         $display='';
         for($i=0;$i<count($dishTypeDetail);$i++)
         {
@@ -297,19 +299,24 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
                 {
                     $image='../images/systemImage/imageNotFound.png';
                 }
-
-
         $display.='<img class="card-img-top " src="'.$image.'" alt="Card image" style="height: 100px" >
         
             <div  class="card-body ">
             <i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '<br>
-            <span> Dish id # ' . $dishDetail[$j][1] . '</span>
+            <span> Dish type id # ' . $dishDetail[$j][1] . '</span>
             <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary"><i class="fas fa-check "></i>  Select</button>
             </div>
        
         </div>';
+
+                $DisplayModelOfDishes.=showPriceofAllDishes($image,$dishDetail[$j][1],$dishDetail[$j][0]);
+
+
             }
             $display.='</div>';
+
+
+
         }
         echo $display;
     ?>
@@ -317,30 +324,22 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
 </div>
 
 
+<div class="container">
+    <?php
 
 
+echo $DisplayModelOfDishes;
 
-
-
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg" >
-
-
-
-
-
-        <!-- Modal content-->
-        <div class="modal-content"  id="AddDishDetail"  style="height: 100vh;overflow: auto">
-
-        </div>
-
-    </div>
-
-
-
+    ?>
 </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -351,9 +350,19 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
     $(document).ready(function ()
     {
 
-        $(document).on("click",".AlreadyDishes",function () {
+        $(document).on("click",".AlreadyDishes",function ()
+        {
             var dishdetailid=$(this).data("dishdetailid");
+            swal({
+                title: "Deleted",
+                text: 'Dish has been Deleted from Selected Dishes Menu',
+                buttons: false,
+                icon: "error",
+                timer: 1500,
+                html: true
+            });
             $("#RemoveAlreadySelected"+dishdetailid).remove();
+
         });
 
 
@@ -362,17 +371,34 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
 
         $(document).on("click",".DishAddOnform",function ()
         {
-            $('.toast').toast('show');
             var image=$(this).data("image");
             var dishName=$(this).data("dishname");
             var dishid=$(this).data("dishid");
             var price=$(this).data("price");
+            var quantity=$("#QuatityDish"+dishid).val();
+            if(validationWithString("QuatityDish"+dishid,"Please Enter Quantity of Dishes"))
+            {
+                $("#QuatityDish"+dishid).removeClass("btn-danger");
+                $("#QuatityDish"+dishid).val();
+                return false;
+            }
+            swal({
+                html:true,
+                title: "Added",
+                text: 'Dish has been added to Selected Dishes Menu',
+                buttons: false,
+                icon: "success",
+                timer: 1500,
+            });
+
             var formdata = new FormData;
             formdata.append("image",image);
             formdata.append("dishid", dishid);
+            formdata.append("price", price);
             formdata.append("dishName",dishName);
             formdata.append("countofdish",countofdish);
-            formdata.append("price",price);
+            formdata.append("countofdish",countofdish);
+            formdata.append("quantity",quantity);
             formdata.append("option", "AddDishOnForm");
             $.ajax({
                 url: "DishDisplayServer.php",
@@ -404,6 +430,8 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
            var image=$(this).data("image");
            var dishName=$(this).data("dishname");
            var dishid=$(this).data("dishid");
+           $("#DishesTypeModel"+dishid).modal("show");
+           return false;
            var formdata = new FormData;
            formdata.append("dishid", dishid);
            formdata.append("image",image);
@@ -432,13 +460,21 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
        $(document).on('click','.remove',function ()
        {
 
-           $('.toast').toast('show');
           var id=$(this).data("dishid");
           $("#remove"+id).remove();
+           swal({
+               title: "Deleted",
+               text: 'Dish has been Deleted from Selected Dishes Menu',
+               buttons: false,
+               icon: "error",
+               timer: 1500,
+               html: true
+           });
        });
 
 
-        $("#cancelDish").click(function () {
+        $("#cancelDish").click(function ()
+        {
 
             <?php
             if($processInformation[0][4]==0)
