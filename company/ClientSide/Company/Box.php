@@ -20,8 +20,8 @@ echo $HeadingImage?>');
             background-position: center;">
     <div class="container h-100" >
         <div class="row h-100 align-items-center">
-            <div class="col-lg-12 transparencyjumbo">
-                <h2 class="mt-5 mb-2"><?php echo $HeadingName; ?></h2>
+            <div class="col-lg-12 transparencyjumbo ">
+                <h1 class="mt-5 mb-2 text-white "><?php echo $HeadingName; ?></h1>
                 <p class="lead mb-5 text-white-50">.</p>
             </div>
         </div>

@@ -105,9 +105,12 @@ else
     if(isset($_GET['order_status']))
     $hallorcater .= "AND (od.status_catering='" . $order_info . "')";
 }
+
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
+
+
 
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
@@ -124,24 +127,151 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
 
-    <style>
-    </style>
-</head>
-<body>
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
 
 <?php
-include_once ("../webdesign/header/header.php");
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
 ?>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Find Order <?php
+                $branchName="Catering";
+
+                if(isset($_GET['c']))
+                {
+                    echo " Catering : ";
+                    $branchName="Catering";
+                }
+                else
+                {
+                    echo " Hall :";
+                    $branchName="Hall";
+                }
+                echo $HeadingName;
+
+
+            ?></h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?php echo $branchName;?> Next 24h Process Order </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <h4>12</h4>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">New Booked <?php echo $branchName;?>  Orders</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">12</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Today Process Orders</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Today <?php echo $branchName;?>  Earning</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">RS: 215,000</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="far fa-money-bill-alt fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+
+    </div>
+
 
 <?php
-$pageName=$order_info." Orders :".'<button data-display="hide" id="searchBtn" class="btn-warning btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>';
+$pageName=$order_info." Orders :".'<button data-display="hide" id="searchBtn" class="btn-outline-primary btn justify-content-center "><i class="fas fa-search"></i>Search Order</button>';
 
 include_once ("../company/ClientSide/Company/Box.php");
 ?>
@@ -149,10 +279,10 @@ include_once ("../company/ClientSide/Company/Box.php");
 
 
 
+<div class="container">
 
-<div class="container card">
 
-        <form class="col-12 shadow mb-4   " id="formId1" style="display: none">
+        <form class="row border mb-4 alert-info" id="formId1" style="display: none" >
 
             <?php
             echo '<input type="number" name="'.$name.'" value='.$id.' hidden>
@@ -164,7 +294,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Customer name</label>
 
 
@@ -187,7 +317,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
 
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label"> Customer CNIC</label>
 
 
@@ -205,7 +335,7 @@ include_once ("../company/ClientSide/Company/Box.php");
             </div>
 
         </div>
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <label  class="col-form-label"> Customer ID</label>
 
 
@@ -224,7 +354,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
 
             </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label"> Customer phone</label>
 
 
@@ -242,7 +372,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
 
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Visited Date</label>
 
 
@@ -262,7 +392,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
 
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label"> Booked Date</label>
 
 
@@ -282,7 +412,7 @@ include_once ("../company/ClientSide/Company/Box.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Order status</label>
 
 
@@ -315,8 +445,8 @@ include_once ("../company/ClientSide/Company/Box.php");
 
         </div>
 
-        <div class="form-group row justify-content-center">
-            <button type="submit" class="form-control btn-success col-6"><i class="fas fa-search"></i>Find</button>
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12 align-content-center mb-4">
+            <button type="submit" class="form-control btn-success float-right"><i class="fas fa-search"></i>Find</button>
         </div>
 
         </form>
@@ -414,14 +544,100 @@ od.destination_date ASC,od.destination_time ASC';
 </div>';
 
 
-            $display='';
+
+            $display='<div>
+
+<div class="container">
+';
             for ($i=0;$i<count($orderdetail);$i++)
             {
                 $sql='SELECT `id`, `token` FROM `BookingProcess`  WHERE `orderDetail_id`='.$orderdetail[$i][0].'';
                 $OrderProcess=queryReceive($sql);
+
+                $Query='pid='.$OrderProcess[0][0].'&token='.$OrderProcess[0][1];
                 $display.='
-        <a href="PreviewOrder.php?pid='.$OrderProcess[0][0].'&token='.$OrderProcess[0][1].'" class="col-12   row  shadow m-3 newcolor">
-        <img style="height:8vh" src="';
+        <div  class="row container mb-2 mb-2 border btn-light border-left-primary  border-bottom-primary">
+   
+
+<nav class="navbar  navbar-light bg-light  col-sm-12    col-12 col-md-12 col-lg-12 row ">
+  <a class="navbar-brand" href="#">No # '.($i+1).'</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown'.$i.'" aria-controls="navbarNavDropdown'.$i.'" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown'.$i.'">
+    <ul class="navbar-nav form-inline row">
+   ';
+
+
+            if(onlyAccessUsersWho("Owner,Employee"))
+            {
+                $display.='    
+                
+                 <li class="nav-item">
+                            <a href="../customer/customerEdit.php?'.$Query.'" class="nav-link"><i class="fas fa-user-edit "></i> Customer Detail</a>
+                  </li>';
+               if(!empty($hallid))
+               {
+                    //1 hall order edit                //2 make hall order to user displaye
+                    $display.=' 
+                    
+                    
+                     <li class="nav-item">
+                    <a href="../company/hallBranches/EdithallOrder.php?' . $Query . '"  class="nav-link"><i class="fas fa-cart-arrow-down "></i> Hall Order</a>
+                  </li> 
+                  <li class="nav-item">
+                    <a href="../company/hallBranches/orderInfo/orderItem.php?' . $Query . '" class="nav-link"><i class="far fa-money-bill-alt"></i> Manage Hall Extra Items</a>
+                  </li>
+';
+                } else {
+                    //catering order editor                  //2 make catering order to user displaye
+                    $display.=' 
+                      <li class="nav-item">
+                    <a href="orderEdit.php?' . $Query . '" class="nav-link"><i class="fas fa-cart-arrow-down "></i> Catering  Order</a>
+                  </li>';
+                }
+
+
+                if (($orderdetail[$i][6]!="")&&($orderdetail[$i][8]!=""))
+                {//catering status
+                    $display.=' 
+                     <li class="nav-item ">
+                        <a href="../dish/AllSelectedDishes.php?' . $Query . '" class="nav-link"><i class="fas fa-concierge-bell "></i> Dishes Booking</a>
+                      </li>';
+                }
+
+            }
+
+      
+      
+ $display.=' 
+    <li class="nav-item ">
+        <a href="../payment/getPayment.php?' . $Query . '" class="nav-link"><i class="far fa-money-bill-alt"></i> Get Payment</a>
+      </li>
+      <li class="nav-item">
+         <a href="../payment/paymentHistory.php?' . $Query . '" class="nav-link"><i class="fas fa-history "></i> Payment History</a>
+      </li>
+      <li class="nav-item">
+        <a href="HistoryOrder.php?' . $Query . '" class="nav-link"><i class="fas fa-eraser"></i> Order History</a>
+      </li>
+      <li class="nav-item">
+        <a href="../payment/paymentDisplaySend.php?' . $Query . '" class="nav-link"><i class="fas fa-share-alt "></i> Transfer payment (user to user)</a>
+      </li>
+      <li class="nav-item">
+        <a href="../payment/transferPaymentReceive.php?' . $Query . '" class="nav-link"><i class="fas fa-clipboard-check "></i> Payment Received Request (user to user)</a>
+      </li>
+         <li class="nav-item">
+        <a href="../order/PreviewOrder.php?' . $Query . '" class="nav-link">  <i class="navbar-toggler-icon"></i> Order Management</a>
+      </li>
+ 
+ 
+ 
+   </ul>
+  </div>
+</nav>
+       
+        <img style="height:60px;weight:60px" src="';
+
 
                 if(file_exists('../images/customerimage/'.$orderdetail[$i][2])&&($orderdetail[$i][2]!=""))
                 {
@@ -437,13 +653,12 @@ od.destination_date ASC,od.destination_time ASC';
 
 
 
-                $display.='"class="col-3 p-0">
-        <div class="col-9">
-            <label class="col-12">Order id:<i class="text-secondary">'.$orderdetail[$i][0].'</i> </label>
-            <label class="col-12">Name: <i class="text-secondary">'.$orderdetail[$i][1].'</i></label>
-            <label class="col-12">Date: <i class="text-secondary">'.$orderdetail[$i][3].'</i></label>
-        </div>
-        <label class="col-12">Time: <i class="text-secondary">';
+                $display.='"class="col-sm-12   col-12 col-md-3 col-lg-3 p-0">
+        <label class="col-sm-12   col-12 col-md-3 col-lg-3">Order id:<i class="text-secondary">'.$orderdetail[$i][0].'</i> </label>
+            <label class="col-sm-12   col-12 col-md-3 col-lg-3">Name: <i class="text-secondary">'.$orderdetail[$i][1].'</i></label>
+            <label class="col-sm-12   col-12 col-md-3 col-lg-3">Date: <i class="text-secondary">'.$orderdetail[$i][3].'</i></label>
+      
+        <label class="col-sm-12   col-12 col-md-3 col-lg-3">Time: <i class="text-secondary">';
 
                 if(!empty($hallid))
                 {
@@ -470,7 +685,7 @@ od.destination_date ASC,od.destination_time ASC';
                 {
                     //if order is hall
 
-                    $display .= '<label class="col-12">Per Head:<i class="text-secondary">';
+                    $display .= '<label class="col-sm-12   col-12 col-md-3 col-lg-3">Per Head:<i class="text-secondary">';
                     if ($orderdetail[$i][9] != "")
                     {
                         //hall is booked wth food+seaating
@@ -489,15 +704,16 @@ od.destination_date ASC,od.destination_time ASC';
                 {
                     //catering status
                     $display.='
-        <label class="col-12">Catering Status:<i class="text-secondary">'.$orderdetail[$i][6].'</i> </label>';
+        <label class="col-sm-12   col-12 col-md-3 col-lg-3">Catering Status:<i class="text-secondary">'.$orderdetail[$i][6].'</i> </label>';
                 }
                 if(($orderdetail[$i][5]!="")&&($orderdetail[$i][7]!=""))
                 {
                     //hall status
                     $display.='
-        <label class="col-12">Hall Status:<i class="text-secondary">'.$orderdetail[$i][5].'</i> </label>';
+        <label class="col-sm-12   col-12 col-md-3 col-lg-3">Hall Status:<i class="text-secondary">'.$orderdetail[$i][5].'</i> </label>';
                 }
-                $display.='</a>';
+                $display.='
+</div>';
 
             }
             echo $display;
@@ -533,10 +749,6 @@ od.destination_date ASC,od.destination_time ASC';
 
 
 
-<?php
-include_once ("../webdesign/footer/footer.php");
-?>
-
 <script>
 
     $(document).ready(function ()
@@ -571,8 +783,10 @@ include_once ("../webdesign/footer/footer.php");
 
 
 </script>
-</body>
-</html>
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
 ?>

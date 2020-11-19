@@ -62,9 +62,16 @@ EVENT APNA  provides Free Software ....... So Register NOW
 <?php
 include('../companyDashboard/includes/endHeader.php');
 include('../companyDashboard/includes/navbar.php');
-include_once ("../webdesign/header/header.php");
 ?>
+    <div class="container-fluid">
 
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Booking New Order</h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>
 <div class="container">
 
     <div class="row" >
@@ -97,7 +104,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 <div class="container">
 
-    <form class="row" >
+    <form class="row"  id="CateringOrderCreate">
 
         <input  hidden name="pid" value="<?php echo $pid;?>">
         <input  hidden name="token" value="<?php echo $token;?>">
@@ -189,9 +196,6 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<?php
-include_once ("../webdesign/footer/footer.php");
-?>
 <script>
 
 
@@ -231,7 +235,7 @@ include_once ("../webdesign/footer/footer.php");
            if(state)
                return false;
 
-           var formdata=new FormData($('form')[0]);
+           var formdata=new FormData($('#CateringOrderCreate')[0]);
            formdata.append('function',"add");
            $.ajax({
               url:"orderServer.php",
