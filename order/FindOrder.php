@@ -106,7 +106,7 @@ else
     $hallorcater .= "AND (od.status_catering='" . $order_info . "')";
 }
 
-include('../companyDashboar1/includes/startHeader.php'); //html
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
 
 
@@ -146,8 +146,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 <?php
-include('../companyDashboar1/includes/endHeader.php');
-include('../companyDashboar1/includes/navbar.php');
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
 ?>
     <div class="container-fluid">
         <!-- Page Heading -->
@@ -784,8 +784,8 @@ od.destination_date ASC,od.destination_time ASC';
 
 </script>
 <?php
-include('../companyDashboar1/includes/scripts.php');
-include('../companyDashboar1/includes/footer.php');
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
 ?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");

@@ -23,7 +23,7 @@ $processInformation=queryReceive($sql);
 $cateringid=$processInformation[0][2];
 $customer=$processInformation[0][7];
 
-include('../companyDashboar1/includes/startHeader.php'); //html
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
 
 
@@ -60,8 +60,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 <?php
-include('../companyDashboar1/includes/endHeader.php');
-include('../companyDashboar1/includes/navbar.php');
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
 ?>
     <div class="container-fluid">
 
@@ -280,8 +280,8 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 </script>
 <?php
-include('../companyDashboar1/includes/scripts.php');
-include('../companyDashboar1/includes/footer.php');
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
 ?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");

@@ -44,7 +44,7 @@ WHERE
 GROUP by (dt.id)';
 $dishTypeDetail=queryReceive($sql);
 
-include('../companyDashboar1/includes/startHeader.php'); //html
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
 
     <?php
@@ -81,8 +81,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <?php
-include('../companyDashboar1/includes/endHeader.php');
-include('../companyDashboar1/includes/navbar.php');
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
 ?>
     <div class="container-fluid">
 
@@ -575,8 +575,8 @@ echo $DisplayModelOfDishes;
 
 </script>
 <?php
-include('../companyDashboar1/includes/scripts.php');
-include('../companyDashboar1/includes/footer.php');
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
 ?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");

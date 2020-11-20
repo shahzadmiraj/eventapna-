@@ -47,7 +47,7 @@ $userid=$_COOKIE['userid'];
 $companyid=$userdetail[0][0];
 
 
-include('../companyDashboar1/includes/startHeader.php'); //html
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
 <?php
 include('../webdesign/header/InsertHeaderTag.php');
@@ -81,8 +81,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
 <?php
-include('../companyDashboar1/includes/endHeader.php');
-include('../companyDashboar1/includes/navbar.php');
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
 ?>
 
 <?php
@@ -569,8 +569,8 @@ p.id='.$customerId.'';
  });
 </script>
 <?php
-include('../companyDashboar1/includes/scripts.php');
-include('../companyDashboar1/includes/footer.php');
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
 ?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
