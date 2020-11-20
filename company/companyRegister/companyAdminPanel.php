@@ -10,22 +10,6 @@ include  ("../../connection/connect.php");
 include  ("../../access/userAccess.php");
 RedirectOtherwiseOnlyAccessUsersWho("Owner,Employee,Viewer","../../index.php");
 
-$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
-$userdetail=queryReceive($sql);
-$companyid=$userdetail[0][0];
-
-$sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
-$companydetail=queryReceive($sql);
-
-
-$sql='SELECT `id`, `name`,`image`,`token` FROM `hall` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
-$halls=queryReceive($sql);
-
-$sql='SELECT `id`, `name`,`image`,`token` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
-$caterings=queryReceive($sql);
-
-$sql='SELECT `id`, `username`,`image`, `jobTitle`,`token` FROM `user` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
-$users=queryReceive($sql);
 
 ?>
 <!DOCTYPE html>

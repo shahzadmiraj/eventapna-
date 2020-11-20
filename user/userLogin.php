@@ -129,7 +129,6 @@ include_once ("../webdesign/header/header.php");
         <div class="col-md-8   " style="background-color: rgba(219,188,219,0.58) !important;">
             <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-out-alt"></i> Sign In</h1>
             <h4 id="error">
-                <h6 ><span class="alert-danger">Note:<br>This Website will be launched on 1st Oct 2020. SO, Enjoy Free Demo</span><br> Demo<br>Username:demo123<br>Password:demo123 <br></h6>
 
                 <?php  echo $display; ?> </h4>
             <form class="col-12" id="formLogin">

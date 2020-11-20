@@ -1,11 +1,9 @@
 <?php
-session_start();
 include('includes/header.php'); 
 ?>
 
 
 
-sdssdfdfdfdsf
 <div class="container">
 
 <!-- Outer Row -->

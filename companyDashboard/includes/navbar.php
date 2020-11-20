@@ -1,4 +1,32 @@
-   <!-- Sidebar -->
+<?php
+/**
+ * Created by PhpStorm.
+ * User: shahzadmiraj
+ * Date: 2019-09-01
+ * Time: 21:31
+ */
+
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
+$companyid=$userdetail[0][0];
+
+$sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
+$companydetail=queryReceive($sql);
+
+
+$sql='SELECT `id`, `name`,`image`,`token` FROM `hall` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
+$halls=queryReceive($sql);
+
+$sql='SELECT `id`, `name`,`image`,`token` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
+$caterings=queryReceive($sql);
+
+$sql='SELECT `id`, `username`,`image`, `jobTitle`,`token` FROM `user` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
+$users=queryReceive($sql);
+
+?>
+
+
+<!-- Sidebar -->
    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 <!-- Sidebar - Brand -->
@@ -6,7 +34,7 @@
   <div class="sidebar-brand-icon rotate-n-15">
     <i class="fas fa-laugh-wink"></i>
   </div>
-  <div class="sidebar-brand-text mx-3">FUNDA <sup>WEB IT</sup></div>
+  <div class="sidebar-brand-text mx-3">EVENT <sup>APNA</sup></div>
 </a>
 
 <!-- Divider -->
@@ -22,16 +50,148 @@
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-<!-- Heading -->
+<!-- Heading company-->
 <div class="sidebar-heading">
-  Interface
+  Company
 </div>
 
+
+       <li class="nav-item">
+           <a class="nav-link" href="register.php">
+               <i class="fas fa-fw fa-chart-area"></i>
+               <span>Website</span></a>
+       </li>
+       
+       <li class="nav-item">
+           <a class="nav-link" href="register.php">
+               <i class="fas fa-fw fa-chart-area"></i>
+               <span>+ Add User</span></a>
+       </li>
+
+
+
+       <!-- Divider -->
+       <hr class="sidebar-divider">
+       <!-- Heading company-->
+       <div class="sidebar-heading">
+           Hall
+       </div>
+
 <!-- Nav Item - Pages Collapse Menu -->
+
+       <?php
+
+
+       for($i=0;$i<count($halls);$i++)
+       {
+
+           $img= "";
+           
+
+
+           $token=$halls[$i][3];
+           $hallEncorded=$halls[$i][0];
+           $Query='h='.$hallEncorded.'&token='.$token;
+           ?>
+       
+       
+       <?php
+       $display=' <li class="nav-item">
+           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwoHallNav'.$i.'" aria-expanded="true" aria-controls="collapseTwo">
+               <i class="fas fa-fw fa-cog"></i>
+               <span>'.$halls[$i][1].'</span>
+           </a>
+           <div id="collapseTwoHallNav'.$i.'" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                 <div class="bg-white py-2 collapse-inner rounded">
+                 <h6 class="collapse-header">Hall Branch</h6>
+           ';
+
+       //start link
+
+           if (onlyAccessUsersWho("Owner,Employee")) 
+           {
+               $display.= '      <a href="../../customer/CustomerCreate.php?' . $Query . '" class="collapse-item"><i class="fas fa-cart-plus"></i> Add Order</a>';
+           }
+
+           $display.='               <a href="../../order/FindOrder.php?order_status=Today_Orders&' . $Query . '" class="collapse-item"><i class="fas fa-book-reader "></i> Next 24 Process Orders</a>
+                       <a href="../../order/FindOrder.php?order_status=Running&' . $Query . '" class="collapse-item"><i class="fas fa-cart-arrow-down "></i> Process Order</a>
+                       <a href="../../order/FindOrder.php?order_status=Delivered&' . $Query . '" class="collapse-item"><i class="fas fa-truck "></i> Delivered Orders</a>
+                       <a href="../../order/FindOrder.php?order_status=Clear&'.$Query . '" class="collapse-item"><i class="far fa-thumbs-up "></i> Clear Orders</a>
+                       <a href="../../order/FindOrder.php?order_status=Cancel&'.$Query.'" class="collapse-item"><i class="far fa-trash-alt "></i> Cancel Orders</a>
+                       <a  href="../hallBranches/userDisplay/OrderCalender/OrderCalender.php?'. $Query . '" class="collapse-item"><i class="far fa-calendar-alt "></i> Calender Orders</a>
+                       <a  href="../ClientSide/Hall/HallClient.php?'.$Query.'" class="collapse-item"><i class="fab fa-chrome "></i> Hall Website</a>';
+           if (onlyAccessUsersWho("Owner"))
+           {
+               $display.='  <a href="../hallBranches/hallInfo.php?' . $Query . '" class="collapse-item"><i class="fas fa-cogs "></i> Setting</a>';
+           }
+           $display.='<a href="../hallBranches/galleryhall.php?' . $Query . '" class="collapse-item"><i class="fas fa-images "></i> Gallery</a>';
+
+
+           //end link
+       ?>
+           
+
+
+           <?php
+       }
+
+       $display.='   </div>
+  </div>
+</li>';
+
+
+       echo $display;
+
+
+
+
+       ?>
+
+
+
+       <?php
+       //access owner for hall
+       if(onlyAccessUsersWho("Owner"))
+       {
+       ?>
+
+       <li class="nav-item">
+           <a class="nav-link" href="../hallBranches/hallRegister.php">
+               <i class="fas fa-place-of-worship"></i>
+               <span>+ Add Hall</span></a>
+       </li>
+
+
+
+       <li class="nav-item">
+           <a class="nav-link       <?php if(count($halls)==0)
+           {
+               echo 'disabled';
+           } ?>  " href="../hallBranches/HallprizeLists.php">
+               <i class="fas fa-clipboard-list"></i>
+               <span>Manage Packages </span></a>
+       </li>
+
+
+
+       <li class="nav-item">
+           <a class="nav-link   <?php if(count($halls)==0)
+           {
+               echo 'disabled';
+           } ?> " href="../hallBranches/extraItems/Hallitem.php">
+               <i class="fas fa-guitar"></i>
+               <span>Extra Items Manage</span></a>
+       </li>
+
+<?php
+       }
+?>
+
+
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
     <i class="fas fa-fw fa-cog"></i>
-    <span>Components</span>
+    <span>Hall Branch</span>
   </a>
   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
