@@ -105,7 +105,7 @@ function ExtraItemShow($sql,$IsAlreadyBooked,$ShowRow)
     $display.='</div>';
     return $display;
 }
-include('../../../companyDashboard/includes/startHeader.php'); //html
+include('../../../companyDashboar1/includes/startHeader.php'); //html
 ?>
 
     <?php
@@ -142,8 +142,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 <?php
-include('../../../companyDashboard/includes/endHeader.php');
-include('../../../companyDashboard/includes/navbar.php');
+include('../../../companyDashboar1/includes/endHeader.php');
+include('../../../companyDashboar1/includes/navbar.php');
 
 ?>
     <div class="container-fluid">
@@ -538,7 +538,7 @@ GROUP by (EIT.id)';
 
 
 <?php
-include('../../../companyDashboard/includes/scripts.php');
-include('../../../companyDashboard/includes/footer.php');
+include('../../../companyDashboar1/includes/scripts.php');
+include('../../../companyDashboar1/includes/footer.php');
 include_once ("../../../webdesign/footer/EndOfPage.php");
 ?>

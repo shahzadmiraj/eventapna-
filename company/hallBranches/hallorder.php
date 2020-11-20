@@ -24,7 +24,7 @@ $userid=$_COOKIE['userid'];
 
 $sql='SELECT c.id, c.name,c.image FROM catering as c WHERE c.company_id=(SELECT h.company_id from hall as h where h.id='.$hallid.') AND (ISNULL(c.expire))';
 $cateringids=queryReceive($sql);
-include('../../companyDashboard/includes/startHeader.php'); //html
+include('../../companyDashboar1/includes/startHeader.php'); //html
 ?>
         <?php
         include('../../webdesign/header/InsertHeaderTag.php');
@@ -62,8 +62,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
     <?php
-include('../../companyDashboard/includes/endHeader.php');
-include('../../companyDashboard/includes/navbar.php');
+include('../../companyDashboar1/includes/endHeader.php');
+include('../../companyDashboar1/includes/navbar.php');
 
     ?>
     <div class="container-fluid">
@@ -583,7 +583,7 @@ include('../../companyDashboard/includes/navbar.php');
     </script>
 
 <?php
-include('../../companyDashboard/includes/scripts.php');
-include('../../companyDashboard/includes/footer.php');
+include('../../companyDashboar1/includes/scripts.php');
+include('../../companyDashboar1/includes/footer.php');
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>

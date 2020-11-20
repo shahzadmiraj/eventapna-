@@ -41,7 +41,7 @@ if(isset($_GET['c']))
 $userid=$_COOKIE['userid'];
 
 
-include('../companyDashboard/includes/startHeader.php'); //html
+include('../companyDashboar1/includes/startHeader.php'); //html
 ?>
 
     <?php
@@ -104,8 +104,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     </style>
 
 <?php
-include('../companyDashboard/includes/endHeader.php');
-include('../companyDashboard/includes/navbar.php');
+include('../companyDashboar1/includes/endHeader.php');
+include('../companyDashboar1/includes/navbar.php');
 ?>
 
     <div class="container-fluid">
@@ -480,8 +480,8 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 </script>
 
 <?php
-include('../companyDashboard/includes/scripts.php');
-include('../companyDashboard/includes/footer.php');
+include('../companyDashboar1/includes/scripts.php');
+include('../companyDashboar1/includes/footer.php');
 ?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");

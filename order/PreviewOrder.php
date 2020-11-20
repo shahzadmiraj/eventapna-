@@ -46,7 +46,7 @@ if($processInformation[0][4]==0)
     $sql='UPDATE `BookingProcess` SET `IsProcessComplete`=1 WHERE id='.$processInformation[0][0].'';
     querySend($sql);
 }
-include('../companyDashboard/includes/startHeader.php'); //html
+include('../companyDashboar1/includes/startHeader.php'); //html
 ?>
         <?php
         include('../webdesign/header/InsertHeaderTag.php');
@@ -81,8 +81,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
 <?php
-include('../companyDashboard/includes/endHeader.php');
-include('../companyDashboard/includes/navbar.php');
+include('../companyDashboar1/includes/endHeader.php');
+include('../companyDashboar1/includes/navbar.php');
 ?>
 
 
@@ -168,8 +168,8 @@ include('../companyDashboard/includes/navbar.php');
 
     </script>
 <?php
-include('../companyDashboard/includes/scripts.php');
-include('../companyDashboard/includes/footer.php');
+include('../companyDashboar1/includes/scripts.php');
+include('../companyDashboar1/includes/footer.php');
 ?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
