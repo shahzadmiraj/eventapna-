@@ -7,21 +7,21 @@
  */
 
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
-$userdetail=queryReceive($sql);
-$companyid=$userdetail[0][0];
+$userdetailNav=queryReceive($sql);
+$companyidNav=$userdetailNav[0][0];
 
-$sql='SELECT  c.name FROM company as c WHERE c.id='.$companyid.'';
-$companydetail=queryReceive($sql);
+$sql='SELECT  c.name FROM company as c WHERE c.id='.$companyidNav.'';
+$companydetailNav=queryReceive($sql);
 
 
-$sql='SELECT `id`, `name`,`image`,`token` FROM `hall` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
-$halls=queryReceive($sql);
+$sql='SELECT `id`, `name`,`image`,`token` FROM `hall` WHERE ISNULL(expire) AND (company_id='.$companyidNav.')';
+$hallsNav=queryReceive($sql);
 
-$sql='SELECT `id`, `name`,`image`,`token` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyid.')';
-$caterings=queryReceive($sql);
+$sql='SELECT `id`, `name`,`image`,`token` FROM `catering` WHERE ISNULL(expire) AND (company_id='.$companyidNav.')';
+$cateringsNav=queryReceive($sql);
 
-$sql='SELECT `id`, `username`,`image`, `jobTitle`,`token` FROM `user` WHERE (company_id='.$companyid.')AND(ISNULL(expire))';
-$users=queryReceive($sql);
+$sql='SELECT `id`, `username`,`image`, `jobTitle`,`token` FROM `user` WHERE (company_id='.$companyidNav.')AND(ISNULL(expire))';
+$usersNav=queryReceive($sql);
 
 ?>
 
@@ -30,7 +30,7 @@ $users=queryReceive($sql);
    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 <!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo $Root; ?>index.php">
   <div class="sidebar-brand-icon rotate-n-15">
     <i class="fas fa-laugh-wink"></i>
   </div>
@@ -41,8 +41,9 @@ $users=queryReceive($sql);
 <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
+
 <li class="nav-item active">
-  <a class="nav-link" href="index.php">
+  <a class="nav-link" href="<?php echo $Root; ?>index.php">
     <i class="fas fa-fw fa-tachometer-alt"></i>
     <span>Dashboard</span></a>
 </li>
@@ -57,13 +58,13 @@ $users=queryReceive($sql);
 
 
        <li class="nav-item">
-           <a class="nav-link" href="register.php">
+           <a class="nav-link" href="<?php echo $Root; ?>company/ClientSide/Company/ClientCompany.php?c=<?php echo $companyidNav;?>">
                <i class="fas fa-fw fa-chart-area"></i>
                <span>Website</span></a>
        </li>
        
        <li class="nav-item">
-           <a class="nav-link" href="register.php">
+           <a class="nav-link" href="<?php echo $Root; ?>user/RegisterCompanyUser.php">
                <i class="fas fa-fw fa-chart-area"></i>
                <span>+ Add User</span></a>
        </li>
@@ -81,27 +82,26 @@ $users=queryReceive($sql);
 
        <?php
 
-
-       for($i=0;$i<count($halls);$i++)
+       $displayNav='';
+       for($iNav=0;$iNav<count($hallsNav);$iNav++)
        {
-
-           $img= "";
+           
            
 
 
-           $token=$halls[$i][3];
-           $hallEncorded=$halls[$i][0];
-           $Query='h='.$hallEncorded.'&token='.$token;
+           $tokenNav=$hallsNav[$iNav][3];
+           $hallEncordedNav=$hallsNav[$iNav][0];
+           $QueryNav='h='.$hallEncordedNav.'&token='.$tokenNav;
            ?>
        
        
        <?php
-       $display=' <li class="nav-item">
-           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwoHallNav'.$i.'" aria-expanded="true" aria-controls="collapseTwo">
+       $displayNav.=' <li class="nav-item">
+           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwoHallNav'.$iNav.'" aria-expanded="true" aria-controls="collapseTwo">
                <i class="fas fa-fw fa-cog"></i>
-               <span>'.$halls[$i][1].'</span>
+               <span>'.$hallsNav[$iNav][1].'</span>
            </a>
-           <div id="collapseTwoHallNav'.$i.'" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+           <div id="collapseTwoHallNav'.$iNav.'" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                  <div class="bg-white py-2 collapse-inner rounded">
                  <h6 class="collapse-header">Hall Branch</h6>
            ';
@@ -110,37 +110,38 @@ $users=queryReceive($sql);
 
            if (onlyAccessUsersWho("Owner,Employee")) 
            {
-               $display.= '      <a href="../../customer/CustomerCreate.php?' . $Query . '" class="collapse-item"><i class="fas fa-cart-plus"></i> Add Order</a>';
+               $displayNav.= '      <a href="'.$Root.'customer/CustomerCreate.php?' . $QueryNav . '" class="collapse-item"><i class="fas fa-cart-plus"></i> Add Order</a>';
            }
 
-           $display.='               <a href="../../order/FindOrder.php?order_status=Today_Orders&' . $Query . '" class="collapse-item"><i class="fas fa-book-reader "></i> Next 24 Process Orders</a>
-                       <a href="../../order/FindOrder.php?order_status=Running&' . $Query . '" class="collapse-item"><i class="fas fa-cart-arrow-down "></i> Process Order</a>
-                       <a href="../../order/FindOrder.php?order_status=Delivered&' . $Query . '" class="collapse-item"><i class="fas fa-truck "></i> Delivered Orders</a>
-                       <a href="../../order/FindOrder.php?order_status=Clear&'.$Query . '" class="collapse-item"><i class="far fa-thumbs-up "></i> Clear Orders</a>
-                       <a href="../../order/FindOrder.php?order_status=Cancel&'.$Query.'" class="collapse-item"><i class="far fa-trash-alt "></i> Cancel Orders</a>
-                       <a  href="../hallBranches/userDisplay/OrderCalender/OrderCalender.php?'. $Query . '" class="collapse-item"><i class="far fa-calendar-alt "></i> Calender Orders</a>
-                       <a  href="../ClientSide/Hall/HallClient.php?'.$Query.'" class="collapse-item"><i class="fab fa-chrome "></i> Hall Website</a>';
+           $displayNav.='               <a href="'.$Root.'order/FindOrder.php?order_status=Today_Orders&' . $QueryNav . '" class="collapse-item"><i class="fas fa-book-reader "></i> Next 24 Process Orders</a>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Running&' . $QueryNav . '" class="collapse-item"><i class="fas fa-cart-arrow-down "></i> Process Order</a>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Delivered&' . $QueryNav . '" class="collapse-item"><i class="fas fa-truck "></i> Delivered Orders</a>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Clear&'.$QueryNav . '" class="collapse-item"><i class="far fa-thumbs-up "></i> Clear Orders</a>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Cancel&'.$QueryNav.'" class="collapse-item"><i class="far fa-trash-alt "></i> Cancel Orders</a>
+                       <a  href="'.$Root.'company/hallBranches/userDisplay/OrderCalender/OrderCalender.php?'. $QueryNav . '" class="collapse-item"><i class="far fa-calendar-alt "></i> Calender Orders</a>
+                       <a  href="'.$Root.'company/ClientSide/Hall/HallClient.php?'.$QueryNav.'" class="collapse-item"><i class="fab fa-chrome "></i> Hall Website</a>';
            if (onlyAccessUsersWho("Owner"))
            {
-               $display.='  <a href="../hallBranches/hallInfo.php?' . $Query . '" class="collapse-item"><i class="fas fa-cogs "></i> Setting</a>';
+               $displayNav.='  <a href="'.$Root.'company/hallBranches/hallInfo.php?' . $QueryNav . '" class="collapse-item"><i class="fas fa-cogs "></i> Setting</a>';
            }
-           $display.='<a href="../hallBranches/galleryhall.php?' . $Query . '" class="collapse-item"><i class="fas fa-images "></i> Gallery</a>';
+           $displayNav.='<a href="'.$Root.'company/hallBranches/galleryhall.php?' . $QueryNav . '" class="collapse-item"><i class="fas fa-images "></i> Gallery</a>';
 
 
            //end link
-       ?>
+
+           $displayNav.='   </div>
+  </div>
+</li>';
+
+           ?>
            
 
 
            <?php
        }
 
-       $display.='   </div>
-  </div>
-</li>';
 
-
-       echo $display;
+       echo $displayNav;
 
 
 
@@ -156,7 +157,7 @@ $users=queryReceive($sql);
        ?>
 
        <li class="nav-item">
-           <a class="nav-link" href="../hallBranches/hallRegister.php">
+           <a class="nav-link" href="<?php echo $Root; ?>company/hallBranches/hallRegister.php">
                <i class="fas fa-place-of-worship"></i>
                <span>+ Add Hall</span></a>
        </li>
@@ -164,10 +165,10 @@ $users=queryReceive($sql);
 
 
        <li class="nav-item">
-           <a class="nav-link       <?php if(count($halls)==0)
+           <a class="nav-link       <?php if(count($hallsNav)==0)
            {
                echo 'disabled';
-           } ?>  " href="../hallBranches/HallprizeLists.php">
+           } ?>  " href="<?php echo $Root; ?>company/hallBranches/HallprizeLists.php">
                <i class="fas fa-clipboard-list"></i>
                <span>Manage Packages </span></a>
        </li>
@@ -175,10 +176,10 @@ $users=queryReceive($sql);
 
 
        <li class="nav-item">
-           <a class="nav-link   <?php if(count($halls)==0)
+           <a class="nav-link   <?php if(count($hallsNav)==0)
            {
                echo 'disabled';
-           } ?> " href="../hallBranches/extraItems/Hallitem.php">
+           } ?> " href="<?php echo $Root; ?>company/hallBranches/extraItems/Hallitem.php">
                <i class="fas fa-guitar"></i>
                <span>Extra Items Manage</span></a>
        </li>
@@ -230,13 +231,135 @@ $users=queryReceive($sql);
   </div>
 </li>
 
-<!-- Divider -->
+<!-- Divider  Catering -->
 <hr class="sidebar-divider">
 
-<!-- Heading -->
+<!-- Heading  Catering -->
 <div class="sidebar-heading">
-  Addons
+  Catering
 </div>
+
+
+
+       <?php
+
+       $displayNav='';
+       for($iNav=0;$iNav<count($cateringsNav);$iNav++)
+       {
+
+
+
+           $tokenNav=$cateringsNav[$iNav][3];
+           $iNavdNav=$cateringsNav[$iNav][0];
+           //  $CateringQuery='id='.$iNavdNav.'&token='.$tokenNav.'&c='.$iNavdNav;
+           $QueryNav='c='.$iNavdNav.'&token='.$tokenNav;
+           ?>
+
+
+           <?php
+           $displayNav.=' <li class="nav-item">
+           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwocateringNav'.$iNav.'" aria-expanded="true" aria-controls="collapseTwo">
+               <i class="fas fa-fw fa-cog"></i>
+               <span>'.$cateringsNav[$iNav][1].'</span>
+           </a>
+           <div id="collapseTwocateringNav'.$iNav.'" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                 <div class="bg-white py-2 collapse-inner rounded">
+                 <h6 class="collapse-header">Catering Branch</h6>
+           ';
+
+           //start link
+
+           if (onlyAccessUsersWho("Owner,Employee"))
+           {
+               $displayNav.= '      <a href="'.$Root.'customer/CustomerCreate.php?' . $QueryNav . '" class="collapse-item"><i class="fas fa-cart-plus"></i> Add Order</a>';
+           }
+
+           $displayNav.='               <a href="'.$Root.'order/FindOrder.php?order_status=Today_Orders&' . $QueryNav . '" class="collapse-item"><i class="fas fa-book-reader "></i> Next 24 Process Orders</a>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Running&' . $QueryNav . '" class="collapse-item"><i class="fas fa-cart-arrow-down "></i> Process Order</a>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Delivered&' . $QueryNav . '" class="collapse-item"><i class="fas fa-truck "></i> Delivered Orders</a>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Clear&'.$QueryNav . '" class="collapse-item"><i class="far fa-thumbs-up "></i> Clear Orders</a>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Cancel&'.$QueryNav.'" class="collapse-item"><i class="far fa-trash-alt "></i> Cancel Orders</a>
+                       <a  href="'.$Root.'company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.?'. $QueryNav . '" class="collapse-item"><i class="far fa-calendar-alt "></i> Calender Orders</a>
+                       <a  href="'.$Root.'company/ClientSide/Catering/cateringClient.php?'.$QueryNav.'" class="collapse-item"><i class="fab fa-chrome "></i> Website</a>';
+           if (onlyAccessUsersWho("Owner"))
+           {
+               $displayNav.='  <a href="'.$Root.'company/cateringBranches/infoCatering.php?' . $QueryNav . '" class="collapse-item"><i class="fas fa-cogs "></i> Setting</a>';
+           }
+           $displayNav.='<a href="'.$Root.'company/cateringBranches/gallerycatering.php?' . $QueryNav . '" class="collapse-item"><i class="fas fa-images "></i> Gallery</a>';
+
+
+           //end link
+
+
+
+           $displayNav.='   </div>
+  </div>
+</li>';
+           ?>
+
+
+
+           <?php
+       }
+
+
+
+
+
+       echo $displayNav;
+
+
+
+
+       ?>
+
+
+
+
+
+
+
+
+       <?php
+       //access owner for hall
+       if(onlyAccessUsersWho("Owner"))
+       {
+           ?>
+
+           <li class="nav-item">
+               <a class="nav-link" href="<?php echo $Root; ?>company/cateringBranches/catering.php">
+                   <i class="fas fa-utensils"></i>
+                   <span>+ Add Catering</span></a>
+           </li>
+
+
+
+           <li class="nav-item">
+               <a class="nav-link       <?php if(count($cateringsNav)==0)
+               {
+                   echo 'disabled';
+               } ?>  " href="<?php echo $Root; ?>company/cateringBranches/dish/dishesInfo.php">
+                   <i class="fas fa-hamburger"></i>
+                   <span> Dishes Manage </span></a>
+           </li>
+
+
+
+
+
+
+
+           <?php
+       }
+
+
+
+
+       ?>
+
+
+
+
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
