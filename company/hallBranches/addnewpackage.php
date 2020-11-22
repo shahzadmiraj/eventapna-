@@ -10,10 +10,12 @@ $companyid=$userdetail[0][0];
 $userid=$_COOKIE['userid'];
 $sql='SELECT `name` FROM `company` WHERE id='.$companyid.' AND ISNULL(expire)';
 $CompanyInfo=queryReceive($sql);
+
+
+include('../../companyDashboard/includes/startHeader.php'); //html
 ?>
 
-<!DOCTYPE html>
-<head>
+
 
     <?php
     include('../../webdesign/header/InsertHeaderTag.php');
@@ -26,33 +28,38 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Add Hall Package page,Insert Package,New Package  Marquee,New Add Package  Marquee,New Package  Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
-    <script src="../../jquery-3.3.1.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="<?php echo $Root;?>bootstrap.min.js"></script>
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="../../calender/customDatepicker/styles.css" rel="stylesheet">
     <script src="../../calender/customDatepicker/multidatespicker.js" type="text/javascript"></script>
-    <script type="text/javascript" src="../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <script type="text/javascript" src="../../webdesign/JSfile/JSFunction.js"></script>
-
-    <style>
 
 
-    </style>
-</head>
-<body>
+
 <?php
-include_once ("../../webdesign/header/header.php");
+include('../../companyDashboard/includes/endHeader.php');
+include('../../companyDashboard/includes/navbar.php');
 
 ?>
+
 <?php
 $HeadingImage="";
 $HeadingName=$CompanyInfo[0][0];
@@ -70,7 +77,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-<div class="container card">
+<div class="container">
 
 
     <div class="form-group row ">
@@ -158,8 +165,8 @@ include_once ("../ClientSide/Company/Box.php");
     ?>
 
 
-    <div id="shownonperivious">
-        <div class="form-group row">
+    <div id="shownonperivious" class="row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <lable for="packagename" class="col-form-label">Packages Name</lable>
 
 
@@ -172,7 +179,7 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <lable for="rate" class="col-form-label">Packages Rate per head</lable>
 
             <div class="input-group mb-3 input-group-lg">
@@ -184,7 +191,7 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <lable for="PackagesType" class="col-form-label">Packages per head With:</lable>
 
             <div class="input-group mb-3 input-group-lg">
@@ -198,7 +205,7 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <lable for="describe" class="col-form-label">Package Timing:</lable>
 
             <div class="input-group mb-3 input-group-lg">
@@ -214,7 +221,7 @@ include_once ("../ClientSide/Company/Box.php");
 
             </div>
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <lable for="rate" class="col-form-label">How many minimum guest will book this packages</lable>
 
             <div class="input-group mb-3 input-group-lg">
@@ -225,7 +232,7 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
-        <div class="form-group card">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <input hidden name="companyid" value="<?php echo $companyid;?>">
 
             <lable  class="col-form-label">Select hall for package active</lable>
@@ -247,7 +254,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <lable for="describe" class="col-form-label">Packages Description</lable>
 
             <div class="input-group mb-3 input-group-lg">
@@ -477,9 +484,7 @@ include_once ("../ClientSide/Company/Box.php");
 </div>
 
 
-<?php
-include_once ("../../webdesign/footer/footer.php");
-?>
+
 
 <script type="text/javascript">
 $(document).ready(function ()
@@ -834,8 +839,10 @@ $(document).ready(function () {
 
 
 </script>
-</body>
-</html>
+<?php
+include('../../companyDashboard/includes/scripts.php');
+include('../../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>
