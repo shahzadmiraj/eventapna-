@@ -24,16 +24,20 @@ include('../../companyDashboard/includes/startHeader.php'); //html
     <meta name="description" content="Add Hall Package page,Add Hall Package Deal ,Add Detail packages Marquee,Add Detail Marquee Deal,insert Detail New Dera Packages only company user can used this
 Find the Best  Wedding Hall Deals! , Catering Deals! Check the prices,availability,compare hundreds of venues and book online Now.
 Do you want Management System of Hall OR Catering  for you company? Yes,This is the right place!
-EVENT APNA  provides Free Software ....... So Register NOW
-">
-    <meta name="keywords" content="Add Hall Package page,Insert Package,New Package  Marquee,New Add Package  Marquee,New Package  Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
+EVENT APNA  provides Free Software ....... So Register NOW">
 
+    <meta name="keywords" content="Add Hall Package page,Insert Package,New Package  Marquee,New Add Package  Marquee,New Package  Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
     <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
     <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="<?php echo $Root;?>bootstrap.min.js"></script>
+    <!--<script type="text/javascript" src="<?php /*echo $Root;*/?>bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
     <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+
+    <link href="../../calender/customDatepicker/styles.css" rel="stylesheet">
+    <script src="../../calender/customDatepicker/multidatespicker.js" type="text/javascript"></script>
+
+
     <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
 
     <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
@@ -49,9 +53,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
 
-    <link href="../../calender/customDatepicker/styles.css" rel="stylesheet">
-    <script src="../../calender/customDatepicker/multidatespicker.js" type="text/javascript"></script>
-
 
 
 <?php
@@ -60,18 +61,19 @@ include('../../companyDashboard/includes/navbar.php');
 
 ?>
 
-<?php
-$HeadingImage="";
-$HeadingName=$CompanyInfo[0][0];
-$Source='..';
-$pageName='Package Add ';
-include_once ("../ClientSide/Company/Box.php");
-?>
 
 
 
 
+    <div class="container-fluid">
 
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Add Package</h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>
 
 
 
@@ -145,7 +147,8 @@ include_once ("../ClientSide/Company/Box.php");
 
 
         </div>
-    </div>
+
+</div>
 
 
 <div class="container">
@@ -310,7 +313,7 @@ include_once ("../ClientSide/Company/Box.php");
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Add Item </h5>
@@ -319,12 +322,11 @@ include_once ("../ClientSide/Company/Box.php");
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-
-                        <div class="container">
+                    <form class="container row">
 
 
-                            <div class="form-group row">
+
+                            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                                 <lable for="describe" class="col-form-label">Items Name:</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
@@ -334,7 +336,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 </div>
                             </div>
 
-                            <div class="form-group row" id="DisplayNameOfItemType">
+                            <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="DisplayNameOfItemType">
                                 <lable for="describe" class="col-form-label">Items Type :</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
@@ -345,7 +347,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 </div>
                             </div>
 
-                            <div class="form-group row" id="NewItemTypeAdd">
+                            <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="NewItemTypeAdd">
                                 <lable for="describe" class="col-form-label">Other item type:New Row</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
@@ -357,7 +359,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-                            <div class="form-group row" id="IncludeItem">
+                            <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="IncludeItem">
                                 <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
@@ -370,7 +372,7 @@ include_once ("../ClientSide/Company/Box.php");
                                 </div>
                             </div>
 
-                            <div class="form-group row" id="ExtrachargeOfitem" style="display: none">
+                            <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="ExtrachargeOfitem" style="display: none">
                                 <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
                                 <div class="input-group mb-3 input-group-lg">
                                     <div class="input-group-prepend">
@@ -384,7 +386,6 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-                        </div>
 
 
 
@@ -409,7 +410,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
@@ -417,9 +418,9 @@ include_once ("../ClientSide/Company/Box.php");
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body row">
 
-                    <div class="form-group row">
+                    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                         <lable for="describe" class="col-form-label">Items Name:</lable>
                         <div class="input-group mb-3 input-group-lg">
                             <div class="input-group-prepend">
@@ -429,7 +430,7 @@ include_once ("../ClientSide/Company/Box.php");
                         </div>
                     </div>
 
-                    <div class="form-group row" id="NewItemTypeAdd">
+                    <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="NewItemTypeAdd">
                         <lable for="describe" class="col-form-label">Other item type:New Row</lable>
                         <div class="input-group mb-3 input-group-lg">
                             <div class="input-group-prepend">
@@ -441,7 +442,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-                    <div class="form-group row" id="IncludeItemExtra">
+                    <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="IncludeItemExtra">
                         <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
                         <div class="input-group mb-3 input-group-lg">
                             <div class="input-group-prepend">
@@ -454,7 +455,7 @@ include_once ("../ClientSide/Company/Box.php");
                         </div>
                     </div>
 
-                    <div class="form-group row" id="ExtrachargeOfitemExtra" style="display:none">
+                    <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="ExtrachargeOfitemExtra" style="display:none">
                         <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
                         <div class="input-group mb-3 input-group-lg">
                             <div class="input-group-prepend">
@@ -603,9 +604,10 @@ $(document).ready(function ()
     });
 
 
-    $("#AddItemInForm").click(function (e)
+    $(document).on('click','#AddItemInForm',function (e)
     {
         e.preventDefault();
+
         var NameOfItem=$("#NameOfItem").val();
         var TypeOfItem=$("#NameOfItemType").val();
         var ExtraItemType=$("#IncludeItemOption").val();
@@ -666,7 +668,9 @@ $(document).ready(function ()
         $("#itemChoice").val("");
         $("#ExtrachargeOfitem").val("");
         $("#ExtrachargeOfitemAmount").val("");
-        $('#exampleModal').modal('hide');
+        $('#exampleModal').modal('toggle');
+
+
     });
 
 
@@ -751,6 +755,7 @@ $(document).ready(function ()
        if (!confirm('Are you sure you want to Add Package in halls?'))
            return  false;
 
+
        var formdata=new FormData($('#submitpackage')[0]);
        formdata.append("option","CreatePackage");
        formdata.append("selectedDates",selectedDates);
@@ -782,19 +787,11 @@ $(document).ready(function ()
 
 
 
-
-
-
-
-
-
-$(document).ready(function () {
-
     $("#month").change(function () {
-            if(($.trim($("#year").val())!=""))
-            {
-                $("#calendarBody").show();
-            }
+        if(($.trim($("#year").val())!=""))
+        {
+            $("#calendarBody").show();
+        }
     });
 
     $("#year").change(function () {
@@ -832,17 +829,21 @@ $(document).ready(function () {
 
 
 
-});
+
+
 
 
 });
 
 
 </script>
+
 <?php
 include('../../companyDashboard/includes/scripts.php');
 include('../../companyDashboard/includes/footer.php');
 ?>
+
+
 <?php
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>

@@ -11,7 +11,6 @@ $companyid=$userdetail[0][0];
 $sql='SELECT `name` FROM `company` WHERE id='.$companyid.' AND ISNULL(expire)';
 $CompanyInfo=queryReceive($sql);
 
-
 include('../../companyDashboard/includes/startHeader.php'); //html
 ?>
 
@@ -66,13 +65,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-<?php
-$HeadingImage="";
-$HeadingName=$CompanyInfo[0][0];
-$Source='';
-$pageName='Package Manage';
-include_once ("../ClientSide/Company/Box.php");
-?>
 
     <div class="container row">
         <h3  class="float-left"> <i class="fas fa-place-of-worship "></i> Halls Packages</h3>
