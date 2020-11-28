@@ -91,9 +91,7 @@ function initialize()
 	 */
 	google.maps.event.addListener( searchBox, 'places_changed', function () {
 		var places = searchBox.getPlaces(),
-			bounds = new google.maps.LatLngBounds(),
-			i, place, lat, long, resultArray,
-			addresss = places[0].formatted_address;
+			bounds = new google.maps.LatLngBounds(), i, place, lat, long, resultArray, addresss = places[0].formatted_address;
 
 		for( i = 0; place = places[i]; i++ ) {
 			bounds.extend( place.geometry.location );

@@ -13,8 +13,7 @@ $sql='SELECT `company_id`,`username`, `jobTitle`,`id` FROM `user` WHERE id='.$_C
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
 ?>
-<!DOCTYPE html>
-<head>
+
 
     <?php
     include('../../webdesign/header/InsertHeaderTag.php');
@@ -27,35 +26,47 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Hall Register page,Add Hall,Insert Marquee,New Add Marquee,Add New Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <script src="../../jquery-3.3.1.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../map/style.css">
 
-    <script src="../../webdesign/JSfile/JSFunction.js"></script>
-    <style>
-    </style>
-</head>
-<body>
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script><!--
+    <script type="text/javascript" src="../bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
+
+
 <?php
-include_once ("../../webdesign/header/header.php");
-
+include('../../companyDashboard/includes/endHeader.php');
+include('../../companyDashboard/includes/navbar.php');
 ?>
-<div class="jumbotron  shadow" style="background-image: url(https://thumbs.dreamstime.com/z/wedding-hall-decoration-reception-party-35933352.jpg);background-size:100% 115%;background-repeat: no-repeat">
-    <div class="card-body text-center" style="opacity: 0.7 ;background: white;">
-        <h1 class="display-5 "><i class="fas fa-registered"></i> Hall Branch Register</h1>
-        <p class="lead">Free register Hall branches and also get free software . Book your order easily</p>
-    </div>
-</div>
 
-<form class="card container">
-    <h2>Hall Registration Form</h2>
-    <hr>
-    <div class="form-group row">
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-registered"></i> Hall Registration Form</h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>
+<form class="container row">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <input hidden type="number" name="userid" value="<?php echo $userdetail[0][3];?>">
         <label class="col-form-label">Hall Name:</label>
 
@@ -70,7 +81,7 @@ include_once ("../../webdesign/header/header.php");
 
     </div>
 
-    <div class="form-group row">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Hall Type:</label>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -86,7 +97,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
 
-    <div class="form-group row">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label ">Advance  Online booking in percentage%</label>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -98,7 +109,7 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-    <div class="form-group row">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Hall Manager Name:</label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -122,7 +133,7 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
 
-    <div class="form-group row">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Hall Branch Image:</label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -134,7 +145,7 @@ include_once ("../../webdesign/header/header.php");
 
 
     </div>
-    <div class="form-group row">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label ">Maximum Capacity of guests in hall:</label>
 
 
@@ -149,7 +160,7 @@ include_once ("../../webdesign/header/header.php");
 
     </div>
 
-    <div class="form-group row">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">How Many function manage on same date and  same time (1 to 4):</label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -163,7 +174,7 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-    <div class="form-group row">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Own Parking :</label>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -181,13 +192,8 @@ include_once ("../../webdesign/header/header.php");
 
 
 
-    <h4   class="text-center"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</h4>
-    <hr>
 
-
-
-
-    <div class="form-group row">
+    <div class="col-sm-12   col-12 col-md-12 col-lg-12">
 
         <label for="" class="col-form-label">Address: </label>
         <div class="input-group mb-3 input-group-lg">
@@ -209,26 +215,16 @@ include_once ("../../webdesign/header/header.php");
     </div>
 
 
-    <div class="form-group row mt-5">
-        <button id="cancel" type="button" class="btn btn-danger col-6 form-control"  value="Cancel"><span class="fas fa-window-close "></span>Cancel</button>
-        <button id="submit" type="button" class="btn btn-primary col-6 form-control" value="Submit"><i class="fas fa-check "></i>Submit</button>
+    <div class="form-inline col-sm-12   col-12 col-md-12 col-lg-12 mt-5">
+        <button id="cancel" type="button" class="btn btn-danger col-sm-6  col-6 col-md-6 col-lg-6"  value="Cancel"><span class="fas fa-window-close "></span>Cancel</button>
+        <button id="submit" type="button" class="btn btn-primary col-sm-6  col-6 col-md-6 col-lg-6" value="Submit"><i class="fas fa-check "></i>Submit</button>
     </div>
 
 
 
 </form>
+    <script src="../../map/javascript.js"></script>
 
-
-
-
-<script src="../../map/javascript.js"></script>
-
-<?php
-include_once ("../../webdesign/footer/footer.php");
-?>
-
-
-<script src="../../webdesign/JSfile/JSFunction.js"></script>
 <script>
 
 
@@ -315,8 +311,10 @@ include_once ("../../webdesign/footer/footer.php");
 
 </script>
 
-</body>
-</html>
+<?php
+include('../../companyDashboard/includes/scripts.php');
+include('../../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>

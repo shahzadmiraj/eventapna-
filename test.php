@@ -1,11 +1,15 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JavaScript Automatic Page Redirect</title>
+    <script>
+        function pageRedirect() {
+            window.location.replace("https://www.tutorialrepublic.com/");
+        }
+        setTimeout("pageRedirect()", 1000);
+    </script>
+</head>
 <body>
-
-<form action="" method="post">
-    Name: <input type="text" name="name"><br>
-    E-mail: <input type="text" name="email"><br>
-    <input type="submit">
-</form>
-
 </body>
 </html>
