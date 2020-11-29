@@ -22,7 +22,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
+<!--    <script type="text/javascript" src="../bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->

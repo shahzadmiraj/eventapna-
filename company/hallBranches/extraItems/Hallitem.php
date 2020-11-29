@@ -44,9 +44,10 @@ else
     $listOfCatering=array_column($HallName, 0);
     $List = implode(',', $listOfCatering);
 }
+
+include('../../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../../../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -58,38 +59,55 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Order Hall Manage Extra Item page,Add Manage Extra Item Hall Marquee,Marquee,Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
-    <script src="../../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
-    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
 
-    <style>
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
 
-    </style>
-</head>
-<body>
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom sweetalert for this template-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 <?php
-include_once ("../../../webdesign/header/header.php");
-
+include('../../../companyDashboard/includes/endHeader.php');
+include('../../../companyDashboard/includes/navbar.php');
 ?>
 
 
 
 
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Manage Extra Hall Item </h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>
 
 
+<div class="container row">
+    <h1 class="col-sm-12   col-12 col-md-6 col-lg-6"></h1>
+    <a  href="CreateItem.php" class="float-right btn btn-success col-sm-12   col-12 col-md-6 col-lg-6"> + Add item</a>
+</div>
 
+<div class="container ">
 
-<div class="container card">
-    <h2 class="text-center text-muted">Extra Item Manage</h2>
-
-    <h6 class="font-weight-bold fa-border">Extra charges of item <a  href="CreateItem.php" class="float-right btn btn-success col-6 form-control"> + Add item</a></h6>
 
     <ul class="nav nav-pills mb-3" >
         <li class="nav-item">
@@ -220,7 +238,7 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
               
               
               <p>
-              Amount : '.$kinds[$i][2].' /Dish id# '.$kinds[$i][0].'
+              Amount : '.$kinds[$i][2].' /Item id# '.$kinds[$i][0].'
               
               <form id="changeActivationOfHall'.$kinds[$i][0].'" >
               
@@ -306,9 +324,6 @@ $display.='<div id="dishtype'.$j.'" class="row" style="display: none">';
 
 
 
-<?php
-include_once ("../../../webdesign/footer/footer.php");
-?>
 <script>
     $(document).ready(function ()
     {
@@ -402,6 +417,7 @@ include_once ("../../../webdesign/footer/footer.php");
                 success:function (data)
                 {
                     $('#pleaseWaitDialog').modal('hide');
+
                     if($.trim(data)!='')
                     {
                         alert(data);
@@ -410,6 +426,7 @@ include_once ("../../../webdesign/footer/footer.php");
                     {
                         location.reload();
                     }
+
 
                 }
             });
@@ -437,9 +454,10 @@ include_once ("../../../webdesign/footer/footer.php");
 
 </script>
 
-
-</body>
-</html>
+<?php
+include('../../../companyDashboard/includes/scripts.php');
+include('../../../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../../../webdesign/footer/EndOfPage.php");
 ?>

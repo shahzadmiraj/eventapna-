@@ -19,9 +19,12 @@ $Names=queryReceive($sql);
 $listOfCatering=array_column($Names, 0);
 $List = implode(', ', $listOfCatering);
 $userid=$_COOKIE['userid'];
+
+
+
+include('../../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../../../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -33,31 +36,45 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Add Hall Manage Extra Item page,Add Manage Extra Item Hall Marquee,Marquee,Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
-    <script src="../../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <script src="../../../webdesign/JSfile/JSFunction.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
 
-</head>
-<body >
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
 <?php
-include_once ("../../../webdesign/header/header.php");
+include('../../../companyDashboard/includes/endHeader.php');
+include('../../../companyDashboard/includes/navbar.php');
 ?>
 
+    <div class="container-fluid">
 
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Add Extra Hall Item </h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>
 
-    <form class="card container">
-
+    <form class="container row" id="AddExtraHallItem">
         <input hidden name="userid" value="<?php echo $userid;?>">
         <input hidden name="companyid" value="<?php echo $userdetail[0][0];?>">
-        <h1 class="text-muted text-center">Add Extra item</h1>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
 
             <label for="name" class="col-form-label">Name item </label>
 
@@ -72,7 +89,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
 
             <label for="image" class="col-form-label">Image Item </label>
 
@@ -85,7 +102,7 @@ include_once ("../../../webdesign/header/header.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
 
             <label for="Price" class="col-form-label"> Price</label>
 
@@ -100,7 +117,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
 
             <label for="typeofitem" class="col-form-label"> Type of item</label>
 
@@ -138,7 +155,7 @@ GROUP by (EIT.id)';
 
 
 
-        <div class="form-group row" id="showType">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="showType">
 
             <label for="otherTypeName" class="col-form-label">Other Type name</label>
             <div class="input-group mb-3 input-group-lg">
@@ -150,7 +167,7 @@ GROUP by (EIT.id)';
         </div>
 
 
-        <div class="form-group card">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
 
 
             <lable  class="col-form-label">Select hall for Extra item active</lable>
@@ -163,16 +180,19 @@ GROUP by (EIT.id)';
               <div class="checkbox">
                 <h4><input type="checkbox" checked  name="branchactive[]" value="'.$Names[$i][0].'"> '.$Names[$i][1].'</h4>
                 </div>';
+
+
+
             }
             ?>
 
         </div>
 
 
-        <div class="form-group row justify-content-center">
+        <div class="form-inline col-sm-12   col-12 col-md-12 col-lg-12 mt-5">
 
-            <button id="Back"  class="form-control col-5 btn btn-danger"><i class="fas fa-arrow-left"></i> Cancel</button>
-            <button type="button" id="submit" class="form-control col-5 btn-primary"><i class="fas fa-check "></i> Submit</button>
+            <button id="Back"  class="btn btn-danger col-sm-6  col-6 col-md-6 col-lg-6"><i class="fas fa-arrow-left"></i> Cancel</button>
+            <button type="button" id="submit" class="btn btn-primary col-sm-6  col-6 col-md-6 col-lg-6"><i class="fas fa-check "></i> Submit</button>
 
         </div>
     </form>
@@ -180,9 +200,6 @@ GROUP by (EIT.id)';
 
 
 
-<?php
-include_once ("../../../webdesign/footer/footer.php");
-?>
 <script>
     $(document).ready(function ()
     {
@@ -238,7 +255,7 @@ include_once ("../../../webdesign/footer/footer.php");
                 return false;
             if (!confirm('Are you sure you want to Save information of items?'))
                 return  false;
-            var formdata=new FormData($('form')[0]);
+            var formdata=new FormData($('#AddExtraHallItem')[0]);
             formdata.append('option',"addItem");
             $.ajax({
                 url:"hallitemsServer.php",
@@ -272,8 +289,11 @@ include_once ("../../../webdesign/footer/footer.php");
     });
 
 </script>
-</body>
-</html>
+
+<?php
+include('../../../companyDashboard/includes/scripts.php');
+include('../../../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../../../webdesign/footer/EndOfPage.php");
 ?>

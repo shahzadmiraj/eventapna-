@@ -27,6 +27,7 @@ $CompanyInfo=queryReceive($sql);
 
 
 
+include('../../companyDashboard/includes/startHeader.php'); //html
 ?>
 
     <!DOCTYPE html>
@@ -45,26 +46,44 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
         <meta name="keywords" content="Edit Hall Package page,Preview Package,Show Package  Marquee,Display Package  Marquee,change Package  Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-        <script src="../../jquery-3.3.1.js"></script>
-        <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
-        <script type="text/javascript" src="../../bootstrap.min.js"></script>
-        <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
-        <link rel="stylesheet" href="../../webdesign/css/complete.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-        <link rel="stylesheet" href="../../webdesign/css/loader.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
+
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
+    <!--<script type="text/javascript" src="<?php /*echo $Root;*/?>bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+
+
+
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo $Root;?>Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
+    <link rel="stylesheet" href="<?php echo $Root;?>Fractional-Star-Rating-jsRapStar/index.css" />
+
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-        <link rel="stylesheet" href="../../webdesign/css/comment.css">
 
-        <link rel="stylesheet" href="../../Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
-        <link rel="stylesheet" href="../../Fractional-Star-Rating-jsRapStar/index.css" />
-        <script src="../../Fractional-Star-Rating-jsRapStar/jsRapStar.js"></script>
+    <!-- Custom sweetalert for this template-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
         <style>
 
 
@@ -72,30 +91,31 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 color: orange;
             }
         </style>
-    </head>
-    <body>
+<?php
+include('../../companyDashboard/includes/endHeader.php');
+include('../../companyDashboard/includes/navbar.php');
 
-    <?php
-    include_once ("../../webdesign/header/header.php");
+?>
 
-    ?>
 
-    <?php
-    $HeadingImage="";
-    $HeadingName=$CompanyInfo[0][0];
-    $Source='';
-    $pageName='Package Edit ';
-    include_once ("../ClientSide/Company/Box.php");
-    ?>
+    <div class="container-fluid">
 
-    <div class="container card">
-        <form id="EditPackageForm">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">EDIT PACKAGE</h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>
+
+    <div class="container">
+        <form id="EditPackageForm" class="row">
             <input hidden name="companyid" value="<?php echo $companyid;?>">
 
             <input hidden name="userid" value="<?php echo $userid;?>">
 
             <input hidden name="packageid" value="<?php echo $packageDetail[0][0];?>">
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable for="package_name" class="col-form-label">Packages Name</lable>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -105,7 +125,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable for="PriceRate" class="col-form-label">Packages Rate per head</lable>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -115,7 +135,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable for="PackagesType" class="col-form-label">Packages per head With:</lable>
 
                 <div class="input-group mb-3 input-group-lg">
@@ -142,7 +162,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable for="Daytime" class="col-form-label">Package Timing:</lable>
 
                 <div class="input-group mb-3 input-group-lg">
@@ -176,7 +196,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable for="MinimumGuest" class="col-form-label">How many minimum guest will book this packages</lable>
 
                 <div class="input-group mb-3 input-group-lg">
@@ -187,7 +207,63 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 </div>
             </div>
 
-            <div class="form-group row">
+
+
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+                <lable class="col-form-label">Packages Active Date</lable>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-clock"></i></span>
+                    </div>
+                    <input readonly  class="form-control" type="datetime" value="<?php echo $packageDetail[0][8];?>">
+                </div>
+            </div>
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+                <lable class="col-form-label">Packages Active User</lable>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input readonly  class="form-control" type="text" value="<?php echo $packageDetail[0][11];?>">
+                </div>
+            </div>
+
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+
+
+                <lable  class="col-form-label">Select hall for package active</lable>
+
+
+                <?php
+                //
+                $sql='SELECT `hall_id`,`id`,(SELECT hall.name from hall WHERE hall.id=packageControl.hall_id) FROM `packageControl` WHERE (ISNULL(expire))AND(package_id='.$packageDetail[0][0].')';
+                $SelectiveHalls=queryReceive($sql);
+                for($i=0;$i<count($SelectiveHalls);$i++)
+                {
+                    echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox" checked  name="selectedHalls[]" value="'.$SelectiveHalls[$i][1].'"> '.$SelectiveHalls[$i][2].'</h4>
+                </div>';
+                }
+                $SelectiveHalls=array_column($SelectiveHalls, 0);
+                $List = implode(',', $SelectiveHalls);
+
+
+
+                $sql='SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')AND( id NOT IN ('.$List.'))';
+                $AllHalls=queryReceive($sql);
+                for($i=0;$i<count($AllHalls);$i++)
+                {
+                    echo '  
+              <div class="checkbox">
+                <h4><input type="checkbox"   name="hallactive[]" value="'.$AllHalls[$i][0].'"> '.$AllHalls[$i][1].'</h4>
+                </div>';
+                }
+                ?>
+
+            </div>
+
+            <div class="col-sm-12   col-12 col-md-12 col-lg-12">
                 <lable class="col-form-label">Packages Description</lable>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -197,19 +273,9 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 </div>
             </div>
 
-            <div class="form-group row">
-                <lable class="col-form-label">Packages Active Date</lable>
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user-clock"></i></span>
-                    </div>
-                    <input readonly  class="form-control" type="datetime" value="<?php echo $packageDetail[0][8];?>">
-                </div>
-            </div>
-
-            <div class="form-group row m-auto">
-                <lable for="describe" class="col-form-label">Add New  Items in package  </lable>
-                <button type="button" class="btn btn-primary form-control " data-toggle="modal" data-target="#exampleModal">
+            <div class="col-sm-12   col-12 col-md-12 col-lg-12 form-inline">
+                <lable for="describe" class="col-form-label col-sm-12   col-12 col-md-6 col-lg-6">Add New  Items in package  </lable>
+                <button type="button" class="btn btn-primary form-control  col-sm-12   col-12 col-md-6 col-lg-6" data-toggle="modal" data-target="#exampleModal">
                     + Add item
                 </button>
             </div>
@@ -281,56 +347,15 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
             </div>
 
-            <div class="form-group card">
-
-
-                <lable  class="col-form-label">Select hall for package active</lable>
-
-
-                <?php
-                //
-                $sql='SELECT `hall_id`,`id`,(SELECT hall.name from hall WHERE hall.id=packageControl.hall_id) FROM `packageControl` WHERE (ISNULL(expire))AND(package_id='.$packageDetail[0][0].')';
-                $SelectiveHalls=queryReceive($sql);
-                for($i=0;$i<count($SelectiveHalls);$i++)
-                {
-                    echo '  
-              <div class="checkbox">
-                <h4><input type="checkbox" checked  name="selectedHalls[]" value="'.$SelectiveHalls[$i][1].'"> '.$SelectiveHalls[$i][2].'</h4>
-                </div>';
-                }
-                $SelectiveHalls=array_column($SelectiveHalls, 0);
-                $List = implode(',', $SelectiveHalls);
 
 
 
-                $sql='SELECT `id`, `name` FROM `hall` WHERE (ISNULL(expire))AND (company_id= '.$companyid.')AND( id NOT IN ('.$List.'))';
-                $AllHalls=queryReceive($sql);
-                for($i=0;$i<count($AllHalls);$i++)
-                {
-                    echo '  
-              <div class="checkbox">
-                <h4><input type="checkbox"   name="hallactive[]" value="'.$AllHalls[$i][0].'"> '.$AllHalls[$i][1].'</h4>
-                </div>';
-                }
-                ?>
-
-            </div>
-
-            <div class="form-group row">
-                <lable class="col-form-label">Packages Active User</lable>
-                <div class="input-group mb-3 input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    </div>
-                    <input readonly  class="form-control" type="text" value="<?php echo $packageDetail[0][11];?>">
-                </div>
-            </div>
 
 
         </form>
 
 
-        <h2>Calender </h2>
+        <h2 class="mt-5">Calender </h2>
         <hr>
         <div id="calendar" ></div>
         <hr>
@@ -378,7 +403,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Item </h5>
@@ -389,10 +414,10 @@ EVENT APNA  provides Free Software ....... So Register NOW
                     <div class="modal-body">
                         <form>
 
-                            <div class="container">
+                            <div class="container row">
 
 
-                                <div class="form-group row">
+                                <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                                     <lable for="describe" class="col-form-label">Items Name:</lable>
                                     <div class="input-group mb-3 input-group-lg">
                                         <div class="input-group-prepend">
@@ -402,7 +427,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                                     </div>
                                 </div>
 
-                                <div class="form-group row" id="DisplayNameOfItemType">
+                                <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="DisplayNameOfItemType">
                                     <lable for="describe" class="col-form-label">Items Type :</lable>
                                     <div class="input-group mb-3 input-group-lg">
                                         <div class="input-group-prepend">
@@ -413,7 +438,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                                     </div>
                                 </div>
 
-                                <div class="form-group row" id="NewItemTypeAdd">
+                                <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="NewItemTypeAdd">
                                     <lable for="describe" class="col-form-label">Other item type:New Row</lable>
                                     <div class="input-group mb-3 input-group-lg">
                                         <div class="input-group-prepend">
@@ -425,7 +450,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-                                <div class="form-group row" id="IncludeItem">
+                                <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="IncludeItem">
                                     <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
                                     <div class="input-group mb-3 input-group-lg">
                                         <div class="input-group-prepend">
@@ -438,7 +463,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                                     </div>
                                 </div>
 
-                                <div class="form-group row" id="ExtrachargeOfitem" style="display: none">
+                                <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="ExtrachargeOfitem" style="display: none">
                                     <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
                                     <div class="input-group mb-3 input-group-lg">
                                         <div class="input-group-prepend">
@@ -476,7 +501,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
@@ -484,9 +509,9 @@ EVENT APNA  provides Free Software ....... So Register NOW
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body container row">
 
-                        <div class="form-group row">
+                        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                             <lable for="describe" class="col-form-label">Items Name:</lable>
                             <div class="input-group mb-3 input-group-lg">
                                 <div class="input-group-prepend">
@@ -496,7 +521,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                             </div>
                         </div>
 
-                        <div class="form-group row" id="NewItemTypeAdd">
+                        <div class="fcol-sm-12   col-12 col-md-6 col-lg-6" id="NewItemTypeAdd">
                             <lable for="describe" class="col-form-label">Other item type:New Row</lable>
                             <div class="input-group mb-3 input-group-lg">
                                 <div class="input-group-prepend">
@@ -508,7 +533,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
 
-                        <div class="form-group row" id="IncludeItemExtra">
+                        <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="IncludeItemExtra">
                             <lable for="describe" class="col-form-label">Include item in this packagse or extra charges</lable>
                             <div class="input-group mb-3 input-group-lg">
                                 <div class="input-group-prepend">
@@ -521,7 +546,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
                             </div>
                         </div>
 
-                        <div class="form-group row" id="ExtrachargeOfitemExtra" style="display:none">
+                        <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="ExtrachargeOfitemExtra" style="display:none">
                             <lable for="describe" class="col-form-label">How much customer pay for this item</lable>
                             <div class="input-group mb-3 input-group-lg">
                                 <div class="input-group-prepend">
@@ -543,9 +568,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
     </div>
-    <?php
-    include_once ("../../webdesign/footer/footer.php");
-    ?>
+
     <script>
 
         $(document).ready(function ()
@@ -722,7 +745,15 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 $("#itemChoice").val("");
                 $("#ExtrachargeOfitem").val("");
                 $("#ExtrachargeOfitemAmount").val("");
-                $('#exampleModal').modal('hide');
+                $('#exampleModal').modal('toggle');
+                swal({
+                    html:true,
+                    title: "Add item",
+                    text: 'Item has been added',
+                    buttons: false,
+                    icon: "success",
+                    timer: 1500,
+                });
             });
             $(document).on("click",".RemoveRow",function () {
                 var row=$(this).data("rownumber");
@@ -736,6 +767,14 @@ EVENT APNA  provides Free Software ....... So Register NOW
             $(document).on("click",".RemoveColumn",function () {
                 var col=$(this).data("columnno");
                 $("#columnno-"+col).remove();
+                swal({
+                    title: "Deleted",
+                    text: 'Item has been Deleted',
+                    buttons: false,
+                    icon: "error",
+                    timer: 1500,
+                    html: true
+                });
             });
             var rowExtraNumber=-1;
             $(document).on("click",".AddColumn",function () {
@@ -769,6 +808,14 @@ EVENT APNA  provides Free Software ....... So Register NOW
                 ColumnNumber++;
                 $('#exampleModalCenter').modal("hide");
                 $("#ExtrachargeOfitemAmount").val('');
+                swal({
+                    html:true,
+                    title: "Add item",
+                    text: 'Item has been added',
+                    buttons: false,
+                    icon: "success",
+                    timer: 1500,
+                });
             });
             $("#SubmitFormPackage").click(function ()
             {
@@ -1001,26 +1048,28 @@ EVENT APNA  provides Free Software ....... So Register NOW
             });
 
 
-
-
-
-
-        });
-
-
-        var scores=3;
-        $(document).ready(function(){
+            var scores=3;
             $('#demo1').jsRapStar({
                 onClick:function(score){
                     $(this)[0].StarF.css({color:'red'});
                     scores=score;
                 }});
+
+
         });
 
 
     </script>
-    </body>
-    </html>
+<?php
+include('../../companyDashboard/includes/scripts.php');
+include('../../companyDashboard/includes/footer.php');
+?>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="<?php echo $Root;?>Fractional-Star-Rating-jsRapStar/jsRapStar.js"></script>
 <?php
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>

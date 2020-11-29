@@ -27,6 +27,9 @@ Do you want Management System of Hall OR Catering  for you company? Yes,This is 
 EVENT APNA  provides Free Software ....... So Register NOW">
 
     <meta name="keywords" content="Add Hall Package page,Insert Package,New Package  Marquee,New Add Package  Marquee,New Package  Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
+
+
+
     <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
     <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
     <!--<script type="text/javascript" src="<?php /*echo $Root;*/?>bootstrap.min.js"></script>-->
@@ -52,6 +55,8 @@ EVENT APNA  provides Free Software ....... So Register NOW">
     <!-- Custom styles for this template-->
     <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom sweetalert for this template-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
@@ -257,23 +262,23 @@ include('../../companyDashboard/includes/navbar.php');
 
 
 
-        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12">
             <lable for="describe" class="col-form-label">Packages Description</lable>
 
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-comments"></i></span>
                 </div>
-                <textarea id="describe" name="describe" class="form-control" placeholder="describe package information for client" ></textarea>
+                <textarea id="describe" name="describe" class="form-control" placeholder="Describe package information for client" ></textarea>
 
             </div>
         </div>
 
     </div>
 
-    <div class="form-group row m-auto">
-        <lable for="describe" class="col-form-label">Add New  Items in package  </lable>
-        <button type="button" class="btn btn-primary form-control " data-toggle="modal" data-target="#exampleModal">
+    <div class="col-sm-12   col-12 col-md-12 col-lg-12 form-inline">
+        <lable for="describe" class="col-form-label col-sm-12   col-12 col-md-6 col-lg-6">Add New  Items in package  </lable>
+        <button type="button" class="btn btn-primary form-control  col-sm-12   col-12 col-md-6 col-lg-6" data-toggle="modal" data-target="#exampleModal">
             + Add item
         </button>
     </div>
@@ -313,7 +318,7 @@ include('../../companyDashboard/includes/navbar.php');
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Add Item </h5>
@@ -410,7 +415,7 @@ include('../../companyDashboard/includes/navbar.php');
 
 
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
@@ -608,6 +613,7 @@ $(document).ready(function ()
     {
         e.preventDefault();
 
+
         var NameOfItem=$("#NameOfItem").val();
         var TypeOfItem=$("#NameOfItemType").val();
         var ExtraItemType=$("#IncludeItemOption").val();
@@ -669,6 +675,14 @@ $(document).ready(function ()
         $("#ExtrachargeOfitem").val("");
         $("#ExtrachargeOfitemAmount").val("");
         $('#exampleModal').modal('toggle');
+        swal({
+            html:true,
+            title: "Add item",
+            text: 'Item has been added',
+            buttons: false,
+            icon: "success",
+            timer: 1500,
+        });
 
 
     });
@@ -681,11 +695,27 @@ $(document).ready(function ()
       delete arrayOfItemType[index];
         $("#RowNumber-"+row).remove();
         TextItemTypeOptions();
+        swal({
+            title: "Deleted",
+            text: 'Item has been Deleted',
+            buttons: false,
+            icon: "error",
+            timer: 1500,
+            html: true
+        });
     });
 
     $(document).on("click",".RemoveColumn",function () {
       var col=$(this).data("columnno");
       $("#columnno-"+col).remove();
+        swal({
+            title: "Deleted",
+            text: 'Item has been Deleted',
+            buttons: false,
+            icon: "error",
+            timer: 1500,
+            html: true
+        });
     });
 
     var rowExtraNumber=-1;
@@ -697,6 +727,7 @@ $(document).ready(function ()
         $('#exampleModalCenter').modal();
         $("#NameOfItemExtra").val("");
         $("#itemChoiceExtra").val(itemType);
+
     });
 
      $(document).on("click","#SubmitExtraColumn",function () {
@@ -720,9 +751,19 @@ $(document).ready(function ()
             ColumnNumber++;
          $('#exampleModalCenter').modal("hide");
          $("#ExtrachargeOfitemAmount").val('');
+
+         swal({
+             html:true,
+             title: "Add item",
+             text: 'Item has been added',
+             buttons: false,
+             icon: "success",
+             timer: 1500,
+         });
      });
 
-    $("#btncancel").click(function () {
+    $("#btncancel").click(function ()
+    {
         window.history.back();
     });
    $("#btnsubmit").click(function ()

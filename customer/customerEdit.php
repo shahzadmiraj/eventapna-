@@ -79,7 +79,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <!-- Custom styles for this template-->
     <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
-
+    <!-- Custom sweetalert for this template-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <?php
 include('../companyDashboard/includes/endHeader.php');
 include('../companyDashboard/includes/navbar.php');
@@ -157,7 +158,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<form id="formEditCustomer" class="row container-fluid">
+<form id="formEditCustomer" class="container-fluid">
 
     <input hidden type="number" value="<?php echo $userid;?>" name="userid">
 
@@ -171,7 +172,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
             for($i=0;$i<count($numbers);$i++)
             {
                 echo '
-        <div class="col-sm-12   col-12 col-md-4 col-lg-4" id="Each_number_row_'.$numbers[$i][1].'">
+        <div class="col-sm-12   col-12 col-md- col-lg-4" id="Each_number_row_'.$numbers[$i][1].'">
                 <label  class="col-form-label" for="number_'.$numbers[$i][1].'">Phone no:</label>
                 
                 
@@ -443,6 +444,7 @@ p.id='.$customerId.'';
                  }
              }
          });
+
      });
      $("#formcustomer").click(function ()
      {

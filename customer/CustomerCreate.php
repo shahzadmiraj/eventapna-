@@ -6,9 +6,7 @@
  * Time: 21:31
  */
 include_once ("../connection/connect.php");
-
 include  ("../access/userAccess.php");
-
 if(isset($_GET['h']))
 {
     //come from hall
@@ -39,8 +37,6 @@ if(isset($_GET['c']))
     $cateringid=$_GET['c'];
 }
 $userid=$_COOKIE['userid'];
-
-
 include('../companyDashboard/includes/startHeader.php'); //html
 ?>
 
@@ -57,8 +53,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
 
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
-    <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
+    <script src="../jquery-3.3.1.js"></script><!--
+    <script type="text/javascript" src="../bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
@@ -76,32 +72,9 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <!-- Custom styles for this template-->
     <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom sweetalert for this template-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <style>
-
-
-        #mynumberlist {
-            /* Remove default list styling */
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        #mynumberlist li a {
-            border: 1px solid #ddd; /* Add a border to all links */
-            margin-top: -1px; /* Prevent double borders */
-            background-color: #f6f6f6; /* Grey background color */
-            padding: 12px; /* Add some padding */
-            text-decoration: none; /* Remove default text underline */
-            font-size: 18px; /* Increase the font-size */
-            color: black; /* Add a black text color */
-            display: block; /* Make it into a block element to fill the whole list */
-        }
-
-        #mynumberlist li a:hover:not(.header) {
-            background-color: #eee; /* Add a hover effect to all links, except for headers */
-        }
-    </style>
 
 <?php
 include('../companyDashboard/includes/endHeader.php');
@@ -203,7 +176,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-phone-volume"></i></span>
                 </div>
-                <input id="number"class="form-control" type="number"   placeholder="Phone no 033xxxxxxxx customer" >
+                <input id="number" class="form-control" type="number"   placeholder="Phone no 033xxxxxxxx customer" >
                 <input type="button" class="form-control btn-primary col-2" id="Add_btn" value="+">
             </div>
 
@@ -306,6 +279,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 data:{value:value,option:"checkExistByKeyUp",company_id:"<?php echo $companyid;?>"},
                 dataType:"text",
                 method: "POST",
+                async:true,
                 beforeSend: function() {
                     $('#pleaseWaitDialog').modal();
                 },
@@ -361,7 +335,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 data:{option:"RightPerson",id:id,"cateringid":"<?php echo $cateringid;?>","hallid":"<?php echo $hallid;?>"},
                 dataType:"text",
                 method: "POST",
-
+                async:true,
                 beforeSend: function() {
                     $('#pleaseWaitDialog').modal();
                 },
@@ -415,12 +389,29 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 "                <input class=\"form-control btn btn-danger col-2 remove_number \" id=\"remove_numbers_"+number+"\" data-removenumber=\""+number+"\" value=\"-\">\n" +
                 "            </div>");
             number++;
+
+            swal({
+                html:true,
+                title: "Add item",
+                text: 'Item has been added,
+                buttons: false,
+                icon: "success",
+                timer: 1500,
+            });
         });
 
         $(document).on("click",".remove_number",function () {
             var id=$(this).data("removenumber");
             $("#Each_number_row_"+id).remove();
             number--;
+            swal({
+                title: "Deleted",
+                text: 'Item has been Deleted',
+                buttons: false,
+                icon: "error",
+                timer: 1500,
+                html: true
+            });
         });
 
         $("#submit").click(function (e)
@@ -429,7 +420,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
             e.preventDefault();
             var state=false;
 
-            var formdata=new FormData($('form')[0]);
+            var formdata=new FormData($('#form')[0]);
             if(number==0)
             {
 
@@ -461,15 +452,15 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 data:formdata,
                 contentType: false,
                 processData: false,
-
+                async:true,
                 beforeSend: function() {
                     $('#pleaseWaitDialog').modal();
                 },
                 success:function (data)
                 {
 
+                   // alert(data);
                     $('#pleaseWaitDialog').modal('hide');
-                    // alert(data);
                     location.replace(data);
                 }
             });

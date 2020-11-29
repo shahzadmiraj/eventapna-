@@ -12,6 +12,8 @@ RedirectOtherwiseOnlyAccessUsersWho("Owner","../../index.php");
 $sql='SELECT `company_id`,`username`, `jobTitle`,`id` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
+
+include('../../companyDashboard/includes/startHeader.php'); //html
 ?>
 
 
@@ -37,9 +39,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
     <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
 
-    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
 
     <!-- Custom fonts for this template-->
     <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -49,6 +49,8 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <!-- Custom styles for this template-->
     <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom sweetalert for this template-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 <?php
@@ -65,7 +67,7 @@ include('../../companyDashboard/includes/navbar.php');
                         class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
         </div>
     </div>
-<form class="container row">
+<form class="container row" id="formRegisterOfHall">
     <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <input hidden type="number" name="userid" value="<?php echo $userdetail[0][3];?>">
         <label class="col-form-label">Hall Name:</label>
@@ -264,7 +266,7 @@ include('../../companyDashboard/includes/navbar.php');
             if (!confirm('Are you sure you want to Add this Hall in company ?'))
                 return  false;
 
-            var formdata = new FormData($("form")[0]);
+            var formdata = new FormData($("#formRegisterOfHall")[0]);
             formdata.append("option", "CreateHall");
             formdata.append("companyid","<?php echo $companyid;?>");
             $.ajax({

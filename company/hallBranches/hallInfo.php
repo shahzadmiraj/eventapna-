@@ -32,9 +32,10 @@ $companyid='';
 $companyid=$userdetail[0][0];
 $sql='SELECT `id`, `longitude`, `expire`, `country`, `city`, `latitude`, `active`, `address` FROM `location` WHERE id='.$halldetail[0][7].'';
 $location=queryReceive($sql);
+
+include('../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -47,26 +48,34 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <meta name="keywords" content="Hall Edit page,Add Hall,Insert Marquee,New Add Marquee,Add New Dera page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
 
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
-    <script src="../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../webdesign/css/complete.css">
+
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+
+
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
+
 
     <link rel="stylesheet" href="../../map/style.css">
-    <style>
 
-    </style>
-</head>
-<body>
 
 <?php
-include_once ("../../webdesign/header/header.php");
-
+include('../../companyDashboard/includes/endHeader.php');
+include('../../companyDashboard/includes/navbar.php');
 ?>
 
 
@@ -74,16 +83,15 @@ include_once ("../../webdesign/header/header.php");
 $HeadingImage=$halldetail[0][5];
 $HeadingName=$halldetail[0][0];
 $Source='../../images/hall/';
-$pageName='General Setting';
+$pageName='General Hall Setting';
 include_once ("../ClientSide/Company/Box.php");
 ?>
 
 
 
-<div class="container card">
-    <h1> Hall Setting </h1>
-    <hr class="">
-    <form class="" id="formhall" >
+<div class="container">
+
+    <form class="row" id="formhall" >
 
         <input type="number" hidden name="userid" value="<?php echo $userdetail[0][3]; ?>">
         <input type="text" hidden name="previousaddress" value="<?php echo $location[0][7]; ?>">
@@ -91,7 +99,7 @@ include_once ("../ClientSide/Company/Box.php");
         <input type="number" hidden name="hallid" value="<?php echo $hallid; ?>">
 
         <input type="text" hidden name="previousimage" value="<?php echo $halldetail[0][5]; ?>">
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Hall Branch Name:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -104,7 +112,7 @@ include_once ("../ClientSide/Company/Box.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Hall Type:</label>
 
 
@@ -133,7 +141,7 @@ include_once ("../ClientSide/Company/Box.php");
                 </select>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Hall Branch Image:</label>
             <!--        <input name="image" class="form-control col-8" type="file">-->
 
@@ -149,7 +157,7 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
 
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Maximum Capacity of guests in hall:</label>
             <!--        <input name="capacity" class="form-control col-4" type="number" value="--><?php //echo $halldetail[0][1]; ?><!--">-->
 
@@ -167,7 +175,7 @@ include_once ("../ClientSide/Company/Box.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">How Many function manage on same date and  same time (1 to 4):</label>
             <!--        <input name="partition" class="form-control col-4" type="number" value="--><?php //echo $halldetail[0][2]; ?><!--">-->
 
@@ -183,7 +191,7 @@ include_once ("../ClientSide/Company/Box.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Hall Manager Name:</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -221,7 +229,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Advance  Online booking in percentage%</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -233,7 +241,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Own Parking :</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -261,13 +269,10 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-        <h4   class="text-center"><i class="fas fa-map-marker-alt"></i> Hall Branch Address</h4>
-        <hr>
 
 
 
-
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12">
 
             <label for="" class="col-form-label">Address: </label>
             <div class="input-group mb-3 input-group-lg">
@@ -287,23 +292,23 @@ include_once ("../ClientSide/Company/Box.php");
             <label  for="">country <input name="country" type="text" id="reg-input-country" placeholder="country" value="<?php echo $location[0][3];?>"></label>
         </div>
 
-        <div class="form-group row mt-5">
+        <div class="row col-sm-12   col-12 col-md-12 col-lg-12 mt-5">
 
 
             <?php
             if($halldetail[0][4]=="")
             {
-                echo '<a href="?action=expire&h='.$hallid.'&token='.$token.'" class="btn btn-danger col-6">Expire</a>';
+                echo '<a href="?action=expire&h='.$hallid.'&token='.$token.'" class="btn btn-danger col-sm-6   col-6 col-md-6 col-lg-6">Expire</a>';
 
             }
             else
             {
-                echo '<a href="?action=active&h='.$hallid.'&token='.$token.'" class="btn btn-warning col-6">Active</a>';
+                echo '<a href="?action=active&h='.$hallid.'&token='.$token.'" class="btn btn-warning col-sm-6   col-6 col-md-6 col-lg-6">Active</a>';
             }
 
             ?>
 
-            <button id="submitedithall" type="button" class="rounded mx-auto d-block btn btn-primary col-6 " value="Submit"> <i class="fas fa-check "></i>Save</button>
+            <button id="submitedithall" type="button" class="btn btn-primary col-sm-6   col-6 col-md-6 col-lg-6"> <i class="fas fa-check "></i>Save</button>
 
         </div>
 
@@ -315,12 +320,8 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-<?php
 
-include_once ("../../webdesign/footer/footer.php");
-?>
 
-<script src="../../webdesign/JSfile/JSFunction.js" type="text/javascript"></script>
 <script src="../../map/constantMap.js"></script>
 <script>
 
@@ -423,8 +424,11 @@ include_once ("../../webdesign/footer/footer.php");
         });
     });
 </script>
-</body>
-</html>
+
+<?php
+include('../../companyDashboard/includes/scripts.php');
+include('../../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>
