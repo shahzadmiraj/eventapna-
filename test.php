@@ -44,7 +44,7 @@
 swal({
 html:true,
 title: "Add item",
-text: 'Item has been added,
+text: 'Item has been added',
 buttons: false,
 icon: "success",
 timer: 1500,

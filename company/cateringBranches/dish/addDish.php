@@ -21,9 +21,10 @@ $CateringName=queryReceive($sql);
 $listOfCatering=array_column($CateringName, 0);
 $List = implode(',', $listOfCatering);
 
+
+include('../../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../../../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -37,31 +38,49 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
     <script src="../../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
-
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
     <script src="../../../webdesign/JSfile/JSFunction.js"></script>
-    <style>
 
-    </style>
-</head>
-<body>
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
 <?php
-include_once ("../../../webdesign/header/header.php");
+include('../../../companyDashboard/includes/endHeader.php');
+include('../../../companyDashboard/includes/navbar.php');
+
 ?>
 
-<div class="container card">
-<h1 class="text-muted text-center">Add Dish</h1>
-    <form>
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Add Dish</h1>
+
+        </div>
+    </div>
+
+<div class="container">
+
+    <form class="row" id="AddDishForm">
 
         <input type="number" hidden name="userid" value="<?php echo $userid;?>">
         <input hidden name="companyid" value="<?php echo $companyid;?>">
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Dish Name</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -72,7 +91,7 @@ include_once ("../../../webdesign/header/header.php");
             </div>
 
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Dish Image</label>
 
 
@@ -85,7 +104,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Attribute Name</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -100,19 +119,19 @@ include_once ("../../../webdesign/header/header.php");
             </ul>
 
         </div>
-       <div class="card" id="attributeHere">
+       <div class="col-sm-12   col-12 col-md-12 col-lg-12" id="attributeHere">
 
        </div>
 
 
 
-        <div class="card" style="overflow-x: scroll"  id="addtable">
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12" style="overflow-x: scroll"  id="addtable">
 
 
         </div>
 
 
-        <div class="form-group row" id="singleprice">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="singleprice">
             <label class="col-form-label">Dish Price</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -126,7 +145,7 @@ include_once ("../../../webdesign/header/header.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Dish Type</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -160,7 +179,7 @@ GROUP by (dt.id)';
 
         </div>
 
-        <div id="showdishtype" class="row" style="display: none">
+        <div id="showdishtype" class="col-sm-12   col-12 col-md-6 col-lg-6" style="display: none">
             <label class="form-check-label">Other Dish Type</label>
 
 
@@ -175,7 +194,7 @@ GROUP by (dt.id)';
 
         </div>
 
-        <div class="form-group card">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
 
 
             <lable  class="col-form-label">Select catering for dishes active</lable>
@@ -197,9 +216,9 @@ GROUP by (dt.id)';
 
 
 
-        <div class="form-group row justify-content-center">
-            <button id="cancel" type="button" class="col-5 form-control btn-danger btn" value="cancel"><span class="fas fa-window-close "></span>  Cancel</button>
-            <button id="submit" type="button" value="Submit" class="col-5 form-control btn-primary btn"><i class="fas fa-check "></i>  Submit</button>
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12 form-inline">
+            <button id="cancel" type="button" class="col-sm-6   col-6 col-md-6 col-lg-6 btn-danger btn" value="cancel"><span class="fas fa-window-close "></span>  Cancel</button>
+            <button id="submit" type="button" value="Submit" class="col-sm-6   col-6 col-md-6 col-lg-6 btn-primary btn"><i class="fas fa-check "></i>  Submit</button>
         </div>
 
 
@@ -211,9 +230,6 @@ GROUP by (dt.id)';
 
 
 
-<?php
-include_once ("../../../webdesign/footer/footer.php");
-?>
 
 <script>
 
@@ -221,6 +237,29 @@ include_once ("../../../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
+        function  AddSwalFunction() {
+            swal({
+                html:true,
+                title: "Add item",
+                text: 'Item has been added',
+                buttons: false,
+                icon: "success",
+                timer: 1500,
+            });
+
+        }
+
+        function  RemoveSwalFunction() {
+            swal({
+                title: "Deleted",
+                text: 'Item has been Deleted',
+                buttons: false,
+                icon: "error",
+                timer: 1500,
+                html: true
+            });
+
+        }
 
         $(document).on("keyup","#attributetext",function (e)
         {
@@ -281,6 +320,8 @@ include_once ("../../../webdesign/footer/footer.php");
             e.preventDefault();
             var id=$(this).data("deleterow");
             $("#deletePrice"+id).remove();
+            RemoveSwalFunction();
+
         });
 
 
@@ -326,13 +367,15 @@ include_once ("../../../webdesign/footer/footer.php");
 
             rowaddedfucntion();
 
+
+
         }
 
         $(document).on('click','#addCombination',function (e)
         {
             e.preventDefault();
             rowaddedfucntion();
-
+            AddSwalFunction();
         });
 
 
@@ -371,6 +414,8 @@ include_once ("../../../webdesign/footer/footer.php");
             attributecount++;
             refreshTable();
             rows++;
+
+            AddSwalFunction();
         }) ;
 
         $(document).on('click','.removeattribute',function ()
@@ -379,6 +424,7 @@ include_once ("../../../webdesign/footer/footer.php");
             $("#removeid_"+id).remove();
             attributecount--;
             refreshTable();
+            RemoveSwalFunction();
 
         });
 
@@ -418,7 +464,7 @@ include_once ("../../../webdesign/footer/footer.php");
                 return false;
             if (!confirm('Are you sure you want to Add  food dish in Food & Catering  Branches?'))
                 return  false;
-           var formdata=new FormData($("form")[0]);
+           var formdata=new FormData($("#AddDishForm")[0]);
             formdata.append("option","addDishsystem");//addDishsystem
              $.ajax({
               url:"dishServer.php",
@@ -457,8 +503,12 @@ include_once ("../../../webdesign/footer/footer.php");
 
 
 </script>
-</body>
-</html>
+<?php
+
+include('../../../companyDashboard/includes/scripts.php');
+include('../../../companyDashboard/includes/footer.php');
+
+?>
 <?php
 include_once ("../../../webdesign/footer/EndOfPage.php");
 ?>

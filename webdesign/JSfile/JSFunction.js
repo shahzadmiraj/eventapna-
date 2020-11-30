@@ -255,5 +255,26 @@ window.NumberRange= function (Element,ShowMessage,Min,Max)
     return state;
 }
 
-
-
+// function  AddSwalFunction() {
+//     swal({
+//         html:true,
+//         title: "Add item",
+//         text: 'Item has been added',
+//         buttons: false,
+//         icon: "success",
+//         timer: 1500,
+//     });
+//
+// }
+//
+// function  RemoveSwalFunction() {
+//     swal({
+//         title: "Deleted",
+//         text: 'Item has been Deleted',
+//         buttons: false,
+//         icon: "error",
+//         timer: 1500,
+//         html: true
+//     });
+//
+// }

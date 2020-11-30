@@ -34,9 +34,10 @@ $sql='SELECT `id`, `name`, `token` FROM `catering` WHERE (ISNULL(expire))AND (co
 $CateringName=queryReceive($sql);
 $listOfCatering=array_column($CateringName, 0);
 $List = implode(',', $listOfCatering);
+
+include('../../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../../../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -50,41 +51,53 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
     <script src="../../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
-
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
     <script src="../../../webdesign/JSfile/JSFunction.js"></script>
-    <link rel="stylesheet" href="../../../Fractional-Star-Rating-jsRapStar/jsRapStar.css" />
-    <link rel="stylesheet" href="../../../Fractional-Star-Rating-jsRapStar/index.css" />
-    <script src="../../../Fractional-Star-Rating-jsRapStar/jsRapStar.js"></script>
-    <style>
-        .checked {
-            color: orange;
-        }
-    </style>
-</head>
-<body>
+
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
 <?php
-include_once ("../../../webdesign/header/header.php");
+include('../../../companyDashboard/includes/endHeader.php');
+include('../../../companyDashboard/includes/navbar.php');
 
 ?>
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Edit Dish</h1>
+
+        </div>
+    </div>
+
 <div class="container ">
 
 
     <form id="EditPackageForm">
-    <h1 align="center" class="text-muted">Dish Edit</h1>
 
-        <div class="col-12 shadow card-header p-4">
+
+        <div class="row">
             <input hidden name="companyid" value="<?php echo $companyid;?>">
             <input name="dishid" id="dishid" type="number" hidden value="<?php echo $dishID; ?>">
             <input name="userid" type="number" hidden value="<?php echo $userid; ?>">
 
-            <div class="form-group row justify-content-center">
+            <div class="col-sm-12   col-12 col-md-12 col-lg-12 text-center">
                 <img style="height: 30vh " src="<?php
                 if(file_exists('../../../images/dishImages/'.$dishDetail[0][2])&&($dishDetail[0][2]!=""))
                 {
@@ -96,9 +109,9 @@ include_once ("../../../webdesign/header/header.php");
                     echo '../../../images/systemImage/imageNotFound.png';
                 }
 
-                ?>"   class="col-8 " alt="Image is not set" >
+                ?>"   alt="Image is not set" >
             </div>
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <label class="col-form-label">Dish Name</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -108,7 +121,7 @@ include_once ("../../../webdesign/header/header.php");
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <label class="col-form-label">Dish Image Change</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -119,7 +132,7 @@ include_once ("../../../webdesign/header/header.php");
             </div>
 
 
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <label class="col-form-label">Dish Type</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -149,7 +162,7 @@ GROUP by (dt.id)';
                 </div>
             </div>
 
-            <div id="showdishtype" class="row" style="display: none">
+            <div id="showdishtype" class="col-sm-12   col-12 col-md-6 col-lg-6" style="display: none">
                 <label class="form-check-label">Other Dish Type</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -162,7 +175,7 @@ GROUP by (dt.id)';
 
 
 
-            <div class="card">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable  class="col-form-label">Select Catering branches for dish active</lable>
 
 
@@ -195,7 +208,7 @@ GROUP by (dt.id)';
 
             </div>
 
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <label class="col-form-label">Dish Active Date:</label>
 
 
@@ -214,7 +227,7 @@ GROUP by (dt.id)';
 
 
 
-            <div class="form-group row">
+            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <label class="col-form-label">Dish Active User :</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -226,21 +239,16 @@ GROUP by (dt.id)';
     </form>
 
 
-            <hr>
-            <div class="m-auto form-inline">
-
-                                <h6 class="col-8">Price control with combination of attribute</h6>
+    <h6 class="col-sm-8   col-8 col-md-8 col-lg-8">Price control with combination of attribute</h6>
 
 
-                <!-- Button trigger modal -->
-                <button  type="button" class="btn btn-success float-right col-4" data-toggle="modal" data-target="#exampleModal">
-                    + Add Price
-                </button>
-
-                <!-- Modal -->
+    <!-- Button trigger modal -->
+    <button  type="button" class="btn btn-success float-right col-sm-4   col-4 col-md-4 col-lg-4" data-toggle="modal" data-target="#exampleModal">
+        + Add Price
+    </button>
                 <form id="formaddprice">
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-concierge-bell"></i> Dish Name :<?php echo $dishDetail[0][0]; ?></h5>
@@ -248,7 +256,7 @@ GROUP by (dt.id)';
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body form">
+                            <div class="modal-body row">
 
 
                                 <?php
@@ -268,7 +276,7 @@ GROUP by name';
                                     echo '
                              
                                
-                                            <div class="form-group row">
+                                            <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <label class="col-form-label">Item : '.$TypeOfAttribute[$i][0].' :</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -285,7 +293,7 @@ GROUP by name';
 
                                 echo '
                                
-                                   <div class="form-group row">
+                                   <div class="col-sm-12   col-12 col-md-6 col-lg-6">
                 <label class="col-form-label">Total price :</label>
                 <div class="input-group mb-3 input-group-lg">
                     <div class="input-group-prepend">
@@ -309,7 +317,7 @@ GROUP by name';
                         </div>
                     </div>
                 </div>
-            </div>
+
             </form>
 
 
@@ -388,19 +396,6 @@ echo $display;
                     ?>
 
 
-           <!-- <div class="card" style="width: 18rem;">
-                <div class="card-header text-danger">
-                    <i class="fas fa-money-bill-alt"></i>  Price
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><i class="fa fa-calculator" aria-hidden="true"></i> AttributeName:quantity</li>
-                    <li class="list-group-item"><i class="fas fa-user-plus"></i> Name:</li>
-                    <li class="list-group-item"><i class="far fa-calendar-alt"></i>Active Date:</li>
-                </ul>
-                <div class="card-footer  m-auto">
-                    <button class="btn btn-danger "><i class="far fa-trash-alt"></i>Delete Price</button>
-                </div>
-            </div>-->
 
         </div>
 
@@ -423,9 +418,7 @@ echo $display;
 
 
 
-<?php
-include_once ("../../../webdesign/footer/footer.php");
-?>
+
 
 <script>
 
@@ -433,6 +426,31 @@ include_once ("../../../webdesign/footer/footer.php");
 
     $(document).ready(function ()
     {
+
+        function  AddSwalFunction() {
+            swal({
+                html:true,
+                title: "Add item",
+                text: 'Item has been added',
+                buttons: false,
+                icon: "success",
+                timer: 1500,
+            });
+
+        }
+
+        function  RemoveSwalFunction() {
+            swal({
+                title: "Deleted",
+                text: 'Item has been Deleted',
+                buttons: false,
+                icon: "error",
+                timer: 1500,
+                html: true
+            });
+
+        }
+
         var NonselectivedishesCount=0;
 
 
@@ -496,6 +514,7 @@ include_once ("../../../webdesign/footer/footer.php");
             var dishid=$(this).data("deleteid");
             var dishtypealredy=$(this).data("dishtypealredy");
             $("#"+dishtypealredy+dishid).remove();
+            RemoveSwalFunction();
             return false;
         });
       /*  $(".deleteprice").click(function (e)
@@ -603,9 +622,11 @@ include_once ("../../../webdesign/footer/footer.php");
                     $("#formaddprice").trigger("reset");
                   //  $('#formaddprice').modal('toggle');
                     $("#exampleModal").modal('toggle');
+                    AddSwalFunction();
                 }
             });
             NonselectivedishesCount++;
+
         });
 
 
@@ -616,8 +637,12 @@ include_once ("../../../webdesign/footer/footer.php");
 
 
 </script>
-</body>
-</html>
+<?php
+
+include('../../../companyDashboard/includes/scripts.php');
+include('../../../companyDashboard/includes/footer.php');
+
+?>
 <?php
 include_once ("../../../webdesign/footer/EndOfPage.php");
 ?>

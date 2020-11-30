@@ -183,8 +183,11 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
             <ul id="mynumberlist" class="container">
             </ul>
 
+
+
+
         </div>
-        <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="number_records">
+        <div class="row" id="number_records">
 
 
         </div>
@@ -196,6 +199,8 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 </div>
                 <input type="text" id="name"  name="name"class="form-control" placeholder="customer name" >
             </div>
+
+
         </div>
         <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="name" class="col-form-label">Image:</label>
@@ -385,14 +390,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 "            </div>");
             number++;
 
-            swal({
-                html:true,
-                title: "Add item",
-                text: 'Item has been added,
-                buttons: false,
-                icon: "success",
-                timer: 1500,
-            });
+
         });
 
         $(document).on("click",".remove_number",function () {

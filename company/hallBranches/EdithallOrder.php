@@ -69,7 +69,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
     <script src="../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../webdesign/css/loader.css">
     <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
@@ -129,10 +128,10 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<form class="container row m-auto" >
+<form class="container row m-auto"  id="formEditHallOrder">
     <input type="hidden" name="userid" value="<?php echo $userid;?>">
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">No of Guests</label>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -141,7 +140,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             <input id="guests" name="guests" type="number" class="checkpackage form-control" value="<?php echo $detailorder[0][12]; ?>">
         </div>
     </div>
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Booked Date (Year,Month,Day)</label>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -150,7 +149,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             <input   id="date" name="date" type="date" class="checkpackage form-control" value="<?php echo $detailorder[0][14]; ?>">
         </div>
     </div>
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Time</label>
         <div class="input-group mb-3 input-group-lg">
             <div class="input-group-prepend">
@@ -193,7 +192,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             </select>
         </div>
     </div>
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label ">Per Head With</label>
 
 
@@ -244,7 +243,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         $display = '
                 
                 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6" id="cateringid">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="cateringid">
         <label class="col-form-label ">Catereing Branch</label>
 
 
@@ -324,7 +323,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Extra items Charges :</label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -336,7 +335,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Total amount: (Extra item charges+ Per head rate)</label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -348,7 +347,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="form-check-label" for="Discount">Discount </label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -360,7 +359,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     </div>
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="form-check-label" for="Charges">Extra Charges </label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -371,7 +370,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
         </div>
 
     </div>
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="form-check-label" for="remaining">Paid Amount </label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -383,7 +382,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
     </div>
 
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="form-check-label" for="remaining">Remaining Amount </label>
 
         <div class="input-group mb-3 input-group-lg">
@@ -402,9 +401,9 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     <?php
 
-        $status=array("Running","Delivered","Cancel","Clear");
+        $status=array("Running","Delivered","Cancel","Clear","Draft");
         $display='
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Order status</label>
         
         
@@ -438,7 +437,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label for="branchOrder" class="col-form-label">Hall Order in branch :</label>
 
 
@@ -469,7 +468,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
     </div>
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Describe /Comments</label>
 
 
@@ -490,7 +489,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+    <div class="col-sm-12   col-12 col-md-6 col-lg-6">
         <label class="col-form-label">Visited Date (Year,Month,Day)</label>
 
 
@@ -766,7 +765,7 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             }
             if (!confirm('Are you sure you want to Save Hall Order informatiom ?'))
                 return  false;
-            var formdata = new FormData($("form")[0]);
+            var formdata = new FormData($("#formEditHallOrder")[0]);
             formdata.append("perheadwith",perheadwith);
             formdata.append("packageDateid", packageDateid);
             formdata.append("order",<?php echo $orderid;  ?>);
