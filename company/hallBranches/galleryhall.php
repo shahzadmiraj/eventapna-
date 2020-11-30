@@ -14,9 +14,8 @@ $hallid=$id;
 $companyid=$userdetail[0][0];
 $userid=$_COOKIE['userid'];
 
+include('../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
     <?php
     include('../../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -29,32 +28,43 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <meta name="keywords" content="Hall Gallery Management page,Add Hall Order,Insert Marquee Order,New Add Marquee Order,Add New Dera Order page,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
 
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
-    <script src="../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../webdesign/css/complete.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
 
-    <style>
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
 
-    </style>
-</head>
-<body>
+
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
 
 <?php
-include_once ("../../webdesign/header/header.php");
-
+include('../../companyDashboard/includes/endHeader.php');
+include('../../companyDashboard/includes/navbar.php');
 ?>
+
+    <div class="container">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Hall Gallery</h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+        </div>
+    </div>
 
 <?php
 $HeadingImage=$halldetail[0][1];
 $HeadingName=$halldetail[0][0];
 $Source='../../images/hall/';
-$pageName='Gallery';
+$pageName='';
 include_once ("../ClientSide/Company/Box.php");
 ?>
 
@@ -160,9 +170,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 </div>
 
-<?php
-include_once ("../../webdesign/footer/footer.php");
-?>
+
 
 
 
@@ -246,8 +254,10 @@ include_once ("../../webdesign/footer/footer.php");
 
 
 </script>
-</body>
-</html>
+<?php
+include('../../companyDashboard/includes/scripts.php');
+include('../../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>

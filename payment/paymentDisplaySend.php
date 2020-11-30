@@ -27,10 +27,10 @@ $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_
 $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
 
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
 
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -44,22 +44,30 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!--<script type="text/javascript" src="../bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
 
-</head>
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
-
-<body>
 <?php
-include_once ("../webdesign/header/header.php");
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
+?>
+<?php
+
 
 $whichActive = 5;
 $imageCustomer = "../images/customerimage/";
@@ -68,7 +76,7 @@ $PageName="Payment Send To User";
 include_once("../webdesign/orderWizard/wizardOrder.php");
 
 ?>
-<div class="container">
+<div class="container row">
 
 <?php
 
@@ -89,7 +97,7 @@ for ($i=0;$i<count($Yourpayment);$i++)
     ?>
 
 
-    <div class="card shadow-lg  container mt-5">
+    <div class="card col-sm-12   col-12 col-md-6 col-lg-6 ">
 
 
 
@@ -122,7 +130,7 @@ for ($i=0;$i<count($Yourpayment);$i++)
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
-                <select style="background-color: #7dff38;" id="userIdlabel<?php
+                <select style="background-color: #ffffff;" id="userIdlabel<?php
                 echo $paymentDetail[0][0];
                 ?>" class="form-control">
                     <option  value="none">None</option>
@@ -239,9 +247,7 @@ for ($i=0;$i<count($Yourpayment);$i++)
     ?>
 
 </div>
-<?php
-include_once ("../webdesign/footer/footer.php");
-?>
+
 
 
 <script>
@@ -290,8 +296,11 @@ include_once ("../webdesign/footer/footer.php");
 
     });
 </script>
-</body>
-</html>
+
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");

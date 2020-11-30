@@ -169,7 +169,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
         <input hidden name="hallid" value="<?php echo $hallid;?>">
 
         <input id="customer" hidden value="">
-        <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12">
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12">
             <label for="number" class="col-form-label">Phone no:</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -183,15 +183,12 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
             <ul id="mynumberlist" class="container">
             </ul>
 
-
+        </div>
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6" id="number_records">
 
 
         </div>
-        <div class="col-12 border mb-3 " id="number_records">
-
-
-        </div>
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="name" class="col-form-label">Name:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -199,10 +196,8 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
                 </div>
                 <input type="text" id="name"  name="name"class="form-control" placeholder="customer name" >
             </div>
-
-
         </div>
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="name" class="col-form-label">Image:</label>
 
 
@@ -220,7 +215,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="cnic" class="col-form-label">CNIC:</label>
 
 
@@ -236,7 +231,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
         </div>
-        <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="address" class="col-form-label">Address:</label>
 
 

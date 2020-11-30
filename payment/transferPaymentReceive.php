@@ -20,10 +20,10 @@ $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
 
 
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
 
-<!DOCTYPE html>
-<head>
+
 
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
@@ -37,24 +37,36 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <meta name="keywords" content="Payment Received  Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
 
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
-    <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
+<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+<script src="../jquery-3.3.1.js"></script>
+<!--<script type="text/javascript" src="../bootstrap.min.js"></script>-->
+<link rel="stylesheet" href="../webdesign/css/loader.css">
+<!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+<script src="../webdesign/JSfile/JSFunction.js"></script>
 
-</head>
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+<!-- Custom fonts for this template-->
+<link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+<link rel="stylesheet" href="../webdesign/css/loader.css">
+<!-- Custom styles for this template-->
+<link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
 
 
 
-<body>
+
 <?php
-include_once ("../webdesign/header/header.php");
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
+?>
+<?php
+
 
 $whichActive = 5;
 $imageCustomer = "../images/customerimage/";
@@ -65,7 +77,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<div class="container">
+<div class="container row">
 
     <?php
 
@@ -85,7 +97,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         ?>
 
 
-        <div class="card-header shadow-lg  col-12 border mt-5">
+        <div class="card col-sm-12   col-12 col-md-6 col-lg-6">
 
 
 
@@ -266,9 +278,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
     ?>
 
 </div>
-<?php
-include_once ("../webdesign/footer/footer.php");
-?>
+
 
 
 
@@ -320,8 +330,10 @@ include_once ("../webdesign/footer/footer.php");
 
     });
 </script>
-</body>
-</html>
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
 ?>

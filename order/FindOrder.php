@@ -713,6 +713,9 @@ od.destination_date ASC,od.destination_time ASC';
         <label class="col-sm-12   col-12 col-md-3 col-lg-3">Hall Status:<i class="text-secondary">'.$orderdetail[$i][5].'</i> </label>';
                 }
                 $display.='
+        <a href="../order/PreviewOrder.php?' . $Query . '" class="btn btn-success col-sm-12   col-12 col-md-3 col-lg-3">  <i class="navbar-toggler-icon"></i> Order Management</a>
+
+
 </div>';
 
             }

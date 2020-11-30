@@ -26,9 +26,9 @@ $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_
 $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
 
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
 
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
@@ -43,24 +43,30 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--<script type="text/javascript" src="../bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="../webdesign/JSfile/JSFunction.js"></script>
 
-    <style>
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 
-    </style>
-</head>
-<body>
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
 <?php
-include_once ("../webdesign/header/header.php");
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
+?>
 
-
+<?php
 
 $whichActive = 5;
 $imageCustomer = "../images/customerimage/";
@@ -69,8 +75,8 @@ $PageName="Payment History";
 include_once("../webdesign/orderWizard/wizardOrder.php");
 ?>
 
-<div class="container">
-    <div class="col-12  shadow border card" style="background-color: #80bdff">
+<div class="container mt-5">
+    <div class="row" style="background-color: #80bdff">
         <?php
         $sql='SELECT py.id,(SELECT u.username FROM user as u where u.id=py.user_id) as sender,
 (SELECT u.username FROM user as u where u.id=t.user_id) as receiver,py.amount,
@@ -86,7 +92,7 @@ WHERE (ot.id='.$orderDetail_id.')';
 for($k=0;$k<count($historyPayment);$k++)
 {
 
-   $display.=' <div class="col-12  shadow border card-body mt-3" >
+   $display.=' <div class="col-sm-12   col-12 col-md-6 col-lg-6    card" >
         <div class="form-group row" >
             <label class="col-4 col-form-label" > Payment Id </label >
             <label class="col-8 col-form-label" > '.$historyPayment[$k][0].'</label >
@@ -173,7 +179,7 @@ for($k=0;$k<count($historyPayment);$k++)
 
 
     <h1 align = "center" >Your received Payment </h1 >
-    <div class="col-12">
+    <div class="row">
 
         <?php
 
@@ -183,7 +189,7 @@ $display='';
         for($t=0;$t<count($WhyPayment);$t++)
         {
 
-    $display.='<div class="col-12  shadow border card-body mb-3" >
+    $display.='<div class="col-sm-12   col-12 col-md-6 col-lg-6    card" >
         <div class="form-group row" >
             <label class="col-4 col-form-label" > Payment Id </label >
             <label class="col-8 col-form-label" > '.$WhyPayment[$t][0].'</label >
@@ -235,14 +241,9 @@ $display='';
 
 
 <?php
-include_once ("../webdesign/footer/footer.php");
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
 ?>
-<script>
-
-
-</script>
-</body>
-</html>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
 ?>

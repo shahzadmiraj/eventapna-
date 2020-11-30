@@ -100,18 +100,6 @@ if($processInformation[0][5]=="") //Not Booked Order yet
     </div>';
 
 }
-else
-{
-    echo '<div class="container-fluid">
-
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Order</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-        </div>
-    </div>';
-}
 
 
 if($processInformation[0][4]==0)
@@ -158,7 +146,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<form id="formEditCustomer" class="container-fluid">
+<form id="formEditCustomer" class="container-fluid row">
 
     <input hidden type="number" value="<?php echo $userid;?>" name="userid">
 
@@ -167,12 +155,12 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
     echo '<input id="customerId" type="number" name="customerid" hidden value="'.$customerId.'">';
     ?>
-        <div id="number_records" class="row">
+        <div id="number_records" class="col-sm-12   col-12 col-md-12 col-lg-12 row">
             <?php
             for($i=0;$i<count($numbers);$i++)
             {
                 echo '
-        <div class="col-sm-12   col-12 col-md- col-lg-4" id="Each_number_row_'.$numbers[$i][1].'">
+        <div class="col-sm-12   col-12 col-md-4 col-lg-4" id="Each_number_row_'.$numbers[$i][1].'">
                 <label  class="col-form-label" for="number_'.$numbers[$i][1].'">Phone no:</label>
                 
                 
@@ -313,7 +301,7 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
     <div class="col-12 shadow">
-        <h4 align="center"><i class="fas fa-user-tag mr-2"></i>Customer personality</h4>
+        <h4 align="center"><i class="fas fa-user-tag mt-5"></i>Customer personality</h4>
         <?php
         $sql='SELECT py.personality,py.rating FROM person as p INNER join orderDetail as od
 on p.id=od.person_id
@@ -325,7 +313,7 @@ p.id='.$customerId.'';
         for ($k=0;$k<count($personalitydetails);$k++)
         {
             echo '
-            <p class=" mb-3 form-control">'.$personalitydetails[$k][0].' <span class="float-right border-danger border font-weight-bold">Rating: '.$personalitydetails[$k][1].' </span> </p>';
+            <p class="mb-3">'.$personalitydetails[$k][0].' <span class="float-right border-danger border font-weight-bold">Rating: '.$personalitydetails[$k][1].' </span> </p>';
         }
         ?>
 

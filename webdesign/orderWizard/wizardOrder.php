@@ -2,13 +2,59 @@
 
 <!------ Include the above in your HEAD tag ---------->
 
+<?php
+
+if(isset($processInformation))
+{
+    if($processInformation[0][4]==1)
+    {
+        echo '
+         <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Order Management </h1>
+            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+                
+                <div class="row form-inline">
+                   <form  method="GET" action="'.$Root.'connection/printOrderDetail.php" class="">
+            <input type="text" hidden name="userdetail" value="'.$userdetail[0][1].'">
+            <input type="number" hidden name="orderid" value="'.$processInformation[0][5].'">
+            <input type="text" hidden name="ViewOrDownload" value="View">
+            <button type="submit"  class="btn btn-outline-warning" ><i class="fa fa-print" aria-hidden="true"></i>View Invoice</button>
+        </form>
+
+        <form  method="GET" action="'.$Root.'connection/printOrderDetail.php" class="">
+            <input type="text" hidden name="userdetail" value="'.$userdetail[0][1].'">
+            <input type="number" hidden name="orderid" value="'.$processInformation[0][5].'">
+            <input type="text" hidden name="ViewOrDownload" value="Download">
+            <button  type="submit" class="btn btn-outline-primary" ><i class="fas fa-cloud-download-alt"></i>Download Invoice</button>
+        </form>
+                
+                </div>
+                
+              
+                
+                
+        </div>
+    </div>
+        
+        
+        ';
+    }
+
+}
+?>
+
 
 <div class="container">
 
     <?php
 
 
-    if(isset($processInformation)) {
+    if(isset($processInformation))
+    {
 
 
         $sql = 'SELECT  `orderDetail_id` FROM `BookingProcess` WHERE (id=' . $pid . ')AND(token="' . $token . '")';
