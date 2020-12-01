@@ -61,7 +61,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
     <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
     <link rel="stylesheet" href="../webdesign/css/loader.css">
     <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
@@ -84,15 +83,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 include('../companyDashboard/includes/endHeader.php');
 include('../companyDashboard/includes/navbar.php');
 ?>
-    <div class="container-fluid">
 
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Order Booked</h1>
-            <a href="#" class="btn btn-sm btn-primary shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> Order Preview</a>
-        </div>
-    </div>
 
 <?php
 if($processInformation[0][4]==0)

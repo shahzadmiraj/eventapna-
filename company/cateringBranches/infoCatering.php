@@ -31,9 +31,10 @@ ISNULL(cl.expire)AND
 $cateringdetail=queryReceive($sql);
 
 $userid=$_COOKIE['userid'];
+
+include('../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -45,33 +46,43 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Edit Catering Services,Food Services Company Management,Food Branch Edit ,Food branches Chagnes,Catering  system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
-    <script src="../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../webdesign/css/complete.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script><!--
+    <script type="text/javascript" src="../bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
     <link rel="stylesheet" href="../../mapRadius/css/gmaps-lat-lng-radius.css" type="text/css">
 
 
 
 
-    <style>
-
-    </style>
-</head>
-<body>
-
 
 
 <?php
-include_once ("../../webdesign/header/header.php");
-
+include('../../companyDashboard/includes/endHeader.php');
+include('../../companyDashboard/includes/navbar.php');
 ?>
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Edit Catering Branch</h1>
+
+        </div>
+    </div>
+
 <?php
 $HeadingImage=$cateringdetail[0][1];
 $HeadingName=$cateringdetail[0][0];
@@ -83,9 +94,9 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-<div class="container card">
+<div class="container">
 
-    <form id="formcatering">
+    <form id="formcatering" class="row">
 
         <input type="number" hidden name="userid" value="<?php echo $userid; ?>">
         <input type="number" hidden name="cateringid" value="<?php echo $cateringid; ?>">
@@ -94,7 +105,7 @@ include_once ("../ClientSide/Company/Box.php");
         <input type="text" hidden name="PreviousRadius" value="<?php echo $cateringdetail[0][5]; ?>">
         <input type="text" hidden name="Previouslocationid" value="<?php echo $cateringdetail[0][2]; ?>">
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Catering Branch Name:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -103,7 +114,7 @@ include_once ("../ClientSide/Company/Box.php");
                 <input id="cateringname" name="cateringname" class="form-control" type="text" value="<?php echo $cateringdetail[0][0]; ?>">
             </div>
         </div>
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Catering Branch Image:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -115,7 +126,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label">Catering Manager :</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -153,7 +164,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Advance  Online booking %</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -164,7 +175,7 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
 
 
-        <div class="form-group row" hidden>
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6" hidden>
             <label class="col-form-label ">Latitude:</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -174,7 +185,7 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
-        <div class="form-group row" hidden>
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6" hidden>
             <label class="col-form-label ">longitude</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -184,7 +195,7 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Address</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -194,7 +205,7 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">City</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -204,7 +215,7 @@ include_once ("../ClientSide/Company/Box.php");
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Country</label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -215,7 +226,7 @@ include_once ("../ClientSide/Company/Box.php");
         </div>
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="col-form-label ">Target Radius / Online market show dishes with in   </label>
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
@@ -232,15 +243,13 @@ include_once ("../ClientSide/Company/Box.php");
             <button class="copybtn" data-clipboard-target="#pos-output"><img class="clippy" src="https://clipboardjs.com/assets/images/clippy.svg" width="12" alt="Copy to clipboard"></button>
             <div id="pos-output">Start by searching for the city...</div>
         </div>
-        <div id="map" style="height: 80vh"></div>
-        <div class="form-group row">
-            <h3 align="center">  <i class="fas fa-map-marker-alt"></i>Address(optional)</h3>
-        </div>
-        <div class="form-group row col-12 mb-5">
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12" id="map" style="height: 80vh"></div>
+      
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12 form-inline">
 
 
-            <button id="Expire" type="button" class="  btn btn-danger col-6 form-control " ><span class="fas fa-window-close "></span>  Delete</button>
-            <button id="submiteditcatering" type="button" class="btn btn-primary col-6 " value="Submit"><i class="fas fa-check "></i>Submit</button>
+            <button id="Expire" type="button" class="  btn btn-danger col-sm-6   col-6 col-md-6 col-lg-6" ><span class="fas fa-window-close "></span>  Delete</button>
+            <button id="submiteditcatering" type="button" class="btn btn-primary col-sm-6   col-6 col-md-6 col-lg-6" value="Submit"><i class="fas fa-check "></i>Submit</button>
 
         </div>
     </form>
@@ -253,9 +262,7 @@ include_once ("../ClientSide/Company/Box.php");
 
 
 <script src="../../mapRadius/js/gmaps-lat-lng-radius.js"></script>
-<?php
-include_once ("../../webdesign/footer/footer.php");
-?>
+
 
 
 <script type="text/javascript" src="../../webdesign/JSfile/JSFunction.js"></script>
@@ -365,8 +372,7 @@ include_once ("../../webdesign/footer/footer.php");
 
 </script>
 
-</body>
-</html>
+
 <?php
 include_once ("../../webdesign/footer/EndOfPage.php");
 ?>

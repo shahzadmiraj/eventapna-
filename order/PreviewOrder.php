@@ -137,7 +137,7 @@ include('../companyDashboard/includes/navbar.php');
 
             if ($result[0][1] != "") {
                 echo '
-             <a href="../dish/AllSelectedDishes.php?' . $Query . '" class="h-25 col-5   col-md-3 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>';
+             <a href="../dish/dishDisplay.php?' . $Query . '" class="h-25 col-5   col-md-3 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>';
             }
 
         }

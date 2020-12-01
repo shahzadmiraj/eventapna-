@@ -390,9 +390,9 @@ $usersNav=queryReceive($sql);
 
 <!-- Nav Item - Tables -->
 <li class="nav-item">
-  <a class="nav-link" href="tables.html">
+  <a class="nav-link" href="<?php echo $Root; ?>company/cateringBranches/packagesCatering/packagecaters.php">
     <i class="fas fa-fw fa-table"></i>
-    <span>Tables</span></a>
+    <span>Manage Cater Deal</span></a>
 </li>
 
 <!-- Divider -->

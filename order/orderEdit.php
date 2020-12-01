@@ -28,9 +28,9 @@ $sql='SELECT sum(amount) FROM `payment` WHERE IsReturn=0 AND orderDetail_id='.$o
 $PaidAmount=queryReceive($sql);
 
 
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -42,27 +42,33 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Add Order Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <script src="../jquery-3.3.1.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <script src="../jquery-3.3.1.js"></script><!--
+    <script type="text/javascript" src="../bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
     <script src="../webdesign/JSfile/JSFunction.js"></script>
-    <style>
 
-    </style>
-</head>
-<body>
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="../webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
 
 <?php
-include_once ("../webdesign/header/header.php");
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
+?>
 
-
-
-
+<?php
 $whichActive = 2;
 $imageCustomer = "../images/customerimage/";
 $PageName="Catering Order";
@@ -74,8 +80,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 <div class="container">
 
-
-    <form class="card container" id="editorder">
+    <form class="row" id="editorder">
         <?php
             echo '<input name="orderid" type="number" hidden value="'.$orderDetail[0][0].'">
             
@@ -97,7 +102,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
             ';
         ?>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="persons" class="col-form-label"> No of Guests </label>
 
 
@@ -111,7 +116,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="time" class="col-form-label">Delivery Time</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -125,7 +130,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="date" class="col-form-label">Delivered Date (Year,Month,day)</label>
 
 
@@ -142,23 +147,11 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group row">
-            <label for="describe" class="col-form-label">Describe order </label>
 
 
 
 
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
-                </div>
-                <textarea name="describe"  class="form-control"  id="describe"><?php echo $orderDetail[0][2];?></textarea>
-            </div>
-        </div>
-
-
-
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="branchOrder" class="col-form-label">Order in branch :</label>
 
 
@@ -196,7 +189,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="orderStatus" class="col-form-label">Order Status </label>
 
 
@@ -227,20 +220,11 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
 
-        <div class="form-group row">
-            <label for="address" class="col-form-label">Address:</label>
-
-            <div class="input-group mb-3 input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
-                </div>
-                <textarea  id="address" name="address" class="form-control form-control" placeholder="destination address "><?php echo $orderDetail[0][14];?>  </textarea>
-            </div>
-        </div>
 
 
 
-        <div class="form-group row">
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="total_amount">Total amount :(Dishes Amount)</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -254,7 +238,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="Discount">Discount </label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -266,7 +250,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="Charges">Extra Charges </label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -279,7 +263,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
         </div>
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="remaining">Paid Amount </label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -290,7 +274,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="remaining">Remaining Amount:</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -306,7 +290,7 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-        <div class="form-group row">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label class="form-check-label" for="booking_date">Visited Date (Year,Month,day)</label>
 
             <div class="input-group mb-3 input-group-lg">
@@ -321,7 +305,32 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         </div>
 
-        <div class="form-group row justify-content-center">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <label for="address" class="col-form-label">Address:</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i></span>
+                </div>
+                <textarea  id="address" name="address" class="form-control form-control" placeholder="destination address "><?php echo $orderDetail[0][14];?>  </textarea>
+            </div>
+        </div>
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <label for="describe" class="col-form-label">Describe order </label>
+
+
+
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comments"></i></span>
+                </div>
+                <textarea name="describe"  class="form-control"  id="describe"><?php echo $orderDetail[0][2];?></textarea>
+            </div>
+        </div>
+
+        <div class="form-inline col-sm-12   col-12 col-md-12 col-lg-12">
 
             <?php
             if($processInformation[0][4]==0)
@@ -357,9 +366,6 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-<?php
-include_once ("../webdesign/footer/footer.php");
-?>
 <script>
     $(document).ready(function () {
 
@@ -466,8 +472,10 @@ include_once ("../webdesign/footer/footer.php");
     });
 
 </script>
-</body>
-</html>
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
 ?>
