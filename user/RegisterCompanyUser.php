@@ -13,9 +13,11 @@ RedirectOtherwiseOnlyAccessUsersWho("Owner","../index.php");
 $sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
 $userdetail=queryReceive($sql);
 $companyid=$userdetail[0][0];
+
+include('../companyDashboard/includes/startHeader.php'); //html
+
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -27,133 +29,124 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Company User Register page Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
-    <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <script type="text/javascript" src="../webdesign/JSfile/JSFunction.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+<script src="<?php echo $Root;?>jquery-3.3.1.js"></script><!--
+    <script type="text/javascript" src="../bootstrap.min.js"></script>-->
+<link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
 
-    <link rel="stylesheet" type="text/css" href="../webdesign/css/complete.css">
+<script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
 
-<style>
 
-</style>
 
-</head>
-<body>
+<!-- Custom fonts for this template-->
+<link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+<link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+<!-- Custom styles for this template-->
+<link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
 <?php
-include_once ("../webdesign/header/header.php");
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
 ?>
-<div class="container">
-
-    <div class="row ">
-        <div class="col-md-4">
-        </div>
-
-        <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
-            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-sign-in-alt"></i>Sign Up in company</h1>
-            <h4 id="error"></h4>
-            <form class="col-12" id="formLogin">
-                <input type="hidden" name="Companyid" value="<?php echo $companyid;?>">
-
-                <div class="form-group row">
-                    <label class="col-form-label">User Name</label>
-                    <div class="input-group mb-3 input-group-lg">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        </div>
-                        <input id="username" type="text" class="form-control" name="username" placeholder="Username">
-                    </div>
-                </div>
 
 
-                <div class="form-group row ">
-                    <label class="col-form-label">Email</label>
-                    <div class="input-group mb-3 input-group-lg ">
-                        <div class="input-group-prepend ">
-                            <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
-                        </div>
-                        <input id="Email" type="text" class="form-control" name="Email" placeholder="Email ">
-                    </div>
-                </div>
 
+<div class="container-fluid">
 
-                <div class="form-group row" >
-                    <label class="col-form-label">Phone No:<small>03XXXXXXXXX | 03XX-XXXXXXXXX | +92XXXXXXXX </small></label>
-                    <div class="input-group mb-3 input-group-lg">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                        </div>
-                        <input id="PhoneNo" type="text" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
-                    </div>
-                </div>
-
-                <div class="form-group row"  >
-                    <label class="col-form-label">Image (Optional)</label>
-                    <div class="input-group mb-3 input-group-lg">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-camera-retro"></i></span>
-                        </div>
-                        <input id="Image" type="file" class="form-control" name="image" >
-                    </div>
-                </div>
-
-                <div class="form-group row ">
-                    <label class="col-form-label">Job Status</label>
-                    <div class="input-group mb-3 input-group-lg ">
-                        <div class="input-group-prepend ">
-                            <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
-                        </div>
-                        <select  name="jobtitle" class="form-control">
-                            <option value="Owner">Owner of company</option>
-                            <option value="Employee">Working Employee At company</option>
-                            <option value="Viewer">Viewer (Only View Orders of Company)</option>
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="form-group row">
-                    <label class="col-form-label">Password</label>
-                    <div class="input-group mb-3 input-group-lg">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                        </div>
-                        <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-                    </div>
-                </div>
-
-
-                <p class="form-group">
-                    <input type="checkbox" name="checkbox" value="check" id="agree" class="form-check-inline" /> I have read and agree to the <a href="../Policy/TermsConditions.php">Terms and Conditions and Privacy Policy</a>
-                </p>
-
-                <div class="row">
-                    <button id="login" type="button" class="btn btn-warning form-control "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-<!--                        Already have a account<a href="userLogin.php">Sign In</a>-->
-                    </div>
-                </div>
-
-            </form>
-        </div>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-registered"></i> Add User</h1>
+        <h4 id="error"></h4>
     </div>
-
-
 </div>
 
+<div class="container" >
+    <form class="row" id="formLogin">
+        <input type="hidden" name="Companyid" value="<?php echo $companyid;?>">
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label">User Name</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input id="username" type="text" class="form-control" name="username" placeholder="Username">
+            </div>
+        </div>
 
 
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6 ">
+            <label class="col-form-label">Email</label>
+            <div class="input-group mb-3 input-group-lg ">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+                </div>
+                <input id="Email" type="text" class="form-control" name="Email" placeholder="Email ">
+            </div>
+        </div>
 
-<?php
-include_once ("../webdesign/footer/footer.php");
-?>
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6" >
+            <label class="col-form-label">Phone No:<small>03XXXXXXXXX | 03XX-XXXXXXXXX | +92XXXXXXXX </small></label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                </div>
+                <input id="PhoneNo" type="text" class="form-control" name="PhoneNo" placeholder="Phone No 03XXXXXXXX">
+            </div>
+        </div>
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6"  >
+            <label class="col-form-label">Image (Optional)</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-camera-retro"></i></span>
+                </div>
+                <input id="Image" type="file" class="form-control" name="image" >
+            </div>
+        </div>
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6 ">
+            <label class="col-form-label">Job Status</label>
+            <div class="input-group mb-3 input-group-lg ">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+                </div>
+                <select  name="jobtitle" class="form-control">
+                    <option value="Owner">Owner of company</option>
+                    <option value="Employee">Working Employee At company</option>
+                    <option value="Viewer">Viewer (Only View Orders of Company)</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label">Password</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+        </div>
+
+
+            <p class="col-sm-12   col-12 col-md-12 col-lg-12 text-center">
+                <input type="checkbox" name="checkbox" value="check" id="agree" class="form-check-inline" /> I have read and agree to the <a href="../Policy/TermsConditions.php">Terms and Conditions and Privacy Policy</a>
+            </p>
+        <div class="col-sm-12   col-12 col-md-12 col-lg-12 form-inline">
+            <button  type="button" class="cancelform  btn btn-danger col-sm-6   col-6 col-md-6 col-lg-6" ><span class="fas fa-window-close "></span>  Cancel</button>
+
+            <button id="login" type="button" class="btn btn-primary col-sm-6   col-6 col-md-6 col-lg-6 "  ><i class="fas fa-sign-in-alt"></i> Sign UP</button>
+        </div>
+
+
+    </form>
+</div>
+
 <script>
 
     $(document).ready(function ()
@@ -161,6 +154,10 @@ include_once ("../webdesign/footer/footer.php");
         $.getScript("../webdesign/JSfile/JSFunction.js");
 
 
+        $(".cancelform").click(function ()
+        {
+            window.history.back();
+        });
         $('#login').click(function ()
         {
 
@@ -220,8 +217,10 @@ include_once ("../webdesign/footer/footer.php");
 
 
 </script>
-</body>
-</html>
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 
 
 <?php

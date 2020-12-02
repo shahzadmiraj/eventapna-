@@ -205,7 +205,7 @@ include('../../companyDashboard/includes/navbar.php');
         <div class="col-sm-12   col-12 col-md-12 col-lg-12 form-inline">
         <button  type="button" class="cancelform  btn btn-danger col-sm-6   col-6 col-md-6 col-lg-6" ><span class="fas fa-window-close "></span>  Cancel</button>
         <button  type="button" id="submitform" class="btn btn-primary  col-sm-6   col-6 col-md-6 col-lg-6" ><i class="fas fa-check "></i>  Submit</button>
-    </div>
+       </div>
     </form>
 </div>
 

@@ -395,6 +395,92 @@ $usersNav=queryReceive($sql);
     <span>Manage Cater Deal</span></a>
 </li>
 
+
+
+       <!-- Divider -->
+       <hr class="sidebar-divider">
+
+       <!-- Heading company-->
+       <div class="sidebar-heading">
+           User
+       </div>
+
+
+       <?php
+
+       $displayNav='';
+       for($iNav=0;$iNav<count($usersNav);$iNav++)
+       {
+
+           $img= "";
+
+           if((file_exists($Root.'images/hall/'.$usersNav[$iNav][2]))&&($usersNav[$iNav][2]!=""))
+           {
+               $img= $Root."images/hall/".$usersNav[$iNav][2];
+           }
+           else
+           {
+               $img=$Root.'images/systemImage/imageNotFound.png';
+           }
+
+
+           $tokenCom=$usersNav[$iNav][4];
+           $EncordedCom=$usersNav[$iNav][0];
+           $QueryCom='uid='.$EncordedCom.'&token='.$tokenCom;
+           ?>
+
+
+           <?php
+           $displayNav.='
+              
+          
+                 <li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesUserProvile'.$iNav.'" aria-expanded="true" aria-controls="collapsePages">
+    <i class="fas fa-user"></i>
+    <span>'.$usersNav[$iNav][1].'</span>
+  </a>
+  <div id="collapsePagesUserProvile'.$iNav.'" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <h6 class="collapse-header">User Management</h6>
+    
+                 
+           ';
+
+           //start link
+
+
+
+
+           $displayNav.='<a href="'.$Root.'user/UserProfile.php?' . $QueryCom . '" class="collapse-item"><i class="fas fa-id-card "></i> User Profile</a>';
+
+
+           //end link
+
+           $displayNav.=' </div>
+  </div>
+</li>';
+
+           ?>
+
+
+
+           <?php
+       }
+
+
+       echo $displayNav;
+
+
+
+
+       ?>
+       
+       
+       
+       
+       
+
+
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
 
@@ -402,6 +488,11 @@ $usersNav=queryReceive($sql);
 <div class="text-center d-none d-md-inline">
   <button class="rounded-circle border-0" id="sidebarToggle"></button>
 </div>
+
+
+
+
+
 
 </ul>
 <!-- End of Sidebar -->
