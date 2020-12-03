@@ -59,3 +59,6 @@ icon: "error",
 timer: 1500,
 html: true
 });
+
+$newDate = new DateTime($PrintedDate);
+$newDate->format('d M Y')

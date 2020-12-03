@@ -66,15 +66,6 @@ include('../../companyDashboard/includes/endHeader.php');
 include('../../companyDashboard/includes/navbar.php');
 
     ?>
-    <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Booking New Order</h1>
-            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
-        </div>
-    </div>
 
     <div class="container">
 
@@ -314,7 +305,6 @@ include('../../companyDashboard/includes/navbar.php');
         </div>
 
         <div class=" col-12  justify-content-center ">
-
             <a id="btnbackhistory"  class="col-5  btn btn-danger text-white"> << Back </a>
             <a id="submitform" data-href="orderInfo/orderItem.php?<?php echo 'pid='.$pid.'&token='.$token ?>" class="col-4 btn btn-primary text-white">  Next >> </a>
         </div>
@@ -522,19 +512,7 @@ include('../../companyDashboard/includes/navbar.php');
                         return false;
                     }
                 }
-                /*            var state=false;
-                            if(validationWithString("date","Please enter date"))
-                            {
-                                state=true;
-                            }
-                            if(validationWithString("time","Please enter DayTime"))
-                            {
-                                state=true;
-                            }
-                            if(validationWithString("perheadwith","Please Enter package type"))
-                            {
-                                state=true;
-                            }*/
+
                 var formdata = new FormData($("#formOfNewHallOrder")[0]);
                 formdata.append("packageDateid", packageDateid);
                 formdata.append("option", "createOrderofHall");

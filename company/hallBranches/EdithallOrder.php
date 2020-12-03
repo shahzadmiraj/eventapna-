@@ -146,7 +146,9 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
             </div>
-            <input   id="date" name="date" type="date" class="checkpackage form-control" value="<?php echo $detailorder[0][14]; ?>">
+            <input   id="date" name="date" type="date" class="checkpackage form-control" value="<?php echo $detailorder[0][14]; ?>" min="<?php
+            echo date('Y-m-d');
+            ?>" >
         </div>
     </div>
     <div class="col-sm-12   col-12 col-md-6 col-lg-6">
@@ -417,13 +419,17 @@ include_once("../../webdesign/orderWizard/wizardOrder.php");
 
        $display.=' <select id="orderStatus"  name="orderStatus" class=" form-control">
         <option value="'.$detailorder[0][13].'">'.$detailorder[0][13].'</option>';
-        for($i=0;$i<count($status);$i++)
-        {
-            if($status[$i]!=$detailorder[0][13])
-            {
-                $display.='<option value="'.$status[$i].'">'.$status[$i].'</option>';
-            }
-        }
+
+       if($processInformation[0][4]==1)
+       {
+                for($i=0;$i<count($status);$i++)
+                {
+                    if($status[$i]!=$detailorder[0][13])
+                    {
+                        $display.='<option value="'.$status[$i].'">'.$status[$i].'</option>';
+                    }
+                }
+       }
         $display.=' </select>
             
         </div>

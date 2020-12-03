@@ -21,7 +21,7 @@ lockTableForWrite('orderDetail WRITE, hallChoiceSelect WRITE,BookingProcess as b
     $perheadwith=$_POST['perheadwith'];
     $describe=$_POST['describe'];
     $totalamount=chechIsEmpty($_POST['totalamount']);
-    $currentdate=date('Y-m-d');
+    $currentdate=date('Y-m-d h:i:s');
     $Discount=chechIsEmpty($_POST['Discount']);
     $Charges=chechIsEmpty($_POST['Charges']);
     $timestamp = date('Y-m-d H:i:s');
@@ -48,14 +48,14 @@ lockTableForWrite('orderDetail WRITE, hallChoiceSelect WRITE,BookingProcess as b
     $catering="NULL";
     if($perheadwith==1)
     {
-        $catering="'Running'";
+        $catering="'Draft'";
         $cateringid=$_POST['cateringid'];
     }
 
     $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `packageDate_id`, `user_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
         `status_catering`,`describe`, `address`, `location_id`, `discount`, `extracharges`) 
-        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageDateid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Running","'.$date.'","'.$currentdate.'",
+        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageDateid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Draft","'.$date.'","'.$currentdate.'",
         "'.$time.'",'.$catering.',"'.$describe.'",NULL,NULL,'.$Discount.','.$Charges.')';
     querySend($sql);
     $pid=$_POST['pid'];
@@ -161,6 +161,51 @@ VALUES (NULL,'.$packageDetails[0][1].','.$packageDetails[0][2].',"'.$packageDeta
 WHERE  id='.$order.'';
          querySend($sql);
      }
+ }
+ else if($_POST['option']=="TransferDraftOrderToProcess")
+ {
+     $orderId=$_POST['OrderId'];
+
+     $sql='SELECT od.hall_id,od.catering_id,od.total_person,od.destination_date,destination_time,od.packageDate_id FROM orderDetail as  od WHERE od.id='.$orderId.'';
+     $result=queryReceive($sql);
+     if($result[0][0]!="")
+     {
+         //hall  may be also catering
+         $sql='SELECT p.isFood,p.dayTime from packageDate as pd INNER join packages as p 
+on (p.id=pd.package_id)
+where 
+pd.id='.$result[0][5];
+         $packageDetail=queryReceive($sql);
+
+         if(!IsAvailableOrderAgainCheck($orderId,$result[0][2],$result[0][3],$packageDetail[0][1],$packageDetail[0][0],$result[0][0]))
+         {
+             echo "SameOrderBooked";
+             exit();
+         }
+         if($packageDetail[0][0]==1)
+         {
+             //yes also food
+
+             $sql='UPDATE `orderDetail` SET `status_hall`="Running",`status_catering`="Running" WHERE id='.$orderId;
+             querySend($sql);
+         }
+         else
+         {
+             // no food just catering
+             $sql='UPDATE `orderDetail` SET `status_hall`="Running" WHERE id='.$orderId;
+             querySend($sql);
+         }
+
+
+     }
+     else
+     {
+            //only catering
+         $sql='UPDATE `orderDetail` SET `status_catering`="Running" WHERE id='.$orderId;
+         querySend($sql);
+     }
+
+
  }
 unlockTables();
  ?>

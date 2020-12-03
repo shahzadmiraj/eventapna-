@@ -132,19 +132,12 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
 
         <div class="col-sm-12   col-12 col-md-6 col-lg-6">
             <label for="date" class="col-form-label">Delivered Date (Year,Month,day)</label>
-
-
-
-
-
             <div class="input-group mb-3 input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                <input id="date"  name="destination_date"  type="date" class="form-control" value="<?php echo $orderDetail[0][5];?>">
+                <input id="date"  name="destination_date"  type="date" class="form-control">
             </div>
-
-
         </div>
 
 

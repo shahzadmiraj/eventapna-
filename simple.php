@@ -225,3 +225,5 @@ $('#exampleModalCenter').modal();
 
 
 e.stopImmediatePropagation();
+
+$status=array("Running","Delivered","Cancel","Clear","Draft");

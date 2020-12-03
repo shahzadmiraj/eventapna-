@@ -4,10 +4,75 @@
 
 <?php
 
+
 if(isset($processInformation))
 {
-    if($processInformation[0][4]==1)
+    if(($processInformation[0][4]==1)AND(onlyAccessUsersWho("Owner,Employee")))
     {
+        $sql='SELECT od.booking_date FROM orderDetail as  od WHERE od.id='.$processInformation[0][5].'';
+        $result1=queryReceive($sql);
+        $newDate = new DateTime($result1[0][0]);
+        if($newDate->format('Y-m-d')==date('Y-m-d'))
+        {
+            echo '
+            <div class="container-fluid">
+                        <h4 class="col-12 btn btn-warning" >Order is on Draft  <div  class="float-right">For Activation <a href="#" id="DraftOrderIntoProcess">click here</a></div></h4>
+            </div>
+            ';
+            ?>
+            <script>
+
+                $(document).ready(function () {
+
+                    $("#DraftOrderIntoProcess").click(function (e) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            url: "<?php echo $Root;?>company/hallBranches/HallOrder/OrderAddOrEdit.php",
+                            method: "POST",
+                            data: {"OrderId":"<?php echo $processInformation[0][5];?>","option":"TransferDraftOrderToProcess"},
+                            contentType: false,
+                            processData: false,
+
+                            beforeSend: function() {
+                                $('#pleaseWaitDialog').modal();
+                            },
+                            success:function (data)
+                            {
+                                $('#pleaseWaitDialog').modal('hide');
+                                if($.trim(data)==="SameOrderBooked")
+                                {
+                                    alert("Same Order Has been booked yet");
+                                }
+                                else if($.trim(data)!="")
+                                {
+                                    alert(data);
+                                }
+                                else
+                                {
+                                    alert("Congratulation Order is now Process ");
+                                }
+                                location.reload();
+
+                            }
+
+
+                        });
+
+
+                    });
+                });
+
+
+            </script>
+
+
+<?php
+
+
+        }
+
+
         echo '
          <div class="container-fluid">
 
@@ -42,6 +107,18 @@ if(isset($processInformation))
         
         
         ';
+    }
+    else
+    {
+        echo '
+            <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Order Create  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Draft (untill complete)</a></h1>
+           
+        </div>
+    </div>';
     }
 
 }

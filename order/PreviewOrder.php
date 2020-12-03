@@ -24,7 +24,7 @@ $cateringid='';
 $orderId="";
 
 $orderId=$processInformation[0][5];
-$sql='SELECT od.hall_id,od.catering_id FROM orderDetail as  od WHERE od.id='.$orderId.'';
+$sql='SELECT od.hall_id,od.catering_id,od.booking_date FROM orderDetail as  od WHERE od.id='.$orderId.'';
 $result=queryReceive($sql);
 if($result[0][0]!="")
 {
@@ -41,11 +41,7 @@ $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
 
 
-if($processInformation[0][4]==0)
-{
-    $sql='UPDATE `BookingProcess` SET `IsProcessComplete`=1 WHERE id='.$processInformation[0][0].'';
-    querySend($sql);
-}
+
 include('../companyDashboard/includes/startHeader.php'); //html
 ?>
         <?php
@@ -101,6 +97,12 @@ include('../companyDashboard/includes/navbar.php');
     $Query='pid=' . $pid . '&token='.$token;
     ?>
 
+
+
+
+
+
+
     <div class="container row m-auto  alert-light">
 
 
@@ -108,14 +110,14 @@ include('../companyDashboard/includes/navbar.php');
             <input type="text" hidden name="userdetail" value="<?php echo $userdetail[0][1];?>">
             <input type="number" hidden name="orderid" value="<?php echo $processInformation[0][5];?>">
             <input type="text" hidden name="ViewOrDownload" value="View">
-            <button type="submit"  class="col-12 shadow btn-info ext-center fa-3x" ><i class="fa fa-print" aria-hidden="true"></i><h6>Download PDF Bill</h6></button>
+            <button type="submit"  class="col-12 shadow btn-info ext-center fa-3x" ><i class="fa fa-print" aria-hidden="true"></i><h6>View Invoice</h6></button>
         </form>
 
         <form  method="GET" action="../connection/printOrderDetail.php" class="col-6  col-md-3">
             <input type="text" hidden name="userdetail" value="<?php echo $userdetail[0][1];?>">
             <input type="number" hidden name="orderid" value="<?php echo $processInformation[0][5];?>">
             <input type="text" hidden name="ViewOrDownload" value="Download">
-            <button  type="submit" class="col-12 shadow btn-info m-2 text-center fa-3x" ><i class="fas fa-cloud-download-alt"></i><h6>Download PDF Bill</h6></button>
+            <button  type="submit" class="col-12 shadow btn-info m-2 text-center fa-3x" ><i class="fas fa-cloud-download-alt"></i><h6>Download Invoice</h6></button>
         </form>
 
         <?php
@@ -135,7 +137,8 @@ include('../companyDashboard/includes/navbar.php');
             }
 
 
-            if ($result[0][1] != "") {
+            if ($result[0][1] != "")
+            {
                 echo '
              <a href="../dish/dishDisplay.php?' . $Query . '" class="h-25 col-5   col-md-3 shadow btn-info m-2 text-center fa-3x"><i class="fas fa-concierge-bell "></i><h6>Dishes Booking </h6></a>';
             }

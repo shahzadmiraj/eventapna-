@@ -87,19 +87,7 @@ include('../companyDashboard/includes/navbar.php');
 ?>
 
 <?php
-if($processInformation[0][5]=="") //Not Booked Order yet
-{
-    echo '<div class="container-fluid">
 
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Booking New Order</h1>
-            <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
-        </div>
-    </div>';
-
-}
 
 
 if($processInformation[0][4]==0)
