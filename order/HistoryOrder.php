@@ -9,6 +9,8 @@ include_once ("../connection/connect.php");
 include  ("../access/userAccess.php");
 RedirectOtherwiseOnlyAccessUserOfOrderBooked("Owner,Employee","../index.php");
 
+$sql='SELECT `company_id`,`username`, `jobTitle` FROM `user` WHERE id='.$_COOKIE['userid'].'';
+$userdetail=queryReceive($sql);
 $pid=$_GET['pid'];
 $token=$_GET['token'];
 $sql='SELECT `id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id` FROM `BookingProcess` WHERE (id='.$pid.')AND(token="'.$token.'")';

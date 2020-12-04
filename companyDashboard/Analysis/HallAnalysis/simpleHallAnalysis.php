@@ -1,4 +1,13 @@
-<div class="row">
+
+<?php
+for($i=0;$i<count($ValueOfHallNames);$i++)
+{
+
+
+?>
+
+<div class="row container mt-5">
+    <h4 class="col-12 text-center"><?php echo $ValueOfHallNames[$i];?></h4>
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -10,14 +19,10 @@
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
 
                             <h4>
-                                <?php
-                                $CurrentDateTime = date('Y-m-d H:i:s');
-                                $CurrentDate = date('Y-m-d', strtotime($CurrentDateTime)); // d.m.YYYY
-                                $NextDateTime = date('Y-m-d H:i:s', strtotime($CurrentDateTime . ' +1 day'));
-                                $NextDate = date('Y-m-d', strtotime($NextDateTime)); // d.m.YYYY
-                                $sql="SELECT Count(id) WHERE (hall_id=1) AND (status_hall='Running') AND (destination_date   BETWEEN '" . $CurrentDate . "' AND '" . $NextDate . "' )";
-
+                                <?
+                              echo  $ValueOfHallNext24Process[$i];
                                 ?>
+
 
 
 
@@ -40,14 +45,14 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Online Order Request</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Draft Order/ Online Request</div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
                                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
 
 
-                                    <?php
-                                    $sql="SELECT Count(id) WHERE (hall_id=1) AND (status_hall='Online')";
+                                    <?
+                                    echo  $ValueOfHallDraft[$i];
                                     ?>
 
 
@@ -81,12 +86,8 @@
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Today Orders</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
 
-                            <?php
-                            $CurrentDateTime = date('Y-m-d H:i:s');
-                            $CurrentDate = date('Y-m-d', strtotime($CurrentDateTime)); // d.m.YYYY
-                            $NextDateTime = date('Y-m-d H:i:s', strtotime($CurrentDateTime . ' +1 day'));
-                            $NextDate = date('Y-m-d', strtotime($NextDateTime)); // d.m.YYYY
-                            $sql="SELECT Count(id) WHERE (hall_id=1) AND (status_hall='Running') AND (destination_date ='" . $CurrentDate . "')";
+                            <?
+                            echo  $ValueOfHallProcess[$i];
                             ?>
 
 
@@ -111,10 +112,10 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Today New Booked Orders</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
 
-                            <?php
-                            $sql="SELECT Count(id) WHERE (hall_id=1) AND (status_hall='Running') AND (booking_date ='" . $CurrentDate . "')";
-                            ?>
 
+                            <?
+                            echo  $ValueOfHallTodayFunctionBooked[$i];
+                            ?>
 
                         </div>
                     </div>
@@ -137,9 +138,8 @@
                         <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Today Earning</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
 
-                            <?php
-                            $sql="SELECT  sum(total_amount + extracharges - discount) WHERE (hall_id=1) AND (status_hall='Running') AND (destination_date ='" . $CurrentDate . "')";
-
+                            <?
+                            echo  $ValueOfHallTodayEarning[$i];
                             ?>
 
 
@@ -160,4 +160,9 @@
 
 
 </div>
+    <hr>
+<?php
+}
+    ?>
+
 

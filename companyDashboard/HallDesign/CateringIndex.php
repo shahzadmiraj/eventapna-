@@ -1,3 +1,18 @@
+<?php
+
+$ValueOfCateringNext24Process=array();
+$ValueOfCateringProcess=array();
+$ValueOfCateringDelivered=array();
+$ValueOfCateringClear=array();
+$ValueOfCateringCancel=array();
+$ValueOfCateringDraft=array();
+$ValueOfCateringTodayFunctionBooked=array();
+$ValueOfCateringNames=array();
+$ValueOfCateringTodayEarning=array();
+?>
+
+
+
 
 <div class="row">
 
@@ -8,6 +23,27 @@
     $displayNav='';
     for($iCom=0;$iCom<count($cateringsCom);$iCom++)
     {
+
+        $sql='SELECT COUNT(id) FROM orderDetail as od WHERE (od.catering_id='.$cateringsCom[$iCom][0].')AND(od.status_catering="Running")AND(od.destination_date="'.$CurrentDate.'")';
+        $ValueOfCateringProcess[$iCom]=queryReceive($sql)[0][0];
+        $sql='SELECT COUNT(id) FROM orderDetail as od WHERE (od.catering_id='.$cateringsCom[$iCom][0].')AND(od.status_catering="Running")AND(od.destination_date BETWEEN "'.$CurrentDate.'" AND "'.$NextDate.'" )';
+        $ValueOfCateringNext24Process[$iCom]=queryReceive($sql)[0][0];
+        $sql='SELECT COUNT(id) FROM orderDetail as od WHERE (od.catering_id='.$cateringsCom[$iCom][0].')AND(od.status_catering="Delivered")AND(od.destination_date="'.$CurrentDate.'")';
+        $ValueOfCateringDelivered[$iCom]=queryReceive($sql)[0][0];
+        $sql='SELECT COUNT(id) FROM orderDetail as od WHERE (od.catering_id='.$cateringsCom[$iCom][0].')AND(od.status_catering="Clear")AND(od.destination_date="'.$CurrentDate.'")';
+        $ValueOfCateringClear[$iCom]=queryReceive($sql)[0][0];
+        $sql='SELECT COUNT(id) FROM orderDetail as od WHERE (od.catering_id='.$cateringsCom[$iCom][0].')AND(od.status_catering="Cancel")AND(od.destination_date="'.$CurrentDate.'")';
+        $ValueOfCateringCancel[$iCom]=queryReceive($sql)[0][0];
+        $sql='SELECT COUNT(id) FROM orderDetail as od WHERE (od.catering_id='.$cateringsCom[$iCom][0].')AND(od.status_catering="Draft")AND(od.destination_date="'.$CurrentDate.'")';
+        $ValueOfCateringDraft[$iCom]=queryReceive($sql)[0][0];
+        $sql='SELECT COUNT(id) FROM orderDetail as od WHERE (od.catering_id='.$cateringsCom[$iCom][0].')AND(od.status_catering="Running")AND( date(od.booking_date)="'.$CurrentDate.'")';
+        $ValueOfCateringTodayFunctionBooked[$iCom]=queryReceive($sql)[0][0];
+
+        $sql='SELECT sum(od.total_amount- od.discount + od.extracharges) FROM orderDetail as od WHERE (od.catering_id='.$cateringsCom[$iCom][0].')AND(od.status_catering="Running")AND( date(od.booking_date)="'.$CurrentDate.'") AND(ISNULL(od.hall_id))';
+        $ValueOfCateringTodayEarning[$iCom]=queryReceive($sql)[0][0];
+
+        $ValueOfCateringNames[$iCom]=$cateringsCom[$iCom][1];
+
 
         $img= "";
 
@@ -48,11 +84,13 @@
             $displayNav.= '<a href="'.$Root.'customer/CustomerCreate.php?' . $QueryCom . '" class="btn btn-primary btn-icon-split"> <span class="icon text-white-50"><i class="fas fa-cart-plus"></i></span> <span class="text">Add Order</span></a><div class="my-2"></div>';
         }
 
-        $displayNav.='<a href="'.$Root.'order/FindOrder.php?order_status=Today_Orders&' . $QueryCom . '" class="btn btn-outline-dark btn-icon-split"><span class="icon text-white-50">  <i class="fas fa-flag"></i></span> <span class="text">Next 24 Process Orders</span></a><div class="my-2"></div>
-                       <a href="'.$Root.'order/FindOrder.php?order_status=Running&' . $QueryCom . '" class="btn btn-warning btn-icon-split"><span class="icon text-white-50"> <i class="fas fa-exclamation-triangle"></i></span> <span class="text">Process Order</span></a><div class="my-2"></div>
-                       <a href="'.$Root.'order/FindOrder.php?order_status=Delivered&' . $QueryCom . '" class="btn  btn-info  btn-icon-split"><span class="icon text-white-50"><i class="fas fa-info-circle"></i></span><span class="text"> Delivered Orders</span></a><div class="my-2"></div>
-                       <a href="'.$Root.'order/FindOrder.php?order_status=Clear&'.$QueryCom . '" class="btn btn-success btn-icon-split"><span class="icon text-white-50">  <i class="fas fa-check"></i></span> <span class="text">Clear Orders</span></a><div class="my-2"></div>
-                       <a href="'.$Root.'order/FindOrder.php?order_status=Cancel&'.$QueryCom.'" class="btn btn-danger btn-icon-split"><span class="icon text-white-50"><i class="fas fa-trash"></i></span> <span class="text">Cancel Orders</span></a><div class="my-2"></div>
+        $displayNav.='<a href="'.$Root.'order/FindOrder.php?order_status=Today_Orders&' . $QueryCom . '" class="btn btn-outline-dark btn-icon-split"><span class="icon text-white-50">  <i class="fas fa-flag"></i></span> <span class="text">Next 24 Process Orders   <button class="btn btn-circle border  border-warning  btn-light"> '.$ValueOfCateringNext24Process[$iCom].'</button></span></a><div class="my-2"></div>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Running&' . $QueryCom . '" class="btn btn-warning btn-icon-split"><span class="icon text-white-50"> <i class="fas fa-exclamation-triangle"></i></span> <span class="text">Process Order <button class="btn btn-circle border  border-warning  btn-light"> '.$ValueOfCateringProcess[$iCom].'</button></span></a><div class="my-2"></div>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Delivered&' . $QueryCom . '" class="btn  btn-info  btn-icon-split"><span class="icon text-white-50"><i class="fas fa-info-circle"></i></span><span class="text"> Delivered Orders <button class="btn btn-circle border  border-warning  btn-light"> '.$ValueOfCateringDelivered[$iCom].'</button></span></a><div class="my-2"></div>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Clear&'.$QueryCom . '" class="btn btn-success btn-icon-split"><span class="icon text-white-50">  <i class="fas fa-check"></i></span> <span class="text">Clear Orders <button class="btn btn-circle border  border-warning  btn-light"> '.$ValueOfCateringClear[$iCom].'</button></span></a><div class="my-2"></div>
+                       <a href="'.$Root.'order/FindOrder.php?order_status=Cancel&'.$QueryCom.'" class="btn btn-danger btn-icon-split"><span class="icon text-white-50"><i class="fas fa-trash"></i></span> <span class="text">Cancel Orders <button class="btn btn-circle border  border-warning  btn-light"> '.$ValueOfCateringCancel[$iCom].'</button></span></a><div class="my-2"></div>
+                              <a href="'.$Root.'order/FindOrder.php?order_status=Draft&'.$QueryCom.'" class="btn btn-outline-danger btn-icon-split"><span class="icon text-white-50"><i class="fas fa-clock"></i></span> <span class="text">Draft Orders <button class="btn btn-circle border  border-warning  btn-light"> '.$ValueOfCateringDraft[$iCom].'</button></span></a><div class="my-2"></div>
+                       
                        <a  href="'.$Root.'company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.php?'. $QueryCom . '" class="btn btn-light btn-icon-split"><span class="icon text-white-50"><i class="far fa-calendar-alt "></i></span> <span class="text">Calender Orders</span></a><div class="my-2"></div>
                        <a  href="'.$Root.'company/ClientSide/Catering/cateringClient.php?'.$QueryCom.'" class="btn btn-outline-primary btn-icon-split"><span class="icon text-white-50"><i class="fab fa-chrome "></i></span> <span class="text">Website</span></a><div class="my-2"></div>';
         if (onlyAccessUsersWho("Owner"))

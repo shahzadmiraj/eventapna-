@@ -1,4 +1,12 @@
-<div class="row">
+<?php
+for($i=0;$i<count($ValueOfCateringNames);$i++)
+{
+
+
+?>
+
+    <div class="row container mt-5">
+        <h4 class="col-12 text-center"><?php echo $ValueOfCateringNames[$i];?></h4>
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -9,8 +17,9 @@
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Next 24h Process Order</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
 
-                            <h4>23</h4>
-
+                            <?
+                            echo  $ValueOfCateringNext24Process[$i];
+                            ?>
                         </div>
                     </div>
                     <div class="col-auto">
@@ -28,18 +37,13 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Online Order Request</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Draft Order/ Online Request</div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">32</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?
+                                    echo  $ValueOfCateringDraft[$i];
+                                    ?></div>
                             </div>
-                            <!--<div class="col">
-                              <div class="progress progress-sm mr-2">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                  aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>-->
-                        </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -47,6 +51,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -58,7 +63,14 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Today Orders</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+
+
+                            <?
+                            echo  $ValueOfCateringProcess[$i];
+                            ?>
+
+                        </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -69,6 +81,31 @@
     </div>
 
 
+                            <!-- Pending Requests Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Today New Booked Orders</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+
+
+                                                    <?
+                                                    echo  $ValueOfCateringTodayFunctionBooked[$i];
+                                                    ?>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -77,7 +114,10 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Today Earning</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">  <?
+                            echo  $ValueOfCateringTodayEarning[$i];
+                            ?>
+                        </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -95,3 +135,6 @@
 
 </div>
 
+    <?php
+}
+?>

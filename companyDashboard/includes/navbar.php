@@ -59,13 +59,13 @@ $usersNav=queryReceive($sql);
 
        <li class="nav-item">
            <a class="nav-link" href="<?php echo $Root; ?>company/ClientSide/Company/ClientCompany.php?c=<?php echo $companyidNav;?>">
-               <i class="fas fa-fw fa-chart-area"></i>
+               <i class="fab fa-chrome "></i>
                <span>Website</span></a>
        </li>
        
        <li class="nav-item">
            <a class="nav-link" href="<?php echo $Root; ?>user/RegisterCompanyUser.php">
-               <i class="fas fa-fw fa-chart-area"></i>
+               <i class="fas fa-id-card "></i>
                <span>+ Add User</span></a>
        </li>
 
@@ -118,6 +118,7 @@ $usersNav=queryReceive($sql);
                        <a href="'.$Root.'order/FindOrder.php?order_status=Delivered&' . $QueryNav . '" class="collapse-item"><i class="fas fa-truck "></i> Delivered Orders</a>
                        <a href="'.$Root.'order/FindOrder.php?order_status=Clear&'.$QueryNav . '" class="collapse-item"><i class="far fa-thumbs-up "></i> Clear Orders</a>
                        <a href="'.$Root.'order/FindOrder.php?order_status=Cancel&'.$QueryNav.'" class="collapse-item"><i class="far fa-trash-alt "></i> Cancel Orders</a>
+                                        <a href="'.$Root.'order/FindOrder.php?order_status=Draft&'.$QueryNav.'" class="collapse-item"><i class="fas fa-clock"></i> Draft Orders</a>
                        <a  href="'.$Root.'company/hallBranches/userDisplay/OrderCalender/OrderCalender.php?'. $QueryNav . '" class="collapse-item"><i class="far fa-calendar-alt "></i> Calender Orders</a>
                        <a  href="'.$Root.'company/ClientSide/Hall/HallClient.php?'.$QueryNav.'" class="collapse-item"><i class="fab fa-chrome "></i> Hall Website</a>';
            if (onlyAccessUsersWho("Owner"))
@@ -189,7 +190,7 @@ $usersNav=queryReceive($sql);
 ?>
 
 
-<li class="nav-item">
+<!--<li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
     <i class="fas fa-fw fa-cog"></i>
     <span>Hall Branch</span>
@@ -201,21 +202,21 @@ $usersNav=queryReceive($sql);
       <a class="collapse-item" href="cards.html">Cards</a>
     </div>
   </div>
-</li>
+</li>-->
 
 
 
 
-<li class="nav-item">
+<!--<li class="nav-item">
   <a class="nav-link" href="register.php">
     <i class="fas fa-fw fa-chart-area"></i>
     <span>Admin Profile</span></a>
-</li>
+</li>-->
 
 
 
 <!-- Nav Item - Utilities Collapse Menu -->
-<li class="nav-item">
+<!--<li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
     <i class="fas fa-fw fa-wrench"></i>
     <span>Utilities</span>
@@ -229,7 +230,7 @@ $usersNav=queryReceive($sql);
       <a class="collapse-item" href="utilities-other.html">Other</a>
     </div>
   </div>
-</li>
+</li>-->
 
 <!-- Divider  Catering -->
 <hr class="sidebar-divider">
@@ -279,6 +280,7 @@ $usersNav=queryReceive($sql);
                        <a href="'.$Root.'order/FindOrder.php?order_status=Delivered&' . $QueryNav . '" class="collapse-item"><i class="fas fa-truck "></i> Delivered Orders</a>
                        <a href="'.$Root.'order/FindOrder.php?order_status=Clear&'.$QueryNav . '" class="collapse-item"><i class="far fa-thumbs-up "></i> Clear Orders</a>
                        <a href="'.$Root.'order/FindOrder.php?order_status=Cancel&'.$QueryNav.'" class="collapse-item"><i class="far fa-trash-alt "></i> Cancel Orders</a>
+                         <a href="'.$Root.'order/FindOrder.php?order_status=Draft&'.$QueryNav.'" class="collapse-item"><i class="fas fa-clock"></i> Draft Orders</a>
                        <a  href="'.$Root.'company/cateringBranches/DisplauUser/Ordercalender/OrderCalender.?'. $QueryNav . '" class="collapse-item"><i class="far fa-calendar-alt "></i> Calender Orders</a>
                        <a  href="'.$Root.'company/ClientSide/Catering/cateringClient.php?'.$QueryNav.'" class="collapse-item"><i class="fab fa-chrome "></i> Website</a>';
            if (onlyAccessUsersWho("Owner"))
@@ -362,7 +364,7 @@ $usersNav=queryReceive($sql);
 
 
 <!-- Nav Item - Pages Collapse Menu -->
-<li class="nav-item">
+<!--<li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
     <i class="fas fa-fw fa-folder"></i>
     <span>Pages</span>
@@ -379,14 +381,14 @@ $usersNav=queryReceive($sql);
       <a class="collapse-item" href="blank.html">Blank Page</a>
     </div>
   </div>
-</li>
+</li>-->
 
 <!-- Nav Item - Charts -->
-<li class="nav-item">
+<!--<li class="nav-item">
   <a class="nav-link" href="charts.html">
     <i class="fas fa-fw fa-chart-area"></i>
     <span>Charts</span></a>
-</li>
+</li>-->
 
 <!-- Nav Item - Tables -->
 <li class="nav-item">
@@ -408,6 +410,10 @@ $usersNav=queryReceive($sql);
 
        <?php
 
+
+       $ActiveUseridNav=$_COOKIE['userid'];
+       $ActiveQueryUser="sdasda";
+       $ActiveNameNav="dsa";
        $displayNav='';
        for($iNav=0;$iNav<count($usersNav);$iNav++)
        {
@@ -427,6 +433,14 @@ $usersNav=queryReceive($sql);
            $tokenCom=$usersNav[$iNav][4];
            $EncordedCom=$usersNav[$iNav][0];
            $QueryCom='uid='.$EncordedCom.'&token='.$tokenCom;
+           if($ActiveUseridNav==$usersNav[$iNav][0])
+           {
+               $ActiveQueryUser=$QueryCom;
+               $ActiveNameNav=$usersNav[$iNav][1];
+
+           }
+
+
            ?>
 
 
@@ -512,7 +526,7 @@ $usersNav=queryReceive($sql);
           </button>
 
           <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+<!--          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
@@ -522,7 +536,7 @@ $usersNav=queryReceive($sql);
               </div>
             </div>
           </form>
-
+-->
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -659,27 +673,35 @@ $usersNav=queryReceive($sql);
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                   
-               ADMIN
+                    <?php
+                     echo $ActiveNameNav;
+                    ?>
                   
                 </span>
                 <img class="img-profile rounded-circle" src="<?php echo $Root; ?>images/systemImage/imageNotFound.png">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="<?php echo $Root; ?>user/UserProfile.php?<?php
+                echo $ActiveQueryUser;
+                ?>">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="<?php echo $Root; ?>user/UserProfile.php?<?php
+                echo $ActiveQueryUser;
+                ?>">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                   Settings
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="<?php echo $Root; ?>user/UserProfile.php?<?php
+                echo $ActiveQueryUser;
+                ?>">
                   <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="<?php echo $Root; ?>user/logout.php" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>

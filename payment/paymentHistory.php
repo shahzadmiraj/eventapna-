@@ -168,9 +168,9 @@ for($k=0;$k<count($historyPayment);$k++)
             </label >
         </div >
     </div >';
-   echo $display;
 
 }
+        echo $display;
 
 ?>
 
