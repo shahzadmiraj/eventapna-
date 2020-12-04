@@ -40,7 +40,13 @@ $sql='SELECT (SELECT p.name FROM person as p WHERE p.id=od.person_id),od.person_
 $orderDetailPerson= queryReceive($sql);
 $customerID=$orderDetailPerson[0][1];
 
+if($processInformation[0][4]==0)
+{
 
+    $sql='UPDATE `BookingProcess` SET `IsProcessComplete`=1 WHERE id='.$processInformation[0][0];
+    querySend($sql);
+    $processInformation[0][4]=1;
+}
 
 include('../companyDashboard/includes/startHeader.php'); //html
 ?>
@@ -85,7 +91,6 @@ include('../companyDashboard/includes/navbar.php');
 
     <?php
     $whichActive = 6;
-    $processInformation[0][4]=1; //complete
     $imageCustomer = "../images/customerimage/";
     $PageName="Order Management";
     include_once("../webdesign/orderWizard/wizardOrder.php");
