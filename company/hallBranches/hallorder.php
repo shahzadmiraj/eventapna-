@@ -67,7 +67,10 @@ include('../../companyDashboard/includes/navbar.php');
 
     ?>
 
-    <div class="container">
+<?php
+$ExtraButtonHandleOnTop='
+
+<div class="container">
 
 
         <div class="row" >
@@ -84,6 +87,10 @@ include('../../companyDashboard/includes/navbar.php');
         </div>
 
     </div>
+';
+
+?>
+
 
 
     <?php
@@ -130,7 +137,9 @@ include('../../companyDashboard/includes/navbar.php');
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                <input   id="date" name="date" type="date" class="checkpackage form-control">
+                <input   id="date" name="date" type="date" class="checkpackage form-control"  min="<?php
+                echo date('Y-m-d');
+                ?>">
             </div>
         </div>
         <div class=" col-sm-12   col-12 col-md-6 col-lg-6">

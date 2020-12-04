@@ -136,7 +136,9 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                <input id="date"  name="destination_date"  type="date" class="form-control">
+                <input id="date"  name="destination_date"  type="date" class="form-control"  value="<?php echo $orderDetail[0][5];?>"   min="<?php
+                echo date('Y-m-d');
+                ?>">
             </div>
         </div>
 
@@ -163,10 +165,13 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                     $sql='SELECT `id`, `name` FROM `catering` WHERE ISNULL(expire) && (id!='.$caterinBranch[0][0].' )&& (company_id='.$companyid.')';
                     $AllBranches=queryReceive($sql);
 
-                    for($i=0;$i<count($AllBranches);$i++)
-                    {
+                        for($i=0;$i<count($AllBranches);$i++)
+                        {
                             echo '<option value='.$AllBranches[$i][0].'>'.$AllBranches[$i][1].'</option>';
-                    }
+                        }
+
+
+
 
                     ?>
                 </select>
@@ -195,15 +200,20 @@ include_once("../webdesign/orderWizard/wizardOrder.php");
                     <?php
                     $OrderStatus=array("Running","Cancel","Delivered","Clear");
                     echo '<option value='.$orderDetail[0][4].'>'.$orderDetail[0][4].'</option>';
-                    for($i=0;$i<count($OrderStatus);$i++)
+
+                    if($processInformation[0][4]==1)
                     {
-                        if($orderDetail[0][4]!=$OrderStatus[$i])
-                        {
+                                for($i=0;$i<count($OrderStatus);$i++)
+                                {
+                                    if($orderDetail[0][4]!=$OrderStatus[$i])
+                                    {
 
-                            echo '<option value='.$OrderStatus[$i].'>'.$OrderStatus[$i].'</option>';
-                        }
+                                        echo '<option value='.$OrderStatus[$i].'>'.$OrderStatus[$i].'</option>';
+                                    }
 
+                                }
                     }
+
 
                     ?>
                 </select>

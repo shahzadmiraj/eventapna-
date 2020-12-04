@@ -9,10 +9,10 @@ if(isset($processInformation))
 {
     if(($processInformation[0][4]==1)AND(onlyAccessUsersWho("Owner,Employee")))
     {
-        $sql='SELECT od.booking_date FROM orderDetail as  od WHERE od.id='.$processInformation[0][5].'';
+        $sql='SELECT od.booking_date,od.status_hall,od.status_catering FROM orderDetail as  od WHERE od.id='.$processInformation[0][5].'';
         $result1=queryReceive($sql);
         $newDate = new DateTime($result1[0][0]);
-        if($newDate->format('Y-m-d')==date('Y-m-d'))
+        if(($newDate->format('Y-m-d')==date('Y-m-d'))AND($result1[0][1]=="Draft" || $result1[0][2]=="Draft"))
         {
             echo '
             <div class="container-fluid">
@@ -27,10 +27,13 @@ if(isset($processInformation))
                     $("#DraftOrderIntoProcess").click(function (e) {
                         e.preventDefault();
 
+                        var formvar=new FormData;
+                        formvar.append("option","TransferDraftOrderToProcess");
+                        formvar.append("OrderId","<?php echo $processInformation[0][5];?>");
                         $.ajax({
                             url: "<?php echo $Root;?>company/hallBranches/HallOrder/OrderAddOrEdit.php",
                             method: "POST",
-                            data: {"OrderId":"<?php echo $processInformation[0][5];?>","option":"TransferDraftOrderToProcess"},
+                            data: formvar,
                             contentType: false,
                             processData: false,
 
@@ -115,10 +118,16 @@ if(isset($processInformation))
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Order Create  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Draft (untill complete)</a></h1>
-           
+            <h1 class="h3 mb-0 text-gray-800">Add Order  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Draft (untill complete)</a></h1>
         </div>
     </div>';
+
+        if(isset($ExtraButtonHandleOnTop))
+        {
+            echo $ExtraButtonHandleOnTop;
+
+        }
+
     }
 
 }

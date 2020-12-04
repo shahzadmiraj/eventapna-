@@ -79,9 +79,10 @@ include('../companyDashboard/includes/navbar.php');
 
 
 <?php
-if($processInformation[0][4]==0)
-{
-    ?>
+$ExtraButtonHandleOnTop='';
+if($processInformation[0][4]==0) {
+    $ExtraButtonHandleOnTop = '
+   
     <div class="container">
         <div class="row" >
 
@@ -95,10 +96,10 @@ if($processInformation[0][4]==0)
                 </ul>
             </div>
         </div>
-    </div>
-    <?php
+    </div>';
 }
-?>
+
+    ?>
 
 <?php
 
