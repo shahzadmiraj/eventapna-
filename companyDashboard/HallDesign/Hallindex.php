@@ -87,7 +87,7 @@ $ValueOfHallTodayEarning=array();
 
         if (onlyAccessUsersWho("Owner,Employee"))
         {
-            $displayNav.= '<a href="'.$Root.'customer/CustomerCreate.php?' . $QueryCom . '" class="btn btn-primary btn-icon-split"> <span class="icon text-white-50"><i class="fas fa-cart-plus"></i></span> <span class="text">Add Order</span></a><div class="my-2"></div>';
+            $displayNav.= '<a href="'.$Root.'customer/CustomerCreate.php?' . $QueryCom . '" class="btn btn-primary btn-icon-split"> <span class="icon text-white-50"><i class="fas fa-cart-plus"></i></span> <span class="text">Add Order <button class="btn btn-circle border  border-warning  btn-light"> '.$ValueOfHallTodayFunctionBooked[$iCom].'</button></span></a><div class="my-2"></div>';
         }
 
         $displayNav.='<a href="'.$Root.'order/FindOrder.php?order_status=Today_Orders&' . $QueryCom . '" class="btn btn-outline-dark btn-icon-split"><span class="icon text-white-50">  <i class="fas fa-flag"></i></span> <span class="text">Next 24 Process Orders <button class="btn btn-circle border  border-warning  btn-light"> '.$ValueOfHallNext24Process[$iCom].'</button> </span></a><div class="my-2"></div>

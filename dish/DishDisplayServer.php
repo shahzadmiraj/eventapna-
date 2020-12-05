@@ -58,7 +58,7 @@ Where  (dwa.id='.$dishid.')';
     <tr>
       <th scope="row">'.($i+1).'</th>
       <td>'.$AttributeDetail[$i][0].'</td>
-      <td>'.$AttributeDetail[$i][1].'</td>
+      <td>'.$AttributeDetail[$i][2].'</td>
    </tr>';
 
     }

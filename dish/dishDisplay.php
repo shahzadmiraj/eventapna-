@@ -191,7 +191,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
     <tr>
       <th scope="row">' . ($k + 1) . '</th>
       <td>' . $AttributeDetail[$k][0] . '</td>
-      <td>' . $AttributeDetail[$k][1] . '</td>
+      <td>' . $AttributeDetail[$k][2] . '</td>
    </tr>';
 
                 }

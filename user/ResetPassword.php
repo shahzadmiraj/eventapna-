@@ -12,9 +12,9 @@ include  ("../access/userAccess.php");
 RedirectOtherwiseOnlyAccessUsersWho("Owner,User,Employee,Viewer","../index.php");
 $userid=$_COOKIE['userid'];
 
+include('../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -26,109 +26,95 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="User Reset password page Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
-    <script src="../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../webdesign/css/complete.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <script type="text/javascript" src="../webdesign/JSfile/JSFunction.js"></script>
-
-    <style>
 
 
-        body{
-            background-image: url('https://i.pinimg.com/originals/cc/48/3b/cc483b945cf746255339655b2a5f25b3.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            font-family: 'Numans', sans-serif;
-            width: 100%;
-            height: 100%;
-        }
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script><!--
+    <script type="text/javascript" src="../bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
 
-    </style>
-</head>
-<body>
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
 <?php
-include_once ("../webdesign/header/header.php");
+include('../companyDashboard/includes/endHeader.php');
+include('../companyDashboard/includes/navbar.php');
 ?>
+
 <div class="container">
+    <h1 class="mb-5 mt-5 "><i class="fas fa-key"></i> Reset Password</h1>
+    <h4 id="error"> </h4>
+    <form class="row" id="formLogin">
 
-    <div class="row ">
-        <div class="col-md-4">
+
+
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label">Old Password</label>
+
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input id="Oldpassword" type="password" class="form-control" name="Oldpassword" placeholder="Previous Password">
+
+            </div>
         </div>
 
-        <div class="col-md-8  " style="background-color: rgba(219,188,219,0.58) !important;">
-            <h1 class="mb-5 mt-5 text-white"><i class="fas fa-key"></i> Reset Password</h1>
-            <h4 id="error"> </h4>
-            <form class="col-12" id="formLogin">
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label">New Password</label>
 
-
-
-
-                <div class="form-group row">
-                    <label class="col-form-label">Old Password</label>
-
-                    <div class="input-group mb-3 input-group-lg">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                        </div>
-                        <input id="Oldpassword" type="password" class="form-control" name="Oldpassword" placeholder="Previous Password">
-
-                    </div>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
                 </div>
+                <input id="password1" type="password" class="form-control" name="password1" placeholder="New Password">
 
-                <div class="form-group row">
-                    <label class="col-form-label">New Password</label>
-
-                    <div class="input-group mb-3 input-group-lg">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                        </div>
-                        <input id="password1" type="password" class="form-control" name="password1" placeholder="New Password">
-
-                    </div>
-                </div>
-
-
-                <div class="form-group row">
-                    <label class="col-form-label">Confirm Password</label>
-                    <div class="input-group mb-3 input-group-lg">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-key"></i></span>
-                        </div>
-                        <input id="password2" type="password" class="form-control" name="password2" placeholder="confirm Password">
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <button id="ResetPassword" type="button" class="btn btn-warning form-control "  ><i class="fas fa-check "></i>  Reset Password</button>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-                        Forgot your password?  <button id="passwordresend"  type="button" class="btn-light"> Send Password</button>
-                    </div>
-                    <div class="d-flex justify-content-center links">
-                         <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
-                    </div>
-                </div>
-
-            </form>
+            </div>
         </div>
-    </div>
+
+
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <label class="col-form-label">Confirm Password</label>
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input id="password2" type="password" class="form-control" name="password2" placeholder="confirm Password">
+            </div>
+        </div>
+
+
+
+        <div class="card-footer col-sm-12   col-12 col-md-12 col-lg-12">
+            <div class="d-flex justify-content-center links">
+                Forgot your password?  <button id="passwordresend"  type="button" class="btn-light"> Send Password</button>
+            </div>
+            <div class="d-flex justify-content-center links">
+                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+            </div>
+        </div>
+        <div class="col-sm-12   col-12 col-md-6 col-lg-6">
+            <button id="ResetPassword" type="button" class="btn btn-warning form-control "  ><i class="fas fa-check "></i>  Reset Password</button>
+        </div>
+
+    </form>
 
 
 
 
 </div>
 
-<?php
-include_once ("../webdesign/footer/footer.php");
-?>
+
 <script>
     $(document).ready(function ()
     {
@@ -197,8 +183,10 @@ include_once ("../webdesign/footer/footer.php");
 
 
 </script>
-</body>
-</html>
+<?php
+include('../companyDashboard/includes/scripts.php');
+include('../companyDashboard/includes/footer.php');
+?>
 <?php
 include_once ("../webdesign/footer/EndOfPage.php");
 ?>

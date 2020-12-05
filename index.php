@@ -8,7 +8,7 @@ if((isset($_COOKIE['userid']))&&(!(isset($_GET['action']))))
     $userdetail=queryReceive($sql);
     $companyid=$userdetail[0][0];
     if($companyid!="")
-        header("location:company/companyRegister/companyAdminPanel.php");
+        header("location:companyDashboard/index.php");
 }
 ?>
 <!DOCTYPE html>

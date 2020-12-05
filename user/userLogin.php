@@ -227,7 +227,7 @@ include_once ("../webdesign/footer/footer.php");
                  }
                  else if($.trim(data)==="companyUser")
                  {
-                     location.replace("../company/companyRegister/companyAdminPanel.php");
+                     location.replace("../companyDashboard/index.php");
                  }
                  else
                  {

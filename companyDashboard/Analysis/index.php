@@ -18,27 +18,28 @@
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
 
-        <?php
-        include_once ('CateringAnalysis/simpleCateringAnalysis.php');
-        ?>
-
-
-    </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
 
 
 
         <?php
         include_once ('CompanyAnalysis/simpleCompanyAnalysis.php');
         ?>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+
+
+        <?php
+        include_once ('HallAnalysis/simpleHallAnalysis.php');
+        ?>
 
 
     </div>
     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
+
         <?php
-        include_once ('HallAnalysis/simpleHallAnalysis.php');
+        include_once ('CateringAnalysis/simpleCateringAnalysis.php');
         ?>
 
     </div>
