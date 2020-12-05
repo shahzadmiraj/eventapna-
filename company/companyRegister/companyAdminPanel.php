@@ -9,7 +9,7 @@
 include  ("../../connection/connect.php");
 include  ("../../access/userAccess.php");
 RedirectOtherwiseOnlyAccessUsersWho("Owner,Employee,Viewer","../../index.php");
-
+header("location:../../index.php");
 
 ?>
 <!DOCTYPE html>

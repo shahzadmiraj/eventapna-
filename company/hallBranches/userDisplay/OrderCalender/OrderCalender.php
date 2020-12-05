@@ -20,9 +20,9 @@ $companyid=$userdetail[0][0];
 
 
 
+include('../../../../companyDashboard/includes/startHeader.php'); //html
 ?>
-<!DOCTYPE html>
-<head>
+
     <?php
     include('../../../../webdesign/header/InsertHeaderTag.php');
     ?>
@@ -34,42 +34,36 @@ EVENT APNA  provides Free Software ....... So Register NOW
 ">
     <meta name="keywords" content="Calender Orders  Finder  Event Apna,Book Wedding Hall,Catering Managment system,Hall Managment system,shadi hall software,marquee Software,Book marquee,Food Management system">
 
-    <link rel="stylesheet" type="text/css" href="../../../../bootstrap.min.css">
-    <script src="../../../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../../../bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="../../../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../../../webdesign/css/complete.css">
 
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $Root;?>bootstrap.min.css">
+    <script src="<?php echo $Root;?>jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!--<link rel="stylesheet" href="../webdesign/css/complete.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <script src="<?php echo $Root;?>webdesign/JSfile/JSFunction.js"></script>
+
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+    <!-- Custom fonts for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo $Root;?>webdesign/css/loader.css">
+    <!-- Custom styles for this template-->
+    <link href="<?php echo $Root;?>companyDashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-    <style>
-
-    </style>
-
-    <script>
 
 
 
-    </script>
-
-</head>
-<body>
 
 <?php
-include_once ("../../../../webdesign/header/header.php");
-
+include('../../../../companyDashboard/includes/endHeader.php');
+include('../../../../companyDashboard/includes/navbar.php');
 ?>
-
-
 <?php
 $HeadingImage=$halldetail[0][1];
 $HeadingName=$halldetail[0][0];
@@ -93,7 +87,7 @@ include_once ("../../../ClientSide/Company/Box.php");
         </li>
 
         <li class="nav-item">
-            <a class="nav-link Search" data-search="Visited" id="pills-SearchVisited-tab" data-toggle="pill" href="#pills-SearchVisited" role="tab" aria-controls="pills-SearchVisited" aria-selected="false">Visited</a>
+            <a class="nav-link Search" data-search="Draft" id="pills-SearchDraft-tab" data-toggle="pill" href="#pills-SearchDraft" role="tab" aria-controls="pills-SearchDraft" aria-selected="false">Draft</a>
         </li>
         <li class="nav-item">
             <a class="nav-link Search" data-search="Clear" id="pills-SearchClear-tab" data-toggle="pill" href="#pills-SearchClear" role="tab" aria-controls="pills-SearchClear" aria-selected="false">Clear</a>
@@ -189,13 +183,6 @@ include_once ("../../../ClientSide/Company/Box.php");
 
 
 
-
-
-
-<?php
-
-include_once ("../../../../webdesign/footer/footer.php");
-?>
 
 <script>
 
@@ -313,8 +300,12 @@ include_once ("../../../../webdesign/footer/footer.php");
 
 
 </script>
-</body>
-</html>
+<?php
+include('../../../../companyDashboard/includes/scripts.php');
+include('../../../../companyDashboard/includes/footer.php');
+?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 <?php
 include_once ("../../../../webdesign/footer/EndOfPage.php");
 ?>

@@ -70,7 +70,7 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddre
         $display.= 'Message could not be sent.';
         $display.= 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-        echo 'message successully sent';
+        echo '';
     }
  //   $mail->smtpClose();
 

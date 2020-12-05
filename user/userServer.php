@@ -9,8 +9,8 @@
 include_once ("../connection/connect.php");
 
 include_once ("../Mail/sending/SendingMail.php");
-//require_once('../Mail/libraries/PHPMailer.php');
-//require_once('../Mail/libraries/SMTP.php');
+require_once('../Mail/libraries/PHPMailer.php');
+require_once('../Mail/libraries/SMTP.php');
 
 
 function checkDetailAndinsert($userPreviousDetail,$username,$PhoneNo,$jobtitle,$image,$CurrentUserid)
