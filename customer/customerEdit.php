@@ -289,8 +289,12 @@ include_once ("../webdesign/orderWizard/wizardOrder.php");
 
 
 
-    <div class="col-12 shadow">
-        <h4 align="center"><i class="fas fa-user-tag mt-5"></i>Customer personality</h4>
+
+</form>
+
+
+    <div class="container row">
+        <h4 align="center col-12"><i class="fas fa-user-tag mt-5"></i>Customer personality</h4>
         <?php
         $sql='SELECT py.personality,py.rating FROM person as p INNER join orderDetail as od
 on p.id=od.person_id
@@ -302,15 +306,11 @@ p.id='.$customerId.'';
         for ($k=0;$k<count($personalitydetails);$k++)
         {
             echo '
-            <p class="mb-3">'.$personalitydetails[$k][0].' <span class="float-right border-danger border font-weight-bold">Rating: '.$personalitydetails[$k][1].' </span> </p>';
+            <p class="col-12 ">'.$personalitydetails[$k][0].' <span class="float-right border-danger border font-weight-bold">Rating: '.$personalitydetails[$k][1].' </span> </p>';
         }
         ?>
 
     </div>
-
-</form>
-
-
 <script>
  $(document).ready(function ()
  {
