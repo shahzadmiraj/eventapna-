@@ -430,7 +430,7 @@ function action($userName,$printDate,$orderid,$action,$BranchName)
     else
         $ViewOrDownload="D";
 
-    action($userdetail[0][1],$currentdate,$PrintedOrdersArray,$ViewOrDownload,$_POST['BranchName']);
+    action($userdetail[0][1],date('Y-M-D'),$PrintedOrdersArray,$ViewOrDownload,$_POST['BranchName']);
 
 ?>
 

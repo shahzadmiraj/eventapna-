@@ -4,7 +4,7 @@ if(!isset($_GET['c']))
 {
     header("location:../../../index.php");
 }
-
+include_once ("../../cateringBranches/dish/dishespriceModel.php");
 $userid="NoUser";
 if(isset($_COOKIE['userid']))
 $userid=$_COOKIE['userid'];
@@ -27,6 +27,14 @@ WHERE
 (ISNULL(dc.expire)) AND(ISNULL(dt.expire))AND(dc.catering_id in('.$cateringid.'))
 GROUP by (dt.id)';
 $dishTypeDetail=queryReceive($sql);
+
+
+$sql='SELECT `id`,`cateringPackages_id` FROM `cateringPackageControl` WHERE (catering_id='.$cateringid.')AND(ISNULL(expire))
+GROUP by (cateringPackages_id)
+';
+$dishDealPackageDetail=queryReceive($sql);
+
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -61,6 +69,11 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js"></script>
     <link rel="stylesheet" href="../../../mapRadius/css/gmaps-lat-lng-radius.css" type="text/css">
     <script src="../../../webdesign/JSfile/JSFunction.js"></script>
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../CateringOrderWizard/assets/css/bd-wizard.css">
+
+
     <style>
         .checked {
             color: orange;
@@ -169,6 +182,77 @@ include_once ("../Company/Box.php");
     </div>
     <!-- /.row -->
 
+    <form id="SubmitFormOfPackage" class="container ">
+       <!-- <?php
+       $displayModelExtraItems="";
+/*        $OneD = array_column($MenuType, 1);
+        $Listofitemtypes = implode(',', $OneD);
+        */?>
+        <input hidden type="text" name="listofitemtype" value="<?php /*echo $Listofitemtypes;*/?>">
+        <input hidden type="number" name="pid" value="<?php /*echo $PackageDateid;*/?>">
+        <input hidden type="text" name="cateringid" value="No">
+        <input hidden type="number" name="hallid" value="<?php /*echo $PackageDetail[0][5];*/?>">
+        <input hidden type="date" name="date" value="<?php /*echo $PackageDate[0][1];*/?>">
+        <input hidden type="text" name="time" value="<?php /*echo $PackageDetail[0][4];*/?>">
+        <input hidden type="number" name="perheadwith" value="<?php /*echo $PackageDetail[0][1];*/?>">
+        <input hidden type="number" name="Charges" value="<?php /*echo '0';*/?>">-->
+        <?php
+        include_once ("../CateringOrderWizard/index.php");
+        echo $displayModelExtraItems;
+        ?>
+    </form>
+
+
+
+
+
+    <h2>Deals !</h2>
+    <hr>
+    <div class="row">
+        <?php
+        $display='';
+        for($i=0;$i<count($dishDealPackageDetail);$i++)
+        {
+
+            $sql = '
+
+SELECT `id`, `packageName`, `description`, `image`, `token`, `PerHeadprice`, `activeDate`, `expireDate`, `activeUser`, `expireUser` FROM `cateringPackages` WHERE (id=' . $dishDealPackageDetail[$i][1] . ')
+';
+            $dishDetail=queryReceive($sql);
+            $image='';
+            if(file_exists('../../../images/cateringPackage/'.$dishDetail[0][3])&&($dishDetail[0][3]!=""))
+            {
+                $image= '../../../images/cateringPackage/'.$dishDetail[0][3];
+            }
+            else
+            {
+                $image='../../../images/systemImage/imageNotFound.png';
+            }
+            $display .='<div class="card m-auto" style="width: 18rem;">
+  <img class="card-img-top " src="'.$image.'" alt="Card image" style="width: 100%;height: 40vh" >
+  <div class="card-body">
+    <h5 class="card-title"><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[0][1] . '</h5>
+    <p class="card-text">' . $dishDetail[0][2] . '</p>
+  </div>
+  <ul class="list-group list-group-flush">
+  <li class="list-group-item">Deal id:' . $dishDetail[0][0] . '</li>
+    <li class="list-group-item text-danger"><i class="far fa-money-bill-alt"></i> Per Head Rate:   ' . $dishDetail[0][5] . '</li>
+  </ul>';
+
+
+            $display.='    
+                                </div>';
+
+
+        }
+        echo $display;
+        ?>
+
+
+
+
+
+    </div>
 
 
 
@@ -176,19 +260,15 @@ include_once ("../Company/Box.php");
 
 
 
-
-
-
-
-
-
-
-    <h2>How many Dishes Available</h2>
+    <h2>Dishes</h2>
     <hr>
         <?php
 
+        $DishPriceModel='';
+
     $display='';
-    for($i=0;$i<count($dishTypeDetail);$i++) {
+    for($i=0;$i<count($dishTypeDetail);$i++)
+    {
         $display .= '<div class="row">';
         $display .= '<h4  data-dishtype="' . $i . '" data-display="hide"    class="col-md-12 text-center dishtypes">' . $dishTypeDetail[$i][1] . '</h4>';
 
@@ -204,14 +284,14 @@ include_once ("../Company/Box.php");
 
         $dishDetail = queryReceive($sql);
 
-        for ($j=0;$j<count($dishDetail);$j++)
+        for ($CaterinClientJ=0;$CaterinClientJ<count($dishDetail);$CaterinClientJ++)
         {
 
 
             $image='';
-            if(file_exists('../../../images/dishImages/'.$dishDetail[$j][2])&&($dishDetail[$j][2]!=""))
+            if(file_exists('../../../images/dishImages/'.$dishDetail[$CaterinClientJ][2])&&($dishDetail[$CaterinClientJ][2]!=""))
             {
-                $image= '../../../images/dishImages/'.$dishDetail[$j][2];
+                $image= '../../../images/dishImages/'.$dishDetail[$CaterinClientJ][2];
             }
             else
             {
@@ -219,17 +299,32 @@ include_once ("../Company/Box.php");
             }
 
             $display.='
-          
-        <div class="col-md-4 mb-5" >
-            <div class="card h-80">
+        <div class="card col-md-4 m-auto" >
+            <div class="h-80">
                 <img class="card-img-top" src="'.$image.'" alt="" style="height: 20vh">
                 <div class="card-body">
-                    <h6 class="card-title">' . $dishDetail[$j][0] . ' </h6>
-                         <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary"><i class="fas fa-check "></i>  Show Price</button>
+                    <h6 class="card-title">' . $dishDetail[$CaterinClientJ][0] . ' </h6>
+                         <button type="button"  data-image="'.$dishDetail[$CaterinClientJ][2].'" data-dishname="'. $dishDetail[$CaterinClientJ][0] .'"  data-dishid="'. $dishDetail[$CaterinClientJ][1] .'"   data-toggle="modal" data-target="#ModalDishPrice'.$dishDetail[$CaterinClientJ][1].'"   class="col-12 mb-0 btn btn-primary"><i class="fas fa-check "></i>  Show Price</button>
                 </div>
             </div>
+        </div>';
+
+            //modal
+            $DishPriceModel.='
+    <div id="ModalDishPrice'.$dishDetail[$CaterinClientJ][1].'" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content"  >';
+
+            $DishPriceModel.=DishesPriceModelShow($image,$dishDetail[$CaterinClientJ][1],$dishDetail[$CaterinClientJ][0]);
+
+            $DishPriceModel.= '
+
+            </div>
+
         </div>
-            ';
+    </div>
+';
 
 
         }
@@ -244,26 +339,10 @@ include_once ("../Company/Box.php");
 
         echo $display;
 
+    echo $DishPriceModel;
+
     ?>
 
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-
-
-
-
-            <!-- Modal content-->
-            <div class="modal-content"  id="AddDishDetail"  >
-
-            </div>
-
-        </div>
-
-
-
-    </div>
 
 
 
@@ -504,7 +583,8 @@ include_once "../All/Comments.php"
     });
 </script>
 
-
+<script src="../CateringOrderWizard/assets/js/jquery.steps.min.js"></script>
+<script src="../CateringOrderWizard/assets/js/bd-wizard.js"></script>
 
 <?php
 include_once ("../../../webdesign/footer/footer.php");

@@ -269,11 +269,13 @@ include('../companyDashboard/includes/navbar.php');
                 contentType: false,
                 processData: false,
 
-                beforeSend: function () {
+                beforeSend: function ()
+                {
                     $('#pleaseWaitDialog').modal();
                 },
-                success: function (data) {
-             $('#pleaseWaitDialog').modal('hide');
+                success: function (data)
+                {
+                      $('#pleaseWaitDialog').modal('hide');
 
                     if($.trim(data)!='')
                     {

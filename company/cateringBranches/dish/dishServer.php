@@ -473,7 +473,7 @@ if(isset($_POST['option']))
         <div class="modal-header">
                 <h4 class="modal-title"><i class="fas fa-concierge-bell mr-1"></i>'.$dishName.'  </h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
+        </div>
             
         
         
@@ -567,7 +567,7 @@ if(isset($_POST['option']))
     <tr>
       <th scope="row">'.($i+1).'</th>
       <td>'.$AttributeDetail[$i][0].'</td>
-      <td>'.$AttributeDetail[$i][1].'</td>
+      <td>'.$AttributeDetail[$i][2].'</td>
    </tr>';
             }
 
