@@ -17,8 +17,7 @@
       <div id="wizard">
         <?php
         include_once('step2/Packageselections.php');
-       /* include_once('Step3/Preview.php');
-        include_once('Step1/PersonalDetail.php');*/
+        include_once('../HallOrderwizard/Step1/PersonalDetail.php');
         ?>
 
 
@@ -55,8 +54,8 @@
 
 
 <?php
-include_once('Step1/NewUserRegisterModel.php');
-include_once('Step1/ForgetPassword.php');
+include_once('../HallOrderwizard/Step1/NewUserRegisterModel.php');
+include_once('../HallOrderwizard/Step1/ForgetPassword.php');
 ?>
   <!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>

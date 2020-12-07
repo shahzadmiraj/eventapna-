@@ -76,13 +76,7 @@ function CheckSecondStep()
     {
         return false;
     }
-    var Remaingseating=Number($("#Remaingseating").val());
     var numberOfGuest=Number($("#numberOfGuest").val());
-    if(Remaingseating<numberOfGuest)
-    {
-        alert("Over Guest is not Allow");
-        return false;
-    }
     return true;
 
 }

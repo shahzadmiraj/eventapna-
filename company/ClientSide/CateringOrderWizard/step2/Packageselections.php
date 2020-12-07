@@ -14,7 +14,7 @@
         <label class="mb-5 form-inline"> No.of Guest  <input id="numberOfGuest" type="number" name="numberOfGuest" class="form-control ml-2" placeholder="Maximum Guest "></label>
         <hr>
 
-        <h4 class="section-heading mb-5">Extra Item <button type="button" class="btn btn-outline-primary float-right"  data-toggle="modal" data-target="#ExtraitemModel">+ Add</button> </h4>
+        <h4 class="section-heading mb-5">Order Detail<button type="button" class="btn btn-outline-primary float-right"  data-toggle="modal" data-target="#ExtraitemModel">+ Add</button> </h4>
         <div class="row" style="overflow: auto">
             <table class="table table-striped">
                 <thead>
@@ -23,6 +23,7 @@
                     <th scope="col">Image</th>
                     <th scope="col">Item</th>
                     <th scope="col">Type</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Total</th>

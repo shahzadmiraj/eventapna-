@@ -75,7 +75,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
 
     <link rel="stylesheet" type="text/css" href="../../../bootstrap.min.css">
     <script src="../../../jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../../bootstrap.min.js"></script>
+  <!--  <script type="text/javascript" src="../../../bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

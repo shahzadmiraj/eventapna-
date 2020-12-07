@@ -41,6 +41,8 @@
 </html>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+function addSwal() {
 swal({
 html:true,
 title: "Add item",
@@ -49,6 +51,8 @@ buttons: false,
 icon: "success",
 timer: 1500,
 });
+
+}
 
 
 swal({

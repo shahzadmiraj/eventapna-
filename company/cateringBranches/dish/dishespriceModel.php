@@ -3,6 +3,9 @@ function DishesPriceModelShow($image,$dishid,$dishName)
 {
 
 
+
+    $description='';
+
     $display='    
    
         <div class="modal-header">
@@ -75,6 +78,7 @@ function DishesPriceModelShow($image,$dishid,$dishName)
       <td>'.$AttributeDetail[$i][0].'</td>
       <td>'.$AttributeDetail[$i][2].'</td>
    </tr>';
+            $description.=$AttributeDetail[$i][0].':'.$AttributeDetail[$i][2].'<br>';
         }
 
         if(count($dishWithAttribute)>0) {
@@ -88,11 +92,12 @@ function DishesPriceModelShow($image,$dishid,$dishName)
 
         $display.=  '
                     <div class="card-footer text-center">
-                    <h6 class="text-danger"><i class="fas fa-money-bill-alt"></i> Price:  '.$dishWithAttribute[$j][3].'</h6>
-                    <input  class="form-control" type="number" placeholder="Quantity">
-                    <button class="btn btn-success mt-3">Add</button>
+                    <h5 class="text-danger"><i class="fas fa-money-bill-alt"></i> Price:  '.$dishWithAttribute[$j][3].'</h5>
+                    <input  class="form-control" id="InputQuantity'.$dishWithAttribute[$j][0].'" type="number" placeholder="Quantity">
+                    <button  data-adddishpriceidbutton="'.$dishWithAttribute[$j][0].'"  data-image="'.$image.'"  data-item="'.$dishName.'" data-type="Dish" data-description="'.$description.'" data-price="'.$dishWithAttribute[$j][3].'"    class="addDishPriceidButton btn btn-success mt-3">Add</button>
                     </div>
                 </div>';
+        $description="";
 
 
 

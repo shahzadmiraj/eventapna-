@@ -73,6 +73,9 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../CateringOrderWizard/assets/css/bd-wizard.css">
 
+    <script  src="../Hall/js/userLogin.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
     <style>
         .checked {
@@ -232,15 +235,20 @@ SELECT `id`, `packageName`, `description`, `image`, `token`, `PerHeadprice`, `ac
   <img class="card-img-top " src="'.$image.'" alt="Card image" style="width: 100%;height: 40vh" >
   <div class="card-body">
     <h5 class="card-title"><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[0][1] . '</h5>
-    <p class="card-text">' . $dishDetail[0][2] . '</p>
+    <p class="card-text">'. $dishDetail[0][2].'</p>
   </div>
   <ul class="list-group list-group-flush">
-  <li class="list-group-item">Deal id:' . $dishDetail[0][0] . '</li>
+  <li class="list-group-item">Deal id:'. $dishDetail[0][0] . '</li>
     <li class="list-group-item text-danger"><i class="far fa-money-bill-alt"></i> Per Head Rate:   ' . $dishDetail[0][5] . '</li>
+      <li class="list-group-item">Quantity: <input type="number" id="DealQuantity'.$dishDetail[0][0].'" placeholder="Quantity"></li>
+      
   </ul>';
 
 
             $display.='    
+                <div class="card-footer">
+                    <button data-dealid="'.$dishDetail[0][0].'" data-dealname="'. $dishDetail[0][2].'" data-dealdescription="'.$dishDetail[0][1].'" data-dealimage="'.$image.'" data-dealprice="'.$dishDetail[0][5].'"   class="addDealOncart btn btn-primary form-control mt-5">Add Deal</button>
+                </div>
                                 </div>';
 
 
@@ -518,37 +526,104 @@ include_once "../All/Comments.php"
 
     $(document).ready(function ()
     {
-
-
-        $(".adddish").click(function ()
-        {
-            var image=$(this).data("image");
-            var dishName=$(this).data("dishname");
-            var dishid=$(this).data("dishid");
-            var formdata = new FormData;
-            formdata.append("dishid", dishid);
-            formdata.append("image",image);
-            formdata.append("dishName",dishName);
-            formdata.append("option", "showPriceofAllDishes");
-
-            $.ajax({
-                url: "../../cateringBranches/dish/dishServer.php",
-                method: "POST",
-                data: formdata,
-                contentType: false,
-                processData: false,
-
-                beforeSend: function() {
-                  $("#preloader").show();
-                },
-                success:function (data)
-                {
-                  $("#preloader").hide();
-                    $("#AddDishDetail").html(data);
-                }
-
+        function addSwal() {
+            swal({
+                html:true,
+                title: "Add item",
+                text: 'Item has been added',
+                buttons: false,
+                icon: "success",
+                timer: 1500,
             });
+
+        }
+        function removeSWAL() {
+            swal({
+                title: "Deleted",
+                text: 'Item has been Deleted',
+                buttons: false,
+                icon: "error",
+                timer: 1500,
+                html: true
+            });
+        }
+        var count=0;
+        function TableOFBodyMenuAdd(id,image,item,Type,description,price,InputQuantity)
+        {
+            var text='<tr id="removeRowFromTableCard'+count+'">\n' +
+                '      <th scope="row">'+id+'<input type="number" name="ids[]" value="'+id+'" hidden></th>\n' +
+                '      <td>  <img src="'+image+'" style="width: 80px"></td>\n' +
+                '      <td>'+item+'</td>\n' +
+                '      <td>'+Type+'<input type="text" name="type[]" value="'+Type+'" hidden></td>\n' +
+                '      <td>'+description+'</td>\n' +
+                '      <td>'+price+'</td>\n' +
+                '      <td>'+InputQuantity+'<input type="number" name="quantity[]" value="'+InputQuantity+'" hidden></td>\n' +
+                '      <td>'+(Number(price)*Number(InputQuantity))+'<input type="number" class="AddTotalDishesAndDeals" name="total[]" value="'+(Number(price)*Number(InputQuantity))+'" hidden></td>\n' +
+                '      <td><button data-removerow="'+count+'" class="removeRowFromTableCard btn btn-danger">X</button></td>\n' +
+                '    </tr>';
+            count++;
+            return text;
+        }
+
+
+        $(document).on('click',".addDishPriceidButton",function () {
+            var addDishPriceidButton=$(this).data("adddishpriceidbutton");
+            var image=$(this).data("image");
+            var item=$(this).data("item");
+            //var type=$(this).data("type");
+            var description=$(this).data("description");
+            var price=$(this).data("price");
+            var InputQuantity=$("#InputQuantity"+addDishPriceidButton).val();
+            if(validationWithString("InputQuantity"+addDishPriceidButton,"Please Enter Quantity of Dish"))
+             return false;
+
+            var text=TableOFBodyMenuAdd(addDishPriceidButton,image,item,"Dish",description,price,InputQuantity);
+            $("#TableOFBodyMenu").append(text);
+            CompleteCalculation();
+            addSwal();
         });
+        $(document).on("click",".addDealOncart",function () {
+            var dealid=$(this).data("dealid");
+            var dealname=$(this).data("dealname");
+            var dealdescription=$(this).data("dealdescription");
+            var dealimage=$(this).data("dealimage");
+            var dealprice=$(this).data("dealprice");
+            var DealQuantity=$("#DealQuantity"+dealid).val();
+            if(validationWithString("DealQuantity"+dealid,"Please Enter Quantity of Deal"))
+                return false;
+            var text=TableOFBodyMenuAdd(dealid,dealimage,dealname,"Deal",dealdescription,dealprice,DealQuantity);
+            $("#TableOFBodyMenu").append(text);
+            CompleteCalculation();
+            addSwal();
+        });
+
+        $(document).on("click",".removeRowFromTableCard",function () {
+            var removerow=$(this).data("removerow");
+            $("#removeRowFromTableCard"+removerow).remove();
+            CompleteCalculation();
+            removeSWAL();
+
+        });
+
+        function CalculateExtraitemAddInTable()
+        {
+            var TotalExtraItem=0;
+            $(".AddTotalDishesAndDeals").each(function () {
+                TotalExtraItem+=Number($(this).val());
+            });
+            // console.log(TotalExtraItem);
+            return TotalExtraItem;
+        }
+        function CompleteCalculation()
+        {
+
+            var TotalExtraItem=0;
+            TotalExtraItem=CalculateExtraitemAddInTable();
+            $("#wizardTotalAmountPackage").val(TotalExtraItem);
+            $("#wizardAmountPackage").val(TotalExtraItem);
+        }
+
+
 
         $(document).on("click",".dishtypes",function () {
             var display=$(this).data("display");
