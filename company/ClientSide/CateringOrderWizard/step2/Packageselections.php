@@ -9,12 +9,32 @@
 </h3>
 <section>
     <div class="content-wrapper">
-        <h4 class="section-heading mb-5">Package</h4>
-        <h6 class="font-weight-bold">Package Detail</h6>
-        <label class="mb-5 form-inline"> No.of Guest  <input id="numberOfGuest" type="number" name="numberOfGuest" class="form-control ml-2" placeholder="Maximum Guest "></label>
-        <hr>
+        <h4 class="section-heading mb-5">Order Detail </h4>
 
-        <h4 class="section-heading mb-5">Order Detail<button type="button" class="btn btn-outline-primary float-right"  data-toggle="modal" data-target="#ExtraitemModel">+ Add</button> </h4>
+        <div class="row">
+
+            <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+                <lable for="Book_Date" class="col-form-label sr-only">Date</lable>
+                <input id="Book_Date" type="date" name="Book_Date" class="form-control " placeholder="Date" min="<?php
+                echo date('Y-m-d');
+                ?>">
+            </div>
+
+            <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+                <lable for="Book_Time" class="col-form-label sr-only">Time</lable>
+                <input id="Book_Time" type="time" name="Book_Time" class="form-control " placeholder="Time">
+            </div>
+            <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+                <lable for="numberOfGuest" class="col-form-label sr-only">Maximum Guest</lable>
+                <input id="numberOfGuest" type="number" name="numberOfGuest" class="form-control " placeholder="Maximum Guest ">
+            </div>
+            <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
+                <lable for="BookingAddress" class="col-form-label sr-only">Booking Address</lable>
+                <input id="BookingAddress" type="text" name="BookingAddress" class="form-control " placeholder="Booking Address ">
+            </div>
+        </div>
+
+
         <div class="row" style="overflow: auto">
             <table class="table table-striped">
                 <thead>
@@ -40,7 +60,7 @@
 
         <br>
         <hr>
-        <h6 class="section-heading mb-5">Amount <input readonly type="number" id="wizardAmountPackage" class="float-right text-danger" style="border: none" value="0"> </h6>
+        <h3 class="section-heading mb-5">Amount <input readonly type="number" name="wizardAmountPackage" id="wizardAmountPackage" class="float-right text-danger text-center" style="border: none;" value="0"> </h3>
 
     </div>
 

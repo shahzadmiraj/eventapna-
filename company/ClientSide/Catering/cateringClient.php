@@ -186,19 +186,10 @@ include_once ("../Company/Box.php");
     <!-- /.row -->
 
     <form id="SubmitFormOfPackage" class="container ">
-       <!-- <?php
+        <?php
        $displayModelExtraItems="";
-/*        $OneD = array_column($MenuType, 1);
-        $Listofitemtypes = implode(',', $OneD);
-        */?>
-        <input hidden type="text" name="listofitemtype" value="<?php /*echo $Listofitemtypes;*/?>">
-        <input hidden type="number" name="pid" value="<?php /*echo $PackageDateid;*/?>">
-        <input hidden type="text" name="cateringid" value="No">
-        <input hidden type="number" name="hallid" value="<?php /*echo $PackageDetail[0][5];*/?>">
-        <input hidden type="date" name="date" value="<?php /*echo $PackageDate[0][1];*/?>">
-        <input hidden type="text" name="time" value="<?php /*echo $PackageDetail[0][4];*/?>">
-        <input hidden type="number" name="perheadwith" value="<?php /*echo $PackageDetail[0][1];*/?>">
-        <input hidden type="number" name="Charges" value="<?php /*echo '0';*/?>">-->
+        ?>
+        <input hidden type="text" name="cateringid" value="<?php echo $cateringid;?>">
         <?php
         include_once ("../CateringOrderWizard/index.php");
         echo $displayModelExtraItems;
@@ -324,7 +315,7 @@ SELECT `id`, `packageName`, `description`, `image`, `token`, `PerHeadprice`, `ac
             <!-- Modal content-->
             <div class="modal-content"  >';
 
-            $DishPriceModel.=DishesPriceModelShow($image,$dishDetail[$CaterinClientJ][1],$dishDetail[$CaterinClientJ][0]);
+            $DishPriceModel.=DishesPriceModelShow($image,$dishDetail[$CaterinClientJ][1],$dishDetail[$CaterinClientJ][0],$dishTypeDetail[$i][0]);
 
             $DishPriceModel.= '
 
@@ -548,16 +539,16 @@ include_once "../All/Comments.php"
             });
         }
         var count=0;
-        function TableOFBodyMenuAdd(id,image,item,Type,description,price,InputQuantity)
+        function TableOFBodyMenuAdd(id,image,item,Type,description,price,InputQuantity,dishtypeid)
         {
             var text='<tr id="removeRowFromTableCard'+count+'">\n' +
                 '      <th scope="row">'+id+'<input type="number" name="ids[]" value="'+id+'" hidden></th>\n' +
-                '      <td>  <img src="'+image+'" style="width: 80px"></td>\n' +
-                '      <td>'+item+'</td>\n' +
+                '      <td>  <img src="'+image+'" style="width: 80px"><input type="text"  name="image[]" value="'+image+'" hidden></td>\n' +
+                '      <td>'+item+'<input type="text"  name="item[]" value="'+item+'" hidden></td>\n' +
                 '      <td>'+Type+'<input type="text" name="type[]" value="'+Type+'" hidden></td>\n' +
-                '      <td>'+description+'</td>\n' +
-                '      <td>'+price+'</td>\n' +
-                '      <td>'+InputQuantity+'<input type="number" name="quantity[]" value="'+InputQuantity+'" hidden></td>\n' +
+                '      <td>'+description+'<input type="text"  name="description[]" value="'+description+'" hidden></td>\n' +
+                '      <td>'+price+'<input type="number"  name="price[]" value="'+price+'" hidden></td>\n' +
+                '      <td>'+InputQuantity+'<input type="number" name="quantity[]" value="'+InputQuantity+'" hidden><input type="number" name="dishtypeid[]" value="'+dishtypeid+'" hidden></td>\n' +
                 '      <td>'+(Number(price)*Number(InputQuantity))+'<input type="number" class="AddTotalDishesAndDeals" name="total[]" value="'+(Number(price)*Number(InputQuantity))+'" hidden></td>\n' +
                 '      <td><button data-removerow="'+count+'" class="removeRowFromTableCard btn btn-danger">X</button></td>\n' +
                 '    </tr>';
@@ -573,11 +564,11 @@ include_once "../All/Comments.php"
             //var type=$(this).data("type");
             var description=$(this).data("description");
             var price=$(this).data("price");
+            var dishtypeid=$(this).data("dishtypeid");
             var InputQuantity=$("#InputQuantity"+addDishPriceidButton).val();
             if(validationWithString("InputQuantity"+addDishPriceidButton,"Please Enter Quantity of Dish"))
              return false;
-
-            var text=TableOFBodyMenuAdd(addDishPriceidButton,image,item,"Dish",description,price,InputQuantity);
+            var text=TableOFBodyMenuAdd(addDishPriceidButton,image,item,"Dish",description,price,InputQuantity,dishtypeid);
             $("#TableOFBodyMenu").append(text);
             CompleteCalculation();
             addSwal();
@@ -591,7 +582,7 @@ include_once "../All/Comments.php"
             var DealQuantity=$("#DealQuantity"+dealid).val();
             if(validationWithString("DealQuantity"+dealid,"Please Enter Quantity of Deal"))
                 return false;
-            var text=TableOFBodyMenuAdd(dealid,dealimage,dealname,"Deal",dealdescription,dealprice,DealQuantity);
+            var text=TableOFBodyMenuAdd(dealid,dealimage,dealname,"Deal",dealdescription,dealprice,DealQuantity,"");
             $("#TableOFBodyMenu").append(text);
             CompleteCalculation();
             addSwal();

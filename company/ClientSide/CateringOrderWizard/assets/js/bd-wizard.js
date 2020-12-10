@@ -13,7 +13,7 @@ $("#wizard").steps({
 
             return true;
         }
-        if (newIndex === 1 )
+        if (newIndex === 0 )
         {
             if(CheckSecondStep())
             {
@@ -72,11 +72,23 @@ return  true;
 
 function CheckSecondStep()
 {
+
+    if(validationWithString("Book_Date","Please Enter Booking Date"))
+    {
+        return false;
+    }
+    if(validationWithString("Book_Time","Please Enter Booking Time"))
+    {
+        return false;
+    }
+    if(validationWithString("BookingAddress","Please Enter Booking Address"))
+    {
+        return false;
+    }
     if(validationWithString("numberOfGuest","Please Enter Guests"))
     {
         return false;
     }
-    var numberOfGuest=Number($("#numberOfGuest").val());
     return true;
 
 }
@@ -84,10 +96,10 @@ function CheckSecondStep()
 function SubmitFormComplete()
 {
     var formdata = new FormData($('#SubmitFormOfPackage')[0]);
-    formdata.append("option","CompleteFormSubmitByClient");
+    formdata.append("option","CompleteCateringFormSubmitByClient");
     $.ajax(
         {
-        url: "serverClientside.php",
+        url: "CateringOrderServer.php",
         method: "POST",
         data: formdata,
         contentType: false,

@@ -1,5 +1,5 @@
 <?php
-function DishesPriceModelShow($image,$dishid,$dishName)
+function DishesPriceModelShow($image,$dishid,$dishName,$dishtypeId)
 {
 
 
@@ -94,7 +94,7 @@ function DishesPriceModelShow($image,$dishid,$dishName)
                     <div class="card-footer text-center">
                     <h5 class="text-danger"><i class="fas fa-money-bill-alt"></i> Price:  '.$dishWithAttribute[$j][3].'</h5>
                     <input  class="form-control" id="InputQuantity'.$dishWithAttribute[$j][0].'" type="number" placeholder="Quantity">
-                    <button  data-adddishpriceidbutton="'.$dishWithAttribute[$j][0].'"  data-image="'.$image.'"  data-item="'.$dishName.'" data-type="Dish" data-description="'.$description.'" data-price="'.$dishWithAttribute[$j][3].'"    class="addDishPriceidButton btn btn-success mt-3">Add</button>
+                    <button  data-adddishpriceidbutton="'.$dishWithAttribute[$j][0].'"  data-image="'.$image.'"  data-item="'.$dishName.'" data-type="Dish" data-description="'.$description.'" data-price="'.$dishWithAttribute[$j][3].'" data-dishtypeid="'.$dishtypeId.'"   class="addDishPriceidButton btn btn-success mt-3">Add</button>
                     </div>
                 </div>';
         $description="";
