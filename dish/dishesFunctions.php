@@ -111,7 +111,9 @@ function showPriceofAllDishes($image,$dishid,$dishName)
 function CreateNewDishes($orderid,$userid,$dishId,$each_price,$quantity,$describe,$dishImage,$dishName,$dishTypeId)
 {
     global  $timestamp;
-   /* $orderid=$_POST['orderid'];
+
+   /*
+    $orderid=$_POST['orderid'];
     $userid=$_POST['userid'];
     $dishId=$_POST['dishId'];
     $each_price=chechIsEmpty($_POST['each_price']);
@@ -120,21 +122,69 @@ function CreateNewDishes($orderid,$userid,$dishId,$each_price,$quantity,$describ
 
     $dishImage=$_POST['dishImage'];
     $dishName=$_POST['dishName'];
-    $dishTypeId=$_POST['dishTypeId'];*/
+    $dishTypeId=$_POST['dishTypeId'];
+
+   */
 
     $dishesAmount=(int)$each_price*(int)$quantity;
     $CurrentDateTime=date('Y-m-d H:i:s');
     $token=uniqueToken('dish_detail',"token",'');
     $sql='INSERT INTO `dish_detail`(`id`, `describe`, `expire`, `quantity`, `orderDetail_id`, `user_id`, `dishWithAttribute_id`, `active`, `price`, `expireUser`,`token`,`name`, `image`, `dish_type_id`) VALUES (NULL,"'.$describe.'",NULL,'.$quantity.','.$orderid.','.$userid.','.$dishId.',"'.$timestamp.'",'.$each_price.',NULL,"'.$token.'","'.$dishName.'","'.$dishImage.'",'.$dishTypeId.')';
     querySend($sql);
-    $sql='SELECT od.hall_id,od.total_amount FROM orderDetail as od WHERE od.id='.$orderid.'';
+
+
+
+
+
+    $sql='SELECT od.hall_id FROM orderDetail as od WHERE od.id='.$orderid.'';
     $detailhall=queryReceive($sql);
     if(!isset($detailhall[0][0]))
     {
-        $totalamount=$detailhall[0][1]+$dishesAmount;
-        $sql='UPDATE `orderDetail` SET `total_amount`='.$totalamount.' WHERE id='.$orderid.'';
-        querySend($sql);
+        SetCateringTotalAmount($orderid);
     }
+
+}
+function GetTotalAmountOFCateringDealCost($orderid)
+{
+
+    $sql='SELECT SUM(`quantity`*`price`) FROM `OrderCateringDealManage` WHERE `orderDetail_id`='.$orderid;
+    return queryReceive($sql)[0][0];
+
+}
+function GetTotalAmountOFCateringDishCost($orderid)
+{
+
+    $sql='SELECT sum(`quantity`*`price`) FROM `dish_detail` WHERE `orderDetail_id`='.$orderid;
+     return queryReceive($sql)[0][0];
+}
+function getTotalCateringCost($orderid)
+{
+    $totalCost=GetTotalAmountOFCateringDealCost($orderid)+GetTotalAmountOFCateringDishCost($orderid);
+
+    return $totalCost;
+
+}
+function SetCateringTotalAmount($orderid)
+{
+    $sql='UPDATE `orderDetail` SET `total_amount`='.getTotalCateringCost($orderid).' WHERE id='.$orderid.'';
+    querySend($sql);
+}
+function dealCreate($describe,$quantity,$user_id,$price,$name,$image,$orderDetail_id,$cateringPackages_id)
+{
+    global  $timestamp;
+    $token=uniqueToken('OrderCateringDealManage',"token",'');
+    $sql='INSERT INTO `OrderCateringDealManage`(`id`, `describe`, `expire`, `quantity`, `user_id`, `active`, `price`, `expireUser`, `token`, `name`, `image`, `orderDetail_id`, `cateringPackages_id`) VALUES (
+NULL,"'.$describe.'",NULL,'.$quantity.','.$user_id.',"'.$timestamp.'",'.$price.',NULL,"'.$token.'","'.$name.'","'.$image.'",'.$orderDetail_id.','.$cateringPackages_id.')';
+    querySend($sql);
+}
+function DealExpire($expireUser,$OrderCateringDealManage_id)
+{
+    global  $timestamp;
+    $sql='UPDATE `OrderCateringDealManage` SET `expire`="'.$timestamp.'",`expireUser`='.$expireUser.' WHERE id='.$OrderCateringDealManage_id;
+    querySend($sql);
+}
+function DealManage()
+{
 
 }
 

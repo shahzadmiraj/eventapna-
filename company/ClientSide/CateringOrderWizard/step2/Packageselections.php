@@ -14,14 +14,14 @@
         <div class="row">
 
             <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
-                <lable for="Book_Date" class="col-form-label sr-only">Date</lable>
+                <lable for="Book_Date" class="col-form-label ">Date</lable>
                 <input id="Book_Date" type="date" name="Book_Date" class="form-control " placeholder="Date" min="<?php
                 echo date('Y-m-d');
                 ?>">
             </div>
 
             <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
-                <lable for="Book_Time" class="col-form-label sr-only">Time</lable>
+                <lable for="Book_Time" class="col-form-label ">Time</lable>
                 <input id="Book_Time" type="time" name="Book_Time" class="form-control " placeholder="Time">
             </div>
             <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
@@ -31,6 +31,11 @@
             <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable for="BookingAddress" class="col-form-label sr-only">Booking Address</lable>
                 <input id="BookingAddress" type="text" name="BookingAddress" class="form-control " placeholder="Booking Address ">
+            </div>
+
+            <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12">
+                <lable for="Describe" class="col-form-label sr-only">Describe</lable>
+                <input id="Describe" type="text" name="Describe" class="form-control " placeholder="Describe /Comments">
             </div>
         </div>
 
@@ -60,7 +65,7 @@
 
         <br>
         <hr>
-        <h3 class="section-heading mb-5">Amount <input readonly type="number" name="wizardAmountPackage" id="wizardAmountPackage" class="float-right text-danger text-center" style="border: none;" value="0"> </h3>
+        <h3 class="section-heading mb-5">Amount <input readonly type="number" name="wizardTotalAmountPackage" id="wizardAmountPackage" class="float-right text-danger text-center" style="border: none;" value="0"> </h3>
 
     </div>
 

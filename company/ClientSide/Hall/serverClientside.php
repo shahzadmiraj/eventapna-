@@ -139,7 +139,7 @@ function hallorderBooking()
     $catering="NULL";
     if($perheadwith==1)
     {
-        $catering="'Not Active'";
+        $catering="'Draft'";
 
         $sql='SELECT c.id FROM catering as c WHERE company_id=(select h.company_id FROM hall as h WHERE (h.id='.$hallid.')AND ISNULL(h.expire) LIMIT 1 )AND(ISNULL(c.expire))';
         $Cateringsdetail=queryReceive($sql);
@@ -152,7 +152,7 @@ function hallorderBooking()
     $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `packageDate_id`, `user_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
         `status_catering`,`describe`, `address`, `location_id`, `discount`, `extracharges`) 
-        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageDateid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Not Active","'.$date.'","'.$timestamp.'",
+        VALUES (NULL,'.$hallid.','.$cateringid.','.$packageDateid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Draft","'.$date.'","'.$timestamp.'",
         "'.$time.'",'.$catering.',"'.$describe.'",NULL,NULL,'.$Discount.','.$Charges.')';
     querySend($sql);
     $last=mysqli_insert_id($connect);
@@ -172,7 +172,7 @@ function hallorderBooking()
                 querySend($sql);
             }
     }
-    $sql='UPDATE BookingProcess as bp SET bp.orderDetail_id='.$last.'  WHERE (bp.id='.$orderProcessId.')';
+    $sql='UPDATE BookingProcess as bp SET bp.orderDetail_id='.$last.',bp.IsProcessComplete=1  WHERE (bp.id='.$orderProcessId.')';
     querySend($sql);
 
     $sql='SELECT `id`, `isFood`, `price`, `describe`, `dayTime`,`package_name`, `MinimumGuest` FROM `packages` WHERE id=(SELECT pd.package_id FROM packageDate as pd WHERE pd.id='.$packageDateid.' LIMIT 1)';

@@ -16,8 +16,8 @@
                 <div class="card border-warning rounded-0">
                     <div class="card-header p-0">
                         <div class="text-white text-center py-2" style="background-color: #ff328c;">
-                            <h3><i class="fa fa-envelope"></i> Contact Form</h3>
-                            <p class="m-0" id="error">HELP</p>
+                            <h3><i class="fa fa-envelope"></i> Email Marketing</h3>
+                            <p class="m-0" id="error">Auto Bulk</p>
                         </div>
                     </div>
                     <div class="card-body p-3">
@@ -28,7 +28,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-user text-info"></i></div>
                                 </div>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Your Name" >
+                                <input type="text" class="form-control" id="username" name="username" placeholder="List of Email (separate by ,)" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -36,7 +36,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-envelope text-info"></i></div>
                                 </div>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email Address" >
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Subject of Email" >
                             </div>
                         </div>
 
@@ -45,7 +45,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-comment text-info"></i></div>
                                 </div>
-                                <textarea name="Message" id="Message" class="form-control" placeholder="Message " ></textarea>
+                                <textarea name="Message" id="Message" class="form-control" placeholder="Message  " ></textarea>
                             </div>
                         </div>
 

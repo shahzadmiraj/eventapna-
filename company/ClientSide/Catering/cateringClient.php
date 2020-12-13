@@ -197,6 +197,85 @@ include_once ("../Company/Box.php");
     </form>
 
 
+    <div id="OrderDetailHistory" class="container">
+
+
+
+
+
+        <h2>Your Order of this Catering</h2>
+        <div class="row" style="height: 60vh;overflow: auto">
+            <?php
+            $DetailofThisOrder=array();
+            $display='';
+            $sql='';
+            if(isset($_COOKIE["userid"])) {
+
+                $sql = 'SELECT od.id,p.name,od.catering_id,od.status_catering,od.destination_date,od.booking_date FROM BookingProcess as bp INNER join orderDetail as od
+on (bp.orderDetail_id=od.id)
+INNER join person as p 
+on (p.id=od.person_id)
+WHERE
+(od.catering_id=' . $cateringid . ')AND(od.user_id=' . $_COOKIE["userid"] . ') order by (od.destination_date)';
+
+                $DetailofThisOrder = queryReceive($sql);
+                $display = '';
+                for ($i = 0; $i < count($DetailofThisOrder); $i++) {
+                    $display .= '
+              <div class="card col-md-4 m-auto" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Order id # ' . $DetailofThisOrder[$i][0] . '</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Order status :' . $DetailofThisOrder[$i][3] . '</h6>
+                
+                <p class="card-text">';
+                    if ($DetailofThisOrder[$i][3] == "Not Active") {
+                        $display .= '<span class="text-danger">You must call to the owner of this hall for activation of order</span><br>';
+                    }
+                    $display .= '
+Visited Date: ' . $DetailofThisOrder[$i][5] . '<br>
+Booked Data: ' . $DetailofThisOrder[$i][4] . '<br>
+
+
+</p>
+
+                 <div class="row form-inline">
+   <form  method="GET" action="' . $Root . 'connection/printOrderDetail.php" class="col-6">
+            <input type="text" hidden name="userdetail" value="' . $_COOKIE["userid"] . '">
+            <input type="number" hidden name="orderid" value="' . $DetailofThisOrder[$i][0] . '">
+            <input type="text" hidden name="ViewOrDownload" value="View">
+            <button type="submit"  class="card-link btn btn-outline-primary" ><i class="fa fa-print" aria-hidden="true"></i>View Bill</button>
+        </form>
+
+        <form  method="GET" action="' . $Root . 'connection/printOrderDetail.php" class="col-6">
+            <input type="text" hidden name="userdetail" value="' . $_COOKIE["userid"] . '">
+            <input type="number" hidden name="orderid" value="' . $DetailofThisOrder[$i][0] . '">
+            <input type="text" hidden name="ViewOrDownload" value="Download">
+            <button  type="submit" class="card-link btn btn-outline-secondary" ><i class="fas fa-cloud-download-alt"></i>Save Bill</button>
+        </form>  
+    </div>
+
+            </div>
+        </div>';
+                }
+            }
+            echo $display;
+
+            ?>
+
+
+        </div>
+    </div>
+    <?php
+
+    if(count($DetailofThisOrder)==0)
+    {
+        echo '<script>
+        $("#OrderDetailHistory").hide();
+    </script>';
+    }
+    ?>
+
+
 
 
 
