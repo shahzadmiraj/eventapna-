@@ -9,6 +9,18 @@ include_once ("../connection/connect.php");
     $dishName=$_POST['dishName'];
     $countofdish=$_POST['countofdish'];
     $quantity=$_POST['quantity'];
+    $DishOrDeal=$_POST['DishOrDeal'];
+    $DishImageRealForDB=$_POST['dishimagrealfordb'];
+
+
+    $DishOrDealText="";
+    if($DishOrDeal=="Dish")
+        $DishOrDealText="Not Include in Deal";
+    else
+        $DishOrDealText="Include in Deal";
+
+
+
 
     $sql='SELECT d.id FROM dish as d   INNER JOIN dishWithAttribute as dwa
 on (d.id=dwa.dish_id)
@@ -19,16 +31,13 @@ Where  (dwa.id='.$dishid.')';
 
 
     $display.=  '<div id="remove'.$countofdish.'" class="card col-md-4" >
-
-                    <ul>
-                    <li class="text-center h4 font-weight-bold"> <i class="fas fa-concierge-bell mr-1"></i>'.$dishName.'</li>
-                   
-                    <li> Dish Type Id : '.$dishid.'</li>
-                     <li> Dish  id : '.$DishDetail[0][0].'</li>
-                    <li> <i class="fas fa-money-bill-alt text-danger float-right">Price : '.$price.'</i></li>
-                    <li> <i class="fas fa-money-bill-alt text-danger float-right">Quantity : '.$quantity.'</i></li>
-                     <li> <i class="fas fa-money-bill-alt text-danger float-right">Total : '.($price*$quantity).'</i></li>
-                    </ul>';
+                 <img class="card-img-top " src="'.$image.'" alt="Card image" style="width: 100%;height: 40vh" >
+                   <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-concierge-bell mr-1"></i>Dish : '.$dishName.'</h5>
+                  
+                     </div>
+                 
+                ';
 
 
     
@@ -70,14 +79,26 @@ Where  (dwa.id='.$dishid.')';
         $display .= '</tbody>
 </table>';
     }
-    $display .= '<div class="card-footer m-auto">
+    $display .= '
+
+           <ul class="list-group list-group-flush">
+                   
+                     <li class="list-group-item"> Dish  id : '.$DishDetail[0][0].'</li>
+                     
+                     <li class="list-group-item"> '.$DishOrDealText.'</li>
+                    <li class="list-group-item"> Price : '.$price.'</i></li>
+                    <li class="list-group-item"> Quantity : '.$quantity.'</i></li>
+                     <li class="list-group-item"> Total : '.($price*$quantity).'</i></li>
+                    </ul>
                                 <input type="text" hidden  name="dishesName[]" value="'.$dishName.'"> 
                               <input type="number" hidden  name="dishesid[]" value="'.$dishid.'"> 
                                <input type="number" hidden  name="prices[]" value="'.$price.'">
                                <input type="number" hidden  name="quantity[]" value="'.$quantity.'">
-                               <input type="text" hidden  name="images[]" value="'.$image.'">
-                          <button type="button"  data-dishid="'.$countofdish.'" class="btn btn-danger remove "><i class="far fa-trash-alt"></i>Delete</button>
-                    </div>
+                                 <input type="text" hidden  name="DishOrDeal[]" value="'.$DishOrDeal.'">
+                                    <input type="text" hidden  name="images[]" value="'.$DishImageRealForDB.'">
+                          
+                          <button type="button"  data-dishid="'.$countofdish.'" class="btn btn-danger remove form-control "><i class="far fa-trash-alt"></i> Delete</button>
+                    
                 </div>';
     echo $display;
 }

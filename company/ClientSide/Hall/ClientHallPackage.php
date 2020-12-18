@@ -352,7 +352,7 @@ on (bp.orderDetail_id=od.id)
 INNER join person as p 
 on (p.id=od.person_id)
 WHERE
-(od.hall_id=' . $hallInformation[0][0] . ')AND(od.user_id=' . $_COOKIE["userid"] . ') order by (od.destination_date)';
+(od.hall_id=' . $hallInformation[0][0] . ')AND(od.user_id=' . $_COOKIE["userid"] . ') AND(bp.BuyerOrSeller="Buyer") order by (od.destination_date)';
 
             $DetailofThisOrder = queryReceive($sql);
             $display = '';

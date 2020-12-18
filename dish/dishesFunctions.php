@@ -1,5 +1,5 @@
 <?php
-function showPriceofAllDishes($image,$dishid,$dishName)
+function showPriceofAllDishes($image,$dishid,$dishName,$imageForDB)
 {
 
 
@@ -40,7 +40,18 @@ function showPriceofAllDishes($image,$dishid,$dishName)
                     <li class="text-center font-weight-bold h5"> Dish Id#'.$dishWithAttribute[$j][0].'</li>
                     
                     <li class="text-danger"> Price: '.$dishWithAttribute[$j][3].'</li>
-                    <li class="form-inline row"><input type="number" value="" placeholder="Quantity" id="QuatityDish'.$dishWithAttribute[$j][0].'" class="form-inline"></li>
+                    <li><input type="number" value="" placeholder="Quantity" id="QuatityDish'.$dishWithAttribute[$j][0].'" class="form-inline form-control"></li>
+                  
+                    <li >
+                   
+                    <select  id="DishOrDeal'.$dishWithAttribute[$j][0].'" class="form-control mt-2 row form-row">
+                    <option value="Dish">Not Include in Deal</option>
+                    <option value="Deal">Include in Deal</option>
+                    </select>
+                    
+                    
+                    
+                    </li>
                     </ul>
  
                     </div>';
@@ -84,7 +95,7 @@ function showPriceofAllDishes($image,$dishid,$dishName)
 </table>';
         }
         $display.=  ' <div class="card-footer m-auto">
-                        <button    data-$image="'.$image.'"  data-price="'.$dishWithAttribute[$j][3].'" data-dishname="'.$dishName.'"  data-dishid="'.$dishWithAttribute[$j][0].'"  class="btn btn-success  DishAddOnform "><i class=" far fa-check-circle"></i>Select</button>
+                        <button    data-image="'.$image.'"  data-price="'.$dishWithAttribute[$j][3].'" data-dishname="'.$dishName.'"  data-dishid="'.$dishWithAttribute[$j][0].'" data-dishimagrealfordb="'.$imageForDB.'" class="btn btn-success  DishAddOnform "><i class=" far fa-check-circle"></i>Select</button>
                     </div>
                 </div>';
 
@@ -187,6 +198,59 @@ function DealManage()
 {
 
 }
+function GetSelectedDeal($DealId)
+{
+    $sql='SELECT `id`, `describe`, `expire`, `quantity`, `user_id`, `active`, `price`, `expireUser`, `token`, `name`, `image`, `orderDetail_id`, `cateringPackages_id` FROM `OrderCateringDealManage` WHERE id='.$DealId;
+    return queryReceive($sql)[0];
+}
+function ShowSelectedDeal($DealId)
+{
+    $DealDetail=GetSelectedDeal($DealId);
 
+    $image='../images/systemImage/imageNotFound.png';
+    if(file_exists('../images/users/'.$DealDetail[10])&&($DealDetail[10]!=""))
+    {
+        $image= '../images/users/'.$DealDetail[10];
+    }
+
+    $display=' <div class="card col-md-4" style="width: 18rem;"  id="removeSelectedRowFromTableCard'.$DealDetail[0].'">
+                <img class="card-img-top " src="'.$image.'" alt="Card image" style="width: 100%;height: 40vh" >
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-concierge-bell mr-1"></i>Deal:'.$DealDetail[9].'</h5>
+                    <p class="card-text">Detail :'.$DealDetail[1].'</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Already Selected</li>
+                    <li class="list-group-item">Deal id:'.$DealDetail[0].'</li>
+                    <li class="list-group-item"> Per Head Rate: '.$DealDetail[6].' </li>
+                    <li class="list-group-item">Quantity: '.$DealDetail[3].'</li>
+                    <li class="list-group-item">Total Amount: '.($DealDetail[6]*$DealDetail[3]).'</li>
+                   
+                </ul>
+          
+                <input  hidden type="number" name="SelectedDealid[]" value="'.$DealDetail[0].'">
+              
+                <button  data-buttonid="'.$DealDetail[0].'"  class="removeSelectedRowFromTableCard btn btn-danger form-control mt-5"><i class="far fa-trash-alt"></i> Remove Deal</button>
+            </div>';
+    return $display;
+}
+function GetAllDealsInOrder($orderDetail_id)
+{
+    $sql='SELECT `id` FROM `OrderCateringDealManage` WHERE orderDetail_id='.$orderDetail_id.' AND (ISNULL(expire))';
+     return queryReceive($sql);
+}
+
+function GetAllShowOfSelectedDeals($orderDetail_id)
+{
+    $display='';
+    $GetSelectedDeals=GetAllDealsInOrder($orderDetail_id);
+    for($i=0;$i<count($GetSelectedDeals);$i++)
+    {
+        $display.=ShowSelectedDeal($GetSelectedDeals[$i][0]);
+    }
+    return $display;
+
+
+}
 
 ?>

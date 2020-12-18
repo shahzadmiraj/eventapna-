@@ -44,6 +44,15 @@ WHERE
 GROUP by (dt.id)';
 $dishTypeDetail=queryReceive($sql);
 
+
+
+
+
+$sql='SELECT `id`,`cateringPackages_id` FROM `cateringPackageControl` WHERE (catering_id='.$cateringid.')AND(ISNULL(expire))
+GROUP by (cateringPackages_id)
+';
+$dishDealPackageDetail=queryReceive($sql);
+
 include('../companyDashboard/includes/startHeader.php'); //html
 ?>
 
@@ -88,7 +97,8 @@ include('../companyDashboard/includes/navbar.php');
 <?php
 $ExtraButtonHandleOnTop ='';
 if($processInformation[0][4]==0) {
-    $ExtraButtonHandleOnTop = ' <div class="container">
+    $ExtraButtonHandleOnTop = '
+ <div class="container">
         <div class="row" >
 
             <div class="container">
@@ -109,7 +119,6 @@ if($processInformation[0][4]==0) {
 
 
 <?php
-
 $whichActive = 4;
 $imageCustomer = "../images/customerimage/";
 $PageName="Catering Dishes";
@@ -134,56 +143,52 @@ if(count($hallpackage)>0)
 
 
     <form  id="formid" method="post" action="<?php echo 'dishCreate.php?pid='.$pid.'&token='.$token.'' ?>" class="container alert-light ">
-        <h1>Selected Dishes Menu</h1>
+        <h3>Selected Menu</h3>
         <hr>
 
 
         <div id="showSelectedDishes" class="form-inline badge-light "  >
 
             <?php
-            $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),dd.token  FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND (dd.orderDetail_id='.$order.')';
+            $sql='SELECT dd.id, dd.describe, dd.expire, dd.quantity, dd.orderDetail_id, dd.user_id, dd.dishWithAttribute_id, dd.active, dd.price, dd.expireUser ,(SELECT (SELECT d.name FROM dish as d WHERE d.id=dwa.dish_id) FROM dishWithAttribute as dwa WHERE dwa.id= dd.dishWithAttribute_id),dd.token,dd.image  FROM dish_detail as dd WHERE (ISNULL(dd.expire))AND (dd.orderDetail_id='.$order.')';
             $detailDishes=queryReceive($sql);
+
+
             $display="";
 
             for($i=0;$i<count($detailDishes);$i++)
             {
 
+                $image='../images/systemImage/imageNotFound.png';
+                if(file_exists('../images/users/'.$detailDishes[$i][11])&&($detailDishes[$i][11]!=""))
+                {
+                    $image= '../images/users/'.$detailDishes[$i][11];
+                }
 
                 $sql = 'SELECT d.id FROM dish as d   INNER JOIN dishWithAttribute as dwa
 on (d.id=dwa.dish_id)
 Where  (dwa.id=' . $detailDishes[$i][6] . ')';
                 $DishDetail = queryReceive($sql);
-
-
                 $display .= '<div id="RemoveAlreadySelected'.$detailDishes[$i][0].'" class="card col-md-4" >
-                    <ul>
-                    <li class="text-center h4 font-weight-bold"> <i class="fas fa-concierge-bell mr-1"></i>' . $detailDishes[$i][10] . '</li>
-                   
-                    <li> Dish Price Id : ' . $detailDishes[$i][6] . '</li>
-                     <li> Dish  id : ' . $DishDetail[0][0] . '</li>
-                     <li> <i class="fas fa-money-bill-alt text-danger float-right">Price : ' . $detailDishes[$i][8] . '</i></li>
-                     <li> <i class="fas fa-money-bill-alt text-danger float-right">Quantity : '.$detailDishes[$i][3].'</i></li>
-                     <li> <i class="fas fa-money-bill-alt text-danger float-right">Total : '.($detailDishes[$i][8]*$detailDishes[$i][3]).'</i></li>
-                       <li> Already booked</li>
-              
-                    </ul>';
-
-
+                    <img class="card-img-top " src="'.$image.'" alt="Card image" style="width: 100%;height: 40vh" >
+                    <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-concierge-bell mr-1"></i>Dish : '.$detailDishes[$i][10].'</h5>
+                   </div>
+                 ';
                 $sql = 'SELECT `name`, `id`,quantity FROM `attribute` WHERE (ISNULL(expire)) AND (dishWithAttribute_id=' . $detailDishes[$i][6] . ')';
                 $AttributeDetail = queryReceive($sql);
-                if (count($AttributeDetail) > 0) {
-
-
-                    $display .= ' <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Item name</th>
-      <th scope="col">Quantity</th>
-    </tr>
-  </thead>
-  <tbody>';
-
+                if (count($AttributeDetail) > 0)
+                {
+                    $display .= ' 
+ <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Item name</th>
+                  <th scope="col">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>';
                 }
                 // special dish with attribute and quantity
                 for ($k = 0; $k < count($AttributeDetail); $k++) {
@@ -193,7 +198,6 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
       <td>' . $AttributeDetail[$k][0] . '</td>
       <td>' . $AttributeDetail[$k][2] . '</td>
    </tr>';
-
                 }
 
 
@@ -201,17 +205,56 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
                     $display .= '</tbody>
 </table>';
                 }
-                $display .= '<div class="card-footer m-auto">
+                $display .= '
+
+                       
+                    <ul class="list-group list-group-flush">
+                     <li class="list-group-item"> Already booked</li>
+                     <li class="list-group-item"> Dish  id : ' . $DishDetail[0][0] . '</li>
+                     <li class="list-group-item"> Price : ' . $detailDishes[$i][8] . '</i></li>
+                     <li class="list-group-item"> Quantity : '.$detailDishes[$i][3].'</i></li>
+                     <li class="list-group-item"> Total : '.($detailDishes[$i][8]*$detailDishes[$i][3]).'</i></li>
+                    
+                    </ul>
+
+                    
                               <input type="number" hidden  name="AlreadyDishes[]" value="' . $detailDishes[$i][0] . '"> 
-                           
-                          <button type="button"  data-dishdetailid="' . $detailDishes[$i][0] . '" class="btn btn-danger AlreadyDishes "><i class="far fa-trash-alt"></i>Delete</button>
-                    </div>
+                   
+                          <button type="button"  data-dishdetailid="' . $detailDishes[$i][0] . '" class="btn btn-danger AlreadyDishes  form-control"><i class="far fa-trash-alt"></i> Delete</button>
                 </div>';
             }
             echo $display;
 
 
+
+            //show Selected Deal
+           echo GetAllShowOfSelectedDeals($order);
+
             ?>
+
+<!--
+
+            <div class="card col-md-4" style="width: 18rem;"  id="removeSelectedRowFromTableCard">
+                <img class="card-img-top " src="" alt="Card image" style="width: 100%" >
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-concierge-bell mr-1"></i>Deal:</h5>
+                    <p class="card-text">Detail :</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Deal id:</li>
+                    <li class="list-group-item text-danger"><i class="far fa-money-bill-alt"></i> Per Head Rate: </li>
+                    <li class="list-group-item">Quantity: </li>
+                    <li class="list-group-item">Total Amount: </li>
+                   <li class="list-group-item">Already Selected</li>
+                </ul>
+
+                <input  hidden type="number" name="SelectedDealid[]" value="">
+
+                <button  data-buttonid=""  class="addDealOncart btn btn-primary form-control mt-5">Add Deal</button>
+            </div>
+
+            -->
+
         </div>
 
 
@@ -248,15 +291,75 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
     </form>
 
 
+
+
 <div class="container badge-light" >
-    <h1>Catering Dishes</h1>
+
+    <h3>Deals !</h3>
+    <hr>
+    <div class="row">
+        <?php
+        $display='';
+        $imageForDB='';
+        for($i=0;$i<count($dishDealPackageDetail);$i++)
+        {
+            $imageForDB='';
+
+            $sql = 'SELECT `id`, `packageName`, `description`, `image`, `token`, `PerHeadprice`, `activeDate`, `expireDate`, `activeUser`, `expireUser` FROM `cateringPackages` WHERE (id=' . $dishDealPackageDetail[$i][1] . ')';
+            $dishDetail=queryReceive($sql);
+            $image='';
+
+            if(file_exists('../images/cateringPackage/'.$dishDetail[0][3])&&($dishDetail[0][3]!=""))
+            {
+                $image= '../images/cateringPackage/'.$dishDetail[0][3];
+                $imageForDB=$dishDetail[0][3];
+            }
+            else
+            {
+                $image='../images/systemImage/imageNotFound.png';
+            }
+
+            $display .='<div class="card m-auto" style="width: 18rem;">
+  <img class="card-img-top " src="'.$image.'" alt="Card image" style="width: 100%;height: 40vh" >
+  <div class="card-body">
+    <h5 class="card-title"><i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[0][1] . '</h5>
+    <p class="card-text">'. $dishDetail[0][2].'</p>
+  </div>
+  <ul class="list-group list-group-flush">
+  <li class="list-group-item">Deal id:'. $dishDetail[0][0] . '</li>
+    <li class="list-group-item text-danger"><i class="far fa-money-bill-alt"></i> Per Head Rate:   ' . $dishDetail[0][5] . '</li>
+      <li class="list-group-item">Quantity: <input type="number" id="DealQuantity'.$dishDetail[0][0].'" placeholder="Quantity"></li>
+      
+  </ul>';
+
+            $display.='    
+                                    <button data-dealid="'.$dishDetail[0][0].'" data-dealname="'. $dishDetail[0][2].'" data-dealdescription="'.$dishDetail[0][1].'" data-dealimage="'.$image.'" data-dealprice="'.$dishDetail[0][5].'"  data-dealimagrealfordb="'.$imageForDB.'"   class="addDealOncart btn btn-primary form-control mt-5">Add Deal</button>
+
+                                </div>';
+
+
+        }
+        echo $display;
+        ?>
+
+
+
+
+
+    </div>
+
+
+
+
+    <h4>Catering Dishes</h4>
     <hr>
     <?php
-
+    $imageForDB='';
     $DisplayModelOfDishes="";
         $display='';
         for($i=0;$i<count($dishTypeDetail);$i++)
         {
+            $imageForDB='';
             $display.='<h4 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning">Dish type '.($i+1).' :  <i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
 
 
@@ -285,6 +388,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
                 if(file_exists('../images/dishImages/'.$dishDetail[$j][2])&&($dishDetail[$j][2]!=""))
                 {
                     $image= '../images/dishImages/'.$dishDetail[$j][2];
+                    $imageForDB=$dishDetail[$j][2];
                 }
                 else
                 {
@@ -295,12 +399,12 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
             <div  class="card-body ">
             <i class="fas fa-concierge-bell mr-1"></i>' . $dishDetail[$j][0] . '<br>
             <span> Dish type id # ' . $dishDetail[$j][1] . '</span>
-            <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"   data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary"><i class="fas fa-check "></i>  Select</button>
+            <button type="button"  data-image="'.$dishDetail[$j][2].'" data-dishname="'. $dishDetail[$j][0] .'"  data-dishid="'. $dishDetail[$j][1] .'"  data-dishimagrealfordb="'.$imageForDB.'"  data-toggle="modal" data-target="#myModal"   class="adddish col-12 mb-0 btn btn-primary"><i class="fas fa-check "></i>  Select</button>
             </div>
        
         </div>';
 
-                $DisplayModelOfDishes.=showPriceofAllDishes($image,$dishDetail[$j][1],$dishDetail[$j][0]);
+                $DisplayModelOfDishes.=showPriceofAllDishes($image,$dishDetail[$j][1],$dishDetail[$j][0],$imageForDB);
 
 
             }
@@ -341,6 +445,92 @@ echo $DisplayModelOfDishes;
     $(document).ready(function ()
     {
 
+
+
+
+        function addSwal() {
+            swal({
+                html:true,
+                title: "Add item",
+                text: 'Item has been added',
+                buttons: false,
+                icon: "success",
+                timer: 1500,
+            });
+
+        }
+        function removeSWAL() {
+            swal({
+                title: "Deleted",
+                text: 'Item has been Deleted',
+                buttons: false,
+                icon: "error",
+                timer: 1500,
+                html: true
+            });
+        }
+
+        $(document).on('click',".removeSelectedRowFromTableCard",function ()
+        {
+            var buttonid=$(this).data("buttonid");
+            $("#removeSelectedRowFromTableCard"+buttonid).remove();
+            removeSWAL();
+
+        });
+
+
+        var count=0;
+        function TableOFBodyMenuAdd(id,image,item,Type,description,price,InputQuantity,dishtypeid,dealimagrealfordb)
+        {
+            var text= '<div class="card col-md-4" style="width: 18rem;" id="removeRowFromTableCard'+count+'">'+
+            '<img class="card-img-top " src="'+image+'" alt="Card image" style="width: 100%" >'+
+            '<div class="card-body">'+
+            '<h5 class="card-title"><i class="fas fa-concierge-bell mr-1"></i>Deal:'+item+'</h5>'+
+            '<p class="card-text">Detail :'+description+'</p>'+
+            '</div>'+
+            '<ul class="list-group list-group-flush">'+
+            '<li class="list-group-item">Deal id:'+id+'</li>'+
+            '<li class="list-group-item "> Per Head Rate: '+price+'</li>'+
+            '<li class="list-group-item">Quantity: '+InputQuantity+'</li>'+
+                '<li class="list-group-item">Total Amount: '+(Number(price)*Number(InputQuantity))+'</li>'+
+            '</ul>'+
+            ' <input hidden type="text" name="CreateDealImage[]" value="'+image+'">'+
+            '<input  hidden type="text" name="CreateDealName[]" value="'+item+'">'+
+            '<input  hidden  type="text" name="CreateDealDetail[]" value="'+description+'">'+
+            '<input   hidden type="number" name="CreateDealid[]" value="'+id+'">'+
+            '<input  hidden  type="number" name="CreateDealPrice[]" value="'+price+'">'+
+            '<input  hidden  type="number" name="CreateDealQuantity[]" value="'+InputQuantity+'">'+
+            '<button data-removerow="'+count+'"  data-dealid="'+id+'" data-dealname="'+item+'" data-dealdescription="'+description+'" data-dealimage="'+image+'" data-dealprice="'+price+'"  data-dealimagrealfordb="'+dealimagrealfordb+'"   class="removeRowFromTableCard btn btn-danger form-control mt-5"><i class="far fa-trash-alt"></i> Remove Deal</button>'+
+            '</div>';
+            count++;
+            return text;
+        }
+
+        $(document).on("click",".removeRowFromTableCard",function ()
+        {
+            var removerow=$(this).data("removerow");
+            $("#removeRowFromTableCard"+removerow).remove();
+            removeSWAL();
+        });
+
+
+        $(document).on("click",".addDealOncart",function ()
+        {
+            var dealid=$(this).data("dealid");
+            var dealname=$(this).data("dealname");
+            var dealdescription=$(this).data("dealdescription");
+            var dealimage=$(this).data("dealimage");
+            var dealprice=$(this).data("dealprice");
+            var DealQuantity=$("#DealQuantity"+dealid).val();
+            var dealimagrealfordb=$(this).data("dealimagrealfordb");
+            if(validationWithString("DealQuantity"+dealid,"Please Enter Quantity of Deal"))
+                return false;
+            var text=TableOFBodyMenuAdd(dealid,dealimage,dealname,"Deal",dealdescription,dealprice,DealQuantity,"",dealimagrealfordb);
+            $("#showSelectedDishes").append(text);
+            //CompleteCalculation();
+            addSwal();
+        });
+
         $(document).on("click",".AlreadyDishes",function ()
         {
             var dishdetailid=$(this).data("dishdetailid");
@@ -367,6 +557,9 @@ echo $DisplayModelOfDishes;
             var dishid=$(this).data("dishid");
             var price=$(this).data("price");
             var quantity=$("#QuatityDish"+dishid).val();
+            var DishOrDeal=$("#DishOrDeal"+dishid).val();
+            var dishimagrealfordb=$(this).data("dishimagrealfordb");
+
             if(validationWithString("QuatityDish"+dishid,"Please Enter Quantity of Dishes"))
             {
                 $("#QuatityDish"+dishid).removeClass("btn-danger");
@@ -388,8 +581,9 @@ echo $DisplayModelOfDishes;
             formdata.append("price", price);
             formdata.append("dishName",dishName);
             formdata.append("countofdish",countofdish);
-            formdata.append("countofdish",countofdish);
+            formdata.append("DishOrDeal",DishOrDeal);
             formdata.append("quantity",quantity);
+            formdata.append("dishimagrealfordb",dishimagrealfordb);
             formdata.append("option", "AddDishOnForm");
             $.ajax({
                 url: "DishDisplayServer.php",

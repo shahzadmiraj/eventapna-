@@ -24,7 +24,59 @@ $orderId=$processInformation[0][5];
 $userid=$_COOKIE['userid'];
 $timestamp = date('Y-m-d H:i:s');
 
-//expired if alreaady exist
+
+
+
+//selected Dealid
+$SelectedDealid=array();
+if(isset($_POST['SelectedDealid']))
+{
+    $SelectedDealid=$_POST['SelectedDealid'];
+}
+//previous Deal id
+$previousDealId=array();
+$previousDealId=array_column(GetAllDealsInOrder($orderId), 0);
+//Expire Previous deals
+
+$clean1 = array_diff($SelectedDealid, $previousDealId);
+$clean2 = array_diff($previousDealId, $SelectedDealid);
+$final_output = array_merge($clean1, $clean2);
+if(count($final_output)>0)
+{
+    $List = implode(',', $final_output);
+    $sql='UPDATE `OrderCateringDealManage` SET `expire`="'.$timestamp.'",`expireUser`='.$userid.' WHERE id in ('.$List.')';
+    querySend($sql);
+}
+
+$CreateDealid=array();
+$CreateDealImage=array();
+$CreateDealName=array();
+$CreateDealDetail=array();
+$CreateDealPrice=array();
+$CreateDealQuantity=array();
+if(isset($_POST['CreateDealid']))
+{
+    //Create New Deal
+    $CreateDealid=$_POST['CreateDealid'];
+    $CreateDealImage=$_POST['CreateDealImage'];
+    $CreateDealName=$_POST['CreateDealName'];
+    $CreateDealDetail=$_POST['CreateDealDetail'];
+    $CreateDealPrice=$_POST['CreateDealPrice'];
+    $CreateDealQuantity=$_POST['CreateDealQuantity'];
+    for($i=0;$i<count($CreateDealid);$i++)
+    {
+        dealCreate($CreateDealDetail[$i],$CreateDealQuantity[$i],$userid,$CreateDealPrice[$i],$CreateDealName[$i],$CreateDealImage[$i],$orderId,$CreateDealid[$i]);
+    }
+
+}
+
+
+
+
+
+
+
+        //expired if alreaady exist
     $AlreadyDishesDishDetail=array();
     if(isset($_POST['AlreadyDishes']))
     $AlreadyDishesDishDetail=$_POST['AlreadyDishes'];
@@ -40,37 +92,23 @@ $timestamp = date('Y-m-d H:i:s');
         $sql='UPDATE `dish_detail` SET `expire`="'.$timestamp.'",`expireUser`='.$userid.' WHERE id in ('.$List.')';
         querySend($sql);
 
+    }
 
-        if($processInformation[0][3]=="")
-        {
-            $sql='SELECT sum(price) FROM `dish_detail` WHERE (orderDetail_id='.$orderId.')AND(ISNULL(expire))';
-            $total=queryReceive($sql);
-            $sql='UPDATE `orderDetail` SET `total_amount`='.(int)($total[0][0]).' WHERE id='.$orderId;
-            querySend($sql);
-        }
-    }
-    if((!isset($_POST['dishesid'])&&($processInformation[0][4]==0)))
-    {
-        header("location:../payment/getPayment.php?pid=$pid&token=$token");
-        exit();
-    }
-    else if(!isset($_POST['dishesid']))
-    {
-        echo   '<script>  window.history.back();</script>';
-        //header("location:../order/PreviewOrder.php?pid=$pid&token=$token");
-        exit();
-    }
-    /*else if(!isset($_POST['dishesid']))
-    {
-        echo   '<script>  window.history.back();</script>';
-        exit();
-    }*/
 
-$dishesName=$_POST['dishesName'];
-$dishesid=$_POST['dishesid'];
-$prices=$_POST['prices'];
-$images=$_POST['images'];
-$quantity=$_POST['quantity'];
+$dishesName=array();
+$dishesid=array();
+$prices=array();
+$images=array();
+$quantity=array();
+
+if(isset($_POST['dishesid']))
+{
+    $dishesName=$_POST['dishesName'];
+    $dishesid=$_POST['dishesid'];
+    $prices=$_POST['prices'];
+    $images=$_POST['images'];
+    $quantity=$_POST['quantity'];
+}
 ?>
 
 
@@ -84,16 +122,22 @@ dwa.id=' . $dishesid[$j] . '';
         $EachDishInfo = queryReceive($sql);
         CreateNewDishes($orderId, $userid, $dishesid[$j], $prices[$j], $quantity[$j], "", $EachDishInfo[0][0], $EachDishInfo[0][1], $EachDishInfo[0][2]);
     }
+
+
+
+
+
+
+    SetCateringTotalAmount($orderId);
+    //redirect
         if(($processInformation[0][4]==0))
         {
             header("location:../payment/getPayment.php?pid=$pid&token=$token");
-            exit();
         }
-        else
-            {
+        else {
             echo   '<script>  window.history.back();</script>';
-           exit();
         }
+
 
         ?>
 

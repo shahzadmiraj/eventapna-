@@ -53,7 +53,7 @@ function customerBookService()
     $sql="";
     if($cateringid!='No')
     {
-        $sql='INSERT INTO `BookingProcess`(`id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`) VALUES (NULL,"'.$token.'",'.$cateringid.',NULL,0,NULL,"'.$timestamp.'",'.$customerId.')';
+        $sql='INSERT INTO `BookingProcess`(`id`, `token`, `catering_id`, `hall_id`, `IsProcessComplete`, `orderDetail_id`, `active`, `person_id`,`BuyerOrSeller`) VALUES (NULL,"'.$token.'",'.$cateringid.',NULL,0,NULL,"'.$timestamp.'",'.$customerId.',"Buyer")';
         $branchtype='Catering';
         $branchid=$cateringid;
     }
