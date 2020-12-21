@@ -295,9 +295,9 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
 
 <div class="container badge-light" >
 
-    <h3>Deals !</h3>
+    <h3  id="DealShowOnOff" class="btn-outline-success" data-display="hide">Deals ! <span class="float-right" style="font-size: 15px">Click here</span></h3>
     <hr>
-    <div class="row">
+    <div class="row"  id="ReflectDealShowOnOff"  style="display: none" >
         <?php
         $display='';
         $imageForDB='';
@@ -351,7 +351,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
 
 
 
-    <h4>Catering Dishes</h4>
+    <h4 class="text-center">Catering Dishes</h4>
     <hr>
     <?php
     $imageForDB='';
@@ -360,7 +360,7 @@ Where  (dwa.id=' . $detailDishes[$i][6] . ')';
         for($i=0;$i<count($dishTypeDetail);$i++)
         {
             $imageForDB='';
-            $display.='<h4 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-warning">Dish type '.($i+1).' :  <i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].'</h2>';
+            $display.='<h4 data-dishtype="'.$i.'" data-display="hide" align="center " class="dishtypes col-12 btn-outline-warning"> <span class="float-left" style="font-size: 15px">'.($i+1).' :</span>  <i class="fas fa-sitemap mr-1"></i> '.$dishTypeDetail[$i][1].' <span class="float-right" style="font-size: 15px">Click here</span></h2>';
 
 
             $sql = 'SELECT d.name, d.id,d.image,d.dish_type_id FROM dish as d
@@ -693,7 +693,7 @@ echo $DisplayModelOfDishes;
         $(document).on("click",".dishtypes",function () {
             var display=$(this).data("display");
             var IdDisplay=$(this).data("dishtype");
-            if(display=="hide")
+            if(display==="hide")
             {
                 $("#dishtype"+IdDisplay).show('slow');
                 $(this).data("display","show");
@@ -706,6 +706,24 @@ echo $DisplayModelOfDishes;
             }
 
         });
+
+
+        $(document).on("click","#DealShowOnOff",function () {
+            var display=$(this).data("display");
+            if(display==="hide")
+            {
+                $("#ReflectDealShowOnOff").show('slow');
+                $(this).data("display","show");
+            }
+            else
+            {
+
+                $("#ReflectDealShowOnOff").hide('slow');
+                $(this).data("display","hide");
+            }
+
+        });
+
 
 
         function menushow(Orderid,PackageDescribe)

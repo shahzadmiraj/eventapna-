@@ -59,15 +59,30 @@ $usersNav=queryReceive($sql);
 
        <li class="nav-item">
            <a class="nav-link" href="<?php echo $Root; ?>company/ClientSide/Company/ClientCompany.php?c=<?php echo $companyidNav;?>">
+
                <i class="fab fa-chrome "></i>
                <span>Website</span></a>
        </li>
-       
+
+
+       <?php
+       if (onlyAccessUsersWho("Owner"))
+       {
+       ?>
        <li class="nav-item">
            <a class="nav-link" href="<?php echo $Root; ?>user/RegisterCompanyUser.php">
                <i class="fas fa-id-card "></i>
                <span>+ Add User</span></a>
        </li>
+           <li class="nav-item">
+               <a class="nav-link" href="<?php echo $Root; ?>company/BankAccount/ManageBankInfo.php">
+                   <i class="fas fa-university"></i>
+                   <span>Account Bank Manage</span></a>
+           </li>
+
+       <?php
+       }
+       ?>
 
 
 
