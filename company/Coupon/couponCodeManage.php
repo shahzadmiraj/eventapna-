@@ -69,8 +69,8 @@ include('../../companyDashboard/includes/navbar.php');
 
 
 
-    <div class="container">
-        <table class="table table-striped">
+    <div class="container" style="width: 100%;overflow-x: auto">
+        <table class="table table-striped" >
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -85,21 +85,30 @@ include('../../companyDashboard/includes/navbar.php');
                 <th scope="col">Clients Type</th>
                 <th scope="col">Product Type</th>
                 <th scope="col">Tems And Conditions</th>
+                <th scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
 
             <?php
-            $sql='SELECT `id`, `BankName`, `BankIBAN`, `BankOwnerName` FROM `Bankinfo` WHERE company_id='.$userdetail[0][0].' AND(ISNULL(UserIdExpire))';
+            $sql='SELECT `id`, `Title`, `PercentageORAmount`, `Discount`, `Minimum`, `Maximum`, `Noclients`, `Active`, `Expire`, `Clients_type`, `product_type`, `Conditions`, `activeuser`, `expireuser`, `companyId`, `couponActiveDate`, `CouponExpireDate` FROM `couponCode` where companyId='.$userdetail[0][0].' AND(ISNULL(CouponExpireDate))';
             $Resultofbanks=queryReceive($sql);
             for($i=0;$i<count($Resultofbanks);$i++)
             {
                 echo ' <tr>
             <th scope="row">'.($i+1).'</th>
-            <td>'.$Resultofbanks[$i][3].'</td>
             <td>'.$Resultofbanks[$i][1].'</td>
             <td>'.$Resultofbanks[$i][2].'</td>
-            <td><button data-idnumberofbank="'.$Resultofbanks[$i][0].'" class="btn btn-danger removeBankAccount">X</button></td>
+            <td>'.$Resultofbanks[$i][3].'</td>
+              <td>'.$Resultofbanks[$i][4].'</td>
+                <td>'.$Resultofbanks[$i][5].'</td>
+                  <td>'.$Resultofbanks[$i][6].'</td>
+                    <td>'.$Resultofbanks[$i][7].'</td>
+                      <td>'.$Resultofbanks[$i][8].'</td>
+                        <td>'.$Resultofbanks[$i][9].'</td>
+                          <td>'.$Resultofbanks[$i][10].'</td>
+                          <td>'.$Resultofbanks[$i][11].'</td>
+            <td><button data-idnumberofcouponcode="'.$Resultofbanks[$i][0].'" class="btn btn-danger removeCouponCode">X</button></td>
         </tr>';
             }
             ?>
@@ -122,9 +131,9 @@ include('../../companyDashboard/includes/navbar.php');
                     </button>
                 </div>
                 <div class="modal-body container">
-                    <form id="FormOfAddBank" class="row">
+                    <form id="FormCouponCode" class="row">
 
-                        <input type="text" hidden name="option" value="AddNewBank">
+                        <input type="text" hidden name="option" value="AddCouponCode">
 
                         <input type="number" hidden name="userid" value="<?php echo $userid;?>">
 
@@ -136,8 +145,8 @@ include('../../companyDashboard/includes/navbar.php');
                         <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
                             <lable for="PercentageORAmount" class="col-form-label">Discount Type</lable>
                             <select  id="PercentageORAmount" name="PercentageORAmount" class="form-control">
-                                <option name="Percentage">Discount in Percentage</option>
-                                <option name="Amount">Discount in Amount</option>
+                                <option value="Percentage">Discount in Percentage</option>
+                                <option value="Amount">Discount in Amount</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
@@ -167,32 +176,31 @@ include('../../companyDashboard/includes/navbar.php');
                         <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
                             <lable for="Clients_type" class="col-form-label">Clients type</lable>
                             <select  id="Clients_type" name="Clients_type" class="form-control">
-                                <option name="New">New  Clients</option>
-                                <option name="Old">Old Clients</option>
-                                <option name="Both">Both Clients</option>
+                                <option value="New">New  Clients</option>
+                                <option value="Old">Old Clients</option>
+                                <option value="New and Old">Both Clients</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
                             <lable for="product_type" class="col-form-label">Product Type</lable>
 
                             <select  id="product_type" name="product_type" class="form-control">
-                                <option name="Hall">Hall Package</option>
-                                <option name="Catering">Catering Product</option>
-                                <option name="Both">Both Product</option>
+                                <option value="Hall">Hall Package</option>
+                                <option value="Catering">Catering Product</option>
+                                <option value="Hall and Catering">Both Product</option>
                             </select>
-
                         </div>
+
                         <div class="form-group col-sm-12   col-12 col-md-12 col-lg-12">
                             <lable for="Conditions" class="col-form-label sr-only">Tems And Conditions</lable>
                             <textarea id="Conditions" name="Conditions" class="form-control " placeholder="Tems And Conditions"></textarea>
                         </div>
 
-
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="submitNewAccount" type="button" class="btn btn-primary">Save changes</button>
+                    <button id="submitNewCouponCode" type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -210,19 +218,29 @@ include('../../companyDashboard/includes/navbar.php');
         $(document).ready(function ()
         {
 
-            $("#submitNewAccount").click(function ()
+            $("#submitNewCouponCode").click(function ()
             {
 
-                if(validationWithString("Account_Holder_Name","please enter Account Holder Name "))
+                if(validationWithString("Title","please enter Title of coupon code "))
                     return false;
-                if(validationWithString("Bank_Name","please enter bank Name"))
+                if(validationWithString("Discount","please enter Discount"))
                     return false;
-                if(validationWithString("IBAN","please enter IBAN "))
+                if(validationWithString("Active","please enter Active date and time "))
+                    return false;
+                if(validationWithString("Expire","please enter Expire date and time "))
+                    return false;
+                if(validationWithString("Minimum","please enter Minimum Total cost for apply "))
+                    return false;
+                if(validationWithString("Maximum","please enter Maximum Total cost for apply "))
+                    return false;
+                if(validationWithString("Noclients","please enter How many client ?"))
                     return false;
 
-                var formData=new FormData($("#FormOfAddBank")[0]);
+
+
+                var formData=new FormData($("#FormCouponCode")[0]);
                 $.ajax({
-                    url:"ManageBankServer.php",
+                    url:"couponCodeManageServer.php",
                     method:"POST",
                     data:formData,
                     contentType: false,
@@ -240,24 +258,23 @@ include('../../companyDashboard/includes/navbar.php');
                         }
                         else
                             location.reload();
-
                     }
                 });
             });
 
 
 
-            $(document).on("click",".removeBankAccount",function ()
+            $(document).on("click",".removeCouponCode",function ()
             {
 
-                var idnumberofbank=$(this).data("idnumberofbank");
+                var idnumberofcouponcode=$(this).data("idnumberofcouponcode");
                 var formData=new FormData;
-                formData.append("option","RemoveBankAccount");
-                formData.append("idnumberofbank",idnumberofbank);
+                formData.append("option","RemoveCouponcode");
+                formData.append("idnumberofcouponcode",idnumberofcouponcode);
                 formData.append("userid","<?php echo $userid;?>");
 
                 $.ajax({
-                    url:"ManageBankServer.php",
+                    url:"couponCodeManageServer.php",
                     method:"POST",
                     data:formData,
                     contentType: false,

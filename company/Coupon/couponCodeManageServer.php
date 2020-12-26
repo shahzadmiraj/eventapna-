@@ -1,23 +1,36 @@
 <?php
 include_once ("../../connection/connect.php");
-if($_POST['option']=="AddNewBank")
+if($_POST['option']=="AddCouponCode")
 {
-    $Account_Holder_Name=$_POST['Account_Holder_Name'];
-    $Bank_Name=$_POST['Bank_Name'];
-    $IBAN=$_POST['IBAN'];
+    $Title=$_POST['Title'];
+    $PercentageORAmount=$_POST['PercentageORAmount'];
     $userid=$_POST['userid'];
     $companyid=$_POST['companyid'];
+    $Discount=$_POST['Discount'];
+    $Minimum=$_POST['Minimum'];
+    $Maximum=$_POST['Maximum'];
+    $Noclients=$_POST['Noclients'];
+    $Active=$_POST['Active'];
+    $Expire=$_POST['Expire'];
+    $Clients_type=$_POST['Clients_type'];
+    $product_type=$_POST['product_type'];
+    $Conditions=$_POST['Conditions'];
+    if($PercentageORAmount=="Percentage" && $Discount>100)
+    {
+            echo "Please enter Valid discount";
+            exit();
+    }
 
-    $sql='INSERT INTO `Bankinfo`(`id`, `BankName`, `BankIBAN`, `BankOwnerName`, `userid`, `activeDate`, `UserIdExpire`, `UserExpire`, `company_id`) VALUES (NULL,"'.$Bank_Name.'","'.$IBAN.'","'.$Account_Holder_Name.'",'.$userid.',"'.$timestamp.'",NULL,NULL,'.$companyid.')';
+    $sql='INSERT INTO `couponCode`(`id`, `Title`, `PercentageORAmount`, `Discount`, `Minimum`, `Maximum`, `Noclients`, `Active`, `Expire`, `Clients_type`, `product_type`, `Conditions`, `activeuser`, `expireuser`, `companyId`,`couponActiveDate`, `CouponExpireDate`) VALUES (NULL,"'.$Title.'","'.$PercentageORAmount.'","'.$Discount.'",'.$Minimum.','.$Maximum.','.$Noclients.',"'.$Active.'","'.$Expire.'"
+    ,"'.$Clients_type.'","'.$product_type.'","'.$Conditions.'",'.$userid.',NULL,'.$companyid.',"'.$timestamp.'",NULL)';
     querySend($sql);
 }
-else if($_POST['option']=="RemoveBankAccount")
+else if($_POST['option']=="RemoveCouponcode")
 {
-    $idnumberofbank=$_POST['idnumberofbank'];
+    $idnumberofcouponcode=$_POST['idnumberofcouponcode'];
     $userid=$_POST['userid'];
-    $sql='UPDATE `Bankinfo` SET `UserIdExpire`='.$userid.',`UserExpire`="'.$timestamp.'" WHERE id='.$idnumberofbank;
+    $sql='UPDATE `couponCode` SET `expireuser`='.$userid.',`CouponExpireDate`="'.$timestamp.'" WHERE id='.$idnumberofcouponcode;
     querySend($sql);
-
 }
 
 ?>
