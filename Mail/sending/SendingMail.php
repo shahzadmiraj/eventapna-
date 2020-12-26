@@ -1,7 +1,7 @@
 <?php
 
-require_once('../libraries/PHPMailer.php');
-require_once('../libraries/SMTP.php');
+//require_once('../libraries/PHPMailer.php');
+//require_once('../libraries/SMTP.php');
 
 function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddress)
 {
@@ -77,9 +77,7 @@ function serverSendMessage($SenderAddress,$SenderName,$Subject,$html,$ReplyAddre
     return $display;
 }
 
-$emailAdress=array("cryptogelt99@gmail.com","shahzadmirajdin1@gmail.com","mrbfree00@gmail.com");
-$emailNames=array("cryptogelt","shahzad miraj","mrbfree");
-echo serverSendMessage($emailAdress,$emailNames,"Confirmation of Email",'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+/*echo serverSendMessage($emailAdress,$emailNames,"Confirmation of Email",'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -190,7 +188,7 @@ echo serverSendMessage($emailAdress,$emailNames,"Confirmation of Email",'<!DOCTY
     </tr>
   </table>
 </body>
-</html> ','shahzadmirajdin1@gmail.com');
+</html> ','shahzadmirajdin1@gmail.com');*/
 //  $mail->Username   = 'support@eventapna.com';                     // SMTP username
 //    $mail->Password   = 'shhazadmirajdin1';                               // SMTP password
 //    $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted

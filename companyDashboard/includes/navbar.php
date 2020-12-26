@@ -79,6 +79,11 @@ $usersNav=queryReceive($sql);
                    <i class="fas fa-university"></i>
                    <span>Account Bank Manage</span></a>
            </li>
+           <li class="nav-item">
+               <a class="nav-link" href="<?php echo $Root; ?>company/Coupon/couponCodeManage.php">
+                   <i class="fas fa-qrcode"></i>
+                   <span>Coupon code</span></a>
+           </li>
 
        <?php
        }
