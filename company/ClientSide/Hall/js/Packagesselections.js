@@ -3,7 +3,27 @@ $('document').ready(function () {
     var Extraitemcounter=0;
 
 
+    function addSwal() {
+        swal({
+            html:true,
+            title: "Add item",
+            text: 'Item has been added',
+            buttons: false,
+            icon: "success",
+            timer: 1500
+        });
 
+    }
+    function removeSWAL() {
+        swal({
+            title: "Deleted",
+            text: 'Item has been Deleted',
+            buttons: false,
+            icon: "error",
+            timer: 1500,
+            html: true
+        });
+    }
     function funAddExtraitemIncard()
     {
 
@@ -34,8 +54,52 @@ $('document').ready(function () {
 
         Extraitemcounter++;
         CompleteCalculation();
+        addSwal();
     }
     $('.AddRowOfTable').unbind().click(funAddExtraitemIncard);
+
+    $(document).on('click','#CoponCodeBtn',function (e)
+    {
+        e.preventDefault();
+         var CoponCode=$("#CoponCode").val();
+         var companyid=$("#companyid").val();
+         var formData=new FormData;
+        formData.append("CoponCode",CoponCode);
+        formData.append("companyid",companyid);
+
+        formData.append("option","CouponCodeValidation");
+        $.ajax({
+            url: 'couponcode/coponserver.php',
+            method: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data)
+            {
+                console.log(data);
+                if(data!=="No")
+                {
+                    var dataNew= JSON.parse(data);
+
+                    //PercentageORAmount 1
+                    //Discount 2
+                    console.log(dataNew[0]);
+                    $("#CoponCodeReal").val(dataNew[0]);
+                    $("#wizardCouponCodePercentageORAmount").val(dataNew[1]);
+                    $("#CouponCodeDiscount").val(dataNew[2]);
+                }
+                else
+                {
+                    $("#CoponCodeReal").val("");
+                    $("#wizardCouponCodePercentageORAmount").val(0);
+                    $("#CouponCodeDiscount").val(0);
+                }
+
+                CompleteCalculation();
+
+            }
+        });
+    });
 
 
 
@@ -46,6 +110,7 @@ $('document').ready(function () {
         var deleteRowOfTablerowid=$(this).data('rowoftable');
         $("#rowoftable"+deleteRowOfTablerowid).remove();
         CompleteCalculation();
+        removeSWAL();
     });
     var DealItems = [];
     function TotalNumbersOfNameIninput()
@@ -80,6 +145,25 @@ $('document').ready(function () {
         // console.log(TotalExtraItem);
          return TotalExtraItem;
     }
+
+    function CalculateDiscount(TotalAmount)
+    {
+       //var CoponCodeReal=$("#CoponCodeReal").val();
+       var wizardCouponCodePercentageORAmount=$("#wizardCouponCodePercentageORAmount").val();
+       var CouponCodeDiscount=$("#CouponCodeDiscount").val();
+       var discount=0;
+       if(wizardCouponCodePercentageORAmount==="Percentage")
+       {
+           discount=(TotalAmount*CouponCodeDiscount)/100;
+       }
+       else if(wizardCouponCodePercentageORAmount==="Amount")
+       {
+           discount=CouponCodeDiscount;
+       }
+
+        $("#wizardDiscountAmountPackage").val(discount);
+    }
+
     function CompleteCalculation()
     {
         var TotalAmount=0;
@@ -95,8 +179,18 @@ $('document').ready(function () {
 
          TotalAmount+=TotalExtraItem;
 
-         $("#wizardTotalAmountPackage").val(TotalAmount);
+
+
+
+
+
+        $("#wizardTotalAmountPackage").val(TotalAmount);
          $("#wizardAmountPackage").val(TotalAmount);
+
+        CalculateDiscount(TotalAmount);
+        var wizardDiscountAmountPackage=Number($("#wizardDiscountAmountPackage").val());
+        TotalAmount-= wizardDiscountAmountPackage;
+         $("#wizardRemiangAmountPackage").val(TotalAmount);
     }
     $("#numberOfGuest").change(CompleteCalculation);
     $('input[type=radio]').change(function() {

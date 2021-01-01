@@ -19,8 +19,8 @@
            echo $SecondincludeItemStyle;
         ?>
         <hr>
-        <h4 class="section-heading mb-5">Extra Item <button type="button" class="btn btn-outline-primary float-right"  data-toggle="modal" data-target="#ExtraitemModel">+ Add</button> </h4>
-        <div class="row" style="overflow: auto">
+        <h4 class="section-heading mb-5">Order Detail: <button type="button" class="btn btn-outline-primary float-right"  data-toggle="modal" data-target="#ExtraitemModel">+ Add</button> </h4>
+        <div class="row" style="width: 100%;overflow-x: auto">
             <table class="table table-striped">
                 <thead>
                 <tr>

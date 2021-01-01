@@ -82,8 +82,7 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
-    <link rel="stylesheet" href="../../../webdesign/css/CardStyle.css">
+
     <link rel="stylesheet" href="../../../webdesign/css/Gallery.css">
     <link rel="stylesheet" href="../../../webdesign/css/comment.css">
 
@@ -97,8 +96,9 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="../../../webdesign/JSfile/JSFunction.js"></script>
     <link rel="stylesheet" href="../HallOrderwizard/assets/css/bd-wizard.css">
-    <script  src="js/Packagesselections.js"></script>
     <script  src="js/userLogin.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
     <style>
         .checked {
@@ -720,6 +720,8 @@ include_once "../All/Comments.php"
     $(document).ready(function()
     {
 
+
+
         latitude=<?php echo $hallInformation[0][13];?>;
         longitude=<?php echo $hallInformation[0][14];?>;
 
@@ -774,11 +776,12 @@ include_once "../All/Comments.php"
 
 <script src="../HallOrderwizard/assets/js/jquery.steps.min.js"></script>
 <script src="../HallOrderwizard/assets/js/bd-wizard.js"></script>
-
+<script  src="js/Packagesselections.js"></script>
 
 <?php
 include_once ("../../../webdesign/footer/footer.php");
 ?>
+
 </body>
 </html>
 <?php
