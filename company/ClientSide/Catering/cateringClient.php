@@ -60,7 +60,6 @@ EVENT APNA  provides Free Software ....... So Register NOW
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../../../webdesign/css/loader.css">
-    <link rel="stylesheet" href="../../../webdesign/css/complete.css">
     <link rel="stylesheet" href="../../../webdesign/css/CardStyle.css">
     <link rel="stylesheet" href="../../../webdesign/css/Gallery.css">
     <link rel="stylesheet" href="../../../webdesign/css/comment.css">
@@ -691,6 +690,11 @@ include_once "../All/Comments.php"
             TotalExtraItem=CalculateExtraitemAddInTable();
             $("#wizardTotalAmountPackage").val(TotalExtraItem);
             $("#wizardAmountPackage").val(TotalExtraItem);
+
+            CalculateDiscount(TotalExtraItem);
+            var wizardDiscountAmountPackage=Number($("#wizardDiscountAmountPackage").val());
+            TotalExtraItem-= wizardDiscountAmountPackage;
+            $("#wizardRemiangAmountPackage").val(TotalExtraItem);
         }
 
 
@@ -711,6 +715,72 @@ include_once "../All/Comments.php"
             }
 
         });
+
+
+
+        $(document).on('click','#CoponCodeBtn',function (e)
+        {
+            e.preventDefault();
+            var CoponCode=$("#CoponCode").val();
+            var companyid=$("#companyid").val();
+            var formData=new FormData;
+            formData.append("CoponCode",CoponCode);
+            formData.append("companyid",companyid);
+
+            formData.append("option","CouponCodeValidation");
+            $.ajax({
+                url: '../Hall/couponcode/coponserver.php',
+                method: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data)
+                {
+                    console.log(data);
+                    if(data!=="No")
+                    {
+                        var dataNew= JSON.parse(data);
+
+                        //PercentageORAmount 1
+                        //Discount 2
+                        console.log(dataNew[0]);
+                        $("#CoponCodeReal").val(dataNew[0]);
+                        $("#wizardCouponCodePercentageORAmount").val(dataNew[1]);
+                        $("#CouponCodeDiscount").val(dataNew[2]);
+                    }
+                    else
+                    {
+                        removeSWAL();
+                        $("#CoponCodeReal").val("");
+                        $("#wizardCouponCodePercentageORAmount").val(0);
+                        $("#CouponCodeDiscount").val(0);
+                    }
+
+                    CompleteCalculation();
+
+                }
+            });
+        });
+
+
+
+        function CalculateDiscount(TotalAmount)
+        {
+            //var CoponCodeReal=$("#CoponCodeReal").val();
+            var wizardCouponCodePercentageORAmount=$("#wizardCouponCodePercentageORAmount").val();
+            var CouponCodeDiscount=$("#CouponCodeDiscount").val();
+            var discount=0;
+            if(wizardCouponCodePercentageORAmount==="Percentage")
+            {
+                discount=(TotalAmount*CouponCodeDiscount)/100;
+            }
+            else if(wizardCouponCodePercentageORAmount==="Amount")
+            {
+                discount=CouponCodeDiscount;
+            }
+
+            $("#wizardDiscountAmountPackage").val(discount);
+        }
     });
 
     $(document).ready(function()

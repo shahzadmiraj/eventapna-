@@ -55,7 +55,7 @@
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-success" id="CoponCodeBtn"><i class="fas fa-check "></i> </button>
                         <input hidden readonly type="text" class="form-control" name="CoponCodeReal" id="CoponCodeReal" >
-                         <input hidden readonly type="text" name="wizardCouponCodePercentageORAmount" value="" id="wizardCouponCodePercentageORAmount">
+                        <input hidden readonly type="text" name="wizardCouponCodePercentageORAmount" value="" id="wizardCouponCodePercentageORAmount">
                         <input hidden  readonly type="number" name="CouponCodeDiscount" value="" id="CouponCodeDiscount">
                         <input hidden readonly type="number" name="companyid" value="<?php echo $hallInformation[0][8];?>" id="companyid">
                     </div>

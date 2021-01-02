@@ -26,7 +26,7 @@
             </div>
             <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable for="numberOfGuest" class="col-form-label sr-only">Maximum Guest</lable>
-                <input id="numberOfGuest" type="number" name="numberOfGuest" class="form-control " placeholder="Maximum Guest ">
+                <input id="numberOfGuest" type="number" name="numberOfGuest" class="form-control " placeholder="Maximum Guest " min="0">
             </div>
             <div class="form-group col-sm-12   col-12 col-md-6 col-lg-6">
                 <lable for="BookingAddress" class="col-form-label sr-only">Booking Address</lable>
@@ -65,7 +65,28 @@
 
         <br>
         <hr>
-        <h3 class="section-heading mb-5">Amount <input readonly type="number" name="wizardTotalAmountPackage" id="wizardAmountPackage" class="float-right text-danger text-center" style="border: none;" value="0"> </h3>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label for="describe" class="sr-only">Coupon Code</label>
+                <div class="input-group mb-3 input-group-lg">
+                    <input type="text" class="form-control" name="CoponCode" id="CoponCode" placeholder="Coupon Code">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-success" id="CoponCodeBtn"><i class="fas fa-check "></i> </button>
+                        <input hidden readonly type="text" class="form-control" name="CoponCodeReal" id="CoponCodeReal" >
+                        <input hidden readonly type="text" name="wizardCouponCodePercentageORAmount" value="" id="wizardCouponCodePercentageORAmount">
+                        <input hidden  readonly type="number" name="CouponCodeDiscount" value="" id="CouponCodeDiscount">
+                        <input hidden readonly type="number" name="companyid" value="<?php echo $catering[0][2];?>" id="companyid">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h6 class="section-heading mb-5">Amount <input readonly type="number" name="wizardTotalAmountPackage" id="wizardAmountPackage" class="float-right text-danger text-center" style="border: none;" value="0"> </h6>
+
+        <h6 class="section-heading mb-5">Discount <input name="Discount" readonly type="number" id="wizardDiscountAmountPackage" class="float-right text-danger" style="border: none" value="0"> </h6>
+
+        <h3 class="section-heading mb-5">Remaining <input readonly type="number" id="wizardRemiangAmountPackage" class="float-right text-danger" style="border: none" value="0"> </h3>
+
 
     </div>
 

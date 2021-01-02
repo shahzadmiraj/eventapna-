@@ -19,6 +19,19 @@ if($_POST['option']=="CompleteFormSubmitByClient")
 
 
 }
+
+function checkCouponCode()
+{
+    global  $_POST,$orderid,$timestamp;
+    $CoponCodeReal=$_POST['CoponCodeReal'];
+    $companyid=$_POST['companyid'];
+    $couponDetail= couponcode($CoponCodeReal,$companyid);
+    if($couponDetail!="No")
+    {
+        $sql='INSERT INTO `orderWithCouponCode`(`id`, `activedate`, `expireDate`, `orderDetail_id`, `couponCode_id`) VALUES (NULL,"'.$timestamp.'",NULL,'.$orderid.','.$couponDetail.')';
+        querySend($sql);
+    }
+}
 function customerBookService()
 {
     global $timestamp,$connect,$_POST,$customerId,$branchid,$branchtype,$orderProcessId;
@@ -156,7 +169,17 @@ if($_POST['option']=="CompleteCateringFormSubmitByClient")
 
     SetCateringTotalAmount($orderid);
 
+    checkCouponCode();
 
+}
+function couponcode($CoponCode,$companyid)
+{
+    $sql='SELECT `id`, `Title`, `PercentageORAmount`, `Discount`, `Minimum`, `Maximum`, `Noclients`, `Active`, `Expire`, `Clients_type`, `product_type`, `Conditions`, `activeuser`, `expireuser`, `couponActiveDate`  FROM `couponCode` WHERE Title="'.$CoponCode.'" AND companyId='.$companyid.' AND (ISNULL(CouponExpireDate))';
+    $CouponCodeDetail=queryReceive($sql);
+    if(count($CouponCodeDetail)==1)
+        return $CouponCodeDetail[0][0];
+    else
+        return "No";
 }
 
 include_once("../../../webdesign/footer/EndOfPage.php");
