@@ -90,6 +90,7 @@ $('document').ready(function () {
                 }
                 else
                 {
+                    removeSWAL();
                     $("#CoponCodeReal").val("");
                     $("#wizardCouponCodePercentageORAmount").val(0);
                     $("#CouponCodeDiscount").val(0);

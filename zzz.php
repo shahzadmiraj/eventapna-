@@ -35,6 +35,15 @@
             "https://www.fiverr.com/categories/online-marketing/website-traffic?source=category_tree",
             "https://www.fiverr.com/categories/online-marketing/online-marketing-services?source=category_tree"
         ];
+        var b=['https://www.fiverr.com/users/shahzadmiraj/balance/sales',
+        'https://www.fiverr.com/users/shahzadmiraj/manage_orders/view?source=header_navigation',
+        'https://www.fiverr.com/users/shahzadmiraj/manage_gigs',
+        'https://www.fiverr.com/users/shahzadmiraj/seller_analytics_dashboard',
+            'https://www.fiverr.com/users/shahzadmiraj/requests',
+            'https://www.fiverr.com/users/shahzadmiraj/manage_sales_promotion',
+            'https://www.fiverr.com/users/shahzadmiraj/manage_orders/FO512D28D06A5',
+            'https://www.fiverr.com/users/shahzadmiraj/manage_orders/FO5F5F639383'
+        ];
         return a[Math.floor(Math.random() * a.length)];
     }
     var rand=Math.floor(Math.random() * 10);

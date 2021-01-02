@@ -16,9 +16,9 @@
     <div class="container">
       <div id="wizard">
         <?php
-        include_once('Step3/Preview.php');
+        //include_once('Step3/Preview.php');
         include_once('step2/Packageselections.php');
-      //  include_once('Step3/Preview.php');
+        include_once('Step3/Preview.php');
         include_once('Step1/PersonalDetail.php');
         ?>
 

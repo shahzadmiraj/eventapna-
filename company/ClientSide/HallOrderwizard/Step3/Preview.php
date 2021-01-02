@@ -53,7 +53,7 @@
                 <div class="input-group mb-3 input-group-lg">
                     <input type="text" class="form-control" name="CoponCode" id="CoponCode" placeholder="Coupon Code">
                     <div class="input-group-prepend">
-                        <button class="btn btn-outline-success" id="CoponCodeBtn"><i class="far fa-id-card"></i></button>
+                        <button class="btn btn-outline-success" id="CoponCodeBtn"><i class="fas fa-check "></i> </button>
                         <input hidden readonly type="text" class="form-control" name="CoponCodeReal" id="CoponCodeReal" >
                          <input hidden readonly type="text" name="wizardCouponCodePercentageORAmount" value="" id="wizardCouponCodePercentageORAmount">
                         <input hidden  readonly type="number" name="CouponCodeDiscount" value="" id="CouponCodeDiscount">
@@ -62,7 +62,6 @@
                 </div>
             </div>
         </div>
-
 
         <h6 class="section-heading mb-5">Amount <input readonly type="number" name="wizardTotalAmountPackage" id="wizardTotalAmountPackage" class="float-right text-danger" style="border: none" value="0"> </h6>
 

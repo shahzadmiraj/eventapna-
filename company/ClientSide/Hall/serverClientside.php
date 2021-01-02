@@ -8,6 +8,22 @@ $branchid=0;
 $branchtype='No';
 $orderProcessId=0;
 $orderid=0;
+
+
+
+
+function checkCouponCode()
+{
+    global  $_POST,$orderid,$timestamp;
+    $CoponCodeReal=$_POST['CoponCodeReal'];
+    $companyid=$_POST['companyid'];
+   $couponDetail= couponcode($CoponCodeReal,$companyid);
+   if($couponDetail!="No")
+   {
+       $sql='INSERT INTO `orderWithCouponCode`(`id`, `activedate`, `expireDate`, `orderDetail_id`, `couponCode_id`) VALUES (NULL,"'.$timestamp.'",NULL,'.$orderid.','.$couponDetail.')';
+        querySend($sql);
+   }
+}
 if($_POST['option']=="CompleteFormSubmitByClient")
 {
     $pid=$_POST['pid'];
@@ -18,6 +34,7 @@ if($_POST['option']=="CompleteFormSubmitByClient")
     $customerAddress=$_POST['customerAddress'];
     customerBookService();
     hallorderBooking();
+    checkCouponCode();
     $listofitemtype='';
     if(isset($_POST['listofitemtype']))
     {
@@ -96,6 +113,15 @@ function customerBookService()
     $last_id= mysqli_insert_id($connect);
     $orderProcessId=$last_id;
 }
+function couponcode($CoponCode,$companyid)
+{
+    $sql='SELECT `id`, `Title`, `PercentageORAmount`, `Discount`, `Minimum`, `Maximum`, `Noclients`, `Active`, `Expire`, `Clients_type`, `product_type`, `Conditions`, `activeuser`, `expireuser`, `couponActiveDate`  FROM `couponCode` WHERE Title="'.$CoponCode.'" AND companyId='.$companyid.' AND (ISNULL(CouponExpireDate))';
+    $CouponCodeDetail=queryReceive($sql);
+    if(count($CouponCodeDetail)==1)
+        return $CouponCodeDetail[0][0];
+    else
+        return "No";
+}
 function hallorderBooking()
 {
 
@@ -149,11 +175,13 @@ function hallorderBooking()
         }
 
     }
+    //$Discount
+    //$Charges
     $sql='INSERT INTO `orderDetail`(`id`, `hall_id`, `catering_id`, `packageDate_id`, `user_id`, `person_id`, 
         `total_amount`, `total_person`, `status_hall`, `destination_date`, `booking_date`, `destination_time`, 
         `status_catering`,`describe`, `address`, `location_id`, `discount`, `extracharges`) 
         VALUES (NULL,'.$hallid.','.$cateringid.','.$packageDateid.','.$userid.','.$personid.','.$totalamount.','.$guests.',"Draft","'.$date.'","'.$timestamp.'",
-        "'.$time.'",'.$catering.',"'.$describe.'",NULL,NULL,'.$Discount.','.$Charges.')';
+        "'.$time.'",'.$catering.',"'.$describe.'",NULL,NULL,0,0)';
     querySend($sql);
     $last=mysqli_insert_id($connect);
     $orderid=$last;
